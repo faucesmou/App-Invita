@@ -10,7 +10,7 @@ const navigation = useNavigation();
 
   return (
     <View style={ globalStyles.container}>
-      <Text>Home Screen Perrako</Text>
+      <Text>Home Screen Perrako1000</Text>
 
     <PrimaryButton
     onPress={ () => navigation.navigate('Products' as never)}
@@ -20,23 +20,6 @@ const navigation = useNavigation();
     onPress={ () => navigation.navigate('Settings' as never)}
     label="Settings"
     />
-     {/*  <Pressable 
-      onPress={ () => navigation.navigate('Products' as never) }
-      style={ globalStyles.primaryButton }>
-        <Text style={ globalStyles.buttonText }>
-          Productos
-        </Text>
-      </Pressable> */}
-    {/*   <Pressable style={ globalStyles.primaryButton }>
-        <Text style={ globalStyles.buttonText }>
-          Productos
-        </Text>
-      </Pressable>
-      <Pressable style={ globalStyles.primaryButton }>
-        <Text style={ globalStyles.buttonText }>
-          Productos
-        </Text>
-      </Pressable> */}
     </View>
   )
 }
