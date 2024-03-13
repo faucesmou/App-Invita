@@ -5,6 +5,15 @@ import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 export const Tab1Screen = () => {
 
 
+  const navigator = useNavigation();
+
+useEffect(() => {
+navigator.setOptions({
+  headerShown: false,
+})
+
+}, [])
+
   return (
     <View>
       <HamburgerMenu/>

@@ -10,7 +10,7 @@ export const HomeScreen = () => {
 const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
 
-useEffect(() => {
+/* useEffect(() => {
   navigation.setOptions({
     headerLeft: () => {
       <Pressable onPress={ ()=> navigation.dispatch( DrawerActions.toggleDrawer)}>
@@ -20,12 +20,12 @@ useEffect(() => {
       </Pressable>
     }
   })
-}, [])
+}, []) */
 
 
   return (
     <View style={ globalStyles.container}>
-      <Text>Home</Text>
+   {/*    <Text>Home</Text> */}
 
     <PrimaryButton
     onPress={ () => navigation.navigate('Products' )}
