@@ -6,6 +6,8 @@ import { Tab1Screen } from '../screens/tabs/Tab1Screen';
 import { globalColors } from '../theme/theme';
 import { TopTabsNavigator } from './TopTabsNavigator';
 import { StackNavigator } from './StackNavigator';
+import { IonIcon } from '../components/shared/IonIcon';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -17,6 +19,7 @@ export const BottomTabsNavigator = () => {
     }}
     screenOptions={{
         //headerShown: false,
+        tabBarActiveTintColor: globalColors.primary,
         tabBarLabelStyle: {
             marginBottom: 5,
         },
@@ -31,9 +34,15 @@ export const BottomTabsNavigator = () => {
     }}
 
     >
-      <Tab.Screen name="Tab1" options={{ title: '1', tabBarIcon: ({ color }) => (<Text style={{color: color}}>Tab1</Text>) }} component={ Tab1Screen } />
-      <Tab.Screen name="Tab2" options={{ title: '2', tabBarIcon: ({ color }) => (<Text style={{color: color}}>Tab2</Text>) }} component={ TopTabsNavigator } />
-      <Tab.Screen name="Tab3" options={{ title: '3', tabBarIcon: ({ color }) => (<Text style={{color: color}}>Tab3</Text>) }} component={ StackNavigator } />
+      <Tab.Screen name="Tab1"
+       options={{ title: '1', tabBarIcon: ({ color }) =>  ( <IonIcon name='accessibility-outline' color= { color }/> ) }} 
+       component={ Tab1Screen } />
+      <Tab.Screen name="Tab2"
+       options={{ title: '2', tabBarIcon: ({ color }) =>  ( <IonIcon name='rocket-outline' color= { color }/> ) }}  
+       component={ TopTabsNavigator } />
+      <Tab.Screen name="Tab3"
+       options={{ title: '3', tabBarIcon: ({ color }) =>( <IonIcon name='apps-outline' color= { color }/> ) }}  
+       component={ StackNavigator } />
       
     </Tab.Navigator>
   );
