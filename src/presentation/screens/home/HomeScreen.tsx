@@ -35,6 +35,10 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>();
     onPress={ () => navigation.navigate('Settings' )}
     label="Settings"
     />
+    <PrimaryButton
+    onPress={ () => navigation.navigate('Settings' )}
+    label="Compartir el acceso a esta credencial"
+    />
     </View>
   )
 }

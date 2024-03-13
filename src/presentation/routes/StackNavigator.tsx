@@ -5,6 +5,7 @@ import { ProductScreen } from '../screens/products/ProductScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
+import { ProfileScreen } from '../screens/profile/ProfileScreen';
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
@@ -44,6 +45,7 @@ navigator.setOptions({
       <Stack.Screen name="Products" component={ProductsScreen} />
       <Stack.Screen name="Product" component={ProductScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
+      {/* <Stack.Screen name="Settings2" component={ ProfileScreen } /> */}
     </Stack.Navigator>
   );
 }

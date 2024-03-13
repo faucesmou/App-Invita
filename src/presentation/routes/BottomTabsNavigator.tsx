@@ -7,6 +7,8 @@ import { globalColors } from '../theme/theme';
 import { TopTabsNavigator } from './TopTabsNavigator';
 import { StackNavigator } from './StackNavigator';
 import { IonIcon } from '../components/shared/IonIcon';
+import { Tab4Screen } from '../screens/tabs/Tab4Screen';
+import { HomeScreen } from '../screens/home/HomeScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -35,13 +37,19 @@ export const BottomTabsNavigator = () => {
 
     >
       <Tab.Screen name="Tab1"
-       options={{ title: '1', tabBarIcon: ({ color }) =>  ( <IonIcon name='accessibility-outline' color= { color }/> ) }} 
-       component={ Tab1Screen } />
+       options={{ title: 'Inicio', tabBarIcon: ({ color }) =>  ( <IonIcon name='home-outline' color= { color }/> ) }} 
+       component={ HomeScreen } />
       <Tab.Screen name="Tab2"
-       options={{ title: '2', tabBarIcon: ({ color }) =>  ( <IonIcon name='rocket-outline' color= { color }/> ) }}  
+       options={{ title: 'Cartilla', tabBarIcon: ({ color }) =>  ( <IonIcon name='book-outline' color= { color }/> ) }}  
        component={ TopTabsNavigator } />
       <Tab.Screen name="Tab3"
-       options={{ title: '3', tabBarIcon: ({ color }) =>( <IonIcon name='apps-outline' color= { color }/> ) }}  
+       options={{ title: 'Credencial', tabBarIcon: ({ color }) =>( <IonIcon name='card-outline' color= { color }/> ) }}  
+       component={ StackNavigator } />
+      <Tab.Screen name="Tab4"
+       options={{ title: 'Tramites', tabBarIcon: ({ color }) =>( <IonIcon name='document-text-outline' color= { color }/> ) }}  
+       component={ Tab4Screen } />
+      <Tab.Screen name="Tab5"
+       options={{ title: 'Mas', tabBarIcon: ({ color }) =>( <IonIcon name='menu-outline' color= { color }/> ) }}  
        component={ StackNavigator } />
       
     </Tab.Navigator>
