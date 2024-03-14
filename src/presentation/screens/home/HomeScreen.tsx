@@ -4,11 +4,15 @@ import React, { useEffect } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../routes/StackNavigator';
+import { useProfileStore } from '../../store/profile-store';
 
 export const HomeScreen = () => {
 
 const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
+/* usando el State del Profile Store:  */
+const name = useProfileStore( state => state.name);
+const email = useProfileStore( state => state.email);
 
 /* useEffect(() => {
   navigation.setOptions({
@@ -39,6 +43,14 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>();
     onPress={ () => navigation.navigate('Settings' )}
     label="Compartir el acceso a esta credencial"
     />
+   
+        <PrimaryButton
+        onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
+        label="Abrir menú"
+        />
+        <Text style={{ marginBottom: 5, marginTop:15 }}> { name }</Text>
+        <Text style={{ marginBottom: 15 }}> { email } </Text>
+    
     </View>
   )
 }

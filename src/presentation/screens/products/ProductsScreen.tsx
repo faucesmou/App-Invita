@@ -14,7 +14,6 @@ const products = [
   {id:3, name: 'producto 3'},
   {id:4, name: 'producto 4'},
   {id:5, name: 'producto 5'},
-  {id:6, name: 'producto 6'},
 ];
 
 export const ProductsScreen = () => {
