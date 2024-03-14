@@ -5,6 +5,7 @@ import { Pressable, Text, View } from 'react-native'
 import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../routes/StackNavigator';
 import { useProfileStore } from '../../store/profile-store';
+import { useCounterStore } from '../../store/counter-store';
 
 export const HomeScreen = () => {
 
@@ -14,6 +15,7 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>();
 const name = useProfileStore( state => state.name);
 const email = useProfileStore( state => state.email);
 
+const count = useCounterStore( state => state.count);
 /* useEffect(() => {
   navigation.setOptions({
     headerLeft: () => {
@@ -50,6 +52,7 @@ const email = useProfileStore( state => state.email);
         />
         <Text style={{ marginBottom: 5, marginTop:15 }}> { name }</Text>
         <Text style={{ marginBottom: 15 }}> { email } </Text>
+        <Text style={{ marginBottom: 5 }}> Contador: { count } </Text>
     
     </View>
   )

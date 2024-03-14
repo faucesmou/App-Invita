@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { useProfileStore } from '../../store/profile-store'
-import { globalStyles } from '../../theme/theme'
+import { globalColors, globalStyles } from '../../theme/theme'
+import { useCounterStore } from '../../store/counter-store'
 
 export const ProfileScreen = () => {
 
@@ -19,8 +20,29 @@ const name = useProfileStore( state => state.name);
 const email = useProfileStore( state => state.email);
 const changeProfile = useProfileStore( state => state.changeProfile);
 
+const count = useCounterStore( state => state.count);
+const increaseBy = useCounterStore( state => state.incrementBy)
 
-console.log( { top });
+
+/* como incorporara un nombre dinámico en el titulo: */
+
+useEffect(() => {
+  navigation.setOptions({
+    title: `Profile + contador: ${ count }`
+  })
+
+
+}, [ count ])
+
+
+/* function Counter() {
+  const { count, incrementBy } = useCounterStore()
+  return (
+    <Text style={{ marginBottom: 5 }}> 
+    { count }
+     </Text>
+  )
+} */
 
 
   return (
@@ -32,6 +54,7 @@ console.log( { top });
         <Text style={{ marginBottom: 5 }}> Profile Screen</Text>
         <Text style={{ marginBottom: 5 }}> { name }</Text>
         <Text style={{ marginBottom: 5 }}> { email } </Text>
+        <Text style={{ marginBottom: 5 }}> Contador: { count } </Text>
 
       <Pressable 
       style ={ globalStyles.primaryButton }
@@ -60,6 +83,29 @@ console.log( { top });
         <Text
         style ={ globalStyles.buttonText }>
           Restaurar datos
+        </Text>
+      </Pressable>
+      <Pressable 
+      style ={ { ...globalStyles.primaryButton, backgroundColor: 'red' }}
+
+      onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
+      >
+        <Text
+        style ={ globalStyles.buttonText }
+        onPress={ () => increaseBy(+1) } 
+        >
+          Incrementar
+        </Text>
+      </Pressable>
+      <Pressable 
+        style ={ { ...globalStyles.primaryButton, backgroundColor: 'blue' }}
+         
+      >
+        <Text
+        style ={ globalStyles.buttonText }
+        onPress={ () => increaseBy(-1) } 
+        >
+          Decrementar
         </Text>
       </Pressable>
 
