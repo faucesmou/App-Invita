@@ -7,8 +7,9 @@ import { globalColors } from '../theme/theme';
 import { TopTabsNavigator } from './TopTabsNavigator';
 import { StackNavigator } from './StackNavigator';
 import { IonIcon } from '../components/shared/IonIcon';
-import { Tab4Screen } from '../screens/tabs/Tab4Screen';
+import { TramitesScreen } from '../screens/tabs/TramitesScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
+import { MasScreen } from '../screens/tabs/MasScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -47,10 +48,10 @@ export const BottomTabsNavigator = () => {
        component={ StackNavigator } />
       <Tab.Screen name="Tab4"
        options={{ title: 'Tramites', tabBarIcon: ({ color }) =>( <IonIcon name='document-text-outline' color= { color }/> ) }}  
-       component={ Tab4Screen } />
+       component={ TramitesScreen } />
       <Tab.Screen name="Tab5"
        options={{ title: 'Mas', tabBarIcon: ({ color }) =>( <IonIcon name='menu-outline' color= { color }/> ) }}  
-       component={ StackNavigator } />
+       component={ MasScreen } />
       
     </Tab.Navigator>
   );

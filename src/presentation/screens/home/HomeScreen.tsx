@@ -34,7 +34,7 @@ const count = useCounterStore( state => state.count);
    {/*    <Text>Home</Text> */}
 
     <PrimaryButton
-    onPress={ () => navigation.navigate('Products' )}
+    onPress={ () => navigation.navigate('Products2')}
     label="Productos"
     />
     <PrimaryButton
@@ -52,7 +52,7 @@ const count = useCounterStore( state => state.count);
         />
         <Text style={{ marginBottom: 5, marginTop:15 }}> { name }</Text>
         <Text style={{ marginBottom: 15 }}> { email } </Text>
-        <Text style={{ marginBottom: 5 }}> Contador: { count } </Text>
+        <Text style={{ marginBottom: 5 }}> Productos: { count } </Text>
     
     </View>
   )

@@ -35,7 +35,7 @@ const dimensions = useWindowDimensions()
 {/*       <Drawer.Screen name="StackNavigator" component={StackNavigator} /> */}
       <Drawer.Screen 
       options={{ drawerIcon: ({ color })=> ( <IonIcon name= 'caret-forward-circle-outline' color={ color } /> ) }} 
-      name="Tabs" component={ BottomTabsNavigator} />
+      name="Innvita" component={ BottomTabsNavigator} />
       
       <Drawer.Screen 
       options={{ drawerIcon: ({ color })=> ( <IonIcon name= 'person-circle-outline' color={ color } /> ) }} 

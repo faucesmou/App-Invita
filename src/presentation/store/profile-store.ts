@@ -12,7 +12,7 @@ export interface ProfileState {
 
 
 export const useProfileStore = create<ProfileState>()((set, get )=>({
-    name: 'Don Damajuana',
+    name: 'Don Emanuel',
     email: 'tintosypeñas@gmail.com',
 
     changeProfile:( name: string, email: string)=> {

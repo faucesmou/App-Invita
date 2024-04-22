@@ -35,12 +35,6 @@ const navigation = useNavigation< NavigationProp < RootStackParams > >()
       )}
       />
 
-      <Text style={{ marginBottom: 10, fontSize:30 }}>Ajustes</Text>
-
-      <PrimaryButton
-      onPress={ ()=> navigation.navigate('Settings' as never )}
-      label={"Ajustes"}
-      />
     </View>
   )
 }

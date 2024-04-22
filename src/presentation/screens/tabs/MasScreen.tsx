@@ -7,20 +7,20 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
 
 const tramites = [
-  {id:1, name: 'Autorizar prestación'},
-  {id:2, name: 'Solicitar medicamentos'},
-  {id:3, name: 'Reintegros'},
-  {id:4, name: 'Empadronamientos anticonceptivos'},
-  {id:5, name: 'Mis trámites'},
+  {id:1, name: 'Mas tramite 1'},
+  {id:2, name: 'Mas tramite 2'},
+  {id:3, name: 'Mas tramite 3'},
+  {id:4, name: 'Mas tramite 4'},
 ];
 
 
-export const Tab4Screen = () => {
+export const MasScreen = () => {
 
   const navigation = useNavigation< NavigationProp < RootStackParams > >()
   return (
     <View style={ globalStyles.container }>
-    <Text style={{marginBottom: 5, fontSize:25}}>Trámites</Text>
+  
+    <Text style={{ marginBottom: 10, fontSize:25 }}>Mas Screen</Text>
     
     <FlatList
     data={ tramites }
@@ -32,7 +32,6 @@ export const Tab4Screen = () => {
     )}
     />
 
-    <Text style={{ marginBottom: 10, fontSize:25 }}>Mis tramites</Text>
 
     <PrimaryButton
     onPress={ ()=> navigation.navigate('Settings' as never )}

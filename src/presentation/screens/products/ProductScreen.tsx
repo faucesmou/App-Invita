@@ -13,7 +13,7 @@ const navigation = useNavigation();
 
 useEffect(() => {
 navigation.setOptions({
-  title:params.name
+  title:params.id
 })
 }, []);
 
