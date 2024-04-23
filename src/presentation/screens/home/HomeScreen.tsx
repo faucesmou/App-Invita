@@ -6,8 +6,11 @@ import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../routes/StackNavigator';
 import { useProfileStore } from '../../store/profile-store';
 import { useCounterStore } from '../../store/counter-store';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const HomeScreen = () => {
+
+  const { top } = useSafeAreaInsets();
 
 const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
@@ -30,9 +33,14 @@ const count = useCounterStore( state => state.count);
 
 
   return (
-    <View style={ globalStyles.container}>
-   {/*    <Text>Home</Text> */}
-
+    <View style={globalStyles.container}>
+   {/*  <View style={ {
+      flex: 1,
+      paddingHorizontal: 20,
+      marginTop: top ,
+      backgroundColor: '#e9f6f8'
+    }}> */}
+ 
     <PrimaryButton
     onPress={ () => navigation.navigate('Products2')}
     label="Productos"

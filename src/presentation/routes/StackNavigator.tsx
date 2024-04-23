@@ -48,7 +48,7 @@ navigator.setOptions({
   return (
     <Stack.Navigator
     screenOptions={{
-      headerShown: true,
+      headerShown: false,
       headerStyle: {
         elevation: 50,
         shadowColor: 'transparent',

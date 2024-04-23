@@ -51,7 +51,7 @@ useEffect(() => {
     <View style={{
       flex: 1,
       paddingHorizontal: 20,
-      marginTop: /* top + */ 0,
+      marginTop:  top + 2,
       backgroundColor: '#e9f6f8'
     }}>
         <Text style={{ marginBottom: 5 }}> Profile Screen</Text>

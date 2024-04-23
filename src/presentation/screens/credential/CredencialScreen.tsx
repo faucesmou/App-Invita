@@ -3,8 +3,7 @@ import { Linking, Text, TouchableOpacity, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { globalStyles } from '../../theme/theme'
-import { FlatList } from 'react-native-gesture-handler'
-import { RootStackParams } from '../../routes/StackNavigator'
+
 import { WebView } from 'react-native-webview';
 
 
@@ -15,7 +14,9 @@ export const CredencialScreen = () => {
     const OrdenConsultaRequest = async () => {
       try {
         const response = await axios.get('https://andessalud.createch.com.ar/api/credencial?idAfiliado=EB0F3828-DB84-49CC-AE37-6987C1B750FC');
+        console.log('este es el response', response);
         const vistaCredencial = response.data;
+        console.log('este es el vistaCredencial', vistaCredencial);
         setCredencial(vistaCredencial);
       } catch (error) {
         console.error('Error al obtener los datos de los afiliados:', error);
@@ -26,7 +27,7 @@ export const CredencialScreen = () => {
 
   return (
     <View style={globalStyles.container}>
-      <Text style={{ marginBottom: 5, fontSize: 25 }}>Credencial</Text>
+      <Text style={{ marginBottom: 25, fontSize: 25 }}>Credencial</Text>
       <WebView
         originWhitelist={['*']}
         source={{ html: credencial }}

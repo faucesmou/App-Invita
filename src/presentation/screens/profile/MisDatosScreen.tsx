@@ -5,12 +5,14 @@ import axios from 'axios'
 import { globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { RootStackParams } from '../../routes/StackNavigator'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 
 
 export const MisDatosScreen = () => {
   
+  const { top } = useSafeAreaInsets();
 const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   const [afiliado, setAfiliado] = useState(null);
@@ -54,7 +56,12 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
 
   return (
-    <View style={globalStyles.container}>
+    <View style={{
+      flex: 1,
+      paddingHorizontal: 20,
+      marginTop:  top ,
+      backgroundColor: '#e9f6f8'
+    }}>
       <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos</Text>
 
       <FlatList

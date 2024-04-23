@@ -22,7 +22,7 @@ export const BottomTabsNavigator = () => {
         backgroundColor: globalColors.background,
     }}
     screenOptions={{
-        //headerShown: false,
+        headerShown: true,
         tabBarActiveTintColor: globalColors.primary,
         tabBarLabelStyle: {
             marginBottom: 5,
