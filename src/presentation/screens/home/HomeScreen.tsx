@@ -43,7 +43,7 @@ const count = useCounterStore( state => state.count);
     />
     <PrimaryButton
     onPress={ () => navigation.navigate('Settings' )}
-    label="Compartir el acceso a esta credencial"
+    label="Credencial"
     />
    
         <PrimaryButton

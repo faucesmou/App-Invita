@@ -10,6 +10,7 @@ import { IonIcon } from '../components/shared/IonIcon';
 import { TramitesScreen } from '../screens/tabs/TramitesScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { MasScreen } from '../screens/tabs/MasScreen';
+import { CredencialScreen } from '../screens/credential/CredencialScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -45,7 +46,7 @@ export const BottomTabsNavigator = () => {
        component={ TopTabsNavigator } />
       <Tab.Screen name="Tab3"
        options={{ title: 'Credencial', tabBarIcon: ({ color }) =>( <IonIcon name='card-outline' color= { color }/> ) }}  
-       component={ StackNavigator } />
+       component={ CredencialScreen } />
       <Tab.Screen name="Tab4"
        options={{ title: 'Tramites', tabBarIcon: ({ color }) =>( <IonIcon name='document-text-outline' color= { color }/> ) }}  
        component={ TramitesScreen } />

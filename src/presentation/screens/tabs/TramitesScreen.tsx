@@ -20,7 +20,7 @@ export const TramitesScreen = () => {
   const navigation = useNavigation< NavigationProp<RootStackParams> >()
   return (
     <View style={ globalStyles.container }>
-    <Text style={{marginBottom: 5, fontSize:25}}>Trámites</Text>
+    <Text style={{marginBottom: 0, fontSize:25}}>Trámites</Text>
     
     <FlatList
     data={ tramites }
@@ -31,13 +31,22 @@ export const TramitesScreen = () => {
       />
     )}
     />
+    <View
+    style={{ marginBottom: 250}}
+    >
 
-    <Text style={{ marginBottom: 10, fontSize:25 }}>Mis tramites</Text>
+     <PrimaryButton
+        onPress={ ()=> navigation.navigate('MiOrdenConsulta')}
+        label="Orden de consulta"
+        />  
+    </View>
 
-    <PrimaryButton
+  {/*   <Text style={{ marginBottom: 70, fontSize:25 }}>Mis tramites</Text> */}
+
+  {/*   <PrimaryButton
     onPress={ ()=> navigation.navigate('Settings' as never )}
     label={"Ajustes"}
-    />
+    /> */}
   </View>
   )
 }

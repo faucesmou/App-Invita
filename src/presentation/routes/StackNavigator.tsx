@@ -11,6 +11,8 @@ import { Tab3Screen } from '../screens/tabs/Tab3Screen';
 import { ProductsScreen2 } from '../screens/products/ProductsScreen2';
 import { MisDatosScreen } from '../screens/profile/MisDatosScreen';
 import { BottomTabsNavigator } from './BottomTabsNavigator';
+import { MiOrdenConsultaScreen } from '../screens/tramites/MiOrdenConsultaScreen';
+import { CredencialScreen } from '../screens/credential/CredencialScreen';
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
@@ -22,6 +24,8 @@ export type RootStackParams = {
   Settings: undefined,
   Tramites: undefined,
   MisDatos:undefined,
+  MiOrdenConsulta:undefined,
+  Credencial: undefined,
   
 }
 
@@ -59,6 +63,8 @@ navigator.setOptions({
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Tramites" component={Tab3Screen} />
       <Stack.Screen name="MisDatos" component={MisDatosScreen} />
+      <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} />
+      <Stack.Screen name="Credencial" component={CredencialScreen} />
       {/* <Stack.Screen name="Settings2" component={ ProfileScreen } /> */}
     </Stack.Navigator>
   );
