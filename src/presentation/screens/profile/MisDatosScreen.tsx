@@ -10,7 +10,8 @@ import { RootStackParams } from '../../routes/StackNavigator'
 
 
 export const MisDatosScreen = () => {
-
+  
+const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   const [afiliado, setAfiliado] = useState(null);
 
@@ -21,15 +22,15 @@ export const MisDatosScreen = () => {
         const response = await axios.get('https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=CHATBOT&password=DrtEchat%&administradora=F100376F-33F9-49FD-AFB9-EE53616E7F0C&datosAfiliado=33440385');
         console.log('este es el response', response);
         
-        const mappedAfiliados = response.data.data.map((
+        const mappedAfiliados = response.data.map((
           item: {
-            apellidoYNombre: any;
+            apellNomb: any;
             nroAfiliado: any;
             edad: any;
             estadoAfiliacion: any;
             planPrestacional: any
           }) => ({
-            apellidoYNombre: item.apellidoYNombre,
+            apellidoYNombre: item.apellNomb,
             nroAfiliado: item.nroAfiliado,
             edad: item.edad,
             estadoAfiliacion: item.estadoAfiliacion,
@@ -52,7 +53,6 @@ export const MisDatosScreen = () => {
 
 
 
-  const navigation = useNavigation<NavigationProp<RootStackParams>>()
   return (
     <View style={globalStyles.container}>
       <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos</Text>
@@ -61,12 +61,12 @@ export const MisDatosScreen = () => {
         data={afiliado}
         renderItem={({ item }) => (
       <View>
-            <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos</Text>
-            <Text style={{ marginBottom: 5, fontSize: 25 }}>{`Nombre; ${item.apellidoYNombre}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 25 }}>{`edad; ${item.edad}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 25 }}>{`edad; ${item.edad}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 25 }}>{`estado afiliacion; ${item.estadoAfiliacion}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 25 }}>{`plan prestacional; ${item.planPrestacional}`}</Text>
+
+            <Text style={{ marginBottom: 5, marginTop:15 ,fontSize: 15 }}>{`Nombre; ${item.apellidoYNombre}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`edad; ${item.edad}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`edad; ${item.edad}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`estado afiliacion; ${item.estadoAfiliacion}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`plan prestacional; ${item.planPrestacional}`}</Text>
       </View>
             )
         }

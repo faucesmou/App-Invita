@@ -9,7 +9,8 @@ import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { useProfileStore } from '../store/profile-store';
 import { Tab3Screen } from '../screens/tabs/Tab3Screen';
 import { ProductsScreen2 } from '../screens/products/ProductsScreen2';
-import { MisDatosScreen } from '../screens/tabs/MisDatosScreen';
+import { MisDatosScreen } from '../screens/profile/MisDatosScreen';
+import { BottomTabsNavigator } from './BottomTabsNavigator';
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
@@ -50,7 +51,9 @@ navigator.setOptions({
       }
      }}
     >
-      <Stack.Screen /* options={{  }} */ name= 'home' component={HomeScreen} />
+
+{/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
+      <Stack.Screen /* options={{  }} */ name= 'home' component={BottomTabsNavigator} />
       <Stack.Screen name="Products2" component={ProductsScreen2} />
       <Stack.Screen name="Product" component={ProductScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />

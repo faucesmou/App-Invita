@@ -1,4 +1,4 @@
-//import { useNavigation } from '@react-navigation/native'; supuestamente esto generaba anidacion( revisar )
+import { useNavigation } from '@react-navigation/native'; //supuestamente esto generaba anidacion( revisar )
 import React from 'react'
 import { Pressable, Text } from 'react-native';
 import { globalStyles } from '../../theme/theme';
@@ -12,7 +12,7 @@ interface Props {
 
 export const PrimaryButton = ( { onPress, label}: Props) => {
 
-    //const navigation = useNavigation();
+    const navigation = useNavigation();
 
   return (
   

@@ -32,7 +32,8 @@ const dimensions = useWindowDimensions()
             paddingHorizontal: 20,
         }
     }}>
-{/*       <Drawer.Screen name="StackNavigator" component={StackNavigator} /> */}
+   <Drawer.Screen name="StackNavigator" component={StackNavigator} />
+   
       <Drawer.Screen 
       options={{ drawerIcon: ({ color })=> ( <IonIcon name= 'caret-forward-circle-outline' color={ color } /> ) }} 
       name="Innvita" component={ BottomTabsNavigator} />

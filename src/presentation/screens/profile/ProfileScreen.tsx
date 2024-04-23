@@ -9,6 +9,7 @@ import { useCounterStore } from '../../store/counter-store'
 import { RootStackParams } from '../../routes/StackNavigator'
 
 export const ProfileScreen = () => {
+
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
 const { top } = useSafeAreaInsets();
@@ -111,17 +112,18 @@ useEffect(() => {
         </Text>
       </Pressable>
 
-
         <PrimaryButton
         onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
         label="Abrir menú"
         />
         <PrimaryButton
+        onPress={ ()=> navigation.navigate('MisDatos')}
+        label="MisDatos"
+        />  
+        </View>
+        )
+      }
+      {/*   <PrimaryButton
         onPress={ ()=> navigation.navigate('MisDatos' )}
         label="Mis Datos"
-        />  
-
-
-    </View>
-  )
-}
+        />   */}
