@@ -5,6 +5,9 @@ import axios from 'axios'
 import { globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { RootStackParams } from '../../routes/StackNavigator'
+import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
+import { BackButton } from '../../components/shared/BackButton'
+
 
 
 
@@ -42,7 +45,8 @@ export const MiOrdenConsultaScreen = () => {
 
   return (
     <View style={globalStyles.container}>
-
+      <HamburgerMenu/>
+      <BackButton onPress={() => navigation.navigate('home')} /> 
       <Text style={{ marginBottom: 5, fontSize: 25 }}>Orden de Consulta</Text>
       <TouchableOpacity onPress={handleOpenURL}>
         <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15, color: 'blue' }}>

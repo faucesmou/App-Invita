@@ -18,6 +18,9 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         padding: 20,
         backgroundColor: globalColors.background, 
+        textAlign: 'center',
+        justifyContent: 'center',
+        
     },
 
     primaryButton: {
@@ -26,11 +29,16 @@ export const globalStyles = StyleSheet.create({
         padding: 10,
         margin: 10,
         marginBottom: 5,
-        width: '100%',
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
         alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center'
+        
     },
     buttonText: {
         color: globalColors.background,
         fontSize: 18,
+        textAlign: 'center',
     }
 })

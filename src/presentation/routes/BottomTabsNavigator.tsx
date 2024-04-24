@@ -1,4 +1,4 @@
-import { Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Tab1Screen } from '../screens/tabs/Tab1Screen';
 //import { Tab2Screen } from '../screens/tabs/Tab2Screen';
@@ -7,7 +7,7 @@ import { globalColors } from '../theme/theme';
 import { TopTabsNavigator } from './TopTabsNavigator';
 import { StackNavigator } from './StackNavigator';
 import { IonIcon } from '../components/shared/IonIcon';
-import { TramitesScreen } from '../screens/tabs/TramitesScreen';
+import { TramitesScreen } from '../screens/tramites/TramitesScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { MasScreen } from '../screens/tabs/MasScreen';
 import { CredencialScreen } from '../screens/credential/CredencialScreen';
@@ -16,6 +16,10 @@ import { CredencialScreen } from '../screens/credential/CredencialScreen';
 const Tab = createBottomTabNavigator();
 
 export const BottomTabsNavigator = () => {
+
+
+
+
   return (
     <Tab.Navigator
     sceneContainerStyle={{
@@ -36,12 +40,12 @@ export const BottomTabsNavigator = () => {
             elevation: 0
         }
     }}
-
     >
+
       <Tab.Screen name="Tab1"
        options={{ title: 'Inicio', tabBarIcon: ({ color }) =>  ( <IonIcon name='home-outline' color= { color }/> ) }} 
        component={ HomeScreen } />
-      <Tab.Screen name="Tab2"
+      <Tab.Screen name="Cartilla"
        options={{ title: 'Cartilla', tabBarIcon: ({ color }) =>  ( <IonIcon name='book-outline' color= { color }/> ) }}  
        component={ TopTabsNavigator } />
       <Tab.Screen name="Tab3"

@@ -13,6 +13,8 @@ import { MisDatosScreen } from '../screens/profile/MisDatosScreen';
 import { BottomTabsNavigator } from './BottomTabsNavigator';
 import { MiOrdenConsultaScreen } from '../screens/tramites/MiOrdenConsultaScreen';
 import { CredencialScreen } from '../screens/credential/CredencialScreen';
+import { TopTabsNavigator } from './TopTabsNavigator';
+import { TramitesScreen } from '../screens/tramites/TramitesScreen';
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
@@ -26,6 +28,7 @@ export type RootStackParams = {
   MisDatos:undefined,
   MiOrdenConsulta:undefined,
   Credencial: undefined,
+  Cartilla: undefined,
   
 }
 
@@ -57,13 +60,14 @@ navigator.setOptions({
     >
 
 {/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
-      <Stack.Screen /* options={{  }} */ name= 'home' component={BottomTabsNavigator} />
+      <Stack.Screen /* options={{  }} */ name= 'home' component={BottomTabsNavigator} /* <options={{ headerShown: true }}> *//>
+      <Stack.Screen /* options={{  }} */ name= 'Cartilla' component={TopTabsNavigator} />
       <Stack.Screen name="Products2" component={ProductsScreen2} />
-      <Stack.Screen name="Product" component={ProductScreen} />
+      <Stack.Screen name="Product" component={ProductScreen}  options={{ headerShown: true }} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="Tramites" component={Tab3Screen} />
-      <Stack.Screen name="MisDatos" component={MisDatosScreen} />
-      <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} />
+      <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
       <Stack.Screen name="Credencial" component={CredencialScreen} />
       {/* <Stack.Screen name="Settings2" component={ ProfileScreen } /> */}
     </Stack.Navigator>

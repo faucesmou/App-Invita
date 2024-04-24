@@ -7,10 +7,12 @@ import { RootStackParams } from '../../routes/StackNavigator';
 import { useProfileStore } from '../../store/profile-store';
 import { useCounterStore } from '../../store/counter-store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Header } from '@react-navigation/elements';
+import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 
 export const HomeScreen = () => {
 
-  const { top } = useSafeAreaInsets();
+const { top } = useSafeAreaInsets();
 
 const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
@@ -31,15 +33,29 @@ const count = useCounterStore( state => state.count);
   })
 }, []) */
 
+//const navigation = useNavigation();
+
+
 
   return (
-    <View style={globalStyles.container}>
-   {/*  <View style={ {
+    <View /* style={globalStyles.container} */
+   style={ {
       flex: 1,
       paddingHorizontal: 20,
       marginTop: top ,
       backgroundColor: '#e9f6f8'
-    }}> */}
+    }}
+    >
+       <HamburgerMenu/>
+{/*    <Pressable onPress={ ()=> navigation.dispatch( DrawerActions.toggleDrawer)}>
+        <Text>
+          Menu
+        </Text>
+      </Pressable> */}
+
+        {/*  <Pressable onPress={openDrawer}>
+        <Text>Open Drawer</Text>
+      </Pressable> */}
  
     <PrimaryButton
     onPress={ () => navigation.navigate('Products2')}

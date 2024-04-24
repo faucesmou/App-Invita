@@ -6,6 +6,8 @@ import { globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
+import { BackButton } from '../../components/shared/BackButton'
 
 
 
@@ -59,11 +61,14 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>()
     <View style={{
       flex: 1,
       paddingHorizontal: 20,
-      marginTop:  top ,
+      marginTop:  top  ,
       backgroundColor: '#e9f6f8'
     }}>
-      <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos</Text>
 
+       <HamburgerMenu/>
+      <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos padre</Text>
+   {/*    <BackButton goToPage="home" /> */}
+   <BackButton onPress={() => navigation.navigate('home')} />
       <FlatList
         data={afiliado}
         renderItem={({ item }) => (

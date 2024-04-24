@@ -6,7 +6,7 @@ export const Tab3Screen = () => {
   return (
     <View>
        <HamburgerMenu/>
-        <Text> Tab3 Screen</Text>
+        <Text> Tab3 Screen papapaapapa</Text>
     </View>
   )
 }

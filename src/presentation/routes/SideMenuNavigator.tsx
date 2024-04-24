@@ -21,8 +21,7 @@ const dimensions = useWindowDimensions()
     drawerContent={ (props)=> <CustomDrawerContent {...props}/>}
 /* esta parte de screenOptions no està funcionando */
     screenOptions={{
-        //headerShown: false,
-        
+        headerShown: true,
         drawerType: (dimensions.width >= 758) ? 'permanent': 'slide',
         drawerActiveBackgroundColor: globalColors.primary,
         drawerActiveTintColor: 'white',
@@ -32,15 +31,19 @@ const dimensions = useWindowDimensions()
             paddingHorizontal: 20,
         }
     }}>
-   <Drawer.Screen name="StackNavigator" component={StackNavigator} />
+  {/*  <Drawer.Screen name="StackNavigator" component={StackNavigator} /> */}
    
+     {/*  <Drawer.Screen 
+      options={{ drawerIcon: ({ color })=> ( <IonIcon name= 'caret-forward-circle-outline' color={ color } /> ) }} 
+      name="Innvita" component={ BottomTabsNavigator} /> */}
+      
       <Drawer.Screen 
       options={{ drawerIcon: ({ color })=> ( <IonIcon name= 'caret-forward-circle-outline' color={ color } /> ) }} 
-      name="Innvita" component={ BottomTabsNavigator} />
+      name="Categorias" component={ StackNavigator} />
       
       <Drawer.Screen 
       options={{ drawerIcon: ({ color })=> ( <IonIcon name= 'person-circle-outline' color={ color } /> ) }} 
-      name="Profile" component={ProfileScreen} />
+      name="Mi Perfil" component={ProfileScreen} />
     </Drawer.Navigator>
   );
 }
@@ -59,7 +62,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps ) =>{
         />
 
         <DrawerItemList {...props } />
-   {/*      <Text>
+       {/*  <Text>
         Hola mundo
         </Text> */}
         

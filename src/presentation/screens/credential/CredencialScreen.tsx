@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, Text, TouchableOpacity, View } from 'react-native'
+import { Linking, Pressable, Text, TouchableOpacity, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { globalStyles } from '../../theme/theme'
 
 import { WebView } from 'react-native-webview';
-
+import { RootStackParams } from '../../routes/StackNavigator'
+import { DrawerActions } from '@react-navigation/native';
+import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
+import { BackButton } from '../../components/shared/BackButton'
 
 export const CredencialScreen = () => {
+
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const [credencial, setCredencial] = useState('');
 
   useEffect(() => {
@@ -25,9 +30,16 @@ export const CredencialScreen = () => {
     OrdenConsultaRequest();
   }, []);
 
+  const handleGoBack = () => {
+    navigation.goBack(); // Retroceder a la pantalla anterior
+  };
+
   return (
     <View style={globalStyles.container}>
-      <Text style={{ marginBottom: 25, fontSize: 25 }}>Credencial</Text>
+    
+      <HamburgerMenu/>
+  {/*     <BackButton onPress={() => navigation.navigate('home')} /> */}
+   
       <WebView
         originWhitelist={['*']}
         source={{ html: credencial }}

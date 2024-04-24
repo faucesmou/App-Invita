@@ -50,14 +50,14 @@ useEffect(() => {
   return (
     <View style={{
       flex: 1,
-      paddingHorizontal: 20,
-      marginTop:  top + 2,
+      //paddingHorizontal: 20,
+      marginTop:  top ,
       backgroundColor: '#e9f6f8'
     }}>
-        <Text style={{ marginBottom: 5 }}> Profile Screen</Text>
-        <Text style={{ marginBottom: 5 }}> { name }</Text>
-        <Text style={{ marginBottom: 5 }}> { email } </Text>
-        <Text style={{ marginBottom: 5 }}> Productos: { count } </Text>
+        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Profile Screen</Text>
+        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { name }</Text>
+        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { email } </Text>
+        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Productos: { count } </Text>
 
       <Pressable 
       style ={ globalStyles.primaryButton }
@@ -65,7 +65,7 @@ useEffect(() => {
       >
         <Text
         style ={ globalStyles.buttonText }>
-          Cambiar nombre
+          Cambiar Pepe
         </Text>
       </Pressable>
 
@@ -80,7 +80,7 @@ useEffect(() => {
       </Pressable>
 
       <Pressable 
-      style ={ globalStyles.primaryButton }
+      style ={ globalStyles.primaryButton  }
       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
       >
         <Text
