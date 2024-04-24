@@ -5,6 +5,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
+import CustomHeader from '../../components/CustomHeader'
 
 const tramites = [
   {id:1, name: 'Mas tramite 1'},
@@ -19,6 +20,7 @@ export const MasScreen = () => {
   const navigation = useNavigation< NavigationProp < RootStackParams > >()
   return (
     <View style={ globalStyles.container }>
+       <CustomHeader />
   
     <Text style={{ marginBottom: 10, fontSize:25 }}>Mas Screen</Text>
     

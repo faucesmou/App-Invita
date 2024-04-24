@@ -7,6 +7,8 @@ import { globalStyles } from '../../theme/theme';
 import { FlatList } from 'react-native-gesture-handler';
 import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { type RootStackParams } from '../../routes/StackNavigator';
+import { BackButton } from '../../components/shared/BackButton';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 
@@ -19,6 +21,8 @@ import { type RootStackParams } from '../../routes/StackNavigator';
 ]; */
 
 export const ProductsScreen2 = () => {
+
+  const { top } = useSafeAreaInsets();
 
   const [products, setProducts] = useState<{ apellidoYNombre: string; nroAfiliado: string; }[]>([]);
   useEffect(() => {
@@ -46,15 +50,23 @@ export const ProductsScreen2 = () => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={{ marginBottom: 5, fontSize: 30 }}>Afiliados</Text>
+    <View 
+    style={ {
+      flex: 1,
+      paddingHorizontal: 20,
+      marginTop: top ,
+      backgroundColor: '#e9f6f8'
+    }}
+    >
+      <BackButton /> 
+      <Text style={{ marginBottom: 5, fontSize: 30 }}>Consulta de Afiliados</Text>
 
       <FlatList
         data={products}
         renderItem={({ item }) => (
           <PrimaryButton
-            onPress={() => navigation.navigate('Product', { id: item.apellidoYNombre, nroAfiliado: item.nroAfiliado })}
-            label={item.apellidoYNombre}
+            onPress={() => navigation.navigate('Product', { id:item.apellidoYNombre, nroAfiliado: item.nroAfiliado })}
+            label={item.apellidoYNombre} 
           />
         )}
       />

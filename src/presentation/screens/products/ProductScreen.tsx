@@ -17,7 +17,12 @@ const navigation = useNavigation();
 
 useEffect(() => {
 navigation.setOptions({
-  title:params.name
+  title:params.name,
+  headerStyle: {
+    backgroundColor: '#57e312', // Cambia el color de fondo según lo desees
+    height: 130,
+  },
+  
 })
 }, []);
 
@@ -28,12 +33,7 @@ navigation.setOptions({
 
   return (
     <View 
-    style={{
-      flex: 1,
-      paddingHorizontal: 20,
-      marginTop:  top  ,
-      backgroundColor: '#e9f6f8'
-    }}
+    style={{...globalStyles.productScreen, marginTop: top }}
     >
       
       <BackButton /> 

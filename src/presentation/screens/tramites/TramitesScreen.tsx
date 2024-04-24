@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, View } from 'react-native'
-import { globalStyles } from '../../theme/theme'
+import { globalColors, globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
+import CustomHeader from '../../components/CustomHeader'
 
 const tramites = [
   { id: 1, name: 'Autorizar prestación' },
@@ -18,9 +19,25 @@ const tramites = [
 
 export const TramitesScreen = () => {
 
+ /*  useEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: globalColors.primary, 
+        height: 130,
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        fontSize: 28, 
+      },
+    })
+    }, []); */
+
+
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
   return (
     <View style={globalStyles.container}>
+
+      <CustomHeader />
       <HamburgerMenu />
       <Text style={{ marginBottom: 20,  marginTop: 10 ,fontSize: 25, textAlign: 'center',}}>Trámites</Text>
 

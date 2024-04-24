@@ -12,11 +12,10 @@ export const HamburgerMenu = () => {
         navigation.setOptions({
           headerLeft: () => (
             <Pressable onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer)}
-            style={{marginLeft:10}}
+            style={{marginLeft:20}}
             >
-           <IonIcon name='menu' color= { 'blue' } size = {35}/> 
-            </Pressable>
-            
+           <IonIcon name='menu' color= { 'white' } size = {35}/> 
+            </Pressable>  
           )
         })
         

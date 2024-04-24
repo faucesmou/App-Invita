@@ -9,6 +9,7 @@ import { useCounterStore } from '../../store/counter-store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Header } from '@react-navigation/elements';
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
+import CustomHeader from '../../components/CustomHeader';
 
 export const HomeScreen = () => {
 
@@ -43,9 +44,10 @@ const count = useCounterStore( state => state.count);
       flex: 1,
       paddingHorizontal: 20,
       marginTop: top ,
-      backgroundColor: '#e9f6f8'
+     /*  backgroundColor: '#e9f6f8' */
     }}
     >
+       <CustomHeader />
        <HamburgerMenu/>
 {/*    <Pressable onPress={ ()=> navigation.dispatch( DrawerActions.toggleDrawer)}>
         <Text>

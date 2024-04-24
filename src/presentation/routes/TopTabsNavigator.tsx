@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+
+
 const Tab = createMaterialTopTabNavigator();
 const { top } = useSafeAreaInsets();
 
@@ -15,7 +17,7 @@ export const TopTabsNavigator = () =>  {
 
     useEffect(() => {
     navigator.setOptions({
-      headerShown: false,
+      headerShown: true,
     })
     
     }, [])
@@ -29,8 +31,10 @@ export const TopTabsNavigator = () =>  {
       backgroundColor: '#e9f6f8'
     }}
     >
+
       <Tab.Screen name="Perfil" component={ ProfileScreen } />
       <Tab.Screen name="About" component={ AboutScreen } />
+
     </Tab.Navigator>
   );
 }

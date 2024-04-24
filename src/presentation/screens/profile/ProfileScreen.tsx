@@ -36,7 +36,18 @@ useEffect(() => {
 
 }, [ count ])
 
-
+useEffect(() => {
+  navigation.setOptions({
+    headerStyle: {
+      backgroundColor: globalColors.profile, 
+      height: 130,
+    },
+    headerTintColor: 'white',
+    headerTitleStyle: {
+      fontSize: 28, // tamaño del título del header
+    },
+  });
+}, []);
 /* function Counter() {
   const { count, incrementBy } = useCounterStore()
   return (
@@ -89,7 +100,7 @@ useEffect(() => {
         </Text>
       </Pressable>
       <Pressable 
-      style ={ { ...globalStyles.primaryButton, backgroundColor: '#ff6336' }}
+      style ={ { ...globalStyles.primaryButton, backgroundColor: globalColors.profile2 }}
 
       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
       >

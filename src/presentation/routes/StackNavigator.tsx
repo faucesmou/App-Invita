@@ -55,16 +55,17 @@ navigator.setOptions({
       headerStyle: {
         elevation: 50,
         shadowColor: 'transparent',
+      /* backgroundColor: '#57e312', */ 
       }
      }}
     >
 
 {/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
       <Stack.Screen name= 'home' component={BottomTabsNavigator} /* <options={{ headerShown: true }}> *//>
-      <Stack.Screen name= 'Cartilla' component={TopTabsNavigator} />
-      <Stack.Screen name="Products2" component={ProductsScreen2} />
+      <Stack.Screen name= 'Cartilla' component={TopTabsNavigator} options={{ headerShown: true }}/>
+      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }}/>
       <Stack.Screen name="Product" component={ProductScreen}  options={{ headerShown: true }} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen}  options={{ headerShown: true }} />
       <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />

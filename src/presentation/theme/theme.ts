@@ -8,6 +8,8 @@ export const globalColors = {
     warning:'#fca3100',
     danger:'#e71d36',
     dark:'#22223b',
+    profile: '#577CEE',
+    profile2:'#3457e6',
 
     background:'#fff', 
 
@@ -40,5 +42,11 @@ export const globalStyles = StyleSheet.create({
         color: globalColors.background,
         fontSize: 18,
         textAlign: 'center',
-    }
+    },
+    productScreen: {
+      flex: 1,
+      paddingHorizontal: 20,
+      backgroundColor: '#e9f6f8'
+        
+    },
 })
