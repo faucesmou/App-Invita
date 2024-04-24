@@ -22,7 +22,7 @@ export const TramitesScreen = () => {
   return (
     <View style={globalStyles.container}>
       <HamburgerMenu />
-      <Text style={{ marginBottom: 0, fontSize: 25 }}>Trámites</Text>
+      <Text style={{ marginBottom: 20,  marginTop: 10 ,fontSize: 25, textAlign: 'center',}}>Trámites</Text>
 
       <FlatList
         data={tramites}

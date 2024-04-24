@@ -1,17 +1,13 @@
-import { Pressable, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Tab1Screen } from '../screens/tabs/Tab1Screen';
-//import { Tab2Screen } from '../screens/tabs/Tab2Screen';
-//import { Tab3Screen } from '../screens/tabs/Tab3Screen';
-import { globalColors } from '../theme/theme';
+
 import { TopTabsNavigator } from './TopTabsNavigator';
-import { StackNavigator } from './StackNavigator';
-import { IonIcon } from '../components/shared/IonIcon';
 import { TramitesScreen } from '../screens/tramites/TramitesScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
-import { MasScreen } from '../screens/tabs/MasScreen';
+import { MasScreen } from '../screens/mas/MasScreen';
 import { CredencialScreen } from '../screens/credential/CredencialScreen';
 
+import { globalColors } from '../theme/theme';
+import { IonIcon } from '../components/shared/IonIcon';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,19 +38,19 @@ export const BottomTabsNavigator = () => {
     }}
     >
 
-      <Tab.Screen name="Tab1"
+      <Tab.Screen name="HomeScreen"
        options={{ title: 'Inicio', tabBarIcon: ({ color }) =>  ( <IonIcon name='home-outline' color= { color }/> ) }} 
        component={ HomeScreen } />
       <Tab.Screen name="Cartilla"
        options={{ title: 'Cartilla', tabBarIcon: ({ color }) =>  ( <IonIcon name='book-outline' color= { color }/> ) }}  
        component={ TopTabsNavigator } />
-      <Tab.Screen name="Tab3"
+      <Tab.Screen name="Credencial"
        options={{ title: 'Credencial', tabBarIcon: ({ color }) =>( <IonIcon name='card-outline' color= { color }/> ) }}  
        component={ CredencialScreen } />
-      <Tab.Screen name="Tab4"
+      <Tab.Screen name="Tramites"
        options={{ title: 'Tramites', tabBarIcon: ({ color }) =>( <IonIcon name='document-text-outline' color= { color }/> ) }}  
        component={ TramitesScreen } />
-      <Tab.Screen name="Tab5"
+      <Tab.Screen name="Mas"
        options={{ title: 'Mas', tabBarIcon: ({ color }) =>( <IonIcon name='menu-outline' color= { color }/> ) }}  
        component={ MasScreen } />
       

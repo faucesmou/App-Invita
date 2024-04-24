@@ -1,13 +1,13 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen } from '../screens/home/HomeScreen';
-import { ProductsScreen } from '../screens/products/ProductsScreen';
+
+
 import { ProductScreen } from '../screens/products/ProductScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
-import { ProfileScreen } from '../screens/profile/ProfileScreen';
+
 import { useProfileStore } from '../store/profile-store';
-import { Tab3Screen } from '../screens/tabs/Tab3Screen';
+
 import { ProductsScreen2 } from '../screens/products/ProductsScreen2';
 import { MisDatosScreen } from '../screens/profile/MisDatosScreen';
 import { BottomTabsNavigator } from './BottomTabsNavigator';
@@ -60,8 +60,8 @@ navigator.setOptions({
     >
 
 {/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
-      <Stack.Screen /* options={{  }} */ name= 'home' component={BottomTabsNavigator} /* <options={{ headerShown: true }}> *//>
-      <Stack.Screen /* options={{  }} */ name= 'Cartilla' component={TopTabsNavigator} />
+      <Stack.Screen name= 'home' component={BottomTabsNavigator} /* <options={{ headerShown: true }}> *//>
+      <Stack.Screen name= 'Cartilla' component={TopTabsNavigator} />
       <Stack.Screen name="Products2" component={ProductsScreen2} />
       <Stack.Screen name="Product" component={ProductScreen}  options={{ headerShown: true }} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
