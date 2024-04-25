@@ -14,7 +14,7 @@ interface Props {
 export const PrimaryButton = ( { onPress, label, color }: Props) => {
 
     const navigation = useNavigation();
-    const backColor = color? color : globalColors.primary;
+    const backColor = color? color : globalColors.profile2;
   return (
   
     <Pressable

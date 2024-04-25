@@ -20,7 +20,7 @@ export const TopTabsNavigator = () =>  {
     navigator.setOptions({
       headerShown: true,
       headerStyle: {
-        backgroundColor: globalColors.primary, 
+        backgroundColor: globalColors.profile2, 
         height: 130,
       },
       headerTintColor: 'white',
