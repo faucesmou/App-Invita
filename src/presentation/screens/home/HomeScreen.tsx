@@ -61,7 +61,7 @@ const count = useCounterStore( state => state.count);
  
     <PrimaryButton
     onPress={ () => navigation.navigate('Products2')}
-    label="Productos"
+    label="Afiliados a Cargo"
     />
     <PrimaryButton
     onPress={ () => navigation.navigate('Settings' )}

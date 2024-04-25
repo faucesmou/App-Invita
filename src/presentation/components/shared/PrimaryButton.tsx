@@ -1,24 +1,25 @@
 import { useNavigation } from '@react-navigation/native'; //supuestamente esto generaba anidacion( revisar )
 import React from 'react'
 import { Pressable, Text } from 'react-native';
-import { globalStyles } from '../../theme/theme';
+import { globalColors, globalStyles } from '../../theme/theme';
 
 interface Props {
     onPress: () => void;
     label?: string;
     id?: any;
+    color?: string;
 }
 
 
-export const PrimaryButton = ( { onPress, label}: Props) => {
+export const PrimaryButton = ( { onPress, label, color }: Props) => {
 
     const navigation = useNavigation();
-
+    const backColor = color? color : globalColors.primary;
   return (
   
     <Pressable
     onPress={ () => onPress() }
-    style={ globalStyles.primaryButton }>
+    style={ {...globalStyles.primaryButton, backgroundColor: backColor} }>
       <Text style={ globalStyles.buttonText }>
         {label}
       </Text>

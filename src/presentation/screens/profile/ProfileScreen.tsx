@@ -7,6 +7,7 @@ import { useProfileStore } from '../../store/profile-store'
 import { globalColors, globalStyles } from '../../theme/theme'
 import { useCounterStore } from '../../store/counter-store'
 import { RootStackParams } from '../../routes/StackNavigator'
+import CustomHeader from '../../components/CustomHeader'
 
 export const ProfileScreen = () => {
 
@@ -36,7 +37,7 @@ useEffect(() => {
 
 }, [ count ])
 
-useEffect(() => {
+/* useEffect(() => {
   navigation.setOptions({
     headerStyle: {
       backgroundColor: globalColors.profile, 
@@ -47,7 +48,7 @@ useEffect(() => {
       fontSize: 28, // tamaño del título del header
     },
   });
-}, []);
+}, []); */
 /* function Counter() {
   const { count, incrementBy } = useCounterStore()
   return (
@@ -65,58 +66,59 @@ useEffect(() => {
       marginTop:  top ,
       backgroundColor: '#e9f6f8'
     }}>
+      <CustomHeader color='orange'  />
+
         <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Profile Screen</Text>
         <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { name }</Text>
         <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { email } </Text>
         <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Productos: { count } </Text>
 
       <Pressable 
-      style ={ globalStyles.primaryButton }
+      style ={ globalStyles.secondaryButton }
       onPress={ () => useProfileStore.setState( { name: 'gonza morresi'})}
       >
         <Text
-        style ={ globalStyles.buttonText }>
+        style ={ globalStyles.buttonText2 }>
           Cambiar Pepe
         </Text>
       </Pressable>
 
       <Pressable 
-      style ={ globalStyles.primaryButton }
+      style ={ globalStyles.secondaryButton  }
       onPress={ () => useProfileStore.setState( { email: 'gonza@gmail.com'})}
       >
         <Text
-        style ={ globalStyles.buttonText }>
+        style ={ globalStyles.buttonText2 }>
           Cambiar email
         </Text>
       </Pressable>
 
       <Pressable 
-      style ={ globalStyles.primaryButton  }
+      style ={ globalStyles.secondaryButton   }
       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
       >
         <Text
-        style ={ globalStyles.buttonText }>
+        style ={ globalStyles.buttonText2 }>
           Restaurar datos
         </Text>
       </Pressable>
       <Pressable 
-      style ={ { ...globalStyles.primaryButton, backgroundColor: globalColors.profile2 }}
+      style ={ globalStyles.secondaryButton }
 
       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
       >
         <Text
-        style ={ globalStyles.buttonText }
+        style ={ globalStyles.buttonText2 }
         onPress={ () => increaseBy(+1) } 
         >
           Sumar al carrito
         </Text>
       </Pressable>
       <Pressable 
-        style ={ { ...globalStyles.primaryButton, backgroundColor: '#295887' }}
-         
+        style ={ globalStyles.secondaryButton }
       >
         <Text
-        style ={ globalStyles.buttonText }
+        style ={ globalStyles.buttonText2 }
         onPress={ () => increaseBy(-1) } 
         >
           Restar al carrito
@@ -126,10 +128,12 @@ useEffect(() => {
         <PrimaryButton
         onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
         label="Abrir menú"
+        color='orange' 
         />
         <PrimaryButton
         onPress={ ()=> navigation.navigate('MisDatos')}
         label="MisDatos"
+        color='orange' 
         />  
         </View>
         )

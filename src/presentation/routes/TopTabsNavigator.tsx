@@ -5,6 +5,7 @@ import { AboutScreen } from '../screens/about/AboutScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { globalColors } from '../theme/theme';
 
 
 
@@ -18,18 +19,26 @@ export const TopTabsNavigator = () =>  {
     useEffect(() => {
     navigator.setOptions({
       headerShown: true,
+      headerStyle: {
+        backgroundColor: globalColors.primary, 
+        height: 130,
+      },
+      headerTintColor: 'white',
+      headerTitleStyle: {
+        fontSize: 28, // tamaño título del header
+      },
     })
     
     }, [])
 
   return (
     <Tab.Navigator
-    style={{
+ /*    style={{
       flex: 1,
       paddingHorizontal: 20,
-      marginTop: top ,
+      marginTop: 5 ,
       backgroundColor: '#e9f6f8'
-    }}
+    }} */
     >
 
       <Tab.Screen name="Perfil" component={ ProfileScreen } />

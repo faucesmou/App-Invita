@@ -32,7 +32,7 @@ const handlePress = () => {
             <Pressable onPress={handlePress}
             style={{marginLeft:20}}
             >
-           <IonIcon name='arrow-back' color= { 'blue' } size = {35}/> 
+           <IonIcon name='arrow-back' color= { 'white' } size = {35}/> 
             </Pressable>
             
           )

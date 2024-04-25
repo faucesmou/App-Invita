@@ -10,6 +10,7 @@ export const globalColors = {
     dark:'#22223b',
     profile: '#577CEE',
     profile2:'#3457e6',
+    orange: '#ed843e',
 
     background:'#fff', 
 
@@ -38,8 +39,28 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center'
         
     },
+    secondaryButton: {
+        backgroundColor: 'white',
+        borderColor: globalColors.orange,
+        borderWidth:2,
+        borderRadius: 5,
+        padding: 10,
+        margin: 10,
+        marginBottom: 5,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center'
+        
+    },
     buttonText: {
         color: globalColors.background,
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    buttonText2: {
+        color: globalColors.profile,
         fontSize: 18,
         textAlign: 'center',
     },

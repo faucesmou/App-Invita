@@ -1,9 +1,9 @@
-import { View, Text, useWindowDimensions } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import { StackNavigator } from './StackNavigator';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { globalColors } from '../theme/theme';
-import { BottomTabsNavigator } from './BottomTabsNavigator';
+
 import { IonIcon } from '../components/shared/IonIcon';
 
 
@@ -17,15 +17,14 @@ const dimensions = useWindowDimensions()
 
   return (
     <Drawer.Navigator 
-
     drawerContent={ (props)=> <CustomDrawerContent {...props}/>}
 /* esta parte de screenOptions no està funcionando */
     screenOptions={{
         headerShown: true,
         drawerType: (dimensions.width >= 758) ? 'permanent': 'slide',
-        drawerActiveBackgroundColor: globalColors.primary,
+        drawerActiveBackgroundColor: globalColors.orange,
         drawerActiveTintColor: 'white',
-        drawerInactiveTintColor: globalColors.primary,
+        drawerInactiveTintColor: globalColors.orange,
         drawerItemStyle: {
             borderRadius: 100,
             paddingHorizontal: 20,
@@ -55,7 +54,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps ) =>{
         <View 
         style={{
         height: 200,
-        backgroundColor: globalColors.primary,
+        backgroundColor: globalColors.orange,
         margin: 30,
         borderRadius: 50,
         }}

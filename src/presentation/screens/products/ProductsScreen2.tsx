@@ -9,6 +9,7 @@ import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { type RootStackParams } from '../../routes/StackNavigator';
 import { BackButton } from '../../components/shared/BackButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CustomHeader from '../../components/CustomHeader';
 
 
 
@@ -58,6 +59,8 @@ export const ProductsScreen2 = () => {
       backgroundColor: '#e9f6f8'
     }}
     >
+      <CustomHeader color='orange'  />
+      
       <BackButton /> 
       <Text style={{ marginBottom: 5, fontSize: 30 }}>Consulta de Afiliados</Text>
 
@@ -67,6 +70,7 @@ export const ProductsScreen2 = () => {
           <PrimaryButton
             onPress={() => navigation.navigate('Product', { id:item.apellidoYNombre, nroAfiliado: item.nroAfiliado })}
             label={item.apellidoYNombre} 
+            color='orange' 
           />
         )}
       />

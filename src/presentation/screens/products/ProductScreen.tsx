@@ -6,6 +6,7 @@ import { globalStyles } from '../../theme/theme';
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 import { BackButton } from '../../components/shared/BackButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CustomHeader from '../../components/CustomHeader';
 
 export const ProductScreen = () => {
 
@@ -14,17 +15,16 @@ export const ProductScreen = () => {
 const params = useRoute<RouteProp<RootStackParams, 'Product'>>().params;
 const navigation = useNavigation();
 
-
+/* 
 useEffect(() => {
 navigation.setOptions({
   title:params.name,
   headerStyle: {
-    backgroundColor: '#57e312', // Cambia el color de fondo según lo desees
-    height: 130,
+    backgroundColor: '#57e312', 
   },
   
 })
-}, []);
+}, []); */
 
   // Función para manejar el retroceso
   const handleGoBack = () => {
@@ -35,6 +35,7 @@ navigation.setOptions({
     <View 
     style={{...globalStyles.productScreen, marginTop: top }}
     >
+      <CustomHeader color='green'  />
       
       <BackButton /> 
 

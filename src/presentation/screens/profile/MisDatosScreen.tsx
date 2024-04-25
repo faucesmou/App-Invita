@@ -8,6 +8,7 @@ import { RootStackParams } from '../../routes/StackNavigator'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import { BackButton } from '../../components/shared/BackButton'
+import CustomHeader from '../../components/CustomHeader'
 
 
 
@@ -53,10 +54,6 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   }, [])
 
-
-
-
-
   return (
     <View style={{
       flex: 1,
@@ -64,9 +61,10 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>()
       marginTop:  top  ,
       backgroundColor: '#e9f6f8'
     }}>
-
-       <HamburgerMenu/>
-      <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos padre</Text>
+      <CustomHeader color='orange'  />
+      <BackButton /> 
+      {/*  <HamburgerMenu/> */}
+      <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos</Text>
    {/*    <BackButton goToPage="home" /> */}
    <BackButton onPress={() => navigation.navigate('home')} />
       <FlatList
@@ -75,10 +73,10 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>()
       <View>
 
             <Text style={{ marginBottom: 5, marginTop:15 ,fontSize: 15 }}>{`Nombre; ${item.apellidoYNombre}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`edad; ${item.edad}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`edad; ${item.edad}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`estado afiliacion; ${item.estadoAfiliacion}`}</Text>
-            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`plan prestacional; ${item.planPrestacional}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`edad: ${item.edad}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`estado afiliacion: ${item.estadoAfiliacion}`}</Text>
+            <Text style={{ marginBottom: 5, fontSize: 15 }}>{`plan prestacional: ${item.planPrestacional}`}</Text>
       </View>
             )
         }

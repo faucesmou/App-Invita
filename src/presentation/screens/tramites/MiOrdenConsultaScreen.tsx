@@ -7,6 +7,8 @@ import { FlatList } from 'react-native-gesture-handler'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import { BackButton } from '../../components/shared/BackButton'
+import CustomHeader from '../../components/CustomHeader'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 
@@ -15,6 +17,8 @@ import { BackButton } from '../../components/shared/BackButton'
 export const MiOrdenConsultaScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
+
+  const { top } = useSafeAreaInsets();
 
   const [ordenConsulta, setOrdenConsulta] = useState(null);
 
@@ -44,10 +48,18 @@ export const MiOrdenConsultaScreen = () => {
 
 
   return (
-    <View style={globalStyles.container}>
+    <View 
+    style={ {
+      flex: 1,
+      paddingHorizontal: 20,
+      marginTop: top ,
+     /*  backgroundColor: '#e9f6f8' */
+    }}
+    >
       <HamburgerMenu/>
+      <CustomHeader/>
       <BackButton onPress={() => navigation.navigate('home')} /> 
-      <Text style={{ marginBottom: 5, fontSize: 25 }}>Orden de Consulta</Text>
+      <Text style={{ marginBottom: 5, fontSize: 25 }}>Orden de Consulta Link:</Text>
       <TouchableOpacity onPress={handleOpenURL}>
         <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15, color: 'blue' }}>
           Orden Link: {ordenConsulta}
