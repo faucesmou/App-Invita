@@ -11,6 +11,7 @@ export const globalColors = {
     profile: '#577CEE',
     profile2:'#3457e6',
     orange: '#ed843e',
+  
 
     background:'#fff', 
 

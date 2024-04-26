@@ -1,20 +1,47 @@
 import 'react-native-gesture-handler';
-import { NavigationContainer } from "@react-navigation/native";
 import React from 'react'
-import { Text, View } from "react-native";
-/* import { StackNavigator } from './presentation/routes/StackNavigator'; */
+import { NavigationContainer } from "@react-navigation/native";
+import { ApplicationProvider, IconRegistry, Layout, Text } from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
+
+import { AuthProvider } from './presentation/providers/AuthProvider';
+
 import { SideMenuNavigator } from './presentation/routes/SideMenuNavigator';
-import { BottomTabsNavigator } from './presentation/routes/BottomTabsNavigator';
+
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+/* import { StackNavigator } from './presentation/routes/StackNavigator'; */
+
+
+
 
 
 export const App = () => {
-  return (
-    <NavigationContainer>
-    {/*   <StackNavigator/> */}
-      <SideMenuNavigator/>
 
-{/*  <BottomTabsNavigator /> */}
-    </NavigationContainer>
+
+  return (
+
+<>
+<IconRegistry icons={EvaIconsPack} />
+
+    <ApplicationProvider {...eva} theme={eva.light}>
+      
+      <NavigationContainer>
+
+        <AuthProvider>
+  
+        <SideMenuNavigator />
+
+        </AuthProvider>
+
+      </NavigationContainer>
+
+    </ApplicationProvider>
+</>
+
+
 
   )
 }
+
+{/*   <StackNavigator/> */ }
+{/*  <BottomTabsNavigator /> */ }

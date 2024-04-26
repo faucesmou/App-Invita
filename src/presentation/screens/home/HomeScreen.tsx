@@ -1,15 +1,18 @@
 import { globalStyles } from '../../theme/theme'
 import { type NavigationProp, useNavigation, DrawerActions } from '@react-navigation/native';
 import React, { useEffect } from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, View } from 'react-native'
 import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../routes/StackNavigator';
 import { useProfileStore } from '../../store/profile-store';
 import { useCounterStore } from '../../store/counter-store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Header } from '@react-navigation/elements';
+
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 import CustomHeader from '../../components/CustomHeader';
+import { Button, Layout, Text } from '@ui-kitten/components';
+import { MyIcon } from '../../components/ui/MyIcon';
+import { useAuthStore } from '../../store/auth/useAuthStore';
 
 export const HomeScreen = () => {
 
@@ -36,7 +39,7 @@ const count = useCounterStore( state => state.count);
 
 //const navigation = useNavigation();
 
-
+const { logout } = useAuthStore()
 
   return (
     <View /* style={globalStyles.container} */
@@ -58,6 +61,10 @@ const count = useCounterStore( state => state.count);
         {/*  <Pressable onPress={openDrawer}>
         <Text>Open Drawer</Text>
       </Pressable> */}
+ <Layout>
+
+
+ </Layout>
  
     <PrimaryButton
     onPress={ () => navigation.navigate('Products2')}
@@ -80,6 +87,14 @@ const count = useCounterStore( state => state.count);
         <Text style={{ marginBottom: 15 }}> { email } </Text>
         <Text style={{ marginBottom: 5 }}> Productos: { count } </Text>
     
+
+      {/*  <Button
+          accessoryLeft={<MyIcon name="log-out-outline" white />} 
+          onPress={ logout } >
+            Cerrar sesión
+          </Button> */}
+
+
     </View>
   )
 }

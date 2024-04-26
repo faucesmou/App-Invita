@@ -15,6 +15,11 @@ import { MiOrdenConsultaScreen } from '../screens/tramites/MiOrdenConsultaScreen
 import { CredencialScreen } from '../screens/credential/CredencialScreen';
 import { TopTabsNavigator } from './TopTabsNavigator';
 import { TramitesScreen } from '../screens/tramites/TramitesScreen';
+import { HomeScreen } from '../screens/home/HomeScreen';
+import { LoginScreen } from '../screens/auth/LoginScreen';
+import { RegisterScreen } from '../screens/auth/RegisterScreen';
+import { LoadingScreen } from '../screens/loading/LoadingScreen';
+import { useAuthStore } from '../store/auth/useAuthStore';
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
@@ -29,12 +34,18 @@ export type RootStackParams = {
   MiOrdenConsulta:undefined,
   Credencial: undefined,
   Cartilla: undefined,
+  LoginScreen: undefined,
+  RegisterScreen: undefined,
+  LoadingScreen: undefined,
+  SideMenuNavigator: undefined,
   
 }
 
 const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
+
+  const { status } = useAuthStore();
 
 const navigator = useNavigation();
 
@@ -50,6 +61,8 @@ navigator.setOptions({
 
   return (
     <Stack.Navigator
+    /* initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} */
+    initialRouteName={'LoginScreen'}
     screenOptions={{
       headerShown: false,
       headerStyle: {
@@ -61,12 +74,19 @@ navigator.setOptions({
     >
 
 {/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
+      <Stack.Screen name= 'LoginScreen' component={LoginScreen} options={{ headerShown: false }}/>
+      <Stack.Screen name= 'RegisterScreen' component={RegisterScreen} options={{ headerShown: true }}/>
+      <Stack.Screen name= 'LoadingScreen' component={LoadingScreen} options={{ headerShown: true }}/>
+
       <Stack.Screen name= 'home' component={BottomTabsNavigator} /* <options={{ headerShown: true }}> *//>
       <Stack.Screen name= 'Cartilla' component={TopTabsNavigator} options={{ headerShown: true }}/>
-      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }}/>
+
       <Stack.Screen name="Product" component={ProductScreen}  options={{ headerShown: true }} />
+      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }}/>
+
       <Stack.Screen name="Settings" component={SettingsScreen}  options={{ headerShown: true }} />
       <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: true }} />
+
       <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
       <Stack.Screen name="Credencial" component={CredencialScreen} />
