@@ -9,7 +9,9 @@ import { AuthProvider } from './presentation/providers/AuthProvider';
 import { SideMenuNavigator } from './presentation/routes/SideMenuNavigator';
 
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-/* import { StackNavigator } from './presentation/routes/StackNavigator'; */
+import { StackNavigator } from './presentation/routes/StackNavigator';
+import { BottomTabsNavigator } from './presentation/routes/BottomTabsNavigator';
+
 
 
 
@@ -28,8 +30,8 @@ export const App = () => {
       <NavigationContainer>
 
         <AuthProvider>
-  
-        <SideMenuNavigator />
+
+          <SideMenuNavigator /> 
 
         </AuthProvider>
 
@@ -37,8 +39,6 @@ export const App = () => {
 
     </ApplicationProvider>
 </>
-
-
 
   )
 }

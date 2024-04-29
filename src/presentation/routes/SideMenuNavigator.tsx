@@ -21,15 +21,10 @@ export const SideMenuNavigator = () => {
 
   const dimensions = useWindowDimensions()
 
-  const { status } = useAuthStore(); // Obtener el estado de autenticación
+/*   const { status } = useAuthStore();  */// Obtener el estado de autenticación
 /*   const navigation = useNavigation<NavigationProp<RootStackParams>>(); */
 
-  // Verificar si el usuario está autenticado
-/*   if (status !== 'authenticated') {
-    console.log('no puede acceder al drawer perro');
-    navigation.navigate('LoginScreen'); 
-    return null;
-  } */
+ 
 
 
   return (
@@ -70,7 +65,7 @@ export const SideMenuNavigator = () => {
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
 
-  const { logout } = useAuthStore()
+  const { logout } = useAuthStore() 
 
  
   return (
@@ -97,7 +92,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       accessoryLeft={<MyIcon name="log-out-outline" white />} 
       onPress={ logout } >
             Cerrar sesión
-          </Button>
+          </Button> 
 
     </DrawerContentScrollView>
   )
@@ -106,3 +101,10 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
 
 
 /*  accessoryLeft={<MyIcon name="log-out-outline" white />} */ 
+
+ // Verificar si el usuario está autenticado
+/*   if (status !== 'authenticated') {
+    console.log('no puede acceder al drawer perro');
+    navigation.navigate('LoginScreen'); 
+    return null;
+  } */

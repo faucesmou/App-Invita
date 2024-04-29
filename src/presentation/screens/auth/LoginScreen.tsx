@@ -3,7 +3,7 @@ import { Alert, useWindowDimensions } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 
 import { StackScreenProps } from "@react-navigation/stack";
-//import { API_URL, STAGE } from '@env'
+
 import { useState } from "react";
 import { useAuthStore } from "../../store/auth/useAuthStore";
 import { MyIcon } from "../../components/ui/MyIcon";

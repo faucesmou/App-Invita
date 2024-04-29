@@ -15,7 +15,7 @@ import { MiOrdenConsultaScreen } from '../screens/tramites/MiOrdenConsultaScreen
 import { CredencialScreen } from '../screens/credential/CredencialScreen';
 import { TopTabsNavigator } from './TopTabsNavigator';
 import { TramitesScreen } from '../screens/tramites/TramitesScreen';
-import { HomeScreen } from '../screens/home/HomeScreen';
+
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { LoadingScreen } from '../screens/loading/LoadingScreen';
@@ -61,25 +61,23 @@ navigator.setOptions({
 
   return (
     <Stack.Navigator
-    /* initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} */
-    initialRouteName={'LoginScreen'}
+    initialRouteName='home' 
     screenOptions={{
       headerShown: false,
       headerStyle: {
         elevation: 50,
         shadowColor: 'transparent',
-      /* backgroundColor: '#57e312', */ 
       }
      }}
     >
 
-{/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
+
       <Stack.Screen name= 'LoginScreen' component={LoginScreen} options={{ headerShown: false }}/>
       <Stack.Screen name= 'RegisterScreen' component={RegisterScreen} options={{ headerShown: true }}/>
       <Stack.Screen name= 'LoadingScreen' component={LoadingScreen} options={{ headerShown: true }}/>
 
       <Stack.Screen name= 'home' component={BottomTabsNavigator} /* <options={{ headerShown: true }}> *//>
-      <Stack.Screen name= 'Cartilla' component={TopTabsNavigator} options={{ headerShown: true }}/>
+     <Stack.Screen name= 'Cartilla' component={TopTabsNavigator} options={{ headerShown: true }}/>
 
       <Stack.Screen name="Product" component={ProductScreen}  options={{ headerShown: true }} />
       <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }}/>
@@ -94,3 +92,7 @@ navigator.setOptions({
     </Stack.Navigator>
   );
 }
+
+   /* initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} */
+/*    initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'}  */
+{/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
