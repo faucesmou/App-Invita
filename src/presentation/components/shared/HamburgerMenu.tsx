@@ -8,10 +8,12 @@ export const HamburgerMenu = () => {
 
     const navigation = useNavigation();
 
+   
+
     useEffect(() => {
         navigation.setOptions({
           headerLeft: () => (
-            <Pressable onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer)}
+            <Pressable onPress={ () => navigation.dispatch(DrawerActions.toggleDrawer)}
             style={{marginLeft:20}}
             >
            <IonIcon name='menu' color= { 'white' } size = {35}/> 

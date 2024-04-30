@@ -12,7 +12,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { StackNavigator } from './presentation/routes/StackNavigator';
 import { BottomTabsNavigator } from './presentation/routes/BottomTabsNavigator';
 
-
+import { SafeAreaProvider } from 'react-native-safe-area-context'; // 
 
 
 
@@ -22,23 +22,26 @@ export const App = () => {
 
   return (
 
-<>
-<IconRegistry icons={EvaIconsPack} />
+    <>
+      <SafeAreaProvider>
+        <IconRegistry icons={EvaIconsPack} />
 
-    <ApplicationProvider {...eva} theme={eva.light}>
-      
-      <NavigationContainer>
+        <ApplicationProvider {...eva} theme={eva.light}>
 
-        <AuthProvider>
+          <NavigationContainer>
 
-          <SideMenuNavigator /> 
+            <AuthProvider>
 
-        </AuthProvider>
+           {/*  <StackNavigator />  */}
+            <SideMenuNavigator/> 
 
-      </NavigationContainer>
+            </AuthProvider>
 
-    </ApplicationProvider>
-</>
+          </NavigationContainer>
+
+        </ApplicationProvider>
+      </SafeAreaProvider>
+    </>
 
   )
 }

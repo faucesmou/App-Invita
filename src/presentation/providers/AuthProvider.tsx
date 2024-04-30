@@ -9,6 +9,7 @@ import { RootStackParams } from '../routes/StackNavigator';
 
 export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
 
+    
     const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
     const { checkStatus, status } = useAuthStore();
 

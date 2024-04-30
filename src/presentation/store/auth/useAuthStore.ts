@@ -3,7 +3,7 @@ import { User } from "../../../domain/entities/user";
 import { AuthStatus } from "../../../infrastructure/interfaces/auth.status";
 import { authCheckStatus, authLogin, register } from "../../../actions/auth/auth";
 import { StorageAdapter } from "../../config/adapters/storageAdapter";
-
+import { useNavigation, DrawerActions, NavigationProp } from '@react-navigation/native';
 //Este es el Store que creamos con zustand para tener un Context de los datos y acceder a los mismos desde cualquier parte de la aplicacion.
 
 
@@ -83,10 +83,13 @@ export const useAuthStore = create<AuthState>()((set, get)=> ({
     logout: async () => {
             await StorageAdapter.removeItem('token')
             set({ status: 'unauthenticated', token: undefined, user: undefined })
-            
-            return;
-           
-    },
-
-
-}))
+            console.log('se cerró la sesion');
+            return
+                
+        },
+        
+        
+    }))
+    
+    /* navigation.closeDrawer(); */
+ /*    navigation.navigate('LoginScreen'); */
