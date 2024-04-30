@@ -15,11 +15,11 @@ interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 
 
 export const LoginScreen = ({ navigation }: Props) => {
-  
+
   const { height } = useWindowDimensions();
 
 
-  
+
   const { login } = useAuthStore();
 
   const [isPosting, setIsPosting] = useState(false)
@@ -29,22 +29,24 @@ export const LoginScreen = ({ navigation }: Props) => {
   })
 
 
-   const onLogin = async () => {
- 
-     if (form.email.length === 0 || form.password.length === 0) {
-       Alert.alert('Error', 'Usuario y contraseña son campos obligatorios');
-       return;
-     }
-     setIsPosting(true);
- 
-     const wasSuccessful = await login(form.email, form.password);
+  const onLogin = async () => {
 
-     setIsPosting(false);
-     if (wasSuccessful) return;
-     Alert.alert('Error', 'Usuario o contraseña incorrectos');
+    if (form.email.length === 0 || form.password.length === 0) {
+      Alert.alert('Error', 'Usuario y contraseña son campos obligatorios');
+      return;
+    }
+    setIsPosting(true);
+
+    const wasSuccessful = await login(form.email, form.password);
+
+    setIsPosting(false);
+    if (wasSuccessful) return;
+    Alert.alert('Error', 'Usuario o contraseña incorrectos');
   }
 
   /* console.log({ apiUrl: API_URL, stage: STAGE} ) */
+
+  //si no sucede esto:form.email.length === 0 || form.password.length === 0 ni es un login exitoso se muestran las siguientes vistas:
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -81,18 +83,17 @@ export const LoginScreen = ({ navigation }: Props) => {
 
         {/*   <Text>{ JSON.stringify(form, null, 2)} </Text> */}
 
-        {/* Espacio */}
+        {/* Espacio: */}
 
         <Layout style={{ height: 10 }} />
 
-        {/* Button */}
+        {/* Button: */}
 
         <Layout style={{ marginTop: 20 }}>
           <Button
-           disabled={ isPosting }
-          accessoryRight={<MyIcon name="arrow-forward-outline" white />} 
-          onPress={onLogin} 
-         /*  onPress={()=>{}} */
+            disabled={isPosting}
+            accessoryRight={<MyIcon name="arrow-forward-outline" white />}
+            onPress={onLogin}
           >
             Ingresar
           </Button>
@@ -100,6 +101,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         </Layout>
 
         {/* informacion para crear cuenta */}
+        
         <Layout style={{ height: 50 }} />
 
         <Layout style={{
@@ -112,7 +114,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           </Text>
           <Text status="primary"
             category="s1"
-              onPress={() => navigation.navigate('RegisterScreen')}
+            onPress={() => navigation.navigate('RegisterScreen')}
           /*   onPress={() => { }} */
           >
             {' '}

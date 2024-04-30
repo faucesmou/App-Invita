@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import { globalStyles } from '../../theme/theme'
+import { globalColors, globalStyles } from '../../theme/theme'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -12,7 +12,7 @@ export const SettingsScreen = () => {
   const { top } = useSafeAreaInsets()
 
 const navigator =useNavigation();
-
+const colorNaranja = globalColors.orange
   return (
     <View 
     style={ {
@@ -22,19 +22,19 @@ const navigator =useNavigation();
       backgroundColor: '#e9f6f8'
     }}
     >
-      <CustomHeader color='orange'  />
+      <CustomHeader color={colorNaranja}  />
        <BackButton /> 
         <Text style={{marginBottom: 10}}> Settings Screen</Text>
 
         <PrimaryButton
         label="Regresar"
         onPress={()=> navigator.goBack() }
-        color='orange' 
+        color={colorNaranja}
         />
         <PrimaryButton
         label="Regresar al Home"
         onPress={()=> navigator.dispatch( StackActions.popToTop ) }
-        color='orange' 
+        color={colorNaranja} 
         />
     </View>
   )

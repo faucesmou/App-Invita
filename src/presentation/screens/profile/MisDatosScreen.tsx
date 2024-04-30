@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
-import { globalStyles } from '../../theme/theme'
+import { globalColors, globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -53,7 +53,7 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>()
     AfiliadosRequest()
 
   }, [])
-
+const colorNaranja = globalColors.orange
   return (
     <View style={{
       flex: 1,
@@ -61,7 +61,7 @@ const navigation = useNavigation<NavigationProp<RootStackParams>>()
       marginTop:  top  ,
       backgroundColor: '#e9f6f8'
     }}>
-      <CustomHeader color='orange'  />
+      <CustomHeader color={colorNaranja}  />
       <BackButton /> 
       {/*  <HamburgerMenu/> */}
       <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos</Text>

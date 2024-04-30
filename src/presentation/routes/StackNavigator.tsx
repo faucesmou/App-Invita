@@ -22,14 +22,8 @@ import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { LoadingScreen } from '../screens/loading/LoadingScreen';
 import { useAuthStore } from '../store/auth/useAuthStore';
 
-import { TouchableOpacity } from 'react-native';
-import { Icon } from '@ui-kitten/components';
-
-
-
-
-
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
+
 export type RootStackParams = {
   home: undefined,
   Product: { id: number, name: string },
@@ -37,15 +31,15 @@ export type RootStackParams = {
   Products2: undefined,
   Settings: undefined,
   Tramites: undefined,
-  MisDatos:undefined,
-  MiOrdenConsulta:undefined,
+  MisDatos: undefined,
+  MiOrdenConsulta: undefined,
   Credencial: undefined,
   Cartilla: undefined,
   LoginScreen: undefined,
   RegisterScreen: undefined,
   LoadingScreen: undefined,
   SideMenuNavigator: undefined,
-  
+
 }
 
 
@@ -55,45 +49,45 @@ export const StackNavigator = () => {
 
   const { status } = useAuthStore();
 
-const navigator = useNavigation();
+  const navigator = useNavigation();
 
 
 
-const email = useProfileStore( state => state.email);
+  const email = useProfileStore(state => state.email);
 
-/* useEffect(() => {
-navigator.setOptions({
-  headerShown: false,
-})
-
-}, []) */
+  /* useEffect(() => {
+  navigator.setOptions({
+    headerShown: false,
+  })
+  
+  }, []) */
 
 
   return (
     <Stack.Navigator
-    initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} 
-    screenOptions={{
-      headerShown: false,
-      headerStyle: {
-        elevation: 50,
-        shadowColor: 'transparent',
-      }
-     }}
+      initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreen'}
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          elevation: 50,
+          shadowColor: 'transparent',
+        }
+      }}
     >
 
-      <Stack.Screen name= 'LoginScreen' component={LoginScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name= 'RegisterScreen' component={RegisterScreen} options={{ headerShown: false }}/>
-      <Stack.Screen name= 'LoadingScreen' component={LoadingScreen} options={{ headerShown: true }}/>
+      <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name='RegisterScreen' component={RegisterScreen} options={{ headerShown: false }} />
+      <Stack.Screen name='LoadingScreen' component={LoadingScreen} options={{ headerShown: true }} />
 
-      
-      <Stack.Screen name= 'home' component={BottomTabsNavigator}  options={{ headerShown: false }} />
-     <Stack.Screen name= 'Cartilla' component={TopTabsNavigator} options={{ headerShown: true }}/>
 
-      <Stack.Screen name="Product" component={ProductScreen}  options={{ headerShown: true }} />
-      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }}/>
+      <Stack.Screen name='home' component={BottomTabsNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name='Cartilla' component={TopTabsNavigator} options={{ headerShown: true }} />
 
-      <Stack.Screen name="Settings" component={SettingsScreen}  options={{ headerShown: true }} />
-      <Stack.Screen name="Tramites" component={TramitesScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }} />
+
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: false }} />
 
       <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
@@ -102,7 +96,7 @@ navigator.setOptions({
   );
 }
 
-  {/* <Stack.Screen name="Settings2" component={ ProfileScreen } /> */}
-   /* initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} */
+{/* <Stack.Screen name="Settings2" component={ ProfileScreen } /> */ }
+/* initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} */
 /*    initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'}  */
-{/*       <Stack.Screen name= 'home' component={HomeScreen} /> */}
+{/*       <Stack.Screen name= 'home' component={HomeScreen} /> */ }

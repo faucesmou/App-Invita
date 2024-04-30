@@ -28,7 +28,7 @@ export const globalStyles = StyleSheet.create({
     },
 
     primaryButton: {
-        backgroundColor: globalColors.primary,
+        backgroundColor: globalColors.profile2,
         borderRadius: 5,
         padding: 10,
         margin: 10,
@@ -61,7 +61,7 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
     },
     buttonText2: {
-        color: globalColors.profile,
+        color: globalColors.orange,
         fontSize: 18,
         textAlign: 'center',
     },

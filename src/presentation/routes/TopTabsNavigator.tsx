@@ -11,7 +11,8 @@ import { globalColors } from '../theme/theme';
 
 const Tab = createMaterialTopTabNavigator();
 const { top } = useSafeAreaInsets();
-
+const headerHeight = 80;
+const adjustedHeaderHeight = headerHeight + top; // Ajusta la altura para tener en cuenta los márgenes seguros
 export const TopTabsNavigator = () =>  {
 
     const navigator = useNavigation();
@@ -21,11 +22,11 @@ export const TopTabsNavigator = () =>  {
       headerShown: true,
       headerStyle: {
         backgroundColor: globalColors.profile2, 
-        height: 130,
+        height: adjustedHeaderHeight,
       },
       headerTintColor: 'white',
       headerTitleStyle: {
-        fontSize: 28, // tamaño título del header
+        fontSize: 28, 
       },
     })
     
@@ -42,7 +43,7 @@ export const TopTabsNavigator = () =>  {
     >
 
       <Tab.Screen name="Perfil" component={ ProfileScreen } />
-      <Tab.Screen name="About" component={ AboutScreen } />
+      <Tab.Screen name="Información" component={ AboutScreen } />
 
     </Tab.Navigator>
   );

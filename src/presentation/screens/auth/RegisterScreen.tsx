@@ -8,6 +8,7 @@ import { useAuthStore } from "../../store/auth/useAuthStore";
 import { useState } from "react";
 import { RootStackParams } from "../../routes/StackNavigator";
 
+
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'>{}
 
 

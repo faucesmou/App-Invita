@@ -1,4 +1,5 @@
 
+import axios from "axios";
 import { User } from "../../domain/entities/user";
 import type { AuthResponse } from "../../infrastructure/interfaces/auth.responses";
 import { tesloApi } from "../../presentation/config/api/tesloApi";
@@ -17,8 +18,12 @@ const returnUserToken = (data: AuthResponse) => {
         token: data.token,
     }
 }
-
-
+//esta es mi funcion de prueba de login integrada con andes salud
+export const login2 = async(data: object) => {
+ 
+    const response = await axios.post('https://cotizador.createch.com.ar/login', data)
+   return response.data
+}
 
 export const authLogin = async (email: string, password: string) => {
 

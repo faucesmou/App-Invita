@@ -83,9 +83,9 @@ const { logout } = useAuthStore()
         onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
         label="Abrir menú"
         />
-        <Text style={{ marginBottom: 5, marginTop:15 }}> { name }</Text>
+      {/*   <Text style={{ marginBottom: 5, marginTop:15 }}> { name }</Text>
         <Text style={{ marginBottom: 15 }}> { email } </Text>
-        <Text style={{ marginBottom: 5 }}> Productos: { count } </Text>
+        <Text style={{ marginBottom: 5 }}> Productos: { count } </Text> */}
     
 
       {/*  <Button

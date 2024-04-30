@@ -3,7 +3,7 @@ import { type NavigationProp, useNavigation } from '@react-navigation/native';
 import { Text, View } from 'react-native';
 
 import axios from 'axios';
-import { globalStyles } from '../../theme/theme';
+import { globalColors, globalStyles } from '../../theme/theme';
 import { FlatList } from 'react-native-gesture-handler';
 import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { type RootStackParams } from '../../routes/StackNavigator';
@@ -47,7 +47,7 @@ export const ProductsScreen2 = () => {
 
   }, [])
 
-
+ const color = globalColors.orange
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   return (
@@ -59,7 +59,7 @@ export const ProductsScreen2 = () => {
       backgroundColor: '#e9f6f8'
     }}
     >
-      <CustomHeader color='orange'  />
+      <CustomHeader color={color}  />
       
       <BackButton /> 
       <Text style={{ marginBottom: 5, fontSize: 30 }}>Consulta de Afiliados</Text>
@@ -70,7 +70,7 @@ export const ProductsScreen2 = () => {
           <PrimaryButton
             onPress={() => navigation.navigate('Product', { id:item.apellidoYNombre, nroAfiliado: item.nroAfiliado })}
             label={item.apellidoYNombre} 
-            color='orange' 
+            color={color} 
           />
         )}
       />

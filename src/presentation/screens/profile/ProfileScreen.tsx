@@ -31,7 +31,7 @@ const increaseBy = useCounterStore( state => state.incrementBy)
 
 useEffect(() => {
   navigation.setOptions({
-    title: `Profile: ${ count }`
+    title: `Mi Perfil`/* `Mi Perfil: ${ count }` */
   })
 
 
@@ -45,10 +45,11 @@ useEffect(() => {
     },
     headerTintColor: 'white',
     headerTitleStyle: {
-      fontSize: 28, // tamaño del título del header
+      fontSize: 28, 
     },
   });
-}, []); */
+}, []);  */
+
 /* function Counter() {
   const { count, incrementBy } = useCounterStore()
   return (
@@ -56,22 +57,18 @@ useEffect(() => {
     { count }
      </Text>
   )
-} */
-
+}*/
+const colorNaranja = globalColors.orange;
 
   return (
     <View style={{
       flex: 1,
       //paddingHorizontal: 20,
       marginTop:  top ,
+   
       backgroundColor: '#e9f6f8'
     }}>
-      <CustomHeader color='orange'  />
-
-        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Profile Screen</Text>
-        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { name }</Text>
-        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { email } </Text>
-        <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Productos: { count } </Text>
+      <CustomHeader color={colorNaranja} />
 
       <Pressable 
       style ={ globalStyles.secondaryButton }
@@ -79,7 +76,7 @@ useEffect(() => {
       >
         <Text
         style ={ globalStyles.buttonText2 }>
-          Cambiar Pepe
+          Editar configuración
         </Text>
       </Pressable>
 
@@ -89,7 +86,7 @@ useEffect(() => {
       >
         <Text
         style ={ globalStyles.buttonText2 }>
-          Cambiar email
+         Editar perfil
         </Text>
       </Pressable>
 
@@ -116,7 +113,7 @@ useEffect(() => {
       </Pressable>
       <Pressable 
         style ={ globalStyles.secondaryButton }
-      >
+        >
         <Text
         style ={ globalStyles.buttonText2 }
         onPress={ () => increaseBy(-1) } 
@@ -128,12 +125,12 @@ useEffect(() => {
         <PrimaryButton
         onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
         label="Abrir menú"
-        color='orange' 
+        color={colorNaranja}
         />
         <PrimaryButton
         onPress={ ()=> navigation.navigate('MisDatos')}
         label="MisDatos"
-        color='orange' 
+        color={colorNaranja}
         />  
         </View>
         )
@@ -142,3 +139,8 @@ useEffect(() => {
         onPress={ ()=> navigation.navigate('MisDatos' )}
         label="Mis Datos"
         />   */}
+        {/* 
+                <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Profile Screen</Text>
+                <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { name }</Text>
+                <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> { email } </Text>
+                <Text style={{ marginBottom: 5, paddingHorizontal: 5, }}> Productos: { count } </Text> */}
