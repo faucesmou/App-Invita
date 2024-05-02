@@ -11,6 +11,7 @@ import { RootStackParams } from "../../routes/StackNavigator";
 import { API_URL, STAGE } from "@env";
 
 
+
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 
 
@@ -20,7 +21,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
 
 
-  const { login } = useAuthStore();
+  const { login, loginGonza } = useAuthStore();
 
   const [isPosting, setIsPosting] = useState(false)
   const [form, setForm] = useState({
@@ -42,6 +43,24 @@ export const LoginScreen = ({ navigation }: Props) => {
     setIsPosting(false);
     if (wasSuccessful) return;
     Alert.alert('Error', 'Usuario o contraseña incorrectos');
+  }
+
+  const onLoginGonza = async () => {
+
+    if (form.email.length === 0 || form.password.length === 0) {
+      Alert.alert('Error', 'Usuario y contraseña son campos obligatorios');
+      return;
+    }
+    setIsPosting(true);
+    // aca viene la primera peticion: 
+  
+    const salioBien = await loginGonza(form.email, form.password)
+
+   setIsPosting(false);
+ 
+    if (salioBien) return;
+    Alert.alert('Error', 'Usuario o contraseña incorrectos');
+    return;
   }
 
   /* console.log({ apiUrl: API_URL, stage: STAGE} ) */
@@ -93,7 +112,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           <Button
             disabled={isPosting}
             accessoryRight={<MyIcon name="arrow-forward-outline" white />}
-            onPress={onLogin}
+            onPress={onLoginGonza}
           >
             Ingresar
           </Button>

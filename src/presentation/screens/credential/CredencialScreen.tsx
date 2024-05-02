@@ -8,20 +8,23 @@ import { WebView } from 'react-native-webview';
 import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import CustomHeader from '../../components/CustomHeader'
+import { FullScreenLoader } from '../../components/ui/FullScreenLoader'
 
 export const CredencialScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const [credencial, setCredencial] = useState('');
-
+  const [isConsulting, setIsConsulting] = useState(false);
   useEffect(() => {
     const OrdenConsultaRequest = async () => {
       try {
+        setIsConsulting(true);
         const response = await axios.get('https://andessalud.createch.com.ar/api/credencial?idAfiliado=EB0F3828-DB84-49CC-AE37-6987C1B750FC');
         console.log('este es el response', response);
         const vistaCredencial = response.data;
-        console.log('este es el vistaCredencial', vistaCredencial);
+        console.log('este es el vistaCredencial e', vistaCredencial);
         setCredencial(vistaCredencial);
+        setIsConsulting(false);
       } catch (error) {
         console.error('Error al obtener los datos de los afiliados:', error);
       }
@@ -35,16 +38,20 @@ export const CredencialScreen = () => {
 
   return (
     <View style={globalStyles.container}>
-       <CustomHeader />
-    
-      <HamburgerMenu/>
-  {/*     <BackButton onPress={() => navigation.navigate('home')} /> */}
-   
-      <WebView
-        originWhitelist={['*']}
-        source={{ html: credencial }}
-        style={{ flex: 1 }}
-      />
+      <CustomHeader />
+
+      <HamburgerMenu />
+      {/*     <BackButton onPress={() => navigation.navigate('home')} /> */}
+      {
+        isConsulting ? (<FullScreenLoader />)
+          :
+
+          <WebView
+            originWhitelist={['*']}
+            source={{ html: credencial }}
+            style={{ flex: 1 }}
+          />
+      }
     </View>
   );
 };

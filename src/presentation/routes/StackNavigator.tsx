@@ -48,10 +48,7 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
 
   const { status } = useAuthStore();
-
   const navigator = useNavigation();
-
-
 
   const email = useProfileStore(state => state.email);
 
