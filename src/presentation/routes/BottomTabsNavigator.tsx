@@ -8,6 +8,7 @@ import { CredencialScreen } from '../screens/credential/CredencialScreen';
 
 import { globalColors } from '../theme/theme';
 import { IonIcon } from '../components/shared/IonIcon';
+import { CredencialScreenPrueba } from '../screens/credential/CredencialScreenPrueba';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,7 @@ export const BottomTabsNavigator = () => {
         component={TopTabsNavigator} />
       <Tab.Screen name="Credencial"
         options={{ title: 'Credencial', tabBarIcon: ({ color }) => (<IonIcon name='card-outline' color={color} />) }}
-        component={CredencialScreen} />
+        component={CredencialScreenPrueba} />
       <Tab.Screen name="Tramites"
         options={{ title: 'Tramites', tabBarIcon: ({ color }) => (<IonIcon name='document-text-outline' color={color} />) }}
         component={TramitesScreen} />

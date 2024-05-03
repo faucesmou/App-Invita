@@ -9,6 +9,7 @@ import { useAuthStore } from "../../store/auth/useAuthStore";
 import { MyIcon } from "../../components/ui/MyIcon";
 import { RootStackParams } from "../../routes/StackNavigator";
 import { API_URL, STAGE } from "@env";
+import { useCredentialStore } from "../../store/credentials/useCredentialStore";
 
 
 
@@ -21,7 +22,8 @@ export const LoginScreen = ({ navigation }: Props) => {
 
 
 
-  const { login, loginGonza } = useAuthStore();
+  const { login, loginGonza, consultaQueryIdAfiliado } = useAuthStore();
+/*   const { consultaDatosCredencial } = useCredentialStore(); */
 
   const [isPosting, setIsPosting] = useState(false)
   const [form, setForm] = useState({
@@ -55,6 +57,13 @@ export const LoginScreen = ({ navigation }: Props) => {
     // aca viene la primera peticion: 
   
     const salioBien = await loginGonza(form.email, form.password)
+    /* let queryIdAfiliado = await consultaQueryIdAfiliado(form.email, form.password) */
+    
+/*      let queryIdAfiliado = 'EB0F3828-DB84-49CC-AE37-6987C1B750FC'
+    console.log('esta es la queryId desde LoginScreen', queryIdAfiliado ); */
+  
+    
+/*     const respuestaCredencial = await consultaDatosCredencial(form.email, form.password) */
 
    setIsPosting(false);
  

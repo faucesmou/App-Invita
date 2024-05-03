@@ -13,13 +13,17 @@ export interface AuthState {
     status: AuthStatus;
     token?: string;
     user?: User;
+    queryIdAfiliado?: string;
 
     login: (email: string, password: string)=> Promise<boolean>;
     loginGonza: (email: string, password: string)=> Promise<boolean>;
+    loginGonzaPrueba: (email: string, password: string)=> Promise<{ success: boolean, queryIdAfiliado?: string }>;
     checkStatus: ()=> Promise<void>;
     logout: ()=> Promise<void>;
     registerUser: (email: string, password: string, fullName: string)=> Promise<void>;
-}
+    consultaQueryIdAfiliado: ((email: string, password: string)=> Promise<string>)
+  }
+
 
 export const useAuthStore = create<AuthState>()((set, get)=> ({
     status:'checking',
@@ -74,27 +78,69 @@ console.log('esta es la respuesta de Franco: ', respuestaFranco );
             return false; // Devolver false en caso de error
           }
         },
-     /*    const respuestaFranco = await axios.post('https://cotizador.createch.com.ar/login');
+        
+    loginGonzaPrueba: async (email: string, password: string) => { 
+        try {
 
-        if (respuestaFranco.data.status === 200) {
-            console.log('ingreso aprobado');
-            set({ status: 'authenticated' });
+            let data= {
+                email: email,
+                pass: password,
+              }
+              console.log('email y password recibido en loginGonza:', email, password);
+              
+              const respuestaFranco = await axios.post('https://cotizador.createch.com.ar/login', data);
+            console.log('esta es la respuesta de Franco: ', respuestaFranco );
 
-        return true;
-           }  */
-      /*   if( respuestaFranco.data.status !== 200){
-            set({ status: 'unauthenticated'})
-            return false;
-        } */
- 
-       /*  await StorageAdapter.setItem( 'token', resp.token ); */
-//vas a tener que guardar el correo y contraseña para hacer otras consultas mientras usa la app asique TODO : Guardarlas en store siguiendo este modelo: 
+            // Convertir la respuesta de texto JSON a un objeto JavaScript
+            const responseObject = JSON.parse(respuestaFranco.request._response);
+            let queryIdAfiliado = responseObject.data.idConexion._text;
+            console.log('esta es la respuesta de Franco: ', respuestaFranco );
 
-       /*  const storedToken =  await StorageAdapter.getItem( 'token' );
-        console.log({storedToken}); */
-       /*  console.log({ resp }); */
-   /*     return false;   
-    }, */
+              if (respuestaFranco.data.status === 200) {
+                console.log('Ingreso aprobado');
+                set({ status: 'authenticated' });
+                return {success: true, queryIdAfiliado}; 
+              } else {
+                console.log('El servidor respondió con un estado diferente a 200');
+                set({ status: 'unauthenticated'})
+                return { success: true, queryIdAfiliado }
+              }
+        }catch (error) {
+            console.error('Error al iniciar sesión:', error);
+           return { success: false}
+          }
+        },
+        consultaQueryIdAfiliado: async (email: string, password: string) => { 
+          try {
+  
+              let data= {
+                  email: email,
+                  pass: password,
+                }
+                console.log('email y password recibido en loginGonza:', email, password);
+                
+                const respuestaFranco = await axios.post('https://cotizador.createch.com.ar/login', data);
+              console.log('esta es la respuesta de Franco: ', respuestaFranco );
+  
+              // Convertir la respuesta de texto JSON a un objeto JavaScript
+              const responseObject = JSON.parse(respuestaFranco.request._response);
+              let queryIdAfiliado = responseObject.data.idConexion._text;
+              console.log('esta es el queryIdAfiliado: ', queryIdAfiliado );
+  
+                if (respuestaFranco.data.status === 200) {
+                  console.log('consulta de queryIdAfiliado exitosa');
+                  set({ queryIdAfiliado });
+                 return queryIdAfiliado ; 
+                } else {
+                  console.log('El servidor respondió con un estado diferente a 200');
+                 return null;
+                }
+          }catch (error) {
+              console.error('Error al iniciar la consulta de queryIdAfiliado:', error);
+             return { success: false}
+            }
+          },
+
 
     registerUser: async (email: string, password: string, fullName: string) => { 
         try {
