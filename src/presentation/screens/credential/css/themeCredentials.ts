@@ -79,8 +79,8 @@ export const globalStylesCredentials = StyleSheet.create({
     borderRadius: 10,    
   },
   frenteCard2: {
-    padding: 10,
-    marginTop: 10,
+  /*   padding: 10,
+    marginTop: 10, */
     marginBottom:10,
     flexDirection: 'column',
     overflow: 'hidden', 
@@ -91,12 +91,22 @@ export const globalStylesCredentials = StyleSheet.create({
     borderRadius: 10,    
   },
   planTitle: {
-    fontSize: 26,
+    fontSize: 26,   
     color: 'white',
     padding: 10,
+    bottom:'95%',
     marginRight:'5%',
     fontWeight: 'bold'
   },
+  fuente: {
+    top:'auto',
+    bottom:'100%',
+  },
+  tituloAndes: {
+    color:'white',
+    fontSize:25,
+    fontWeight: 'bold',
+  }, 
 
   titanium: {
     backgroundColor: '#452a64',
@@ -130,12 +140,7 @@ export const globalStylesCredentials = StyleSheet.create({
   frenteImagen: {
     position: 'relative',
   },
-  fuente: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    position: 'absolute',
-    left: 15,
-  },
+ 
   h5: {
     fontSize: 20,
     paddingVertical: 5,

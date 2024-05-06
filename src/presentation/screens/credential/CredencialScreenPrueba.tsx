@@ -16,7 +16,7 @@ const convert = { xml2json };
 import LinearGradient from 'react-native-linear-gradient';
 import { SvgXml } from 'react-native-svg';
 
-import Isotipo from './CredentialsData/images/unnamed.png';
+
 
 import { credencialStyles, credentialsColors, globalStylesCredentials } from '../credential/css/themeCredentials'
 
@@ -118,7 +118,7 @@ export const CredencialScreenPrueba = () => {
           (
             <View style={{ flex: 1 }} >
               <Text style={{ textAlign: 'center', fontSize: 24 }}>Tu Credencial</Text>
-              <View >
+              <View  >
 
                 <LinearGradient
 
@@ -126,13 +126,7 @@ export const CredencialScreenPrueba = () => {
                   /* style={[globalStylesCredentials.linearGradient, { width: '100%', height: '100%' }]} */
                   style={globalStylesCredentials.frenteCard}
                 >
-                  <View /* style={styles.frenteImagen} */>
-                  {/* <SvgXml xml={Isotipo} width="20" height="20" /> */}
-                    <View /* style={styles.fuente} */>
-                      <Text /* style={styles.h5} */>andes</Text>
-                      <Text /* style={styles.span} */>salud</Text>
-                    </View>
-                  </View>
+
                   <ImageBackground
                     source={require('./CredentialsData/images/logogris.png')}
                     imageStyle={{
@@ -145,21 +139,30 @@ export const CredencialScreenPrueba = () => {
                     }}
 
                   >
+                    <View  >
 
-                    <View style={[globalStylesCredentials.frenteCard2, { alignItems: 'flex-end', justifyContent: 'flex-end', }]}>
-                      <View >
-                        <Text style={globalStylesCredentials.planTitle}> Plan {datosCredencial.plan}</Text>
-                      </View>
-                      <View >
 
+                      <View>
+                        {/* <SvgXml xml={Isotipo} width="20" height="20" /> */}
                         <View >
-                          <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
-                          <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
-                          <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>
+                          <Text style={globalStylesCredentials.tituloAndes} >andes</Text>
+                          <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
+                        </View>
+                      </View>
+
+                      <View style={[globalStylesCredentials.frenteCard2, { alignItems: 'flex-end', justifyContent: 'flex-end', }]}>
+                        <View >
+                          <Text style={globalStylesCredentials.planTitle}> Plan {datosCredencial.plan}</Text>
+                        </View>
+                        <View >
+                          <View style={globalStylesCredentials.fuente}>
+                            <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
+                            <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
+                            <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>
+                          </View>
                         </View>
                       </View>
                     </View>
-
                   </ImageBackground>
                 </LinearGradient>
 
