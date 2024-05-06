@@ -71,15 +71,33 @@ export const globalStylesCredentials = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     flexDirection: 'column',
- /*    backgroundImage: "url('/images/logogris.png')", */
-  /*   backgroundRepeat: 'no-repeat', */
- /*    backgroundPosition: '155% 0', */
+    overflow: 'hidden', 
     marginVertical: 20,
     width: 400,
     height: 250,
     color: 'white',
-    borderRadius: 10,
+    borderRadius: 10,    
   },
+  frenteCard2: {
+    padding: 10,
+    marginTop: 10,
+    marginBottom:10,
+    flexDirection: 'column',
+    overflow: 'hidden', 
+    marginVertical: 0,
+    width: 380,
+    height: 220,
+    color: 'white',
+    borderRadius: 10,    
+  },
+  planTitle: {
+    fontSize: 26,
+    color: 'white',
+    padding: 10,
+    marginRight:'5%',
+    fontWeight: 'bold'
+  },
+
   titanium: {
     backgroundColor: '#452a64',
    /*  backgroundImage: "url('/images/logogris.png'), linear-gradient(to top left, #272528, #452B65, #52457c)", */

@@ -25,9 +25,9 @@ export const MisDatosScreen = () => {
   useEffect(() => {
 
     const AfiliadosRequest = async () => {
-      setIsConsulting(true);
       try {
-        console.log('is posting en true! dale man ere');
+        setIsConsulting(true);
+        console.log('is posting en true! daled man ere');
         
         const response = await axios.get('https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=CHATBOT&password=DrtEchat%&administradora=F100376F-33F9-49FD-AFB9-EE53616E7F0C&datosAfiliado=33440385');
         console.log('este es el response', response);
