@@ -7,7 +7,8 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import CustomHeader from '../../components/CustomHeader'
-
+/* import { SvgXml } from 'react-native-svg';
+const isotipo = require('../credential/CredentialsData/images/Isotipo.svg'); */
 const tramites = [
   { id: 1, name: 'Autorizar prestación' },
   { id: 2, name: 'Solicitar medicamentos' },
@@ -58,6 +59,8 @@ export const TramitesScreen = () => {
           onPress={() => navigation.navigate('MiOrdenConsulta')}
           label="Orden de consulta"
         />
+
+{/* <SvgXml xml={isotipo} width="100" height="150" /> */}
       </View>
 
       {/*   <Text style={{ marginBottom: 70, fontSize:25 }}>Mis tramites</Text> */}

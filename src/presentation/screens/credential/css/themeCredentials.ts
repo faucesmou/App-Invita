@@ -68,7 +68,7 @@ export const globalStylesCredentials = StyleSheet.create({
   frenteCard: {
     borderWidth: 1,
     borderColor: 'black',
-    padding: 10,
+   /*  padding: 10, */
     marginTop: 10,
     flexDirection: 'column',
     overflow: 'hidden', 
@@ -90,21 +90,31 @@ export const globalStylesCredentials = StyleSheet.create({
     color: 'white',
     borderRadius: 10,    
   },
+  contenedorTituloAndes: {
+    flexDirection: 'column',
+   /*  overflow: 'hidden',  */
+   alignItems: 'center',
+    marginVertical: 0,
+    width: 50,
+    height: 40,
+    color: 'white',
+    borderRadius: 10,    
+  },
   planTitle: {
     fontSize: 26,   
     color: 'white',
     padding: 10,
-    bottom:'95%',
+    bottom:'80%',
     marginRight:'5%',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   fuente: {
     top:'auto',
-    bottom:'100%',
+    bottom:'80%',
   },
   tituloAndes: {
     color:'white',
-    fontSize:25,
+    fontSize:15,
     fontWeight: 'bold',
   }, 
 

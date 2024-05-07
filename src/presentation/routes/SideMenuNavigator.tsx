@@ -33,19 +33,21 @@ export const SideMenuNavigator = () => {
 
       navigation.dispatch(DrawerActions.closeDrawer());
 
+
     }
   }, [status, isDrawerOpen, navigation]);
 
+// MOMENTANEAMENTE QUITE ESTE IF PARA PODER TRABAJAR, RESTAURAR CUANDO TERMINE LA APP!
 
-  if (status !== 'authenticated') {
+// si no esta autenticado muestro este drawer pero que no podrá abrirse nunca:
+  if (status !== 'unauthenticated'/* cambiar esto a authenticated */) {
     console.log('no puede acceder al drawer perro');
 
-    // si no esta autenticado muestro este drawer pero que no podrá abrirse nunca:
     return (
       <Drawer.Navigator
-        initialRouteName={'LoginScreen'}
+       /*  initialRouteName={'home' 'LoginScreen' } */
         screenOptions={{
-          swipeEdgeWidth: 0, //con esta propiedad no permito que se pueda abrir
+          /* swipeEdgeWidth: 0, */ //con esta propiedad no permito que se pueda abrir
           headerShown: false,
         }}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -53,7 +55,7 @@ export const SideMenuNavigator = () => {
 
         <Drawer.Screen
           options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color} />), headerShown: false }}
-          name="no debe salir" component={StackNavigator} />
+          name="HomeScreen" component={StackNavigator} />
       </Drawer.Navigator>
     );
   }
@@ -78,7 +80,7 @@ export const SideMenuNavigator = () => {
 
       <Drawer.Screen
         options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color} />) }}
-        name="Categorias" component={StackNavigator} />
+        name="home"/* aca decia categorias */ component={StackNavigator} />
 
       <Drawer.Screen
         options={{ drawerIcon: ({ color }) => (<IonIcon name='person-circle-outline' color={color} />), headerShown: true }}

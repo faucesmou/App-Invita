@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ImageBackground, View } from 'react-native'
+import { ImageBackground, View, Image } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { globalStyles } from '../../theme/theme'
@@ -14,12 +14,28 @@ import { useAuthStore } from '../../store/auth/useAuthStore'
 import { xml2json } from 'xml-js';
 const convert = { xml2json };
 import LinearGradient from 'react-native-linear-gradient';
+//prueba para poder mostrar el isotipo de andes salud (la carita amarilla)
 import { SvgXml } from 'react-native-svg';
+const isotipo = require('./CredentialsData/images/Isotipo.png');//pareciera que lo lee pero no lo muestra
+//otra prueba para lo mismo: 
 
 
 
 import { credencialStyles, credentialsColors, globalStylesCredentials } from '../credential/css/themeCredentials'
 
+// Definir un tipo para los nombres de los planes
+type PlanName = 'titanium' | 'platinum' | 'black' | 'gold' | 'green';
+// Definir un tipo para el objeto de paletas de colores
+interface PlanPalettes {
+  [key: string]: string[];
+}
+const PlanPalettes: PlanPalettes = {
+  titanium: ['#8a6fa2', '#452a64', '#452a64', '#452a64'],
+  platinum: ['#939095', '#8c9292', '#8c9292', '#8c9292'],
+  black: ['#474648', '#161516', '#161516', '#161516'],
+  gold: ['#98671e', '#8d7249', '#8d7249', '#8d7249'],
+  green: ['#29bd0f', '#47ac34', '#47ac34', '#47ac34'],
+};
 
 
 export const CredencialScreenPrueba = () => {
@@ -33,6 +49,11 @@ export const CredencialScreenPrueba = () => {
     numAfiliado: '',
     fecVencimiento: ''
   });
+
+  //consulto el plan del afiliado para mostrar el color de la credencial:
+  // Obtener los colores del plan actual
+  const planColors: string[] = PlanPalettes[datosCredencial.plan] || [];
+
   //const {queryIdAfiliado} = useAuthStore();
   //momentaneamente vamos a definir el queryIdAfiliado nosotros aqui: pero en el caso real desde el login se hace la consulta a la funcion correspondiente:
   /*     const consultaDatosCredencial = async (queryIdAfiliado: string| undefined) => {  */
@@ -74,12 +95,15 @@ export const CredencialScreenPrueba = () => {
           numAfiliado: numAfiliado,
           fecVencimiento: fecVencimiento,
         });
+ /*        setDatosCredencial(prevState => ({
+          ...prevState,
+          plan: 'black'
+        })); */
       } catch (error) {
         console.log(error);
         return null
       }
     }
-
 
 
     const OrdenConsultaRequest = async () => {
@@ -121,30 +145,29 @@ export const CredencialScreenPrueba = () => {
               <View  >
 
                 <LinearGradient
-
-                  colors={['#452a64', '#8a6fa2', '#452a64']}
-                  /* style={[globalStylesCredentials.linearGradient, { width: '100%', height: '100%' }]} */
+                colors={planColors}                  
                   style={globalStylesCredentials.frenteCard}
                 >
 
                   <ImageBackground
-                    source={require('./CredentialsData/images/logogris.png')}
+                    source={require('./CredentialsData/images/logogris4.png')}
                     imageStyle={{
                       resizeMode: "cover",
                       flex: 1,
                       justifyContent: 'flex-end',
                       width: '80%',
-                      height: '100%',
+                      height: '90%',
                       transform: [{ translateX: 250 }],
                     }}
 
                   >
                     <View  >
-
-
-                      <View>
-                        {/* <SvgXml xml={Isotipo} width="20" height="20" /> */}
-                        <View >
+                      <View style={{ alignItems: 'flex-start', width: 50, height: 50, padding: 10, }}>
+                      <Image
+                        source={isotipo}
+                       style={{ width: 50, height: 50, marginBottom: 10, alignItems: 'center', }}
+                       />
+                          <View style={globalStylesCredentials.contenedorTituloAndes}>
                           <Text style={globalStylesCredentials.tituloAndes} >andes</Text>
                           <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
                         </View>
@@ -167,6 +190,9 @@ export const CredencialScreenPrueba = () => {
                 </LinearGradient>
 
               </View>
+
+             {/*  <SvgXml xml={isotipo} width="100" height="150" /> */}
+             
             </View>
           )
       }

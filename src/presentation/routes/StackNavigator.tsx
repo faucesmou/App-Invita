@@ -64,7 +64,8 @@ export const StackNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreen'}
+/*       initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreen'} */
+      initialRouteName={'home'}
       screenOptions={{
         headerShown: false,
         headerStyle: {
