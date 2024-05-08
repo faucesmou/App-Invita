@@ -55,10 +55,10 @@ useEffect(() => {
   return (
     <Text style={{ marginBottom: 5 }}> 
     { count }
-     </Text>
-  )
-}*/
-const colorNaranja = globalColors.orange;
+    </Text>
+    )
+  }*/
+  const colorNaranja = globalColors.orange;
 
   return (
     <View style={{
@@ -69,7 +69,18 @@ const colorNaranja = globalColors.orange;
       backgroundColor: '#e9f6f8'
     }}>
       <CustomHeader color={colorNaranja} />
+      
+      <PrimaryButton
+      onPress={ ()=> navigation.navigate('MisDatos')}
+      label="MisDatos"
+      color={colorNaranja}
+      />  
 
+      <PrimaryButton
+      onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
+      label="Abrir menú"
+      color={colorNaranja}
+      />
       <Pressable 
       style ={ globalStyles.secondaryButton }
       onPress={ () => useProfileStore.setState( { name: 'gonza morresi'})}
@@ -80,7 +91,7 @@ const colorNaranja = globalColors.orange;
         </Text>
       </Pressable>
 
-      <Pressable 
+     {/*  <Pressable 
       style ={ globalStyles.secondaryButton  }
       onPress={ () => useProfileStore.setState( { email: 'gonza@gmail.com'})}
       >
@@ -88,9 +99,9 @@ const colorNaranja = globalColors.orange;
         style ={ globalStyles.buttonText2 }>
          Editar perfil
         </Text>
-      </Pressable>
+      </Pressable> */}
 
-      <Pressable 
+   {/*    <Pressable 
       style ={ globalStyles.secondaryButton   }
       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
       >
@@ -98,8 +109,9 @@ const colorNaranja = globalColors.orange;
         style ={ globalStyles.buttonText2 }>
           Restaurar datos
         </Text>
-      </Pressable>
-      <Pressable 
+      </Pressable> */}
+
+    {/*   <Pressable 
       style ={ globalStyles.secondaryButton }
 
       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
@@ -110,8 +122,9 @@ const colorNaranja = globalColors.orange;
         >
           Sumar al carrito
         </Text>
-      </Pressable>
-      <Pressable 
+      </Pressable> */}
+
+      {/* <Pressable 
         style ={ globalStyles.secondaryButton }
         >
         <Text
@@ -120,18 +133,8 @@ const colorNaranja = globalColors.orange;
         >
           Restar al carrito
         </Text>
-      </Pressable>
+      </Pressable> */}
 
-        <PrimaryButton
-        onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
-        label="Abrir menú"
-        color={colorNaranja}
-        />
-        <PrimaryButton
-        onPress={ ()=> navigation.navigate('MisDatos')}
-        label="MisDatos"
-        color={colorNaranja}
-        />  
         </View>
         )
       }

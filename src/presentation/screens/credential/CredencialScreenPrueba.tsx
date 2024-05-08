@@ -17,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 //prueba para poder mostrar el isotipo de andes salud (la carita amarilla)
 import { SvgXml } from 'react-native-svg';
 const isotipo = require('./CredentialsData/images/Isotipo.png');//pareciera que lo lee pero no lo muestra
+import { USUARIO,PASSWORD, ADMINISTRADORA,  STAGE } from '@env';
 //otra prueba para lo mismo: 
 
 
@@ -54,16 +55,18 @@ export const CredencialScreenPrueba = () => {
   // Obtener los colores del plan actual
   const planColors: string[] = PlanPalettes[datosCredencial.plan] || [];
 
-  //const {queryIdAfiliado} = useAuthStore();
+ /*  const {queryIdAfiliado} = useAuthStore(); */
+
   //momentaneamente vamos a definir el queryIdAfiliado nosotros aqui: pero en el caso real desde el login se hace la consulta a la funcion correspondiente:
   /*     const consultaDatosCredencial = async (queryIdAfiliado: string| undefined) => {  */
+  /* const consultaDatosCredencial = async () => { */
 
   useEffect(() => {
 
-    const consultaDatosCredencial = async () => {
-
+    const consultaDatosCredencial = async (/* queryIdAfiliado: string| undefined */) => { 
       let queryIdAfiliado = 'EB0F3828-DB84-49CC-AE37-6987C1B750FC'
-      console.log('esta es la queryId desde LoginScreen', queryIdAfiliado);
+      console.log('esta es la queryId desde CredencialScreenPrueba', queryIdAfiliado);
+      console.log('estos son VARIABLES DE .ENV ADMINISTRADORA:', STAGE, ADMINISTRADORA)
       try {
 
         setIsConsulting(true);
@@ -95,10 +98,10 @@ export const CredencialScreenPrueba = () => {
           numAfiliado: numAfiliado,
           fecVencimiento: fecVencimiento,
         });
- /*        setDatosCredencial(prevState => ({
-          ...prevState,
-          plan: 'black'
-        })); */
+        /*      setDatosCredencial(prevState => ({
+               ...prevState,
+               plan: 'titanium'
+             })); */
       } catch (error) {
         console.log(error);
         return null
@@ -145,7 +148,7 @@ export const CredencialScreenPrueba = () => {
               <View  >
 
                 <LinearGradient
-                colors={planColors}                  
+                  colors={planColors}
                   style={globalStylesCredentials.frenteCard}
                 >
 
@@ -162,12 +165,12 @@ export const CredencialScreenPrueba = () => {
 
                   >
                     <View  >
-                      <View style={{ alignItems: 'flex-start', width: 50, height: 50, padding: 10, }}>
-                      <Image
-                        source={isotipo}
-                       style={{ width: 50, height: 50, marginBottom: 10, alignItems: 'center', }}
-                       />
-                          <View style={globalStylesCredentials.contenedorTituloAndes}>
+                      <View style={{ alignItems: 'flex-start', width: 50, height: 50, padding: 12, }}>
+                        <Image
+                          source={isotipo}
+                          style={{ width: 50, height: 50, marginBottom: 10, alignItems: 'center', }}
+                        />
+                        <View style={globalStylesCredentials.contenedorTituloAndes}>
                           <Text style={globalStylesCredentials.tituloAndes} >andes</Text>
                           <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
                         </View>
@@ -191,8 +194,69 @@ export const CredencialScreenPrueba = () => {
 
               </View>
 
-             {/*  <SvgXml xml={isotipo} width="100" height="150" /> */}
-             
+
+
+              {/* dorso de la tarjeta: */}
+
+              <View  >
+
+                <LinearGradient
+                  colors={planColors}
+                  style={globalStylesCredentials.frenteCard}
+                >
+
+                  <View  >
+                    <View style={{ alignItems: 'flex-end', width: '95%', height: 50, padding: 10, }}>
+                      <Image
+                        source={isotipo}
+                        style={{ width: 50, height: 50, marginBottom: 10, alignItems: 'center', }}
+                      />
+                      <View style={globalStylesCredentials.contenedorTituloAndesDorso}>
+                        <Text style={globalStylesCredentials.tituloAndes} >andes</Text>
+                        <Text style={[globalStylesCredentials.tituloAndes, { fontWeight: 'normal' }]}>salud</Text>
+                      </View>
+                    </View>
+
+                    <View style={globalStylesCredentials.dorsoCard}>
+                      <View style={{ alignItems: 'center' }}>
+                        <View style={{ padding: 5 }}>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize:15, fontWeight: 'bold'  }}>
+                            Esta credencial es personal e intransferible para uso exclusivo del titular. Debe presentarse acompañado de DNI o Cédula de Identidad
+                          </Text>
+                        </View>
+                        <View style={{ backgroundColor: 'white', padding: 5, borderRadius: 10 }}>
+                          <Text style={{ color: 'blue', textAlign: 'center', fontWeight: 'bold' }}>
+                            www.andessalud.com.ar
+                          </Text>
+                        </View>
+                        <View style={{ padding: 5 }}>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize:13, }}>
+                            Superintendencia de Servicio de Salud
+                          </Text>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize:12, }}>
+                            Órgano de Control 0800 222 SALUD (72583) www.sssalud.gov.ar
+                          </Text>
+                        </View>
+                      </View>
+                      {/*  <View >
+                        <Text style={{ color: 'white', alignItems: 'center',  }}> Esta credencial es personal e intransferible para uso exclusivo del titular. Debe presentarse acompañado de DNI o Cédula de Identidad</Text>
+                      <Text style={{ color: 'white', alignItems: 'center', }}>www.andessalud.com.ar</Text>
+                      </View>
+                      <View >
+                      </View>
+                      <View >
+                        <View >
+                          <Text style={{ color: 'white' }}>Superintendencia de Servicio de Salud</Text>
+                          <Text style={{ color: 'white' }}>Órgano de Control 0800 222 SALUD (72583) www.sssalud.gov.ar</Text>
+                        </View>
+                      </View> */}
+                    </View>
+                  </View>
+
+                </LinearGradient>
+
+              </View>
+
             </View>
           )
       }

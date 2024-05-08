@@ -21,7 +21,7 @@ export interface AuthState {
     checkStatus: ()=> Promise<void>;
     logout: ()=> Promise<void>;
     registerUser: (email: string, password: string, fullName: string)=> Promise<void>;
-    consultaQueryIdAfiliado: ((email: string, password: string)=> Promise<string>)
+    consultaDatosAfiliado: ((email: string, password: string)=> Promise<string>)
   }
 
 
@@ -110,7 +110,7 @@ console.log('esta es la respuesta de Franco: ', respuestaFranco );
            return { success: false}
           }
         },
-        consultaQueryIdAfiliado: async (email: string, password: string) => { 
+        consultaDatosAfiliado: async (email: string, password: string) => { 
           try {
   
               let data= {
@@ -120,8 +120,8 @@ console.log('esta es la respuesta de Franco: ', respuestaFranco );
                 console.log('email y password recibido en loginGonza:', email, password);
                 
                 const respuestaFranco = await axios.post('https://cotizador.createch.com.ar/login', data);
-              console.log('esta es la respuesta de Franco: ', respuestaFranco );
-  
+              console.log('esta es la respuesta de Franco desde useAuthStore COTIZADOR: ', respuestaFranco );
+             
               // Convertir la respuesta de texto JSON a un objeto JavaScript
               const responseObject = JSON.parse(respuestaFranco.request._response);
               let queryIdAfiliado = responseObject.data.idConexion._text;

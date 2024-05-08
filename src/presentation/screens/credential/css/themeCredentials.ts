@@ -90,6 +90,16 @@ export const globalStylesCredentials = StyleSheet.create({
     color: 'white',
     borderRadius: 10,    
   },
+  dorsoCard: {
+    flexDirection: 'column',
+    marginVertical: 0,
+    marginTop: 70,
+    width: '100%',
+    height: '40%',
+    color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',    
+  },
   contenedorTituloAndes: {
     flexDirection: 'column',
    /*  overflow: 'hidden',  */
@@ -99,6 +109,18 @@ export const globalStylesCredentials = StyleSheet.create({
     height: 40,
     color: 'white',
     borderRadius: 10,    
+  },
+  contenedorTituloAndesDorso: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    marginVertical: 0,
+    marginRight:'5%',
+    width: 50,
+    height: 40,
+    color: 'blue',
+    borderRadius: 10,  
+   
   },
   planTitle: {
     fontSize: 26,   

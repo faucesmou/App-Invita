@@ -22,7 +22,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
 
 
-  const { login, loginGonza, consultaQueryIdAfiliado } = useAuthStore();
+  const { login, loginGonza, consultaDatosAfiliado } = useAuthStore();
 /*   const { consultaDatosCredencial } = useCredentialStore(); */
 
   const [isPosting, setIsPosting] = useState(false)
@@ -49,20 +49,42 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   const onLoginGonza = async () => {
 
+
     if (form.email.length === 0 || form.password.length === 0) {
       Alert.alert('Error', 'Usuario y contraseña son campos obligatorios');
       return;
     }
     setIsPosting(true);
     // aca viene la primera peticion: 
-  
+  // TODO esta peticion vamos a tener que cambiarla por la de consultar afiliado JSON, esta solo pide el cuil. adaptar el login para pedir cuil y contraseña, con eso hacer esta peticion. despues ver como hacer las otras peticiones. //
     const salioBien = await loginGonza(form.email, form.password)
-    /* let queryIdAfiliado = await consultaQueryIdAfiliado(form.email, form.password) */
+    //necesito arreglar la consultaDatosAfiliado para guardar TODOS LOS DATOS: ID, id titular, dni etc.
+    let queryIdAfiliado = await consultaDatosAfiliado(form.email, form.password)
     
-/*      let queryIdAfiliado = 'EB0F3828-DB84-49CC-AE37-6987C1B750FC'
-    console.log('esta es la queryId desde LoginScreen', queryIdAfiliado ); */
+/*      let queryIdAfiliado = 'EB0F3828-DB84-49CC-AE37-6987C1B750FC' //este es siempre el titular, el endpoint devuelve siempre el id del titular (deberia) no del usuario y contraseña. 
+*/
+    console.log('esta es la queryIdAfiliado desde LoginScreen', queryIdAfiliado ); 
+  //tenes que guardar este queryIdAfiliado de manera global:
+
   
     
+//TODO: Consultar con el idAfiliado, consultar los familiares de ese afiliado y guardar los id de todos. 
+//postman workspaces > expendio> obtener datos> Obtener Familiares:
+
+/*  */
+//TODO: identificar y guardar cual es el Id DEL Afiliado titular.
+
+//obtener especialidad: necesitamos id afiliado y id afiliado titular
+//postman workspaces > expendio> obtener datos> Obtener especialidad.traumatologia. es lo mismo que idPrestacion 
+
+//tenemos que obtener prestadores que ofrecen esta especialidad.
+
+//obtener provincias: ?
+// obtener prestador por provincia
+
+
+
+
 /*     const respuestaCredencial = await consultaDatosCredencial(form.email, form.password) */
 
    setIsPosting(false);
