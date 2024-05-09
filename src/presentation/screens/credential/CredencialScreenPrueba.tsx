@@ -17,7 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 //prueba para poder mostrar el isotipo de andes salud (la carita amarilla)
 import { SvgXml } from 'react-native-svg';
 const isotipo = require('./CredentialsData/images/Isotipo.png');//pareciera que lo lee pero no lo muestra
-import { USUARIO,PASSWORD, ADMINISTRADORA,  STAGE } from '@env';
+import { USUARIO, PASSWORD, ADMINISTRADORA, STAGE } from '@env';
 //otra prueba para lo mismo: 
 
 
@@ -55,7 +55,7 @@ export const CredencialScreenPrueba = () => {
   // Obtener los colores del plan actual
   const planColors: string[] = PlanPalettes[datosCredencial.plan] || [];
 
- /*  const {queryIdAfiliado} = useAuthStore(); */
+   const {idAfiliado} = useAuthStore();
 
   //momentaneamente vamos a definir el queryIdAfiliado nosotros aqui: pero en el caso real desde el login se hace la consulta a la funcion correspondiente:
   /*     const consultaDatosCredencial = async (queryIdAfiliado: string| undefined) => {  */
@@ -63,16 +63,16 @@ export const CredencialScreenPrueba = () => {
 
   useEffect(() => {
 
-    const consultaDatosCredencial = async (/* queryIdAfiliado: string| undefined */) => { 
-      let queryIdAfiliado = 'EB0F3828-DB84-49CC-AE37-6987C1B750FC'
-      console.log('esta es la queryId desde CredencialScreenPrueba', queryIdAfiliado);
+    const consultaDatosCredencial = async (idAfiliado: string| undefined) => {
+     /*  let queryIdAfiliado = 'EB0F3828-DB84-49CC-AE37-6987C1B750FC' */
+      console.log('esta es el idAfiliado desde CredencialScreenPrueba', idAfiliado);
       console.log('estos son VARIABLES DE .ENV ADMINISTRADORA:', STAGE, ADMINISTRADORA)
       try {
 
         setIsConsulting(true);
         let response = await axios({
           method: 'get',
-          url: `https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscaDatoCredencial?IMEI=ADMCE09D187-8D2C-4592-AE43-87B0D657299C&idAfiliado=${queryIdAfiliado}`,
+          url: `https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscaDatoCredencial?IMEI=ADMCE09D187-8D2C-4592-AE43-87B0D657299C&idAfiliado=${idAfiliado}`,
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
@@ -98,10 +98,11 @@ export const CredencialScreenPrueba = () => {
           numAfiliado: numAfiliado,
           fecVencimiento: fecVencimiento,
         });
-        /*      setDatosCredencial(prevState => ({
+          /*    setDatosCredencial(prevState => ({
                ...prevState,
-               plan: 'titanium'
+               plan: 'black'
              })); */
+        /* titanium platinum black gold green*/
       } catch (error) {
         console.log(error);
         return null
@@ -125,7 +126,7 @@ export const CredencialScreenPrueba = () => {
 
     };
     /*    OrdenConsultaRequest(); */
-    consultaDatosCredencial(/* queryIdAfiliado */);
+    consultaDatosCredencial(idAfiliado);
   }, []);
 
   const handleGoBack = () => {
@@ -220,7 +221,7 @@ export const CredencialScreenPrueba = () => {
                     <View style={globalStylesCredentials.dorsoCard}>
                       <View style={{ alignItems: 'center' }}>
                         <View style={{ padding: 5 }}>
-                          <Text style={{ color: 'white', textAlign: 'center', fontSize:15, fontWeight: 'bold'  }}>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize: 15, fontWeight: 'bold' }}>
                             Esta credencial es personal e intransferible para uso exclusivo del titular. Debe presentarse acompañado de DNI o Cédula de Identidad
                           </Text>
                         </View>
@@ -230,10 +231,10 @@ export const CredencialScreenPrueba = () => {
                           </Text>
                         </View>
                         <View style={{ padding: 5 }}>
-                          <Text style={{ color: 'white', textAlign: 'center', fontSize:13, }}>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize: 13, }}>
                             Superintendencia de Servicio de Salud
                           </Text>
-                          <Text style={{ color: 'white', textAlign: 'center', fontSize:12, }}>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize: 12, }}>
                             Órgano de Control 0800 222 SALUD (72583) www.sssalud.gov.ar
                           </Text>
                         </View>

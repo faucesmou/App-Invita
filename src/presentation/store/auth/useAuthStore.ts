@@ -6,184 +6,106 @@ import { StorageAdapter } from "../../config/adapters/storageAdapter";
 import { useNavigation, DrawerActions, NavigationProp } from '@react-navigation/native';
 import axios from "axios";
 //Este es el Store que creamos con zustand para tener un Context de los datos y acceder a los mismos desde cualquier parte de la aplicacion.
+import { USUARIO, PASSWORD, ADMINISTRADORA, STAGE } from '@env';
 
 
 
 export interface AuthState {
-    status: AuthStatus;
-    token?: string;
-    user?: User;
-    queryIdAfiliado?: string;
-
-    login: (email: string, password: string)=> Promise<boolean>;
-    loginGonza: (email: string, password: string)=> Promise<boolean>;
-    loginGonzaPrueba: (email: string, password: string)=> Promise<{ success: boolean, queryIdAfiliado?: string }>;
-    checkStatus: ()=> Promise<void>;
-    logout: ()=> Promise<void>;
-    registerUser: (email: string, password: string, fullName: string)=> Promise<void>;
-    consultaDatosAfiliado: ((email: string, password: string)=> Promise<string>)
-  }
+  status: AuthStatus;
+  token?: string;
+  user?: User;
+  queryIdAfiliado?: string;
+  idAfiliado?: string;
+  idAfiliadoTitular?: string;
+  loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
+  checkStatus: () => Promise<void>;
+  logout: () => Promise<void>;
+  registerUser: (email: string, password: string, fullName: string) => Promise<void>;
+}
 
 
-export const useAuthStore = create<AuthState>()((set, get)=> ({
-    status:'checking',
-    token: undefined,
-    user: undefined,
+export const useAuthStore = create<AuthState>()((set, get) => ({
+  status: 'checking',
+  token: undefined,
+  user: undefined,
+  idAfiliado: undefined,
+  idAfiliadoTitular: undefined,
 
-    login: async (email: string, password: string) => { 
-        
-        const resp = await authLogin( email, password);
 
-        if( !resp){
-            set({ status: 'unauthenticated', token: undefined, user: undefined })
-            return false;
-        }
+  loginGonzaMejorado: async (email: string, password: string, dni: string) => {
+    try {
 
-        //TODO: Save token and user in storage 
-      
-        await StorageAdapter.setItem( 'token', resp.token );
+      let data = {
+        email: email,
+        pass: password,
+        dni: dni,
+      }
+      console.log('email y password recibido en loginGonza:', email, password);
+      console.log('usuario, password y administradora: en loginGonzaMejorado:', USUARIO, PASSWORD, ADMINISTRADORA);
 
-      /*    esta es una prueba para ver si funciona : */
-        const storedToken =  await StorageAdapter.getItem( 'token' );
-        console.log({storedToken});
-       /*  console.log({ resp }); */
-        
-        set({ status: 'authenticated', token: resp.token, user: resp.user });
+      const respuestaFrancoMejorada = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=${USUARIO}&password=${PASSWORD}&administradora=${ADMINISTRADORA}&datosAfiliado=${dni}`);
+      console.log('esta es la respuesta de Franco: ', respuestaFrancoMejorada);
 
+      if (respuestaFrancoMejorada && respuestaFrancoMejorada.data && respuestaFrancoMejorada.data.length > 0) {
+          const idAfiliado = respuestaFrancoMejorada.data[0].idAfiliado;
+          const idAfiliadoTitular = respuestaFrancoMejorada.data[0].idAfiliadoTitular;
+         
+        console.log('idAfiliado', idAfiliado);
+        console.log('idAfiliadoTitular', idAfiliadoTitular);
+
+        console.log('Ingreso aprobado');
+        set({ status: 'authenticated', idAfiliado: idAfiliado, idAfiliadoTitular: idAfiliadoTitular });
         return true;
-    },
-    loginGonza: async (email: string, password: string) => { 
-        try {
+      } else {
+        console.log('El servidor respondió con un estado diferente a 200');
+        set({ status: 'unauthenticated' })
+        return false
+      }
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      return false; 
+    }
+  },
+  registerUser: async (email: string, password: string, fullName: string) => {
+    try {
+      const resp = await register(email, password, fullName);
+      console.log('Respuesta de la petición de registro:', resp);
+      if (!resp) {
+        set({ status: 'unauthenticated', token: undefined, user: undefined })
+        throw new Error('Registro fallido perro');
+      }
+      //TODO: Save token and user in storage 
+      /*    await StorageAdapter.setItem( 'token', resp.token ); */
 
-            let data= {
-                email: email,
-                pass: password,
-              }
-              console.log('email y password recibido en loginGonza:', email, password);
-              
-              const respuestaFranco = await axios.post('https://cotizador.createch.com.ar/login', data);
-console.log('esta es la respuesta de Franco: ', respuestaFranco );
+      set({ status: 'registered', token: resp.token, user: resp.user });
 
-              if (respuestaFranco.data.status === 200) {
-                console.log('Ingreso aprobado');
-                set({ status: 'authenticated' });
-                return true; 
-              } else {
-                console.log('El servidor respondió con un estado diferente a 200');
-                set({ status: 'unauthenticated'})
-                return false
-              }
-        }catch (error) {
-            console.error('Error al iniciar sesión:', error);
-            return false; // Devolver false en caso de error
-          }
-        },
-        
-    loginGonzaPrueba: async (email: string, password: string) => { 
-        try {
+    } catch (err) {
+      console.error('Error en el registro:', err);
+      throw err;
+    }
 
-            let data= {
-                email: email,
-                pass: password,
-              }
-              console.log('email y password recibido en loginGonza:', email, password);
-              
-              const respuestaFranco = await axios.post('https://cotizador.createch.com.ar/login', data);
-            console.log('esta es la respuesta de Franco: ', respuestaFranco );
+  },
 
-            // Convertir la respuesta de texto JSON a un objeto JavaScript
-            const responseObject = JSON.parse(respuestaFranco.request._response);
-            let queryIdAfiliado = responseObject.data.idConexion._text;
-            console.log('esta es la respuesta de Franco: ', respuestaFranco );
+  checkStatus: async () => {
+    const resp = await authCheckStatus();
+    if (!resp) {
+      set({ status: 'unauthenticated', token: undefined, user: undefined })
+      return;
+    }
+    await StorageAdapter.setItem('token', resp.token);
+    set({ status: 'authenticated', token: resp.token, user: resp.user });
+  },
 
-              if (respuestaFranco.data.status === 200) {
-                console.log('Ingreso aprobado');
-                set({ status: 'authenticated' });
-                return {success: true, queryIdAfiliado}; 
-              } else {
-                console.log('El servidor respondió con un estado diferente a 200');
-                set({ status: 'unauthenticated'})
-                return { success: true, queryIdAfiliado }
-              }
-        }catch (error) {
-            console.error('Error al iniciar sesión:', error);
-           return { success: false}
-          }
-        },
-        consultaDatosAfiliado: async (email: string, password: string) => { 
-          try {
-  
-              let data= {
-                  email: email,
-                  pass: password,
-                }
-                console.log('email y password recibido en loginGonza:', email, password);
-                
-                const respuestaFranco = await axios.post('https://cotizador.createch.com.ar/login', data);
-              console.log('esta es la respuesta de Franco desde useAuthStore COTIZADOR: ', respuestaFranco );
-             
-              // Convertir la respuesta de texto JSON a un objeto JavaScript
-              const responseObject = JSON.parse(respuestaFranco.request._response);
-              let queryIdAfiliado = responseObject.data.idConexion._text;
-              console.log('esta es el queryIdAfiliado: ', queryIdAfiliado );
-  
-                if (respuestaFranco.data.status === 200) {
-                  console.log('consulta de queryIdAfiliado exitosa');
-                  set({ queryIdAfiliado });
-                 return queryIdAfiliado ; 
-                } else {
-                  console.log('El servidor respondió con un estado diferente a 200');
-                 return null;
-                }
-          }catch (error) {
-              console.error('Error al iniciar la consulta de queryIdAfiliado:', error);
-             return { success: false}
-            }
-          },
+  logout: async () => {
+    await StorageAdapter.removeItem('token')
+    set({ status: 'unauthenticated', token: undefined, user: undefined })
+    console.log('se cerró la sesion');
+    return
+
+  },
 
 
-    registerUser: async (email: string, password: string, fullName: string) => { 
-        try {
+}))
 
-            const resp = await register( email, password, fullName);
-            console.log('Respuesta de la petición de registro:', resp);
-            if( !resp){
-                set({ status: 'unauthenticated', token: undefined, user: undefined })
-                throw new Error('Registro fallido perro');
-           
-            }
-            //TODO: Save token and user in storage 
-         /*    await StorageAdapter.setItem( 'token', resp.token ); */
-           
-            set({ status: 'registered', token: resp.token, user: resp.user });
-
-        } catch(err){
-            console.error('Error en el registro:', err); 
-            throw err;
-        }
-
-    },
-
-    checkStatus: async () => {
-        const resp = await authCheckStatus();
-        if (!resp){
-            set({ status: 'unauthenticated', token: undefined, user: undefined })
-            return;
-        }      
-        await StorageAdapter.setItem( 'token', resp.token );
-        set({ status: 'authenticated', token: resp.token, user: resp.user });
-    },
-    
-    logout: async () => {
-            await StorageAdapter.removeItem('token')
-            set({ status: 'unauthenticated', token: undefined, user: undefined })
-            console.log('se cerró la sesion');
-            return
-                
-        },
-        
-        
-    }))
-    
-    /* navigation.closeDrawer(); */
- /*    navigation.navigate('LoginScreen'); */
+/* navigation.closeDrawer(); */
+/*    navigation.navigate('LoginScreen'); */
