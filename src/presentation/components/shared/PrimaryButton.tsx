@@ -8,10 +8,11 @@ interface Props {
     label?: string;
     id?: any;
     color?: string;
+    disabled?: boolean;
 }
 
 
-export const PrimaryButton = ( { onPress, label, color }: Props) => {
+export const PrimaryButton = ( { onPress, label, color, disabled }: Props) => {
 
     const navigation = useNavigation();
     const backColor = color? color : globalColors.profile2;

@@ -7,6 +7,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import CustomHeader from '../../components/CustomHeader'
+import { useAuthStore } from '../../store/auth/useAuthStore'
 /* import { SvgXml } from 'react-native-svg';
 const isotipo = require('../credential/CredentialsData/images/Isotipo.svg'); */
 const tramites = [
@@ -33,7 +34,36 @@ export const TramitesScreen = () => {
     })
     }, []); */
 
+    const { ObtenerFamiliares } = useAuthStore();
+    const {idAfiliado} = useAuthStore();
 
+useEffect(()=>{
+
+  const obtenerFamiliaresTramites = async ()=> {
+    try{
+      if(idAfiliado !== undefined){
+        const idsFamiliares = await ObtenerFamiliares(idAfiliado);
+        console.log('estos son los idsFamiliares desde el effect de TramitesScreen', idsFamiliares); 
+      }else{
+        console.error('idAfiliado es undefined. No se puede llamar a ObtenerFamiliares.');
+      } 
+    } catch (error){
+      console.error('idAfiliado es undefined. No se puede llamar a ObtenerFamiliares desde el tramitesScreen.');
+    }    
+  };
+  obtenerFamiliaresTramites();
+}, [])
+  /* 
+  let idAfiliadoUsuario = idAfiliado;
+  if(idAfiliadoUsuario !== undefined){
+    const idsFamiliares = ObtenerFamiliares(idAfiliadoUsuario)
+    console.log('estos son los idsFamiliares desde el effect de TramitesScreen', idsFamiliares); 
+  }
+  else {
+    console.error('idAfiliado es undefined. No se puede llamar a ObtenerFamiliares.');
+}
+
+} )*/
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
   return (
     <View style={globalStyles.container}>
@@ -52,8 +82,13 @@ export const TramitesScreen = () => {
         )}
       />
       <View
-        style={{ marginBottom: 250 }}
+        style={{ marginBottom: 20 }}
       >
+
+        <PrimaryButton
+          onPress={() => navigation.navigate('ConsultaScreen')}
+          label="Solicitar orden de consulta"
+        />
 
         <PrimaryButton
           onPress={() => navigation.navigate('MiOrdenConsulta')}

@@ -22,6 +22,7 @@ import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { LoadingScreen } from '../screens/loading/LoadingScreen';
 import { useAuthStore } from '../store/auth/useAuthStore';
 import { CredencialScreenPrueba } from '../screens/credential/CredencialScreenPrueba';
+import { ConsultaScreen } from '../screens/ordenConsulta/ConsultaScreen';
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
 
@@ -41,6 +42,7 @@ export type RootStackParams = {
   LoadingScreen: undefined,
   SideMenuNavigator: undefined,
   CredencialScreenPrueba:undefined,
+  ConsultaScreen: undefined,
 
 }
 
@@ -91,6 +93,8 @@ export const StackNavigator = () => {
 
       <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
+      
+      <Stack.Screen name="ConsultaScreen" component={ConsultaScreen} options={{ headerShown: true }} />
       <Stack.Screen name="Credencial" component={CredencialScreen} />
       <Stack.Screen name="CredencialScreenPrueba" component={CredencialScreenPrueba} />
     </Stack.Navigator>
