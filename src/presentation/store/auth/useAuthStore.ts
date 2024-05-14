@@ -17,8 +17,11 @@ export interface AuthState {
   queryIdAfiliado?: string;
   idAfiliado?: string;
   idAfiliadoTitular?: string;
+  idsFamiliares?:string[];
+  idsEspecialidades?:string;
   loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
   ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>;
+  ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
   registerUser: (email: string, password: string, fullName: string) => Promise<void>;
@@ -31,6 +34,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   user: undefined,
   idAfiliado: undefined,
   idAfiliadoTitular: undefined,
+  idsFamiliares:[],
+  idsEspecialidades:undefined,
 
 
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
@@ -76,6 +81,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       respuesta.data.forEach((familiar: { idAfiliado: string }) =>{
         idsFamiliares.push(familiar.idAfiliado)
       });
+      
       return idsFamiliares;
     } catch(error){
       console.log('error en la funcion obtenerIdsFamiliares');
@@ -85,14 +91,49 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     try {
       const grupoFamiliar = await axios.get(`https://andessalud.createch.com.ar/api/obtenerFamiliares?idAfiliado=${idAfiliado}`)
       
-    const idsFamiliares = obtenerIdsFamiliares(JSON.stringify(grupoFamiliar.data))
-   
-    return idsFamiliares; 
+    const idsFamiliares2 = obtenerIdsFamiliares(JSON.stringify(grupoFamiliar.data))
+    set({ idsFamiliares: idsFamiliares2 })/* esto no esta funcionando resolver */
+    return idsFamiliares2; 
   } catch (error) {
       console.log('ha ocurrido un error al obtener los familiares');
      return [];
     }
   },
+  ObtenerEspecialidades: async (idAfiliado: string, idAfiliadoTitular: string): Promise<string[]> => {
+    //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
+    const obtenerIdsEspecialidades = (respuestaApi:string) =>{
+      try{
+      const respuesta = JSON.parse(respuestaApi);
+      const idsEspecialidades:any[] = [];       
+
+      respuesta.data.forEach((especialidad: any ) => {
+        const especialidadObj = {
+          idPrestacion: especialidad.idPrestacion,
+          nombreParaAfiliado: especialidad.nombreParaAfiliado
+      };
+      idsEspecialidades.push(especialidadObj);
+      /*   const arrayEspecialidad = [especialidad.idPrestacion, especialidad.nombreParaAfiliado,]
+        idsEspecialidades.push(arrayEspecialidad); */
+       
+      });
+      
+      return idsEspecialidades;
+    } catch(error){
+      console.log('error en la funcion obtenerIdsFamiliares');
+      return []
+    }}
+
+    try {
+      const grupoEspecialidades = await axios.get(`https://andessalud.createch.com.ar/api/obtenerEspecialidad?idAfiliado=${idAfiliado}&idAfiliadoTitular=${idAfiliadoTitular}`)
+      
+    const idsEspecialidades = obtenerIdsEspecialidades(JSON.stringify(grupoEspecialidades.data))
+    return idsEspecialidades; 
+  } catch (error) {
+      console.log('ha ocurrido un error al obtener los familiares');
+     return [];
+    }
+  },
+  /* set({ idsEspecialidades: idsEspecialidades })esto no esta funcionando resolver */
   registerUser: async (email: string, password: string, fullName: string) => {
     try {
       const resp = await register(email, password, fullName);

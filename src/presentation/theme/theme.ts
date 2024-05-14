@@ -26,6 +26,19 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center',
         
     },
+    pickerInput:{
+    backgroundColor: 'pink',
+    color: 'white',
+    width:'100%',
+    height:'50%',
+    paddingHorizontal: 0,
+    marginVertical: 0,
+    borderRadius: 20,
+    fontSize: 5,
+    fontFamily: 'Quicksand-Light', 
+    padding: 0,
+    margin:0,
+    },
 
     primaryButton: {
         backgroundColor: globalColors.profile2,

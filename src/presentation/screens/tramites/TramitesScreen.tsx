@@ -8,8 +8,7 @@ import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import CustomHeader from '../../components/CustomHeader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
-/* import { SvgXml } from 'react-native-svg';
-const isotipo = require('../credential/CredentialsData/images/Isotipo.svg'); */
+
 const tramites = [
   { id: 1, name: 'Autorizar prestación' },
   { id: 2, name: 'Solicitar medicamentos' },
@@ -34,25 +33,7 @@ export const TramitesScreen = () => {
     })
     }, []); */
 
-    const { ObtenerFamiliares } = useAuthStore();
-    const {idAfiliado} = useAuthStore();
 
-useEffect(()=>{
-
-  const obtenerFamiliaresTramites = async ()=> {
-    try{
-      if(idAfiliado !== undefined){
-        const idsFamiliares = await ObtenerFamiliares(idAfiliado);
-        console.log('estos son los idsFamiliares desde el effect de TramitesScreen', idsFamiliares); 
-      }else{
-        console.error('idAfiliado es undefined. No se puede llamar a ObtenerFamiliares.');
-      } 
-    } catch (error){
-      console.error('idAfiliado es undefined. No se puede llamar a ObtenerFamiliares desde el tramitesScreen.');
-    }    
-  };
-  obtenerFamiliaresTramites();
-}, [])
   /* 
   let idAfiliadoUsuario = idAfiliado;
   if(idAfiliadoUsuario !== undefined){
@@ -82,7 +63,7 @@ useEffect(()=>{
         )}
       />
       <View
-        style={{ marginBottom: 20 }}
+        style={{ marginBottom: 275 }}
       >
 
         <PrimaryButton
@@ -90,10 +71,10 @@ useEffect(()=>{
           label="Solicitar orden de consulta"
         />
 
-        <PrimaryButton
+       {/*  <PrimaryButton
           onPress={() => navigation.navigate('MiOrdenConsulta')}
           label="Orden de consulta"
-        />
+        /> */}
 
 {/* <SvgXml xml={isotipo} width="100" height="150" /> */}
       </View>
