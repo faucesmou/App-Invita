@@ -40,12 +40,12 @@ export const SideMenuNavigator = () => {
 // MOMENTANEAMENTE QUITE ESTE IF PARA PODER TRABAJAR, RESTAURAR CUANDO TERMINE LA APP!
 
 // si no esta autenticado muestro este drawer pero que no podrá abrirse nunca:
-  if (status !== 'unauthenticated'/* cambiar esto a authenticated */) {
-    console.log('no puede acceder al drawer perro');
+  if (status !== 'authenticated'/* cambiar esto a authenticated */) {
+    console.log('no puede acceder al drawer perro loco');
 
     return (
       <Drawer.Navigator
-       /*  initialRouteName={'home' 'LoginScreen' } */
+        initialRouteName={/* 'home' */ 'LoginScreen' }
         screenOptions={{
           /* swipeEdgeWidth: 0, */ //con esta propiedad no permito que se pueda abrir
           headerShown: false,

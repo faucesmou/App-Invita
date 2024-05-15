@@ -26,6 +26,10 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center',
         
     },
+    pickerContainer: {
+        padding: 0,
+        margin: 10,
+      },
     pickerInput:{
     backgroundColor: 'pink',
     color: 'white',
@@ -39,6 +43,15 @@ export const globalStyles = StyleSheet.create({
     padding: 0,
     margin:0,
     },
+    containerSelect: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: 192,
+      },
+      select: {
+        flex: 1,
+        margin: 2,
+      },
 
     primaryButton: {
         backgroundColor: globalColors.profile2,

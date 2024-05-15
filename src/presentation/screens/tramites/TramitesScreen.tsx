@@ -67,7 +67,7 @@ export const TramitesScreen = () => {
       >
 
         <PrimaryButton
-          onPress={() => navigation.navigate('ConsultaScreen')}
+          onPress={() => navigation.navigate('ConsultaScreenFinal')}
           label="Solicitar orden de consulta"
         />
 

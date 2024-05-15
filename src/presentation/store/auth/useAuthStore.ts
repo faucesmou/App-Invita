@@ -20,7 +20,8 @@ export interface AuthState {
   idsFamiliares?:string[];
   idsEspecialidades?:string;
   loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
-  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>;
+ /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
+  ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
@@ -72,17 +73,23 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       return false; 
     }
   },
-  ObtenerFamiliares: async (idAfiliado: string): Promise<string[]> => {
+  ObtenerFamiliares: async (idAfiliado: string): Promise<any[]> => {
     //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
-    const obtenerIdsFamiliares = (respuestaApi:string) =>{
+    const obtenerFamiliaresObjeto = (respuestaApi:string) =>{
       try{
       const respuesta = JSON.parse(respuestaApi);
       const idsFamiliares:string[] = [];
-      respuesta.data.forEach((familiar: { idAfiliado: string }) =>{
+      const infoFamiliares:any[] = [];  
+      respuesta.data.forEach((familiar: { idAfiliado: string, apellidoYNombre:string }) =>{
         idsFamiliares.push(familiar.idAfiliado)
+        const familiaresObj = {
+          idAfiliado: familiar.idAfiliado,
+          apellidoYNombre: familiar.apellidoYNombre
+      };
+      infoFamiliares.push(familiaresObj);
       });
       
-      return idsFamiliares;
+      return infoFamiliares;
     } catch(error){
       console.log('error en la funcion obtenerIdsFamiliares');
       return []
@@ -91,9 +98,12 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     try {
       const grupoFamiliar = await axios.get(`https://andessalud.createch.com.ar/api/obtenerFamiliares?idAfiliado=${idAfiliado}`)
       
-    const idsFamiliares2 = obtenerIdsFamiliares(JSON.stringify(grupoFamiliar.data))
-    set({ idsFamiliares: idsFamiliares2 })/* esto no esta funcionando resolver */
-    return idsFamiliares2; 
+      
+    const Familiares2 = obtenerFamiliaresObjeto(JSON.stringify(grupoFamiliar.data))
+
+    
+    /* set({ Familiares: Familiares2 }) *//* esto no esta funcionando resolver */
+    return Familiares2; 
   } catch (error) {
       console.log('ha ocurrido un error al obtener los familiares');
      return [];

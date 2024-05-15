@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
+
 import {Picker } from '@react-native-picker/picker';
-import { globalColors, globalStyles } from '../../theme/theme'
-import { FlatList } from 'react-native-gesture-handler'
+import {  globalStyles } from '../../theme/theme'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
-import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import CustomHeader from '../../components/CustomHeader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
-import { Input, IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components'
-import { MyIcon } from '../../components/ui/MyIcon'
+import { IndexPath, Layout, Select, SelectItem, SelectGroup, } from '@ui-kitten/components'
 import { BackButton } from '../../components/shared/BackButton'
 /* import { SvgXml } from 'react-native-svg';
 const isotipo = require('../credential/CredentialsData/images/Isotipo.svg'); */
@@ -20,6 +18,12 @@ const tramites = [
   { id: 3, name: 'Reintegros' },
   { id: 4, name: 'Empadronamientos anticonceptivos' },
   { id: 5, name: 'Mis trámites' },
+];
+
+const data = [
+  'Developer',
+  'Designer',
+  'Product Manager',
 ];
 
 interface Especialidad {
@@ -35,37 +39,55 @@ export const ConsultaScreen = () => {
 
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades } = useAuthStore();
 
-  //codigo para los selects:
+  //codigo para los selects:---------------------->
+
+// PRUEBA REACT UI KITTEN SELECT:
+const [selectedIndex, setSelectedIndex] = React.useState<IndexPath>(new IndexPath(0));
+
+const displayValue = data[selectedIndex.row];
+
+const renderOption = (title): React.ReactElement => (
+  <SelectItem title={title} />
+);
+
+// ADAPTACION PARA NUESTRA APP: 
+
+const [idNombresEspecialidad, setIdNombresEspecialidad] = useState<string[]>([]);
+
+const [selectedIndexGonzalo, setSelectedIndexGonzalo] = React.useState<IndexPath>(new IndexPath(0));
+
+const displayValueGonzalo = idNombresEspecialidad[selectedIndex.row];
+
+const renderOptionGonzalo = (title): React.ReactElement => (
+  <SelectItem title={title} />
+);
+
+
+
+
+
 
   //useState para Familiar: 
-   const [selectedIndex2, setSelectedIndex2] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0)); 
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
+   const [selectedIndex2, setSelectedIndex2] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0) ); 
+   //const [selectedIndex, setSelectedIndex] = useState<number | null>(null);//no se si lo uso
   const [selectedFamiliar, setSelectedFamiliar] = useState<string | null>(null);
-
   const [selectedIndexEspecialidad, setSelectedIndexEspecialidad] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
-
   const [idsesFamiliares, setIdsesFamiliares] = useState<string[]>([]); // Inicializa idsesFamiliares como un array vacío
-
-  // useState para especialidad:
-
-  const [idEspecialidad, setIdEspecialidad] = useState<string[]>([]); // Inicializa idsesFamiliares como un array vacío
-  const [selectedEspecialidad, setSelectedEspecialidad] = useState<{ idPrestacion: number, nombreParaAfiliado: string } | null>(null);
-  //const [idPrestadores, setIdPrestadores] = useState<string[]>([]); // Inicializa idsesFamiliares como un array vacío
 
   const handleSelect3 = (itemValue: string | number, itemIndex: number) => {
     setSelectedFamiliar(idsesFamiliares[itemIndex]);
-    console.log('se guardo el familiar elegido en SelectedFamiliar', selectedFamiliar);
-
   };
 
+
+  const [idEspecialidad, setIdEspecialidad] = useState<string[]>([]); // Inicializa idsesFamiliares como un array vacío
+  const [selectedEspecialidad, setSelectedEspecialidad] = useState<{ idPrestacion: number, nombreParaAfiliado: string } | null>(null);
   
   const handleSelectEspecialidad = (index: any) => {
     const especialidadSeleccionada = idEspecialidad[index -1]; // Obtenemos la especialidad seleccionada del array de especialidades
-    setSelectedEspecialidad(especialidadSeleccionada); // Actualizamos el estado con la especialidad seleccionada
-    console.log('se actualizò el selectedEspecialidad:----> ', selectedEspecialidad);
-
+    console.log('se SELECCIONO la especialidadSeleccionada:----> ', especialidadSeleccionada);
+    setSelectedEspecialidad(especialidadSeleccionada);
   };
+
 
   useEffect(() => {
 
@@ -73,7 +95,7 @@ export const ConsultaScreen = () => {
       try {
         if (idAfiliado !== undefined) {
           const idsesFamiliaresObtenidos = await ObtenerFamiliares(idAfiliado);
-          console.log('estos son los idsesFamiliaresObtenidos desde el effect de CONSULTAScreen', idsesFamiliaresObtenidos);
+          /* console.log('estos son los idsesFamiliaresObtenidos desde el effect de CONSULTAScreen', idsesFamiliaresObtenidos); */
           setIdsesFamiliares(idsesFamiliaresObtenidos);
           console.log('IdsesFamiliares: ', idsesFamiliares);
 
@@ -90,9 +112,12 @@ export const ConsultaScreen = () => {
       try {
         if (idAfiliado !== undefined && idAfiliadoTitular !== undefined) {
           const especialidadesObtenidas = await ObtenerEspecialidades(idAfiliado, idAfiliadoTitular);
-          console.log('estos son las especialidadesObtenidas desde el effect de CONSULTAScreen', especialidadesObtenidas);
+          console.log('estE ES EL SELECTED ESPECIALIDAD--->', selectedEspecialidad);
           setIdEspecialidad(especialidadesObtenidas);
-          return especialidadesObtenidas
+          console.log('estE ES EL ARRAY DE ID ESPECIALDIDAD CON TODAS--->', idEspecialidad);
+          const nombresEspecialidades = idEspecialidad.map((especialidad) => especialidad.nombreParaAfiliado);
+          setIdNombresEspecialidad(nombresEspecialidades)
+          return {especialidadesObtenidas, nombresEspecialidades}
 
         } else {
           console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerFamiliares.');
@@ -103,7 +128,7 @@ export const ConsultaScreen = () => {
     };
     obtenerFamiliaresConsulta();
     obtenerEspecialidadesConsulta()
-  }, [])
+  }, [selectedEspecialidad])
 
 
   /*   const { idAfiliado } = useAuthStore(); */
@@ -128,6 +153,7 @@ export const ConsultaScreen = () => {
   //voy a llamar los id familiares desde el context y mostrarlos en el select.
   //voy a llamar a consulta especialidad y mostrarlos en el select.
   //voy a llamar a consulta prestador y mostrarlos en el select.
+  
   let nombrePlaceHolder = selectedEspecialidad ? selectedEspecialidad.nombreParaAfiliado : "Seleccione Especialidad";
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
@@ -146,7 +172,7 @@ export const ConsultaScreen = () => {
         <Text style={{  fontSize: 20, textAlign: 'center' }}>Selecciona un familiar</Text>
           <Picker
             selectedValue={selectedFamiliar !== null ? selectedFamiliar : undefined}
-            onValueChange={(itemValue: string | number, itemIndex: number) =>
+            onValueChange={(itemValue: string | number, itemIndex: number ) =>
               handleSelect3(itemValue, itemIndex)
             }
             itemStyle={{
@@ -168,16 +194,15 @@ export const ConsultaScreen = () => {
         <Layout level='1'>
           <Text style={{ marginLeft: 15 }}>Selecciona una Especialidad</Text>
           <Select
-         /*    placeholder={} */
+           /*  title={{selectedIndex}} */
             selectedIndex={selectedIndex2}
             onSelect={(selectedIndex) => {
               setSelectedIndexEspecialidad(selectedIndex);
               handleSelectEspecialidad(selectedIndex);
-              console.log('este es el selectedIndex: ', selectedIndex);
             }}
-          >
+          >   
             {idEspecialidad.map((item, index) => (
-              <SelectItem key={index} title={item.nombreParaAfiliado} /> // Acceder al nombre de la especialidad en el segundo elemento
+              <SelectItem key={index}  title={item.nombreParaAfiliado} /> // Acceder al nombre de la especialidad en el segundo elemento
 
             ))}
           </Select>
@@ -230,6 +255,45 @@ export const ConsultaScreen = () => {
             ))}
           </Select> */}
         </Layout>
+
+        <Layout
+      style={globalStyles.containerSelect}
+      level='1'
+    >
+
+      <Select
+        style={globalStyles.select}
+        placeholder='Default'
+        value={displayValue}
+        selectedIndex={selectedIndex}
+        onSelect={(index: IndexPath) => setSelectedIndex(index)}
+      >
+        {data.map(renderOption)}
+      </Select>
+
+     
+
+    </Layout>
+    
+
+        <Layout
+      style={globalStyles.containerSelect}
+      level='1'
+    >
+
+      <Select
+        style={globalStyles.select}
+        placeholder='Default'
+        value={displayValueGonzalo}
+        selectedIndex={selectedIndexGonzalo}
+        onSelect={(index: IndexPath) => setSelectedIndexGonzalo(index)}
+      >
+        {idNombresEspecialidad.map(renderOptionGonzalo)}
+      </Select>
+
+     
+
+    </Layout>
         {/*  <Layout level='1'>
           <Text style={{ marginLeft: 15 }}>Selecciona un Prestador</Text>
           <Select
@@ -294,3 +358,4 @@ export const ConsultaScreen = () => {
     </View>
   )
 }
+
