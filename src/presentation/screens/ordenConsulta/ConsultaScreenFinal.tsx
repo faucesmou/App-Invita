@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 
-import {Picker, PickerContainer} from '@react-native-picker/picker';
+import {Picker } from '@react-native-picker/picker';
 import {  globalStyles } from '../../theme/theme'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
@@ -143,15 +143,15 @@ const [idNombresEspecialidad, setIdNombresEspecialidad] = useState<string[]>([])
 
       <BackButton />
 
-      <Text style={{ marginBottom: 20, marginTop: 0, fontSize: 20, textAlign: 'center', }}>Solicitar orden de consulta screenFinal</Text>
+      <Text style={{ marginBottom: 20, marginTop: 20, fontSize: 20, textAlign: 'center', }}>Solicitar orden de consulta screenFinal</Text>
       <View
-        style={{ marginBottom: 350,/*  alignItems: 'center' */ }}>
+        style={{ marginBottom: 300,/*  alignItems: 'center' */ }}>
 
         <View style={{borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center'}}>
-        <Text style={{  fontSize: 20, textAlign: 'center', marginBottom: 0 }}>Selecciona un familiar</Text>
-       {/*  <PickerContainer style={{ padding: 0, margin: 10 }}></PickerContainer> */}
+        <Text style={{  fontSize: 20, textAlign: 'center', marginBottom: 0, marginTop:10 }}>Selecciona un familiar</Text>
+      
           <Picker
-            style={{  fontSize: 10, textAlign: 'center', padding:0, marginTop: 0 }}/* esto no funciona */
+            style={globalStyles.inputIOS}/* esto no funciona */
             selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
             onValueChange={(itemValue: string | number, itemIndex: number) =>
               handleSelect3(itemValue, itemIndex)
@@ -159,9 +159,12 @@ const [idNombresEspecialidad, setIdNombresEspecialidad] = useState<string[]>([])
             itemStyle={{
               fontSize: 15,
               fontFamily: 'Quicksand-Light',
-              marginVertical: 0,
+             /*  marginVertical: -60, */
+             flex:1,
               padding: 0,
               margin:0,
+              color:'black',
+              alignItems: 'center'
             }}
           >
             {nombresDeFamiliares.map((item, index) => (

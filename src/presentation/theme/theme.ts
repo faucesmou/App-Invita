@@ -43,6 +43,15 @@ export const globalStyles = StyleSheet.create({
     padding: 0,
     margin:0,
     },
+    inputIOS: {
+      padding: 0,
+      height: 50,
+      color: 'black',
+      fontSize: 5,
+      fontFamily: 'Quicksand-Light',
+      backgroundColor: 'pink',
+    
+    },
     containerSelect: {
         flexDirection: 'row',
         justifyContent: 'space-between',
