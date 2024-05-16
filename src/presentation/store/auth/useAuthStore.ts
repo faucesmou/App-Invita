@@ -19,10 +19,12 @@ export interface AuthState {
   idAfiliadoTitular?: string;
   idsFamiliares?:string[];
   idsEspecialidades?:string;
+  idPrestacion?: string;
   loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
   ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
+  ObtenerPrestadores: (idAfiliado: string, idAfiliadoTitular:string, idPrestacion: string)=> Promise<any[]>;
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
   registerUser: (email: string, password: string, fullName: string) => Promise<void>;
@@ -140,6 +142,40 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     return idsEspecialidades; 
   } catch (error) {
       console.log('ha ocurrido un error al obtener los familiares');
+     return [];
+    }
+  },
+  ObtenerPrestadores: async (idAfiliado: string, idAfiliadoTitular: string, idPrestacion: string): Promise<string[]> => {
+    //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
+    const obtenerPrestadoresObjeto = (respuestaApi:string) =>{
+      try{
+      const respuesta = JSON.parse(respuestaApi);
+      const infoPrestadores:any[] = [];       
+
+      respuesta.data.forEach((prestador: any ) => {
+        const prestadoresObj = {
+          idPrestador: prestador.idPrestador,
+          prestador: prestador.prestador
+      };
+      infoPrestadores.push(prestadoresObj);
+      /*   const arrayEspecialidad = [especialidad.idPrestacion, especialidad.nombreParaAfiliado,]
+        idsEspecialidades.push(arrayEspecialidad); */
+       
+      });
+      
+      return infoPrestadores;
+    } catch(error){
+      console.log('error en la funcion obtenerPrestadoresObjeto');
+      return []
+    }}
+
+    try {
+      const grupoPrestadores = await axios.get(`https://andessalud.createch.com.ar/api/obtenerPrestador?idAfiliado${idAfiliado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}`)
+    const informacionPrestadores = obtenerPrestadoresObjeto(JSON.stringify(grupoPrestadores.data))
+    console.log('el useState informacionPrestadores --&&&----&&--&&-->:', informacionPrestadores);
+    return informacionPrestadores; 
+  } catch (error) {
+      console.log('ha ocurrido un error al obtener informacionPrestadores');
      return [];
     }
   },
