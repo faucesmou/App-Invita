@@ -45,7 +45,7 @@ export const globalStyles = StyleSheet.create({
     },
     inputIOS: {
       padding: 0,
-      height: 50,
+      height: 70,
       color: 'black',
       fontSize: 5,
       fontFamily: 'Quicksand-Light',

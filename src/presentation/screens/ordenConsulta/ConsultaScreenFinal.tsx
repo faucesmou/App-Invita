@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 
-import {Picker } from '@react-native-picker/picker';
-import {  globalStyles } from '../../theme/theme'
+import { Picker } from '@react-native-picker/picker';
+import { globalStyles } from '../../theme/theme'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
@@ -10,95 +10,72 @@ import CustomHeader from '../../components/CustomHeader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
 import { IndexPath, Layout, Select, SelectItem, SelectGroup, } from '@ui-kitten/components'
 import { BackButton } from '../../components/shared/BackButton'
-/* import { SvgXml } from 'react-native-svg';
-const isotipo = require('../credential/CredentialsData/images/Isotipo.svg'); */
-const tramites = [
-  { id: 1, name: 'Autorizar prestación' },
-  { id: 2, name: 'Solicitar medicamentos' },
-  { id: 3, name: 'Reintegros' },
-  { id: 4, name: 'Empadronamientos anticonceptivos' },
-  { id: 5, name: 'Mis trámites' },
-];
 
-const data = [
-  'Developer',
-  'Designer',
-  'Product Manager',
-];
-
-interface Especialidad {
-  id: string;
-  nombre: string;
-}
-
-interface Props {
-  especialidades: Especialidad[];
-}
 
 export const ConsultaScreenFinal = () => {
 
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades } = useAuthStore();
-  
-  
-
-  //codigo para los selects:---------------------->
 
 
+  //--------------------- LOGICA PARA EL SELECT DE ESPECIALIDAD ELEGIDA-------------------------------------->
+  //
+  //useStates: State 1 (NombresDeEspecialidades): para guardar un listado de solamente NOMBRES de especialidades (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (EspecialidadesObtenidasObjeto): datos de las especialidades obtenidas de la consulta (nombre y id). state 3(SelectedEspecialidadNombre): nombre de la especialidad seleccionada. state4(EspecialidadSeleccionadaDatos) : nombre y id de la especialidad seleccionada. 
+  const [NombresDeEspecialidades, setNombresDeEspecialidades] = useState<string[]>([]);
+  const [EspecialidadesObtenidasObjeto, setEspecialidadesObtenidasObjeto] = useState<string[]>([]); // 
+  const [SelectedEspecialidadNombre, setSelectedEspecialidadNombre] = useState<string | null>(null);
+  const [EspecialidadSeleccionadaDatos, setEspecialidadSeleccionadaDatos] = useState<string[]>([]);
 
-// ADAPTACION PARA NUESTRA APP: 
+  const handleSelectEspecialidad = (itemValue: string | number, itemIndex: number) => {
+    setSelectedEspecialidadNombre(NombresDeEspecialidades[itemIndex]);
+    const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === itemValue);    
+    if (EspecialidadEncontrada) {
+      setEspecialidadSeleccionadaDatos(EspecialidadEncontrada)
+      const { nombreParaAfiliado, idPrestacion }: { nombreParaAfiliado: string, idPrestacion: string } = EspecialidadEncontrada;
+      console.log('Nombre de la prestacion:', nombreParaAfiliado);
+      console.log('ID de la Prestacion:', idPrestacion);
+    } else {
+      console.log('No se encontró la especialidad');
 
-const [idNombresEspecialidad, setIdNombresEspecialidad] = useState<string[]>([]);
+    }
 
-  //use state para guardar un listado de solamente NOMBRES de familiares (sin el id) y poder mostrarlos en el select para que elija el usuario:
+  };
+
+  //---------------------LOGICA PARA EL SELECT DE FAMILIAR ELEGIDO-------------------------------------->
+//useStates: State 1 (nombresDeFamiliares): para guardar un listado de solamente NOMBRES de Familiares (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (FamiliaresObtenidosObjeto): datos de los familiares obtenidos de la consulta (nombre y id). State 3(selectedFamiliarNombre): nombre del familiar seleccionado. State4(FamiliarSeleccionadoDatos) : nombre y id del familiar seleccionado. 
   const [nombresDeFamiliares, setNombresDeFamiliares] = useState<string[]>([]);
-
-  //useStates para la almacenar los datos de EL  Familiar (solo un familiar) seleccionado: state 1 (FamiliaresObtenidosObjeto): familiares obtenidos de la consulta. state 2(selectedFamiliarNombre): nombre del familiar seleccionado. state3(FamiliarSeleccionadoDatos) : nombre y id del familiar seleccionado: 
-   
   const [FamiliaresObtenidosObjeto, setFamiliaresObtenidosObjeto] = useState<string[]>([]); // 
   const [selectedFamiliarNombre, setSelectedFamiliarNombre] = useState<string | null>(null);
   const [FamiliarSeleccionadoDatos, setFamiliarSeleccionadoDatos] = useState<string[]>([]); // 
 
-  const handleSelect3 = (itemValue: string | number, itemIndex: number) => {
-    setSelectedFamiliarNombre(nombresDeFamiliares[itemIndex]);  
-    const familiarEncontrado: any  = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === itemValue);
+  const handleSelectFamiliar = (itemValue: string | number, itemIndex: number) => {
+    setSelectedFamiliarNombre(nombresDeFamiliares[itemIndex]);
+    const familiarEncontrado: any = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === itemValue);
     if (familiarEncontrado) {
       setFamiliarSeleccionadoDatos(familiarEncontrado)
-      // Guardar el objeto encontrado en unas variables para posterior uso
       const { apellidoYNombre, idAfiliado }: { apellidoYNombre: string, idAfiliado: string } = familiarEncontrado;
-      
-      // Hacer lo que necesites con el objeto encontrado
       console.log('Apellido y Nombre:', apellidoYNombre);
       console.log('ID de Afiliado:', idAfiliado);
-  
     } else {
       console.log('No se encontró el familiar');
-      
+
     }
-    
+
   };
 
-
-  const [idEspecialidad, setIdEspecialidad] = useState<string[]>([]); 
-  
-  
+ //---------------------FAMILIAR ELEGIDO- HASTA ACÀ------------------------------------->
 
 
 
   useEffect(() => {
-
-    console.log('el familiar seleccionado y guardado el el useState selectedFamiliarNombre es:', selectedFamiliarNombre);
-    console.log('el familiar FamiliaresObtenidosObjeto --x--x-x-->:', FamiliaresObtenidosObjeto);
-    console.log('el familiar FamiliarSeleccionadoDatos --x--x-x-->:', FamiliarSeleccionadoDatos);
+    console.log('el familiar FamiliarSeleccionadoDatos --x--x-x-->:', FamiliarSeleccionadoDatos); 
+    console.log('la especialidad EspecialidadSeleccionadaDatos --x--x-x-->:', EspecialidadSeleccionadaDatos); 
     const obtenerFamiliaresConsulta = async () => {
 
-    
       try {
         if (idAfiliado !== undefined) {
           const FamiliaresObtenidosObjeto = await ObtenerFamiliares(idAfiliado);
-          console.log('estos son los idsesFamiliaresObtenidos desde el effect de CONSULTAScreen', FamiliaresObtenidosObjeto);
           setFamiliaresObtenidosObjeto(FamiliaresObtenidosObjeto);
           const nombresFamiliares = FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre);
-          console.log('estos son los idsesFamiliaresObtenidos desde el effect de CONSULTAScreen', nombresFamiliares);
           setNombresDeFamiliares(nombresFamiliares)
 
           return FamiliaresObtenidosObjeto
@@ -114,26 +91,24 @@ const [idNombresEspecialidad, setIdNombresEspecialidad] = useState<string[]>([])
       try {
         if (idAfiliado !== undefined && idAfiliadoTitular !== undefined) {
           const especialidadesObtenidas = await ObtenerEspecialidades(idAfiliado, idAfiliadoTitular);
-          setIdEspecialidad(especialidadesObtenidas);
-       
-        /*   console.log('estE ES EL ARRAY DE ID ESPECIALDIDAD CON TODAS--->', idEspecialidad); */
-          const nombresEspecialidades = idEspecialidad.map((especialidad) => especialidad.nombreParaAfiliado);
-          setIdNombresEspecialidad(nombresEspecialidades)
-          return {especialidadesObtenidas, nombresEspecialidades}
+          setEspecialidadesObtenidasObjeto(especialidadesObtenidas);
+          const nombresEspecialidades = especialidadesObtenidas.map((especialidad) => especialidad.nombreParaAfiliado);
+          setNombresDeEspecialidades(nombresEspecialidades)
+          return especialidadesObtenidas
 
         } else {
-          console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerFamiliares.');
+          console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades.');
         }
       } catch (error) {
-        console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerFamiliares desde el ConsultaScreen.');
+        console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades desde el ConsultaScreen.');
       }
     };
     obtenerFamiliaresConsulta();
     obtenerEspecialidadesConsulta()
-  }, [selectedFamiliarNombre])
+  }, [selectedFamiliarNombre, SelectedEspecialidadNombre])
 
 
-  
+
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   return (
@@ -143,33 +118,62 @@ const [idNombresEspecialidad, setIdNombresEspecialidad] = useState<string[]>([])
 
       <BackButton />
 
-      <Text style={{ marginBottom: 20, marginTop: 20, fontSize: 20, textAlign: 'center', }}>Solicitar orden de consulta screenFinal</Text>
-      <View
-        style={{ marginBottom: 300,/*  alignItems: 'center' */ }}>
-
-        <View style={{borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center'}}>
-        <Text style={{  fontSize: 20, textAlign: 'center', marginBottom: 0, marginTop:10 }}>Selecciona un familiar</Text>
+      <Text style={{ marginBottom: 20, marginTop: 20, fontSize: 20, textAlign: 'center', backgroundColor: 'orange'}}>Solicitar orden de consulta screenFinal</Text>
       
+      <View
+        style={{ flex: 1, backgroundColor: 'green', marginBottom: 25/*  alignItems: 'center' */ }}>
+
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', backgroundColor: 'yellow', }}>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 10 }}>Selecciona un familiar</Text>
+
           <Picker
             style={globalStyles.inputIOS}/* esto no funciona */
             selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
             onValueChange={(itemValue: string | number, itemIndex: number) =>
-              handleSelect3(itemValue, itemIndex)
+              handleSelectFamiliar(itemValue, itemIndex)
             }
             itemStyle={{
               fontSize: 15,
               fontFamily: 'Quicksand-Light',
-             /*  marginVertical: -60, */
-             flex:1,
+              flex: 1,
+              justifyContent: 'center',
               padding: 0,
-              margin:0,
-              color:'black',
+              margin: 0,
+              color: 'black',
+              alignItems: 'center',            
+            }}
+           
+          >
+            {nombresDeFamiliares.map((item, index) => (
+              <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
+
+              />
+            ))}
+          </Picker>
+        </View>
+        {/* -----------------ESPECIALIDAD---------------- */}
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', backgroundColor: 'yellow', }}>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 10 }}>Selecciona una Especialidad</Text>
+
+          <Picker
+            style={globalStyles.inputIOS}
+            selectedValue={SelectedEspecialidadNombre !== null ? SelectedEspecialidadNombre : undefined}
+            onValueChange={(itemValue: string | number, itemIndex: number) =>
+              handleSelectEspecialidad(itemValue, itemIndex)
+            }
+            itemStyle={{
+              fontSize: 15,
+              fontFamily: 'Quicksand-Light',
+              flex: 1,
+              padding: 0,
+              margin: 0,
+              color: 'black',
               alignItems: 'center'
             }}
           >
-            {nombresDeFamiliares.map((item, index) => (
-              <Picker.Item style={{marginVertical: 0}} key={index} label={item} value={item}
-            
+            {NombresDeEspecialidades.map((item, index) => (
+              <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
+
               />
             ))}
           </Picker>
@@ -182,7 +186,7 @@ const [idNombresEspecialidad, setIdNombresEspecialidad] = useState<string[]>([])
             console.log('se realizo la consulta de orden de consultaaaa');
 
           }}
-    
+
           label=" Solicitar Orden de consulta pa"
         />
       </View>

@@ -114,20 +114,20 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     const obtenerIdsEspecialidades = (respuestaApi:string) =>{
       try{
       const respuesta = JSON.parse(respuestaApi);
-      const idsEspecialidades:any[] = [];       
+      const infoEspecialidades:any[] = [];       
 
       respuesta.data.forEach((especialidad: any ) => {
         const especialidadObj = {
           idPrestacion: especialidad.idPrestacion,
           nombreParaAfiliado: especialidad.nombreParaAfiliado
       };
-      idsEspecialidades.push(especialidadObj);
+      infoEspecialidades.push(especialidadObj);
       /*   const arrayEspecialidad = [especialidad.idPrestacion, especialidad.nombreParaAfiliado,]
         idsEspecialidades.push(arrayEspecialidad); */
        
       });
       
-      return idsEspecialidades;
+      return infoEspecialidades;
     } catch(error){
       console.log('error en la funcion obtenerIdsFamiliares');
       return []
