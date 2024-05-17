@@ -17,92 +17,6 @@ export const ConsultaScreenFinal = () => {
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades, ObtenerPrestadores } = useAuthStore();
 
 
-  //--------------------- LOGICA PARA EL SELECT DE ESPECIALIDAD ELEGIDA-------------------------------------->
-  //
-  //useStates: State 1 (NombresDeEspecialidades): para guardar un listado de solamente NOMBRES de especialidades (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (EspecialidadesObtenidasObjeto): datos de las especialidades obtenidas de la consulta (nombre y id). state 3(SelectedEspecialidadNombre): nombre de la especialidad seleccionada. state4(EspecialidadSeleccionadaDatos) : nombre y id de la especialidad seleccionada. 
-  const [NombresDeEspecialidades, setNombresDeEspecialidades] = useState<string[]>([]);
-  const [EspecialidadesObtenidasObjeto, setEspecialidadesObtenidasObjeto] = useState<string[]>([]); // 
-  const [SelectedEspecialidadNombre, setSelectedEspecialidadNombre] = useState<string | null>(null);
-  const [EspecialidadSeleccionadaDatos, setEspecialidadSeleccionadaDatos] = useState<string[]>([]);
-  const [IdEspecialidadElegida, setIdEspecialidadElegida] = useState<string>('Seleccione familiar y especialidad');
-
-// coloco la funcion aca para que sea accesible al handleselectEspecialidad:
-
-const obtenerPrestadoresConsulta = async () => {
-  try {
-   /*  console.log('----x----x------idAfiliado --x--x-x-->:', idAfiliado);
-    console.log('x----x------idAfiliadoTitular --x--x-x-->:', idAfiliadoTitular);
-    console.log('x----x------IdEspecialidadElegida--x--x-x-->:', IdEspecialidadElegida); */
-    if (idAfiliado !== undefined && idAfiliadoTitular !== undefined && IdEspecialidadElegida !== undefined) {
-      const PrestadoresObtenidos = await ObtenerPrestadores(idAfiliado, idAfiliadoTitular, IdEspecialidadElegida);
-      setPrestadoresObtenidosObjeto(PrestadoresObtenidos);
-      const nombresPrestadores = PrestadoresObtenidos.map((prestador: any) => prestador.nombreParaAfiliado);
-      setNombresDePrestadores(nombresPrestadores)
-      return PrestadoresObtenidos
-
-    } else {
-      console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades.');
-    }
-  } catch (error) {
-    console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades desde el ConsultaScreen.');
-  }
-};
-
-
-  const handleSelectEspecialidad = (itemValue: string | number, itemIndex: number) => {
-    setSelectedEspecialidadNombre(NombresDeEspecialidades[itemIndex]);
-    const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === itemValue);
-    if (EspecialidadEncontrada) {
-      setEspecialidadSeleccionadaDatos(EspecialidadEncontrada)
-      const { nombreParaAfiliado, idPrestacion }: { nombreParaAfiliado: string, idPrestacion: string } = EspecialidadEncontrada;
-      console.log('Nombre de la prestacion:', nombreParaAfiliado);
-      console.log('ID de la Prestacion:', idPrestacion);
-      
-      setIdEspecialidadElegida(idPrestacion)
-
-     /*  setTimeout(() => {
-        if (IdEspecialidadElegida) {
-          try {
-            obtenerPrestadoresConsulta()
-          } catch (error) {
-            console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades desde el ConsultaScreen.');
-          }
-        }
-      }, 3000); */
-
-      
-  }
-
-
-  };
-
-  //---------------------LOGICA PARA EL SELECT DE PRESTADOR ELEGIDO-------------------------------------->
-  const [PrestadoresObtenidosObjeto, setPrestadoresObtenidosObjeto] = useState<string[]>([]);
-  const [NombresDePrestadores, setNombresDePrestadores] = useState<string[]>([]);
-  const [SelectedPrestadorNombre, setSelectedPrestadorNombre] = useState<string | null>(null);
-  const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
-  const [IdPrestadorElegido, setIdPrestadorElegido] = useState<string>('');
-
-  const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
-    setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
-    const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);
-    if (PrestadorEncontrado) {
-      setPrestadorSeleccionadoDatos(PrestadorEncontrado)
-      const { prestador, idPrestador }: { prestador: string, idPrestador: string } = PrestadorEncontrado;
-      console.log('Nombre del Prestador:', prestador);
-      console.log('ID del Prestador:', idPrestador);
-      setIdPrestadorElegido(idPrestador)
-    } else {
-      console.log('No se encontró la especialidad');
-
-    }
-
-  };
-
-
-
-
-
   //---------------------LOGICA PARA EL SELECT DE FAMILIAR ELEGIDO-------------------------------------->
   //useStates: State 1 (nombresDeFamiliares): para guardar un listado de solamente NOMBRES de Familiares (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (FamiliaresObtenidosObjeto): datos de los familiares obtenidos de la consulta (nombre y id). State 3(selectedFamiliarNombre): nombre del familiar seleccionado. State4(FamiliarSeleccionadoDatos) : nombre y id del familiar seleccionado. 
   const [nombresDeFamiliares, setNombresDeFamiliares] = useState<string[]>([]);
@@ -125,18 +39,62 @@ const obtenerPrestadoresConsulta = async () => {
 
   };
 
-  //---------------------FAMILIAR ELEGIDO- HASTA ACÀ------------------------------------->
+
+  //--------------------- LOGICA PARA EL SELECT DE ESPECIALIDAD ELEGIDA-------------------------------------->
+  //
+  //useStates: State 1 (NombresDeEspecialidades): para guardar un listado de solamente NOMBRES de especialidades (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (EspecialidadesObtenidasObjeto): datos de las especialidades obtenidas de la consulta (nombre y id). state 3(SelectedEspecialidadNombre): nombre de la especialidad seleccionada. state4(EspecialidadSeleccionadaDatos) : nombre y id de la especialidad seleccionada. 
+  const [NombresDeEspecialidades, setNombresDeEspecialidades] = useState<string[]>([]);
+  const [EspecialidadesObtenidasObjeto, setEspecialidadesObtenidasObjeto] = useState<string[]>([]); // 
+  const [SelectedEspecialidadNombre, setSelectedEspecialidadNombre] = useState<string | null>(null);
+  const [EspecialidadSeleccionadaDatos, setEspecialidadSeleccionadaDatos] = useState<string[]>([]);
+  const [IdEspecialidadElegida, setIdEspecialidadElegida] = useState<string>('');
+
+  const handleSelectEspecialidad = (itemValue: string | number, itemIndex: number) => {
+    setSelectedEspecialidadNombre(NombresDeEspecialidades[itemIndex]);
+    const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === itemValue);
+    if (EspecialidadEncontrada) {
+      setEspecialidadSeleccionadaDatos(EspecialidadEncontrada)
+      const { nombreParaAfiliado, idPrestacion }: { nombreParaAfiliado: string, idPrestacion: string } = EspecialidadEncontrada;
+      //podemos luego guardar estas constantes en el context.
+      setIdEspecialidadElegida(idPrestacion)
+      
+  }
+
+
+  };
+
+  //---------------------LOGICA PARA EL SELECT DE PRESTADOR ELEGIDO-------------------------------------->
+  const [PrestadoresObtenidosObjeto, setPrestadoresObtenidosObjeto] = useState<string[]>([]);
+  const [NombresDePrestadores, setNombresDePrestadores] = useState<string[]>([]);
+  const [SelectedPrestadorNombre, setSelectedPrestadorNombre] = useState<string | null>(null);
+  const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
+  const [IdPrestadorElegido, setIdPrestadorElegido] = useState<string>('');
+
+  const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
+    setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
+    const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);
+    if (PrestadorEncontrado) {
+      setPrestadorSeleccionadoDatos(PrestadorEncontrado) 
+      const { prestador, idPrestador }: { prestador: string, idPrestador: string } = PrestadorEncontrado;
+      console.log('Nombre del Prestador:', prestador);
+      console.log('ID del Prestador:', idPrestador);
+      setIdPrestadorElegido(idPrestador)
+    } else {
+      console.log('No se encontró la especialidad');
+
+    }
+
+  };
+
+
 
 
 
   useEffect(() => {
-    /*     console.log('el familiar FamiliarSeleccionadoDatos --x--x-x-->:', FamiliarSeleccionadoDatos); 
-        console.log('la especialidad EspecialidadSeleccionadaDatos --x--x-x-->:', EspecialidadSeleccionadaDatos);  */
-  /*   console.log('los nombresPrestadores --x--x-x-->:', NombresDePrestadores);
-    console.log('el useState IdPrestadorElegido --x--x-x-->:', IdPrestadorElegido);
-    console.log('el useState PrestadoresObtenidosObjeto --x--x-x-->:', PrestadoresObtenidosObjeto);
-    console.log('el useState IdEspecialidadElegida--x--x-x-->:', IdEspecialidadElegida); */
-console.log('PrestadorSeleccionadoDatos------>>>', PrestadorSeleccionadoDatos);
+   
+console.log('FamiliarSeleccionadoDatos------>>>', FamiliarSeleccionadoDatos);
+console.log('EspecialidadSeleccionadaDatos------>>>', EspecialidadSeleccionadaDatos);
+console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSeleccionadoDatos);
 
     const obtenerFamiliaresConsulta = async () => {
 
@@ -146,7 +104,9 @@ console.log('PrestadorSeleccionadoDatos------>>>', PrestadorSeleccionadoDatos);
           /*      console.log('familiares obtenidos objeto datos--->', FamiliaresObtenidosObjeto); */
 
           setFamiliaresObtenidosObjeto(FamiliaresObtenidosObjeto);
-          const nombresFamiliares = FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre);
+          const mensajePredeterminado = 'Desliza hacia abajo';
+          const nombresFamiliares = [mensajePredeterminado, ...FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre)];
+          /* const nombresFamiliares = FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre); */
           setNombresDeFamiliares(nombresFamiliares)
 
           return FamiliaresObtenidosObjeto
@@ -163,7 +123,8 @@ console.log('PrestadorSeleccionadoDatos------>>>', PrestadorSeleccionadoDatos);
         if (idAfiliado !== undefined && idAfiliadoTitular !== undefined) {
           const especialidadesObtenidas = await ObtenerEspecialidades(idAfiliado, idAfiliadoTitular);
           setEspecialidadesObtenidasObjeto(especialidadesObtenidas);
-          const nombresEspecialidades = especialidadesObtenidas.map((especialidad) => especialidad.nombreParaAfiliado);
+          const mensajePredeterminado = 'Desliza hacia abajo';
+          const nombresEspecialidades = [mensajePredeterminado, ...especialidadesObtenidas.map((especialidad) => especialidad.nombreParaAfiliado)];
           setNombresDeEspecialidades(nombresEspecialidades)
           return especialidadesObtenidas
 
@@ -176,15 +137,12 @@ console.log('PrestadorSeleccionadoDatos------>>>', PrestadorSeleccionadoDatos);
     };
     const obtenerPrestadoresConsulta = async () => {
       try {
-        /* console.log('----x----x------idAfiliado --x--x-x-->:', idAfiliado);
-        console.log('x----x------idAfiliadoTitular --x--x-x-->:', idAfiliadoTitular);*/
-        console.log('x----x------IdEspecialidadElegida desde el useEffect la primera vez es el inicial--x--x-x-->:', IdEspecialidadElegida); 
+       
         if (idAfiliado !== undefined && idAfiliadoTitular !== undefined && IdEspecialidadElegida !== undefined)  {
           const PrestadoresObtenidos: any = await ObtenerPrestadores(idAfiliado, idAfiliadoTitular, IdEspecialidadElegida);
           setPrestadoresObtenidosObjeto(PrestadoresObtenidos);
           const nombresPrestadores = PrestadoresObtenidos.map((prestador: any) => prestador.prestador);
-          console.log('x----x------nombresPrestadores--x--x-x-->:', nombresPrestadores); 
-          if (nombresPrestadores[0] === "No se encontraron prestadores para la especialidad indicada.") {
+           if (nombresPrestadores[0] === "No se encontraron prestadores para la especialidad indicada.") {
             setNombresDePrestadores(["Elija familiar y especialidad"]);
           } else {
             setNombresDePrestadores(nombresPrestadores);
@@ -203,7 +161,7 @@ console.log('PrestadorSeleccionadoDatos------>>>', PrestadorSeleccionadoDatos);
     obtenerFamiliaresConsulta();
     obtenerEspecialidadesConsulta();
     obtenerPrestadoresConsulta();
-  }, [selectedFamiliarNombre, SelectedEspecialidadNombre, IdEspecialidadElegida, SelectedPrestadorNombre])
+  }, [selectedFamiliarNombre, SelectedEspecialidadNombre, /* IdEspecialidadElegida,*/ SelectedPrestadorNombre ])
 
 
 
