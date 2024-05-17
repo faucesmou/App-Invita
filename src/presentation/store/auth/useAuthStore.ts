@@ -39,6 +39,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   idAfiliadoTitular: undefined,
   idsFamiliares:[],
   idsEspecialidades:undefined,
+  idPrestacion:undefined,
 
 
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
@@ -147,6 +148,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   },
   ObtenerPrestadores: async (idAfiliado: string, idAfiliadoTitular: string, idPrestacion: string): Promise<string[]> => {
     //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
+     
     const obtenerPrestadoresObjeto = (respuestaApi:string) =>{
       try{
       const respuesta = JSON.parse(respuestaApi);
@@ -170,9 +172,14 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     }}
 
     try {
-      const grupoPrestadores = await axios.get(`https://andessalud.createch.com.ar/api/obtenerPrestador?idAfiliado${idAfiliado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}`)
+   /*    console.log('----x----x------idAfiliado --x--x-x-- desde el useAuthStore>:', idAfiliado);
+        console.log('x----x------idAfiliadoTitular --x--x-x-->:', idAfiliadoTitular);
+        console.log('x----x------IdEspecialidadElegida--x--x-x--> ACAACACACACA--------------->>>:', idPrestacion); */
+
+      const grupoPrestadores = await axios.get(`https://andessalud.createch.com.ar/api/obtenerPrestador?idAfiliado=${idAfiliado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}`)
+/*       const grupoPrestadores = await axios.get(`https://andessalud.createch.com.ar/api/obtenerPrestador?idAfiliado=C9D98A02-B545-4FA9-871D-54A1687EE796&idAfiliadoTitular=301936D8-6482-4625-82DD-38A932A4FC5A&idPrestacion=A2C83163-5CCA-40D8-B577-2FCC19E4FAF3`) */
     const informacionPrestadores = obtenerPrestadoresObjeto(JSON.stringify(grupoPrestadores.data))
-    console.log('el useState informacionPrestadores --&&&----&&--&&-->:', informacionPrestadores);
+    /* console.log('el useState informacionPrestadores --&&&----&&--&&-->:', informacionPrestadores); */
     return informacionPrestadores; 
   } catch (error) {
       console.log('ha ocurrido un error al obtener informacionPrestadores');

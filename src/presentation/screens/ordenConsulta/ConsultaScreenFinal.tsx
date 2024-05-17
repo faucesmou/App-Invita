@@ -24,27 +24,60 @@ export const ConsultaScreenFinal = () => {
   const [EspecialidadesObtenidasObjeto, setEspecialidadesObtenidasObjeto] = useState<string[]>([]); // 
   const [SelectedEspecialidadNombre, setSelectedEspecialidadNombre] = useState<string | null>(null);
   const [EspecialidadSeleccionadaDatos, setEspecialidadSeleccionadaDatos] = useState<string[]>([]);
-  const [IdEspecialidadElegida, setIdEspecialidadElegida] = useState<string>('');
- 
+  const [IdEspecialidadElegida, setIdEspecialidadElegida] = useState<string>('Seleccione familiar y especialidad');
+
+// coloco la funcion aca para que sea accesible al handleselectEspecialidad:
+
+const obtenerPrestadoresConsulta = async () => {
+  try {
+   /*  console.log('----x----x------idAfiliado --x--x-x-->:', idAfiliado);
+    console.log('x----x------idAfiliadoTitular --x--x-x-->:', idAfiliadoTitular);
+    console.log('x----x------IdEspecialidadElegida--x--x-x-->:', IdEspecialidadElegida); */
+    if (idAfiliado !== undefined && idAfiliadoTitular !== undefined && IdEspecialidadElegida !== undefined) {
+      const PrestadoresObtenidos = await ObtenerPrestadores(idAfiliado, idAfiliadoTitular, IdEspecialidadElegida);
+      setPrestadoresObtenidosObjeto(PrestadoresObtenidos);
+      const nombresPrestadores = PrestadoresObtenidos.map((prestador: any) => prestador.nombreParaAfiliado);
+      setNombresDePrestadores(nombresPrestadores)
+      return PrestadoresObtenidos
+
+    } else {
+      console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades.');
+    }
+  } catch (error) {
+    console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades desde el ConsultaScreen.');
+  }
+};
+
+
   const handleSelectEspecialidad = (itemValue: string | number, itemIndex: number) => {
     setSelectedEspecialidadNombre(NombresDeEspecialidades[itemIndex]);
-    const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === itemValue);    
+    const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === itemValue);
     if (EspecialidadEncontrada) {
       setEspecialidadSeleccionadaDatos(EspecialidadEncontrada)
       const { nombreParaAfiliado, idPrestacion }: { nombreParaAfiliado: string, idPrestacion: string } = EspecialidadEncontrada;
       console.log('Nombre de la prestacion:', nombreParaAfiliado);
       console.log('ID de la Prestacion:', idPrestacion);
-      setIdEspecialidadElegida(idPrestacion)
       
-    } else {
-      console.log('No se encontró la especialidad');
+      setIdEspecialidadElegida(idPrestacion)
 
-    }
+     /*  setTimeout(() => {
+        if (IdEspecialidadElegida) {
+          try {
+            obtenerPrestadoresConsulta()
+          } catch (error) {
+            console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades desde el ConsultaScreen.');
+          }
+        }
+      }, 3000); */
+
+      
+  }
+
 
   };
 
   //---------------------LOGICA PARA EL SELECT DE PRESTADOR ELEGIDO-------------------------------------->
-  const [PrestadoresObtenidosObjeto, setPrestadoresObtenidosObjeto] = useState<string[]>([]); 
+  const [PrestadoresObtenidosObjeto, setPrestadoresObtenidosObjeto] = useState<string[]>([]);
   const [NombresDePrestadores, setNombresDePrestadores] = useState<string[]>([]);
   const [SelectedPrestadorNombre, setSelectedPrestadorNombre] = useState<string | null>(null);
   const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
@@ -52,7 +85,7 @@ export const ConsultaScreenFinal = () => {
 
   const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
     setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
-    const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);    
+    const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);
     if (PrestadorEncontrado) {
       setPrestadorSeleccionadoDatos(PrestadorEncontrado)
       const { prestador, idPrestador }: { prestador: string, idPrestador: string } = PrestadorEncontrado;
@@ -71,7 +104,7 @@ export const ConsultaScreenFinal = () => {
 
 
   //---------------------LOGICA PARA EL SELECT DE FAMILIAR ELEGIDO-------------------------------------->
-//useStates: State 1 (nombresDeFamiliares): para guardar un listado de solamente NOMBRES de Familiares (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (FamiliaresObtenidosObjeto): datos de los familiares obtenidos de la consulta (nombre y id). State 3(selectedFamiliarNombre): nombre del familiar seleccionado. State4(FamiliarSeleccionadoDatos) : nombre y id del familiar seleccionado. 
+  //useStates: State 1 (nombresDeFamiliares): para guardar un listado de solamente NOMBRES de Familiares (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (FamiliaresObtenidosObjeto): datos de los familiares obtenidos de la consulta (nombre y id). State 3(selectedFamiliarNombre): nombre del familiar seleccionado. State4(FamiliarSeleccionadoDatos) : nombre y id del familiar seleccionado. 
   const [nombresDeFamiliares, setNombresDeFamiliares] = useState<string[]>([]);
   const [FamiliaresObtenidosObjeto, setFamiliaresObtenidosObjeto] = useState<string[]>([]); // 
   const [selectedFamiliarNombre, setSelectedFamiliarNombre] = useState<string | null>(null);
@@ -79,7 +112,7 @@ export const ConsultaScreenFinal = () => {
 
   const handleSelectFamiliar = (itemValue: string | number, itemIndex: number) => {
     setSelectedFamiliarNombre(nombresDeFamiliares[itemIndex]);
-    const familiarEncontrado: any = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === itemValue);    
+    const familiarEncontrado: any = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === itemValue);
     if (familiarEncontrado) {
       setFamiliarSeleccionadoDatos(familiarEncontrado)
       const { apellidoYNombre, idAfiliado }: { apellidoYNombre: string, idAfiliado: string } = familiarEncontrado;
@@ -92,25 +125,26 @@ export const ConsultaScreenFinal = () => {
 
   };
 
- //---------------------FAMILIAR ELEGIDO- HASTA ACÀ------------------------------------->
+  //---------------------FAMILIAR ELEGIDO- HASTA ACÀ------------------------------------->
 
 
 
   useEffect(() => {
-/*     console.log('el familiar FamiliarSeleccionadoDatos --x--x-x-->:', FamiliarSeleccionadoDatos); 
-    console.log('la especialidad EspecialidadSeleccionadaDatos --x--x-x-->:', EspecialidadSeleccionadaDatos);  */
-    console.log('los nombresPrestadores --x--x-x-->:', NombresDePrestadores); 
-    console.log('el useState IdPrestadorElegido --x--x-x-->:', IdPrestadorElegido); 
-    console.log('el useState PrestadoresObtenidosObjeto --x--x-x-->:', PrestadoresObtenidosObjeto); 
-    console.log('el useState IdEspecialidadElegida--x--x-x-->:', IdEspecialidadElegida); 
- 
+    /*     console.log('el familiar FamiliarSeleccionadoDatos --x--x-x-->:', FamiliarSeleccionadoDatos); 
+        console.log('la especialidad EspecialidadSeleccionadaDatos --x--x-x-->:', EspecialidadSeleccionadaDatos);  */
+  /*   console.log('los nombresPrestadores --x--x-x-->:', NombresDePrestadores);
+    console.log('el useState IdPrestadorElegido --x--x-x-->:', IdPrestadorElegido);
+    console.log('el useState PrestadoresObtenidosObjeto --x--x-x-->:', PrestadoresObtenidosObjeto);
+    console.log('el useState IdEspecialidadElegida--x--x-x-->:', IdEspecialidadElegida); */
+console.log('PrestadorSeleccionadoDatos------>>>', PrestadorSeleccionadoDatos);
+
     const obtenerFamiliaresConsulta = async () => {
 
       try {
         if (idAfiliado !== undefined) {
           const FamiliaresObtenidosObjeto = await ObtenerFamiliares(idAfiliado);
-     /*      console.log('familiares obtenidos objeto datos--->', FamiliaresObtenidosObjeto); */
-          
+          /*      console.log('familiares obtenidos objeto datos--->', FamiliaresObtenidosObjeto); */
+
           setFamiliaresObtenidosObjeto(FamiliaresObtenidosObjeto);
           const nombresFamiliares = FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre);
           setNombresDeFamiliares(nombresFamiliares)
@@ -142,14 +176,21 @@ export const ConsultaScreenFinal = () => {
     };
     const obtenerPrestadoresConsulta = async () => {
       try {
-        console.log('----x----x------idAfiliado --x--x-x-->:', idAfiliado); 
-    console.log('x----x------idAfiliadoTitular --x--x-x-->:', idAfiliadoTitular); 
-    console.log('x----x------IdEspecialidadElegida--x--x-x-->:', IdEspecialidadElegida); 
-        if (idAfiliado !== undefined && idAfiliadoTitular !== undefined && IdEspecialidadElegida !== undefined) {
-          const PrestadoresObtenidos = await ObtenerPrestadores(idAfiliado, idAfiliadoTitular, IdEspecialidadElegida);
+        /* console.log('----x----x------idAfiliado --x--x-x-->:', idAfiliado);
+        console.log('x----x------idAfiliadoTitular --x--x-x-->:', idAfiliadoTitular);*/
+        console.log('x----x------IdEspecialidadElegida desde el useEffect la primera vez es el inicial--x--x-x-->:', IdEspecialidadElegida); 
+        if (idAfiliado !== undefined && idAfiliadoTitular !== undefined && IdEspecialidadElegida !== undefined)  {
+          const PrestadoresObtenidos: any = await ObtenerPrestadores(idAfiliado, idAfiliadoTitular, IdEspecialidadElegida);
           setPrestadoresObtenidosObjeto(PrestadoresObtenidos);
-          const nombresPrestadores = PrestadoresObtenidos.map((prestador:any) => prestador.nombreParaAfiliado);
-          setNombresDePrestadores(nombresPrestadores)
+          const nombresPrestadores = PrestadoresObtenidos.map((prestador: any) => prestador.prestador);
+          console.log('x----x------nombresPrestadores--x--x-x-->:', nombresPrestadores); 
+          if (nombresPrestadores[0] === "No se encontraron prestadores para la especialidad indicada.") {
+            setNombresDePrestadores(["Elija familiar y especialidad"]);
+          } else {
+            setNombresDePrestadores(nombresPrestadores);
+          }
+          
+          
           return PrestadoresObtenidos
 
         } else {
@@ -162,7 +203,7 @@ export const ConsultaScreenFinal = () => {
     obtenerFamiliaresConsulta();
     obtenerEspecialidadesConsulta();
     obtenerPrestadoresConsulta();
-  }, [selectedFamiliarNombre, SelectedEspecialidadNombre, IdEspecialidadElegida,SelectedPrestadorNombre])
+  }, [selectedFamiliarNombre, SelectedEspecialidadNombre, IdEspecialidadElegida, SelectedPrestadorNombre])
 
 
 
@@ -175,8 +216,8 @@ export const ConsultaScreenFinal = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 20, marginTop: 20, fontSize: 20, textAlign: 'center', backgroundColor: 'orange'}}>Solicitar orden de consulta screenFinal</Text>
-      
+      <Text style={{ marginBottom: 20, marginTop: 20, fontSize: 20, textAlign: 'center', backgroundColor: 'orange' }}>Solicitar orden de consulta screenFinal</Text>
+
       <View
         style={{ flex: 1, backgroundColor: 'green', marginBottom: 25/*  alignItems: 'center' */ }}>
 
@@ -197,9 +238,9 @@ export const ConsultaScreenFinal = () => {
               padding: 0,
               margin: 0,
               color: 'black',
-              alignItems: 'center',            
+              alignItems: 'center',
             }}
-           
+
           >
             {nombresDeFamiliares.map((item, index) => (
               <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
@@ -241,7 +282,7 @@ export const ConsultaScreenFinal = () => {
 
           <Picker
             style={globalStyles.inputIOS}
-            selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : 'seleccione familiar y especialidad'}
+            selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
             onValueChange={(itemValue: string | number, itemIndex: number) =>
               handleSelectPrestador(itemValue, itemIndex)
             }
