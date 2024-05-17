@@ -45,11 +45,11 @@ export const globalStyles = StyleSheet.create({
     },
     inputIOS: {
       padding: 0,
-      height: 70,
+      height: 90,
       color: 'black',
       fontSize: 5,
       fontFamily: 'Quicksand-Light',
-      backgroundColor: 'pink',
+      /* backgroundColor: 'pink', */
     
     },
     containerSelect: {

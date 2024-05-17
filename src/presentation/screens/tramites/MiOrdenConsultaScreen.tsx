@@ -10,6 +10,7 @@ import { BackButton } from '../../components/shared/BackButton'
 import CustomHeader from '../../components/CustomHeader'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader'
+import { useAuthStore } from '../../store/auth/useAuthStore'
 
 
 
@@ -17,6 +18,11 @@ import { FullScreenLoader } from '../../components/ui/FullScreenLoader'
 
 export const MiOrdenConsultaScreen = () => {
 
+  const {  idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado } = useAuthStore();
+  console.log('id idAfiliadoSeleccionado: ', idAfiliadoSeleccionado);
+  console.log(' titular orden de consulta: ',  idAfiliadoTitular );
+  console.log('prestacion: ',  idPrestacion );
+  
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   const { top } = useSafeAreaInsets();
@@ -28,7 +34,7 @@ export const MiOrdenConsultaScreen = () => {
     const OrdenConsultaRequest = async () => {
       try {
         setIsConsulting(true);
-        const response = await axios.get('https://andessalud.createch.com.ar/api/ordenDeConsulta?idAfiliado=1E7DC71B-8D9F-47BF-86C8-2DBAB996AEB6&idAfiliadoTitular=1E7DC71B-8D9F-47BF-86C8-2DBAB996AEB6&idPrestacion=A2C83163-5CCA-40D8-B577-2FCC19E4FAF3&idPrestador=4C0EFE26-4562-488D-9D85-A086DC4A0FA4');
+        const response = await axios.get(`https://andessalud.createch.com.ar/api/ordenDeConsulta?idAfiliado=${idAfiliadoSeleccionado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}&idPrestador=${idPrestador}`);
         const Url = response.data;
         console.log('este es el Url', Url);
         setOrdenConsulta(Url);

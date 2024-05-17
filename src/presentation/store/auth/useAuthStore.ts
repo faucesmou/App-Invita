@@ -20,11 +20,15 @@ export interface AuthState {
   idsFamiliares?:string[];
   idsEspecialidades?:string;
   idPrestacion?: string;
+  idPrestador?: string;
+  idAfiliadoSeleccionado?:string;
   loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
   ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
   ObtenerPrestadores: (idAfiliado: string, idAfiliadoTitular:string, idPrestacion: string)=> Promise<any[]>;
+  GuardarIdPrestador: (idPrestador: string)=> Promise<any[]>;
+  GuardarIdFamiliarSeleccionado: (idAfiliado: string)=> Promise<any[]>;
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
   registerUser: (email: string, password: string, fullName: string) => Promise<void>;
@@ -40,6 +44,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   idsFamiliares:[],
   idsEspecialidades:undefined,
   idPrestacion:undefined,
+  idAfiliadoSeleccionado:undefined,
 
 
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
@@ -148,7 +153,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   },
   ObtenerPrestadores: async (idAfiliado: string, idAfiliadoTitular: string, idPrestacion: string): Promise<string[]> => {
     //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
-     
+    //guardo el id de la especialidad elegida en el context para recuperarla luego en la orden de consulta.
+    set({ idPrestacion: idPrestacion })
     const obtenerPrestadoresObjeto = (respuestaApi:string) =>{
       try{
       const respuesta = JSON.parse(respuestaApi);
@@ -172,12 +178,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     }}
 
     try {
-   /*    console.log('----x----x------idAfiliado --x--x-x-- desde el useAuthStore>:', idAfiliado);
-        console.log('x----x------idAfiliadoTitular --x--x-x-->:', idAfiliadoTitular);
-        console.log('x----x------IdEspecialidadElegida--x--x-x--> ACAACACACACA--------------->>>:', idPrestacion); */
 
       const grupoPrestadores = await axios.get(`https://andessalud.createch.com.ar/api/obtenerPrestador?idAfiliado=${idAfiliado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}`)
-/*       const grupoPrestadores = await axios.get(`https://andessalud.createch.com.ar/api/obtenerPrestador?idAfiliado=C9D98A02-B545-4FA9-871D-54A1687EE796&idAfiliadoTitular=301936D8-6482-4625-82DD-38A932A4FC5A&idPrestacion=A2C83163-5CCA-40D8-B577-2FCC19E4FAF3`) */
     const informacionPrestadores = obtenerPrestadoresObjeto(JSON.stringify(grupoPrestadores.data))
     /* console.log('el useState informacionPrestadores --&&&----&&--&&-->:', informacionPrestadores); */
     return informacionPrestadores; 
@@ -186,6 +188,27 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
      return [];
     }
   },
+  GuardarIdPrestador: async ( idPrestador: string): Promise<string[]> => {
+    try {
+      set({ idPrestador: idPrestador })
+ 
+    return []; 
+  } catch (error) {
+      console.log('ha ocurrido un error al guardar idPrestador en el useAuthStore');
+     return [];
+    }
+  },
+  GuardarIdFamiliarSeleccionado: async ( idAfiliado: string): Promise<string[]> => {
+    try {
+      set({ idAfiliadoSeleccionado: idAfiliado })
+ 
+    return []; 
+  } catch (error) {
+      console.log('ha ocurrido un error al guardar idAfiliado en el useAuthStore');
+     return [];
+    }
+  },
+
   /* set({ idsEspecialidades: idsEspecialidades })esto no esta funcionando resolver */
   registerUser: async (email: string, password: string, fullName: string) => {
     try {

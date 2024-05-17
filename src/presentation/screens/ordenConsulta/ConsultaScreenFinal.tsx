@@ -14,7 +14,7 @@ import { BackButton } from '../../components/shared/BackButton'
 
 export const ConsultaScreenFinal = () => {
 
-  const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades, ObtenerPrestadores } = useAuthStore();
+  const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades, ObtenerPrestadores, GuardarIdPrestador, GuardarIdFamiliarSeleccionado } = useAuthStore();
 
 
   //---------------------LOGICA PARA EL SELECT DE FAMILIAR ELEGIDO-------------------------------------->
@@ -32,6 +32,7 @@ export const ConsultaScreenFinal = () => {
       const { apellidoYNombre, idAfiliado }: { apellidoYNombre: string, idAfiliado: string } = familiarEncontrado;
       console.log('Apellido y Nombre:', apellidoYNombre);
       console.log('ID de Afiliado:', idAfiliado);
+      GuardarIdFamiliarSeleccionado(idAfiliado);
     } else {
       console.log('No se encontró el familiar');
 
@@ -79,6 +80,7 @@ export const ConsultaScreenFinal = () => {
       console.log('Nombre del Prestador:', prestador);
       console.log('ID del Prestador:', idPrestador);
       setIdPrestadorElegido(idPrestador)
+      GuardarIdPrestador(idPrestador)
     } else {
       console.log('No se encontró la especialidad');
 
@@ -174,13 +176,13 @@ console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSel
 
       <BackButton />
 
-      <Text style={{ marginBottom: 20, marginTop: 20, fontSize: 20, textAlign: 'center', backgroundColor: 'orange' }}>Solicitar orden de consulta screenFinal</Text>
+      <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', /* backgroundColor: 'orange' */ }}>Solicitar orden de consulta</Text>
 
       <View
-        style={{ flex: 1, backgroundColor: 'green', marginBottom: 25/*  alignItems: 'center' */ }}>
+        style={{ flex: 1/* , backgroundColor: 'green' */, marginBottom: 25, marginTop: 35/*  alignItems: 'center' */ }}>
 
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', backgroundColor: 'yellow', }}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 10 }}>Selecciona un familiar</Text>
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center',/*  backgroundColor: 'yellow', */ }}>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Selecciona un familiar</Text>
 
           <Picker
             style={globalStyles.inputIOS}/* esto no funciona */
@@ -208,7 +210,7 @@ console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSel
           </Picker>
         </View>
         {/* -----------------ESPECIALIDAD---------------- */}
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', backgroundColor: 'yellow', }}>
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center',/*  backgroundColor: 'yellow', */ }}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 10 }}>Selecciona una Especialidad</Text>
 
           <Picker
@@ -235,7 +237,7 @@ console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSel
           </Picker>
         </View>
         {/* -----------------PRESTADOR---------------- */}
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', backgroundColor: 'yellow', }}>
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', /* backgroundColor: 'yellow', */ }}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 10 }}>Selecciona un Prestador</Text>
 
           <Picker
@@ -264,13 +266,13 @@ console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSel
 
 
         <PrimaryButton
-          /*  onPress={() => navigation.navigate('MiOrdenConsulta')} */
-          onPress={() => {
+           onPress={() => navigation.navigate('MiOrdenConsulta')}
+         /*  onPress={() => {
             console.log('se realizo la consulta de orden de consultaaaa');
 
-          }}
+          }} */
 
-          label=" Solicitar Orden de consulta pa"
+          label=" Solicitar Orden de consulta"
         />
       </View>
 
