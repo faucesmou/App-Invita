@@ -11,6 +11,7 @@ export const globalColors = {
     profile: '#577CEE',
     profile2:'#3457e6',
     orange: '#ed843e',
+    select: '#efe3e3',
   
 
     background:'#fff', 
@@ -31,7 +32,7 @@ export const globalStyles = StyleSheet.create({
         margin: 10,
       },
     pickerInput:{
-    backgroundColor: 'pink',
+   /*  backgroundColor: 'pink', */
     color: 'white',
     width:'100%',
     height:'50%',
@@ -45,12 +46,26 @@ export const globalStyles = StyleSheet.create({
     },
     inputIOS: {
       padding: 0,
-      height: 90,
+      width: '100%',
+      height: 50,
       color: 'black',
       fontSize: 5,
       fontFamily: 'Quicksand-Light',
-      /* backgroundColor: 'pink', */
-    
+      borderRadius: 15,
+     backgroundColor: '#efe3e3',
+  
+    },
+    pickerWrapper:{
+      width: '100%', // Define el ancho del contenedor
+      height: 50,
+      marginBottom:10,
+      padding: 0,
+      borderRadius: 15,
+      backgroundColor: 'white', // Fondo para ver el borderRadius
+      shadowColor: '#000', // Color de la sombra
+      shadowOffset: { width: -5, height: 6 }, // Desplazamiento de la sombra
+      shadowOpacity: 0.5, // Opacidad de la sombra
+      shadowRadius: 8, // Radio de la sombra
     },
     containerSelect: {
         flexDirection: 'row',

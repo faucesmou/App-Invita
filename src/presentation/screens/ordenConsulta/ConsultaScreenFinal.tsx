@@ -58,8 +58,8 @@ export const ConsultaScreenFinal = () => {
       const { nombreParaAfiliado, idPrestacion }: { nombreParaAfiliado: string, idPrestacion: string } = EspecialidadEncontrada;
       //podemos luego guardar estas constantes en el context.
       setIdEspecialidadElegida(idPrestacion)
-      
-  }
+
+    }
 
 
   };
@@ -75,7 +75,7 @@ export const ConsultaScreenFinal = () => {
     setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
     const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);
     if (PrestadorEncontrado) {
-      setPrestadorSeleccionadoDatos(PrestadorEncontrado) 
+      setPrestadorSeleccionadoDatos(PrestadorEncontrado)
       const { prestador, idPrestador }: { prestador: string, idPrestador: string } = PrestadorEncontrado;
       console.log('Nombre del Prestador:', prestador);
       console.log('ID del Prestador:', idPrestador);
@@ -93,10 +93,10 @@ export const ConsultaScreenFinal = () => {
 
 
   useEffect(() => {
-   
-console.log('FamiliarSeleccionadoDatos------>>>', FamiliarSeleccionadoDatos);
-console.log('EspecialidadSeleccionadaDatos------>>>', EspecialidadSeleccionadaDatos);
-console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSeleccionadoDatos);
+
+    console.log('FamiliarSeleccionadoDatos------>>>', FamiliarSeleccionadoDatos);
+    console.log('EspecialidadSeleccionadaDatos------>>>', EspecialidadSeleccionadaDatos);
+    console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSeleccionadoDatos);
 
     const obtenerFamiliaresConsulta = async () => {
 
@@ -139,18 +139,18 @@ console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSel
     };
     const obtenerPrestadoresConsulta = async () => {
       try {
-       
-        if (idAfiliado !== undefined && idAfiliadoTitular !== undefined && IdEspecialidadElegida !== undefined)  {
+
+        if (idAfiliado !== undefined && idAfiliadoTitular !== undefined && IdEspecialidadElegida !== undefined) {
           const PrestadoresObtenidos: any = await ObtenerPrestadores(idAfiliado, idAfiliadoTitular, IdEspecialidadElegida);
           setPrestadoresObtenidosObjeto(PrestadoresObtenidos);
           const nombresPrestadores = PrestadoresObtenidos.map((prestador: any) => prestador.prestador);
-           if (nombresPrestadores[0] === "No se encontraron prestadores para la especialidad indicada.") {
+          if (nombresPrestadores[0] === "No se encontraron prestadores para la especialidad indicada.") {
             setNombresDePrestadores(["Elija familiar y especialidad"]);
           } else {
             setNombresDePrestadores(nombresPrestadores);
           }
-          
-          
+
+
           return PrestadoresObtenidos
 
         } else {
@@ -163,7 +163,7 @@ console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSel
     obtenerFamiliaresConsulta();
     obtenerEspecialidadesConsulta();
     obtenerPrestadoresConsulta();
-  }, [selectedFamiliarNombre, SelectedEspecialidadNombre, /* IdEspecialidadElegida,*/ SelectedPrestadorNombre ])
+  }, [selectedFamiliarNombre, SelectedEspecialidadNombre, /* IdEspecialidadElegida,*/ SelectedPrestadorNombre])
 
 
 
@@ -179,98 +179,103 @@ console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSel
       <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', /* backgroundColor: 'orange' */ }}>Solicitar orden de consulta</Text>
 
       <View
-        style={{ flex: 1/* , backgroundColor: 'green' */, marginBottom: 25, marginTop: 35/*  alignItems: 'center' */ }}>
+        style={{ flex: 1/* , backgroundColor: 'green' */, marginBottom: 30, marginTop: 35, /*  alignItems: 'center' */ }}>
 
         <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center',/*  backgroundColor: 'yellow', */ }}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Selecciona un familiar</Text>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5, /* backgroundColor: 'yellow' */ }}>Selecciona un familiar</Text>
+          <View style={globalStyles.pickerWrapper}>
+            <Picker
+              style={globalStyles.inputIOS}
+              selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
+              onValueChange={(itemValue: string | number, itemIndex: number) =>
+                handleSelectFamiliar(itemValue, itemIndex)
+              }
+              itemStyle={{
+                fontSize: 16,
+                fontFamily: 'Quicksand-Light',
+                flex: 1,
+                justifyContent: 'center',
+                padding: 0,
+                margin: 0,
+                color: 'black',
+                alignItems: 'center',
+                borderRadius: 15,
 
-          <Picker
-            style={globalStyles.inputIOS}/* esto no funciona */
-            selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
-            onValueChange={(itemValue: string | number, itemIndex: number) =>
-              handleSelectFamiliar(itemValue, itemIndex)
-            }
-            itemStyle={{
-              fontSize: 15,
-              fontFamily: 'Quicksand-Light',
-              flex: 1,
-              justifyContent: 'center',
-              padding: 0,
-              margin: 0,
-              color: 'black',
-              alignItems: 'center',
-            }}
+              }}
 
-          >
-            {nombresDeFamiliares.map((item, index) => (
-              <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
+            >
+              {nombresDeFamiliares.map((item, index) => (
+                <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
 
-              />
-            ))}
-          </Picker>
+                />
+              ))}
+            </Picker>
+          </View>
         </View>
         {/* -----------------ESPECIALIDAD---------------- */}
         <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center',/*  backgroundColor: 'yellow', */ }}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 10 }}>Selecciona una Especialidad</Text>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona una Especialidad</Text>
+          <View style={globalStyles.pickerWrapper}>
+            <Picker
+              style={globalStyles.inputIOS}
+              selectedValue={SelectedEspecialidadNombre !== null ? SelectedEspecialidadNombre : undefined}
+              onValueChange={(itemValue: string | number, itemIndex: number) =>
+                handleSelectEspecialidad(itemValue, itemIndex)
+              }
+              itemStyle={{
+                fontSize: 15,
+                fontFamily: 'Quicksand-Light',
+                flex: 1,
+                padding: 0,
+                margin: 0,
+                color: 'black',
+                alignItems: 'center'
+              }}
+            >
+              {NombresDeEspecialidades.map((item, index) => (
+                <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
 
-          <Picker
-            style={globalStyles.inputIOS}
-            selectedValue={SelectedEspecialidadNombre !== null ? SelectedEspecialidadNombre : undefined}
-            onValueChange={(itemValue: string | number, itemIndex: number) =>
-              handleSelectEspecialidad(itemValue, itemIndex)
-            }
-            itemStyle={{
-              fontSize: 15,
-              fontFamily: 'Quicksand-Light',
-              flex: 1,
-              padding: 0,
-              margin: 0,
-              color: 'black',
-              alignItems: 'center'
-            }}
-          >
-            {NombresDeEspecialidades.map((item, index) => (
-              <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
-
-              />
-            ))}
-          </Picker>
+                />
+              ))}
+            </Picker>
+          </View>
         </View>
         {/* -----------------PRESTADOR---------------- */}
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', /* backgroundColor: 'yellow', */ }}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 10 }}>Selecciona un Prestador</Text>
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25, /* backgroundColor: 'yellow', */ }}>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona un Prestador</Text>
+          <View style={globalStyles.pickerWrapper}>
+            <Picker
+              style={globalStyles.inputIOS}
+              selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
+              onValueChange={(itemValue: string | number, itemIndex: number) =>
+                handleSelectPrestador(itemValue, itemIndex)
+              }
+              itemStyle={{
+                fontSize: 15,
+                fontFamily: 'Quicksand-Light',
+                flex: 1,
+                padding: 0,
+                margin: 0,
+                color: 'black',
+                alignItems: 'center'
+              }}
+            >
+              {NombresDePrestadores.map((item, index) => (
+                <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
 
-          <Picker
-            style={globalStyles.inputIOS}
-            selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
-            onValueChange={(itemValue: string | number, itemIndex: number) =>
-              handleSelectPrestador(itemValue, itemIndex)
-            }
-            itemStyle={{
-              fontSize: 15,
-              fontFamily: 'Quicksand-Light',
-              flex: 1,
-              padding: 0,
-              margin: 0,
-              color: 'black',
-              alignItems: 'center'
-            }}
-          >
-            {NombresDePrestadores.map((item, index) => (
-              <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
-
-              />
-            ))}
-          </Picker>
+                />
+              ))}
+            </Picker>
+          </View>
         </View>
 
 
         <PrimaryButton
-           onPress={() => navigation.navigate('MiOrdenConsulta')}
-         /*  onPress={() => {
-            console.log('se realizo la consulta de orden de consultaaaa');
-
-          }} */
+          onPress={() => navigation.navigate('MiOrdenConsulta')}
+          /*  onPress={() => {
+             console.log('se realizo la consulta de orden de consultaaaa');
+ 
+           }} */
 
           label=" Solicitar Orden de consulta"
         />
