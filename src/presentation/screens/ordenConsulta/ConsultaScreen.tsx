@@ -10,6 +10,7 @@ import CustomHeader from '../../components/CustomHeader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
 import { IndexPath, Layout, Select, SelectItem, SelectGroup, } from '@ui-kitten/components'
 import { BackButton } from '../../components/shared/BackButton'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 /* import { SvgXml } from 'react-native-svg';
 const isotipo = require('../credential/CredentialsData/images/Isotipo.svg'); */
 const tramites = [
@@ -155,10 +156,10 @@ const renderOptionGonzalo = (title): React.ReactElement => (
   //voy a llamar a consulta prestador y mostrarlos en el select.
   
   let nombrePlaceHolder = selectedEspecialidad ? selectedEspecialidad.nombreParaAfiliado : "Seleccione Especialidad";
-
+  const { top } = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
   return (
-    <View style={globalStyles.container}>
+    <View style={[globalStyles.container, { marginTop: top }]}>
 
       <CustomHeader />
 
@@ -166,7 +167,7 @@ const renderOptionGonzalo = (title): React.ReactElement => (
 
       <Text style={{ marginBottom: 20, marginTop: 10, fontSize: 25, textAlign: 'center', }}>Solicitar orden de consulta</Text>
       <View
-        style={{ marginBottom: 250,/*  alignItems: 'center' */ }}>
+        style={{/*  marginBottom: 250, *//*  alignItems: 'center' */ }}>
 
         <View style={{borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center'}}>
         <Text style={{  fontSize: 20, textAlign: 'center' }}>Selecciona un familiar</Text>

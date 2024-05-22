@@ -19,9 +19,9 @@ import { useAuthStore } from '../../store/auth/useAuthStore'
 export const MiOrdenConsultaScreen = () => {
 
   const {  idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado } = useAuthStore();
-  console.log('id idAfiliadoSeleccionado: ', idAfiliadoSeleccionado);
+/*   console.log('id idAfiliadoSeleccionado: ', idAfiliadoSeleccionado);
   console.log(' titular orden de consulta: ',  idAfiliadoTitular );
-  console.log('prestacion: ',  idPrestacion );
+  console.log('prestacion: ',  idPrestacion ); */
   
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 

@@ -179,41 +179,32 @@ export const ConsultaScreenFinal = () => {
       <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', /* backgroundColor: 'orange' */ }}>Solicitar orden de consulta</Text>
 
       <View
-        style={{ flex: 1/* , backgroundColor: 'green' */, marginBottom: 30, marginTop: 35, /*  alignItems: 'center' */ }}>
+        style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 35 }}>
 
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center',/*  backgroundColor: 'yellow', */ }}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5, /* backgroundColor: 'yellow' */ }}>Selecciona un familiar</Text>
+          {/* -----------------FAMILIAR---------------- */}
+
+        <View style={{ /*  backgroundColor: 'yellow', */ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
+          <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper}>
             <Picker
               style={globalStyles.inputIOS}
               selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectFamiliar(itemValue, itemIndex)
-              }
-              itemStyle={{
-                fontSize: 16,
-                fontFamily: 'Quicksand-Light',
-                flex: 1,
-                justifyContent: 'center',
-                padding: 0,
-                margin: 0,
-                color: 'black',
-                alignItems: 'center',
-                borderRadius: 15,
-
-              }}
-
+              }         
+              itemStyle={globalStyles.itemStyle}
             >
               {nombresDeFamiliares.map((item, index) => (
                 <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
-
                 />
               ))}
             </Picker>
           </View>
         </View>
+
         {/* -----------------ESPECIALIDAD---------------- */}
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center',/*  backgroundColor: 'yellow', */ }}>
+
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center'}}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona una Especialidad</Text>
           <View style={globalStyles.pickerWrapper}>
             <Picker
@@ -222,15 +213,7 @@ export const ConsultaScreenFinal = () => {
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectEspecialidad(itemValue, itemIndex)
               }
-              itemStyle={{
-                fontSize: 15,
-                fontFamily: 'Quicksand-Light',
-                flex: 1,
-                padding: 0,
-                margin: 0,
-                color: 'black',
-                alignItems: 'center'
-              }}
+              itemStyle={globalStyles.itemStyle}
             >
               {NombresDeEspecialidades.map((item, index) => (
                 <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
@@ -240,8 +223,10 @@ export const ConsultaScreenFinal = () => {
             </Picker>
           </View>
         </View>
+
         {/* -----------------PRESTADOR---------------- */}
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25, /* backgroundColor: 'yellow', */ }}>
+
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25 }}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona un Prestador</Text>
           <View style={globalStyles.pickerWrapper}>
             <Picker
@@ -250,15 +235,7 @@ export const ConsultaScreenFinal = () => {
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectPrestador(itemValue, itemIndex)
               }
-              itemStyle={{
-                fontSize: 15,
-                fontFamily: 'Quicksand-Light',
-                flex: 1,
-                padding: 0,
-                margin: 0,
-                color: 'black',
-                alignItems: 'center'
-              }}
+              itemStyle={globalStyles.itemStyle}
             >
               {NombresDePrestadores.map((item, index) => (
                 <Picker.Item style={{ marginVertical: 0 }} key={index} label={item} value={item}
@@ -272,11 +249,6 @@ export const ConsultaScreenFinal = () => {
 
         <PrimaryButton
           onPress={() => navigation.navigate('MiOrdenConsulta')}
-          /*  onPress={() => {
-             console.log('se realizo la consulta de orden de consultaaaa');
- 
-           }} */
-
           label=" Solicitar Orden de consulta"
         />
       </View>

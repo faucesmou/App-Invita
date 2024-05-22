@@ -51,9 +51,9 @@ export const TramitesScreen = () => {
 
       <CustomHeader />
       <HamburgerMenu />
-      <Text style={{ marginBottom: 20,  marginTop: 10 ,fontSize: 25, textAlign: 'center',}}>Trámites</Text>
+      <Text style={{ marginBottom: 20,  marginTop: 10 ,fontSize: 25, textAlign: 'center',}}> Mis Trámites</Text>
 
-      <FlatList
+      {/* <FlatList
         data={tramites}
         renderItem={({ item }) => (
           <PrimaryButton
@@ -61,7 +61,7 @@ export const TramitesScreen = () => {
             label={item.name}
           />
         )}
-      />
+      /> */}
       <View
         style={{ marginBottom: 275 }}
       >
@@ -71,12 +71,12 @@ export const TramitesScreen = () => {
           label="Solicitar orden de consulta"
         />
 
-       {/*  <PrimaryButton
-          onPress={() => navigation.navigate('MiOrdenConsulta')}
-          label="Orden de consulta"
-        /> */}
+        <PrimaryButton
+          onPress={() => navigation.navigate('Formularios')}
+          label="Obtener Formularios Especiales"
+        /> 
 
-{/* <SvgXml xml={isotipo} width="100" height="150" /> */}
+
       </View>
 
       {/*   <Text style={{ marginBottom: 70, fontSize:25 }}>Mis tramites</Text> */}

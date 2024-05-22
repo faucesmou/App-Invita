@@ -22,27 +22,11 @@ export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: globalColors.background, 
+        backgroundColor: /* 'yellow' */ globalColors.background , 
         textAlign: 'center',
         justifyContent: 'center',
+      
         
-    },
-    pickerContainer: {
-        padding: 0,
-        margin: 10,
-      },
-    pickerInput:{
-   /*  backgroundColor: 'pink', */
-    color: 'white',
-    width:'100%',
-    height:'50%',
-    paddingHorizontal: 0,
-    marginVertical: 0,
-    borderRadius: 20,
-    fontSize: 5,
-    fontFamily: 'Quicksand-Light', 
-    padding: 0,
-    margin:0,
     },
     inputIOS: {
       padding: 0,
@@ -55,8 +39,20 @@ export const globalStyles = StyleSheet.create({
      backgroundColor: '#efe3e3',
   
     },
+    itemStyle:{
+      fontSize: 16,
+      fontFamily: 'Quicksand-Light',
+      flex: 1,
+      justifyContent: 'center',
+      padding: 0,
+      margin: 0,
+      color: 'black',
+      alignItems: 'center',
+      borderRadius: 15,
+    },
+    //para la sombra: 
     pickerWrapper:{
-      width: '100%', // Define el ancho del contenedor
+      width: '100%', 
       height: 50,
       marginBottom:10,
       padding: 0,
@@ -67,16 +63,6 @@ export const globalStyles = StyleSheet.create({
       shadowOpacity: 0.5, // Opacidad de la sombra
       shadowRadius: 8, // Radio de la sombra
     },
-    containerSelect: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: 192,
-      },
-      select: {
-        flex: 1,
-        margin: 2,
-      },
-
     primaryButton: {
         backgroundColor: globalColors.profile2,
         borderRadius: 5,

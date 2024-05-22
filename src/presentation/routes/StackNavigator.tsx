@@ -24,6 +24,8 @@ import { useAuthStore } from '../store/auth/useAuthStore';
 import { CredencialScreenPrueba } from '../screens/credential/CredencialScreenPrueba';
 import { ConsultaScreen } from '../screens/ordenConsulta/ConsultaScreen';
 import { ConsultaScreenFinal } from '../screens/ordenConsulta/ConsultaScreenFinal';
+import { FormulariosEspScreen } from '../screens/tramites/formulariosEspeciales/FormulariosEspScreen';
+import { FormularioElegido } from '../screens/tramites/formulariosEspeciales/FormularioElegido';
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
 
@@ -45,6 +47,7 @@ export type RootStackParams = {
   CredencialScreenPrueba:undefined,
   ConsultaScreen: undefined,
   ConsultaScreenFinal: undefined,
+  FormularioElegido:undefined,
 
 }
 
@@ -89,9 +92,13 @@ export const StackNavigator = () => {
 
       <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: true }} />
       <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }} />
+      
 
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: true }} />
       <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: false }} />
+
+      <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="FormularioElegido" component={FormularioElegido} options={{ headerShown: true }} />
 
       <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />

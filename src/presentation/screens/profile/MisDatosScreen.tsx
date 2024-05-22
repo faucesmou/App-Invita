@@ -70,7 +70,7 @@ export const MisDatosScreen = () => {
       <CustomHeader color={colorNaranja} />
       <BackButton />
 
-      <Text style={{ marginBottom: 5, fontSize: 25 }}>Mis Datos</Text>
+      <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center' }}>Mis Datos</Text>
     
       <BackButton onPress={() => navigation.navigate('home')} />
       <FlatList
@@ -94,12 +94,12 @@ export const MisDatosScreen = () => {
 
                 )
                   :
-                  <View>
-                    <Text style={{ marginBottom: 5, marginTop: 15, fontSize: 15 }}>{`Nombre; ${item.apellidoYNombre}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15 }}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15 }}>{`edad: ${item.edad}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15 }}>{`estado afiliacion: ${item.estadoAfiliacion}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15 }}>{`plan prestacional: ${item.planPrestacional}`}</Text>
+                  <View >
+                    <Text style={{ marginBottom: 5, marginTop: 15, fontSize: 15, textAlign: 'center' }}>{`Nombre; ${item.apellidoYNombre}`}</Text>
+                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
+                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`edad: ${item.edad}`}</Text>
+                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`estado afiliacion: ${item.estadoAfiliacion}`}</Text>
+                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`plan prestacional: ${item.planPrestacional}`}</Text>
 
                   </View>
               }
