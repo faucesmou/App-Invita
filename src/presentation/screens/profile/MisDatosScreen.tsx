@@ -23,12 +23,12 @@ export const MisDatosScreen = () => {
   const [afiliado, setAfiliado] = useState(null);
 
   useEffect(() => {
+    setIsConsulting(true);
 
     const AfiliadosRequest = async () => {
       try {
-        setIsConsulting(true);
         console.log('is posting en true! daled man ere');
-        
+
         const response = await axios.get('https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=CHATBOT&password=DrtEchat%&administradora=F100376F-33F9-49FD-AFB9-EE53616E7F0C&datosAfiliado=33440385');
         console.log('este es el response', response);
 
@@ -71,29 +71,29 @@ export const MisDatosScreen = () => {
       <BackButton />
 
       <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center' }}>Mis Datos</Text>
-    
+
       <BackButton onPress={() => navigation.navigate('home')} />
-      <FlatList
-        data={afiliado}
-        renderItem={({ item }) => (
-          <View>
+      {
+        isConsulting ? (
+
+          <View
+            style={{
+              flex: 0.5,
+              marginTop: top - 10,
+            }}
+          >
+            <FullScreenLoader />
+          </View>
+
+        )
+          :
+          <FlatList
+            data={afiliado}
+            renderItem={({ item }) => (
+              <View>
 
 
-            <View>
-              {
-                isConsulting ? (
-
-                  <View
-                  style={{
-                    flex: 0.5,
-                    marginTop: top - 10,
-                  }}
-                  >
-                    <FullScreenLoader />       
-                  </View>
-
-                )
-                  :
+                <View>
                   <View >
                     <Text style={{ marginBottom: 5, marginTop: 15, fontSize: 15, textAlign: 'center' }}>{`Nombre; ${item.apellidoYNombre}`}</Text>
                     <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
@@ -102,14 +102,15 @@ export const MisDatosScreen = () => {
                     <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`plan prestacional: ${item.planPrestacional}`}</Text>
 
                   </View>
-              }
-            </View>
+              
+                </View>
 
-            
-          </View>
-        )
-        }
-      />
+
+              </View>
+            )
+            }
+          />
+}
     </View>
   )
 }
