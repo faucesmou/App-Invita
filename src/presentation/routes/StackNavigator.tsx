@@ -26,6 +26,8 @@ import { ConsultaScreen } from '../screens/ordenConsulta/ConsultaScreen';
 import { ConsultaScreenFinal } from '../screens/ordenConsulta/ConsultaScreenFinal';
 import { FormulariosEspScreen } from '../screens/tramites/formulariosEspeciales/FormulariosEspScreen';
 import { FormularioElegido } from '../screens/tramites/formulariosEspeciales/FormularioElegido';
+import { CartillaMedicaScreen } from '../screens/cartilla/cartillaMedica/CartillaMedicaScreen';
+import { CartillaScreen } from '../screens/cartilla/CartillaScreen';
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
 
@@ -48,6 +50,8 @@ export type RootStackParams = {
   ConsultaScreen: undefined,
   ConsultaScreenFinal: undefined,
   FormularioElegido:undefined,
+  CartillaScreen: undefined,
+  CartillaMedicaScreen: undefined,
 
 }
 
@@ -100,8 +104,11 @@ export const StackNavigator = () => {
       <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
       <Stack.Screen name="FormularioElegido" component={FormularioElegido} options={{ headerShown: true }} />
 
+      <Stack.Screen name="CartillaMedicaScreen" component={CartillaMedicaScreen} options={{ headerShown: true }} />
+
       <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="CartillaScreen" component={CartillaScreen} options={{ headerShown: true }} />
       
       <Stack.Screen name="ConsultaScreen" component={ConsultaScreen} options={{ headerShown: true }} />
       <Stack.Screen name="ConsultaScreenFinal" component={ConsultaScreenFinal} options={{ headerShown: true }} />

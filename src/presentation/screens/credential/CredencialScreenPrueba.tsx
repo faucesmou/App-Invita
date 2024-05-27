@@ -98,10 +98,10 @@ export const CredencialScreenPrueba = () => {
           numAfiliado: numAfiliado,
           fecVencimiento: fecVencimiento,
         });
-          /*    setDatosCredencial(prevState => ({
+             setDatosCredencial(prevState => ({
                ...prevState,
-               plan: 'black'
-             })); */
+               plan: 'platinum'
+             }));
         /* titanium platinum black gold green*/
       } catch (error) {
         console.log(error);

@@ -10,11 +10,14 @@ import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import { BackButton } from '../../components/shared/BackButton'
 import CustomHeader from '../../components/CustomHeader'
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader'
+import { useAuthStore } from '../../store/auth/useAuthStore'
 
 
 
 
 export const MisDatosScreen = () => {
+
+  const { idAfiliadoTitular, idAfiliado } = useAuthStore();
 
   const [isConsulting, setIsConsulting] = useState(false);
   const { top } = useSafeAreaInsets();
@@ -29,7 +32,7 @@ export const MisDatosScreen = () => {
       try {
         console.log('is posting en true! daled man ere');
 
-        const response = await axios.get('https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=CHATBOT&password=DrtEchat%&administradora=F100376F-33F9-49FD-AFB9-EE53616E7F0C&datosAfiliado=33440385');
+        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=CHATBOT&password=DrtEchat%&administradora=F100376F-33F9-49FD-AFB9-EE53616E7F0C&datosAfiliado=${idAfiliado}`);
         console.log('este es el response', response);
 
         const mappedAfiliados = response.data.map((
