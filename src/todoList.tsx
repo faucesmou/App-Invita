@@ -17,3 +17,5 @@
    /*  TODO : HACER VISTA DE SELECT- 1ER SELECT: SELECCIONAR FAMILIAR-USAR CONSULTA DE OBTENER FAMILARES. 
     MOSTRAR ESPECIALIDADES */
     
+     /*    "start:ios": "npm run ios -- --simulator='iPhone 15 Pro Max'" */
+    

@@ -22,6 +22,7 @@ export interface AuthState {
   idPrestacion?: string;
   idPrestador?: string;
   idAfiliadoSeleccionado?:string;
+  idCartillaSeleccionada?:string;
   loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
   ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
@@ -32,6 +33,8 @@ export interface AuthState {
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
   registerUser: (email: string, password: string, fullName: string) => Promise<void>;
+  GuardarIdCartillaSeleccionada:(idCartilla: string)=> Promise<any[]>;
+
 }
 
 
@@ -45,6 +48,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   idsEspecialidades:undefined,
   idPrestacion:undefined,
   idAfiliadoSeleccionado:undefined,
+  idCartillaSeleccionada:undefined,
 
 
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
@@ -205,6 +209,16 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     return []; 
   } catch (error) {
       console.log('ha ocurrido un error al guardar idAfiliado en el useAuthStore');
+     return [];
+    }
+  },
+  GuardarIdCartillaSeleccionada: async ( idCartilla: string): Promise<string[]> => {
+    try {
+      set({ idCartillaSeleccionada: idCartilla })
+ 
+    return []; 
+  } catch (error) {
+      console.log('ha ocurrido un error al guardar idCartilla en el useAuthStore');
      return [];
     }
   },

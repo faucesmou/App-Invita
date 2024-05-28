@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "start:ios": "npm run ios -- --simulator='iPhone 15 Pro Max'"
+    "start:ios": "npx react-native run-ios --udid DA117F3A-AF7F-4A88-B202-9DCCCEFE1133"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",

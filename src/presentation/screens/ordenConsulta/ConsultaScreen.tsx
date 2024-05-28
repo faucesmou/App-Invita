@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 
-import {Picker } from '@react-native-picker/picker';
-import {  globalStyles } from '../../theme/theme'
+import { Picker } from '@react-native-picker/picker';
+import { globalStyles } from '../../theme/theme'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'

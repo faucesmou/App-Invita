@@ -18,8 +18,8 @@ import { RootStackParams } from '../../../routes/StackNavigator';
 
 
 export const CartillaMedicaScreen = () => {
-  console.log('Entrando a Cartilla Medica Screen------->');
-  const { idAfiliadoTitular, idAfiliado } = useAuthStore();
+  console.log('Entrando a CARTILLA MEDICA------->');
+  const { idAfiliadoTitular, idAfiliado, GuardarIdCartillaSeleccionada } = useAuthStore();
   console.log('idAfiliadoTitular desde Cartilla Medica Screen---->', idAfiliadoTitular);
 
 
@@ -55,7 +55,7 @@ export const CartillaMedicaScreen = () => {
           }];
         setCartillas(mappedCartillas);
 
-        console.log('este es el mappedCartillas---x--x-x--x->:', mappedCartillas);
+        console.log('este es el mappedCartillas DE CARTILLA MEDICA---x--x-x--x->:', mappedCartillas);
         /*  console.log('este es el cartillas useState:', cartillas); */
 
       }
@@ -86,11 +86,24 @@ export const CartillaMedicaScreen = () => {
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
           {cartillas.map((cartilla, index) => (
 
-            <View key={index} style={{ marginBottom: 10 }}>
-              <Text style={{ fontSize: 16, textAlign: 'center', }}>{cartilla.nombre}</Text>
-              {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text> */}
+            <View 
+            key={index} 
+            style={{ marginBottom: 10 }} 
+            >
+              <Text 
+              onPress={ ()=> {
+                console.log('Valor de idCartilla ACA ACA ACAA:', cartilla.idCartilla);
+              let idCartilla = cartilla.idCartilla;
+                GuardarIdCartillaSeleccionada(idCartilla); 
+                navigation.navigate('CartillaMedicaEspecialidad', { idCartilla: cartilla.idCartilla })}
+              }
+              style={{ fontSize: 16, textAlign: 'center', }}>{cartilla.nombre}</Text>
+            {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}
+
+        
             </View>
           ))}
+
         </ScrollView>
       </View>
 
