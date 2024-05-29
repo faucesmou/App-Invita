@@ -18,7 +18,7 @@ export const CartillaScreen = () => {
       flex: 1,
       //paddingHorizontal: 20,
       marginTop: 15/* top */,
-      backgroundColor: 'green'/* '#e9f6f8' */
+      /* backgroundColor: 'green' *//* '#e9f6f8' */
     }}>
 
       <Pressable
@@ -33,7 +33,7 @@ export const CartillaScreen = () => {
       <PrimaryButton
       onPress={ ()=> navigation.navigate('CartillaMedicaScreen')}
       label="CartillaMedicaScreen"
-      color={colorNaranja}
+      color={globalColors.profile2}
       /> 
     </View>
   )
