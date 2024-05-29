@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../routes/StackNavigator';
+import CustomHeader from '../../components/CustomHeader';
+import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 
 export const CartillaScreen = () => {
   console.log('Entrando a Cartilla Screen--------->');
@@ -15,11 +17,18 @@ export const CartillaScreen = () => {
   
   return (
     <View style={{
-      flex: 1,
+     
+        flex: 1,
+        paddingHorizontal: 20,
+        marginTop: 0,
+        backgroundColor: 'green'
+      /* flex: 1, */
       //paddingHorizontal: 20,
-      marginTop: 15/* top */,
+      /* marginTop: 15 *//* top */,
       /* backgroundColor: 'green' *//* '#e9f6f8' */
     }}>
+        <CustomHeader />
+      <HamburgerMenu />
 
       <Pressable
         style={globalStyles.primaryButton}

@@ -47,11 +47,14 @@ export const TramitesScreen = () => {
 } )*/
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
   return (
-    <View style={globalStyles.container}>
+    <View style={{/* globalStyles.container */  flex: 1,
+    paddingHorizontal: 20,
+    marginTop: 0,
+    backgroundColor: 'yellow'}}>
 
       <CustomHeader />
       <HamburgerMenu />
-      <Text style={{ marginBottom: 20,  marginTop: 10 ,fontSize: 25, textAlign: 'center',}}> Mis Trámites</Text>
+     {/*  <Text style={{ marginBottom: 20,  marginTop: 10 ,fontSize: 25, textAlign: 'center',}}> Mis Trámites</Text> */}
 
       {/* <FlatList
         data={tramites}
@@ -63,7 +66,7 @@ export const TramitesScreen = () => {
         )}
       /> */}
       <View
-        style={{ marginBottom: 275 }}
+        style={{ marginBottom: 225, marginTop:10, backgroundColor: 'green', flex: 1 }}
       >
 
         <PrimaryButton

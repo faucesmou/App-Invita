@@ -11,7 +11,7 @@ interface Props{
 
 
 
-export const IonIcon = ({name, size = 25, color = 'black'}: Props ) => {
+export const IonIcon = ({name, size = 33, color = 'black'}: Props ) => {
   return (
     
     <Icon 
