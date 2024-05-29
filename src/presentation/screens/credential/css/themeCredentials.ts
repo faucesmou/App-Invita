@@ -90,6 +90,35 @@ export const globalStylesCredentials = StyleSheet.create({
     color: 'white',
     borderRadius: 10,    
   },
+  frenteCardHome: {
+    borderWidth: 1,
+    borderColor: 'black',
+   /*  padding: 10, */
+    marginTop: 10,
+    flexDirection: 'column',
+    overflow: 'hidden', 
+    marginVertical: 20,
+    width: 390,
+    height: 230,
+    paddingHorizontal: 0,
+    color: 'white',
+    borderRadius: 10, 
+       
+  },
+  frenteCardHome2: {
+  /*   padding: 10,
+    marginTop: 10, */
+    marginTop:30,
+    marginBottom:10,
+    flexDirection: 'column',
+   /*  overflow: 'hidden',  */
+    marginVertical: 0,
+    width: 380,
+    height: 220,
+    color: 'white',
+    borderRadius: 10,    
+    zIndex: 2,
+  },
   dorsoCard: {
     flexDirection: 'column',
     marginVertical: 0,
@@ -102,7 +131,7 @@ export const globalStylesCredentials = StyleSheet.create({
   },
   contenedorTituloAndes: {
     flexDirection: 'column',
-   /*  overflow: 'hidden',  */
+    overflow: 'hidden', 
    alignItems: 'center',
     marginVertical: 0,
     width: 50,
@@ -123,6 +152,14 @@ export const globalStylesCredentials = StyleSheet.create({
    
   },
   planTitle: {
+    fontSize: 26,   
+    color: 'white',
+    padding: 10,
+    bottom:'80%',
+    marginRight:'5%',
+    fontWeight: 'bold',
+  },
+  planTitleHome: {
     fontSize: 26,   
     color: 'white',
     padding: 10,

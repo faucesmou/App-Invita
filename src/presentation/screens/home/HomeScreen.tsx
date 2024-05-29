@@ -13,80 +13,81 @@ import CustomHeader from '../../components/CustomHeader';
 import { Button, Layout, Text } from '@ui-kitten/components';
 import { MyIcon } from '../../components/ui/MyIcon';
 import { useAuthStore } from '../../store/auth/useAuthStore';
+import Credencial from '../../components/shared/Credencial';
 
 export const HomeScreen = () => {
 
-const { top } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
 
-const navigation = useNavigation<NavigationProp<RootStackParams>>();
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
-/* usando el State del Profile Store:  */
-const name = useProfileStore( state => state.name);
-const email = useProfileStore( state => state.email);
+  /* usando el State del Profile Store:  */
+  const name = useProfileStore(state => state.name);
+  const email = useProfileStore(state => state.email);
 
-const count = useCounterStore( state => state.count);
-/* useEffect(() => {
-  navigation.setOptions({
-    headerLeft: () => {
-      <Pressable onPress={ ()=> navigation.dispatch( DrawerActions.toggleDrawer)}>
-        <Text>
-          Menu
-        </Text>
-      </Pressable>
-    }
-  })
-}, []) */
+  const count = useCounterStore(state => state.count);
+  /* useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => {
+        <Pressable onPress={ ()=> navigation.dispatch( DrawerActions.toggleDrawer)}>
+          <Text>
+            Menu
+          </Text>
+        </Pressable>
+      }
+    })
+  }, []) */
 
-//const navigation = useNavigation();
+  //const navigation = useNavigation();
 
-const { logout } = useAuthStore()
+  const { logout } = useAuthStore()
 
   return (
     <View /* style={globalStyles.container} */
-   style={ {
-      flex: 1,
-      paddingHorizontal: 20,
-      marginTop: top ,
-     /*  backgroundColor: '#e9f6f8' */
-    }}
+      style={{
+        flex: 1,
+        paddingHorizontal: 20,
+        marginTop: 0,
+        backgroundColor: 'green'
+      }}
     >
-       <CustomHeader />
-       <HamburgerMenu/>
-{/*    <Pressable onPress={ ()=> navigation.dispatch( DrawerActions.toggleDrawer)}>
-        <Text>
-          Menu
-        </Text>
-      </Pressable> */}
+      <CustomHeader />
+      <HamburgerMenu />
+      <Credencial />
 
-        {/*  <Pressable onPress={openDrawer}>
-        <Text>Open Drawer</Text>
-      </Pressable> */}
- <Layout>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 20,
+          marginTop: -160,
+          marginBottom: 20,
+          backgroundColor: 'yellow'
+        }}
+      >
 
-
- </Layout>
- 
-    <PrimaryButton
-    onPress={ () => navigation.navigate('Products2')}
-    label="Afiliados a Cargo"
-    />
-    <PrimaryButton
-    onPress={ () => navigation.navigate('Settings' )}
-    label="Settings"
-    />
-    <PrimaryButton
-    onPress={ () => navigation.navigate('Settings' )}
-    label="Credencial"
-    />
-   
         <PrimaryButton
-        onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
-        label="Abrir menú"
+          onPress={() => navigation.navigate('Products2')}
+          label="Afiliados a Cargo"
         />
+        <PrimaryButton
+          onPress={() => navigation.navigate('Settings')}
+          label="Settings"
+        />
+        <PrimaryButton
+          onPress={() => navigation.navigate('Settings')}
+          label="Credencial"
+        />
+
+        <PrimaryButton
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer)}
+          label="Abrir menú"
+        />
+
+      </View>
       {/*   <Text style={{ marginBottom: 5, marginTop:15 }}> { name }</Text>
         <Text style={{ marginBottom: 15 }}> { email } </Text>
         <Text style={{ marginBottom: 5 }}> Productos: { count } </Text> */}
-    
+
 
       {/*  <Button
           accessoryLeft={<MyIcon name="log-out-outline" white />} 

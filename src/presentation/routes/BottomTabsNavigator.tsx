@@ -42,15 +42,15 @@ export const BottomTabsNavigator = () => {
       <Tab.Screen name="Cartilla"
         options={{ title: 'Cartilla', tabBarIcon: ({ color }) => (<IonIcon name='book-outline' color={color} />) }}
         component={TopTabsNavigator} />
-      <Tab.Screen name="Credencial"
+{/*       <Tab.Screen name="Credencial"
         options={{ title: 'Credencial', tabBarIcon: ({ color }) => (<IonIcon name='card-outline' color={color} />) }}
-        component={CredencialScreenPrueba} />
+        component={CredencialScreenPrueba} /> */}
       <Tab.Screen name="Tramites"
         options={{ title: 'Tramites', tabBarIcon: ({ color }) => (<IonIcon name='document-text-outline' color={color} />) }}
         component={TramitesScreen} />
-      <Tab.Screen name="Mas"
+{/*       <Tab.Screen name="Mas"
         options={{ title: 'Mas', tabBarIcon: ({ color }) => (<IonIcon name='menu-outline' color={color} />) }}
-        component={MasScreen} />
+        component={MasScreen} /> */}
 
     </Tab.Navigator>
   );

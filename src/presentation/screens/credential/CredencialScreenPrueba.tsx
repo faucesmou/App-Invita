@@ -145,7 +145,7 @@ export const CredencialScreenPrueba = () => {
 
           (
             <View style={{ flex: 1 }} >
-              <Text style={{ textAlign: 'center', fontSize: 24 }}>Tu Credencial</Text>
+              <Text style={{ textAlign: 'center', fontSize: 24 }}>Tu Credencial perrako</Text>
               <View  >
 
                 <LinearGradient
@@ -162,7 +162,7 @@ export const CredencialScreenPrueba = () => {
                       width: '80%',
                       height: '90%',
                       transform: [{ translateX: 250 }],
-                    }}
+                    }} 
 
                   >
                     <View  >
@@ -199,7 +199,7 @@ export const CredencialScreenPrueba = () => {
 
               {/* dorso de la tarjeta: */}
 
-              <View  >
+              {/* <View  >
 
                 <LinearGradient
                   colors={planColors}
@@ -239,35 +239,24 @@ export const CredencialScreenPrueba = () => {
                           </Text>
                         </View>
                       </View>
-                      {/*  <View >
-                        <Text style={{ color: 'white', alignItems: 'center',  }}> Esta credencial es personal e intransferible para uso exclusivo del titular. Debe presentarse acompañado de DNI o Cédula de Identidad</Text>
-                      <Text style={{ color: 'white', alignItems: 'center', }}>www.andessalud.com.ar</Text>
-                      </View>
-                      <View >
-                      </View>
-                      <View >
-                        <View >
-                          <Text style={{ color: 'white' }}>Superintendencia de Servicio de Salud</Text>
-                          <Text style={{ color: 'white' }}>Órgano de Control 0800 222 SALUD (72583) www.sssalud.gov.ar</Text>
-                        </View>
-                      </View> */}
+                   
                     </View>
                   </View>
 
                 </LinearGradient>
 
-              </View>
+              </View> */}
 
             </View>
           )
       }
 
-      {/* 15064289120/0000 CreaTech2023 */}
-      {/*   <Layout style={{ height: 10 }} /> */}
     </View>
   );
 };
 
+{/* 15064289120/0000 CreaTech2023 */}
+{/*   <Layout style={{ height: 10 }} /> */}
 
 
 
