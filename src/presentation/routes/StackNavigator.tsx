@@ -53,7 +53,7 @@ export type RootStackParams = {
   ConsultaScreenFinal: undefined,
   FormularioElegido:undefined,
   CartillaScreen: undefined,
- /*  CartillaMedicaScreen: undefined, */
+  CartillaMedicaScreen: undefined,
   MiSalud: undefined,
   CartillaMedicaEspecialidad: { idCartilla: string };
 
@@ -108,7 +108,7 @@ export const StackNavigator = () => {
       <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
       <Stack.Screen name="FormularioElegido" component={FormularioElegido} options={{ headerShown: true }} />
 
-      {/* <Stack.Screen name="CartillaMedicaScreen" component={CartillaMedicaScreen} options={{ headerShown: true }} /> */}
+      <Stack.Screen name="CartillaMedicaScreen" component={CartillaMedicaScreen} options={{ headerShown: true }} /> 
       <Stack.Screen name="MiSalud" component={CartillaMedicaScreen} options={{ headerShown: true }} />
       <Stack.Screen name="CartillaMedicaEspecialidad" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
