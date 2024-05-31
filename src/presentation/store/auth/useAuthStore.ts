@@ -38,7 +38,7 @@ export interface AuthState {
 }
 
 
-export const useAuthStore = create<AuthState>()((set, get) => ({
+export const useAuthStore = create<AuthState>()((set /* , get */) => ({
   status: 'checking',
   token: undefined,
   user: undefined,
@@ -257,7 +257,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   logout: async () => {
     await StorageAdapter.removeItem('token')
     set({ status: 'unauthenticated', token: undefined, user: undefined })
-    console.log('se cerró la sesion');
+   
+    console.log('se cerró la sesion gonzalito');
     return
 
   },

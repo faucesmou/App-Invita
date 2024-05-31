@@ -19,29 +19,25 @@ const Drawer = createDrawerNavigator();
 
 export const SideMenuNavigator = () => {
   const dimensions = useWindowDimensions()
-
-
-
   const navigation = useNavigation();
   const { status } = useAuthStore();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     // Si el usuario no está autenticado y cerramos el drawer:
     if (status !== 'authenticated') {
-
+      /* navigation.removeListener */
       navigation.dispatch(DrawerActions.closeDrawer());
-
-
     }
-  }, [status, isDrawerOpen, navigation]);
+  }, [status, isDrawerOpen, navigation ]);
 
 // MOMENTANEAMENTE QUITE ESTE IF PARA PODER TRABAJAR, RESTAURAR CUANDO TERMINE LA APP!
 
 // si no esta autenticado muestro este drawer pero que no podrá abrirse nunca:
   if (status !== 'authenticated'/* cambiar esto a authenticated */) {
-    console.log('no puede acceder al drawer perro loco');
+/*    navigation.removeListener  */
+
+    console.log('no estas autenticado te tengo que cerrar todo primo');
 
     return (
       <Drawer.Navigator
@@ -49,13 +45,14 @@ export const SideMenuNavigator = () => {
         screenOptions={{
           /* swipeEdgeWidth: 0, */ //con esta propiedad no permito que se pueda abrir
           headerShown: false,
+        
         }}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
 
         <Drawer.Screen
-          options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color} />), headerShown: false }}
-          name="HomeScreen" component={StackNavigator} />
+          options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color} />), headerShown: false, /* intento sacar el onAnimatedValueUpdate agregando esto: : title: 'HomeScreen papa' */ }}
+          name="HomeScreen papa" component={StackNavigator} />
       </Drawer.Navigator>
     );
   }
@@ -79,11 +76,11 @@ export const SideMenuNavigator = () => {
       }}>
 
       <Drawer.Screen
-        options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color} />) }}
-        name="home"/* aca decia categorias */ component={StackNavigator} />
+        options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color}  />), /* intento sacar el onAnimatedValueUpdate agregando esto: : title: 'Home' */ }}
+        name="Home" component={StackNavigator}  />
 
       <Drawer.Screen
-        options={{ drawerIcon: ({ color }) => (<IonIcon name='person-circle-outline' color={color} />), headerShown: true }}
+        options={{ drawerIcon: ({ color }) => (<IonIcon name='person-circle-outline' color={color} />), headerShown: true, title: 'Mi Perfil' }}
         name="Mi Perfil" component={ProfileScreen} />
     </Drawer.Navigator>
   );

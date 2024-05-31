@@ -79,8 +79,9 @@ export const StackNavigator = () => {
 
   return (
     <Stack.Navigator
-/*       initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreen'} */
-      initialRouteName={'home'}
+    /* ATENCIÒN ACÁ: INITIAL RouteName: esto define el loging sino anda usar la variante de abajo comentada. */
+      initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreen'}
+   /*    initialRouteName={'home'} */
       screenOptions={{
         headerShown: false,
         headerStyle: {
@@ -89,42 +90,78 @@ export const StackNavigator = () => {
         }
       }}
     >
+{/* ------------VISTAS PRINCIPALES: -------------->*/}
 
+{/* ------------VISTAS INICIO SESIÓN: -------------->*/}
       <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name='RegisterScreen' component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name='LoadingScreen' component={LoadingScreen} options={{ headerShown: true }} />
 
 
+
+{/* ------------VISTAS DESDE EL BOTTOM TAB: -------------->*/}
+
+{/* La vista PADRE es el home con BottomTabsNavigator: */}
       <Stack.Screen name='home' component={BottomTabsNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name='Cartilla' component={TopTabsNavigator} options={{ headerShown: true }} />
+{/* vistas a las que se accede desde el botomTabsNavigator: */}
 
+{/* (Mi Gestion): */}
+     <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: false }} />
+{/* (Mi Salud): */}
+      <Stack.Screen name="CartillaScreen" component={CartillaScreen} options={{ headerShown: true }} />
+
+{/* ----------VISTAS SECUNDARIAS: -------------->*/}
+
+{/*  HOME (INICIO): */}
+                        {/* Afiliados a Cargo: */}
+      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }} /> 
+
+      {/* Desde Afiliados a Cargo podemos navegar al Product Screen (componente reutilizable) */}
       <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }} />
-      
 
+  {/* Settings: */}
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: false }} />
 
-      <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="FormularioElegido" component={FormularioElegido} options={{ headerShown: true }} />
+{/* MI SALUD (CartillaScreen): */}
 
       <Stack.Screen name="CartillaMedicaScreen" component={CartillaMedicaScreen} options={{ headerShown: true }} /> 
-      <Stack.Screen name="MiSalud" component={CartillaMedicaScreen} options={{ headerShown: true }} />
+     {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="CartillaMedicaEspecialidad" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
-      <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="CartillaScreen" component={CartillaScreen} options={{ headerShown: true }} />
-      
-      <Stack.Screen name="ConsultaScreen" component={ConsultaScreen} options={{ headerShown: true }} />
+{/* MI GESTIÓN (TramitesScreen): */}
+
+{/* Solicitar orden de consulta: */}
       <Stack.Screen name="ConsultaScreenFinal" component={ConsultaScreenFinal} options={{ headerShown: true }} />
-      <Stack.Screen name="Credencial" component={CredencialScreen} />
-      <Stack.Screen name="CredencialScreenPrueba" component={CredencialScreenPrueba} />
+
+{/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
+      <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
+
+{/* Obtener Formularios Especiales: */}
+      <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
+
+      <Stack.Screen name="FormularioElegido" component={FormularioElegido} options={{ headerShown: true }} />
+
+{/* DRAWER----------> */}
+
+      <Stack.Screen name="MisDatos" component={MisDatosScreen} options={{ headerShown: true }} />
+      
+    
     </Stack.Navigator>
   );
 }
+
+/*  ---MATERIAL REUTILIZABLE----> */
+
+{/* <Stack.Screen name="MiSalud" component={CartillaMedicaScreen} options={{ headerShown: true }} /> */}
+
+
+{/*     <Stack.Screen name="ConsultaScreen" component={ConsultaScreen} options={{ headerShown: true }} /> */}
+   {/*  <Stack.Screen name="Credencial" component={CredencialScreen} /> */}
+  {/*   <Stack.Screen name="CredencialScreenPrueba" component={CredencialScreenPrueba} /> */}
 
 {/* <Stack.Screen name="Settings2" component={ ProfileScreen } /> */ }
 /* initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} */
 /*    initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'}  */
 {/*       <Stack.Screen name= 'home' component={HomeScreen} /> */ }
+
+    {/*  <Stack.Screen name='Cartilla' component={TopTabsNavigator} options={{ headerShown: true }} /> */}

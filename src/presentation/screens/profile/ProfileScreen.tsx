@@ -76,68 +76,73 @@ useEffect(() => {
       color={colorNaranja}
       />  
 
-      <PrimaryButton
-      onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
-      label="Abrir menú"
-      color={colorNaranja}
-      />
       <Pressable 
       style ={ globalStyles.secondaryButton }
       onPress={ () => useProfileStore.setState( { name: 'gonza morresi'})}
       >
         <Text
         style ={ globalStyles.buttonText2 }>
-          Editar configuración
+          Editar Datos
         </Text>
       </Pressable>
-
-     {/*  <Pressable 
-      style ={ globalStyles.secondaryButton  }
-      onPress={ () => useProfileStore.setState( { email: 'gonza@gmail.com'})}
-      >
-        <Text
-        style ={ globalStyles.buttonText2 }>
-         Editar perfil
-        </Text>
-      </Pressable> */}
-
-   {/*    <Pressable 
-      style ={ globalStyles.secondaryButton   }
-      onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
-      >
-        <Text
-        style ={ globalStyles.buttonText2 }>
-          Restaurar datos
-        </Text>
-      </Pressable> */}
-
-    {/*   <Pressable 
-      style ={ globalStyles.secondaryButton }
-
-      onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
-      >
-        <Text
-        style ={ globalStyles.buttonText2 }
-        onPress={ () => increaseBy(+1) } 
-        >
-          Sumar al carrito
-        </Text>
-      </Pressable> */}
-
-      {/* <Pressable 
-        style ={ globalStyles.secondaryButton }
-        >
-        <Text
-        style ={ globalStyles.buttonText2 }
-        onPress={ () => increaseBy(-1) } 
-        >
-          Restar al carrito
-        </Text>
-      </Pressable> */}
-
         </View>
         )
       }
+
+      
+      {/*     <PrimaryButton
+          onPress={ () => navigation.dispatch( DrawerActions.toggleDrawer )}
+          label="Abrir menú"
+          color={colorNaranja}
+          /> */}
+      
+
+
+      {/*  <Pressable 
+       style ={ globalStyles.secondaryButton  }
+       onPress={ () => useProfileStore.setState( { email: 'gonza@gmail.com'})}
+       >
+         <Text
+         style ={ globalStyles.buttonText2 }>
+          Editar perfil
+         </Text>
+       </Pressable> */}
+ 
+    {/*    <Pressable 
+       style ={ globalStyles.secondaryButton   }
+       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
+       >
+         <Text
+         style ={ globalStyles.buttonText2 }>
+           Restaurar datos
+         </Text>
+       </Pressable> */}
+ 
+     {/*   <Pressable 
+       style ={ globalStyles.secondaryButton }
+ 
+       onPress={ () => changeProfile( 'Don Damajuana', 'tintosypeñas@gmail.com.com') }
+       >
+         <Text
+         style ={ globalStyles.buttonText2 }
+         onPress={ () => increaseBy(+1) } 
+         >
+           Sumar al carrito
+         </Text>
+       </Pressable> */}
+ 
+       {/* <Pressable 
+         style ={ globalStyles.secondaryButton }
+         >
+         <Text
+         style ={ globalStyles.buttonText2 }
+         onPress={ () => increaseBy(-1) } 
+         >
+           Restar al carrito
+         </Text>
+       </Pressable> */}
+
+
       {/*   <PrimaryButton
         onPress={ ()=> navigation.navigate('MisDatos' )}
         label="Mis Datos"

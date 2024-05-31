@@ -19,7 +19,9 @@ const tramites = [
 
 
 export const TramitesScreen = () => {
+  console.log('Entrando a TramitesScreen (Mi Gestion)')
 
+ 
  /*  useEffect(() => {
     navigation.setOptions({
       headerStyle: {
@@ -46,6 +48,7 @@ export const TramitesScreen = () => {
 
 } )*/
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
+  /* console.error('Entrando a TramitesScreen (Mi Gestion)') */
   return (
     <View style={{/* globalStyles.container */  flex: 1,
     paddingHorizontal: 20,

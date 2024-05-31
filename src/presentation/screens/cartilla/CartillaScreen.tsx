@@ -36,9 +36,11 @@ export const CartillaScreen = () => {
         <Text
           style={globalStyles.buttonText}
         >
-          Cartilla Médica
+          Cartilla Médica boton extra
         </Text>
       </Pressable>
+
+      
       <PrimaryButton
       onPress={ ()=> navigation.navigate('CartillaMedicaScreen')}
       label="CartillaMedicaScreen"

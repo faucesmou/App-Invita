@@ -1,14 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { TopTabsNavigator } from './TopTabsNavigator';
+//import { TopTabsNavigator } from './TopTabsNavigator';
 import { TramitesScreen } from '../screens/tramites/TramitesScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
-import { MasScreen } from '../screens/mas/MasScreen';
-import { CredencialScreen } from '../screens/credential/CredencialScreen';
+//import { MasScreen } from '../screens/mas/MasScreen';
+//import { CredencialScreen } from '../screens/credential/CredencialScreen';
 
 import { globalColors } from '../theme/theme';
 import { IonIcon } from '../components/shared/IonIcon';
-import { CredencialScreenPrueba } from '../screens/credential/CredencialScreenPrueba';
+//import { CredencialScreenPrueba } from '../screens/credential/CredencialScreenPrueba';
 import { CartillaScreen } from '../screens/cartilla/CartillaScreen';
 
 const Tab = createBottomTabNavigator();

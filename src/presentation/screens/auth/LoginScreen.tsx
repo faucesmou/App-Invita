@@ -34,7 +34,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   const onLoginGonza = async () => {
 
-
+   
     if (/* form.email.length === 0 || form.password.length === 0 || */ form.dni.length === 0) {
       Alert.alert('Error', 'Dni es campo obligatorio');
       return;
