@@ -31,12 +31,13 @@ export const CartillaScreen = () => {
       <HamburgerMenu />
 
       <Pressable
+        onPress={ ()=> navigation.navigate('EstudiosMedicosScreen')}
         style={globalStyles.primaryButton}
       >
         <Text
           style={globalStyles.buttonText}
         >
-          Cartilla Médica boton extra
+          Consulta Estudios Médicos
         </Text>
       </Pressable>
 

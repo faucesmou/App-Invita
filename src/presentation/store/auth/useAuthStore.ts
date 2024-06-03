@@ -5,10 +5,24 @@ import { authCheckStatus, authLogin, register } from "../../../actions/auth/auth
 import { StorageAdapter } from "../../config/adapters/storageAdapter";
 import { useNavigation, DrawerActions, NavigationProp } from '@react-navigation/native';
 import axios from "axios";
+import { xml2js } from 'xml-js';
+
 //Este es el Store que creamos con zustand para tener un Context de los datos y acceder a los mismos desde cualquier parte de la aplicacion.
 import { USUARIO, PASSWORD, ADMINISTRADORA, STAGE } from '@env';
 
-
+type ResultadoXML = {
+  Resultado: {
+    fila: {
+      tablaPrestadores: {
+        idConvenio: { _text: string };
+        nombre: { _text: string };
+      } | {
+        idConvenio: { _text: string }[];
+        nombre: { _text: string }[];
+      };
+    };
+  };
+}; /* esto no pareciera funcionar para eliminar el error de Resultado */
 
 export interface AuthState {
   status: AuthStatus;
@@ -23,11 +37,13 @@ export interface AuthState {
   idPrestador?: string;
   idAfiliadoSeleccionado?:string;
   idCartillaSeleccionada?:string;
+  cadena: string;
   loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
   ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
   ObtenerPrestadores: (idAfiliado: string, idAfiliadoTitular:string, idPrestacion: string)=> Promise<any[]>;
+  ObtenerPrestadoresEstudiosMedicos: (idAfiliado: string, cadena: string)=> Promise<any[]>;
   GuardarIdPrestador: (idPrestador: string)=> Promise<any[]>;
   GuardarIdFamiliarSeleccionado: (idAfiliado: string)=> Promise<any[]>;
   checkStatus: () => Promise<void>;
@@ -49,6 +65,7 @@ export const useAuthStore = create<AuthState>()((set /* , get */) => ({
   idPrestacion:undefined,
   idAfiliadoSeleccionado:undefined,
   idCartillaSeleccionada:undefined,
+  cadena: '',
 
 
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
@@ -156,7 +173,7 @@ export const useAuthStore = create<AuthState>()((set /* , get */) => ({
     }
   },
   ObtenerPrestadores: async (idAfiliado: string, idAfiliadoTitular: string, idPrestacion: string): Promise<string[]> => {
-    //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
+    //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar:
     //guardo el id de la especialidad elegida en el context para recuperarla luego en la orden de consulta.
     set({ idPrestacion: idPrestacion })
     const obtenerPrestadoresObjeto = (respuestaApi:string) =>{
@@ -192,6 +209,62 @@ export const useAuthStore = create<AuthState>()((set /* , get */) => ({
      return [];
     }
   },
+
+ ObtenerPrestadoresEstudiosMedicos: async (idAfiliado: string, cadena: string): Promise<{ idConvenio: string; nombre: string }[]> => {
+/*   Función para manejar la respuesta de la API y transformar XML a JSON */
+  const RecepcionRespuestaPrestadores = (xmlData: string) => {
+    try {
+ /*    Convertir XML a JSON */
+      const result = xml2js(xmlData, { compact: true });
+      console.log('Datos JSON convertidos ----->>:', result);
+
+/*    Verificación de la estructura del resultado */
+      if (!result || !result.Resultado || !result.Resultado.fila || !result.Resultado.fila.tablaPrestadores) {
+        console.error('La respuesta XML no contiene los datos esperados');
+        return [];
+      }
+
+      const prestadoresData = result.Resultado.fila.tablaPrestadores;
+      console.log('prestadoresData:', prestadoresData);
+
+   /*   Mapear los datos correctamente */
+      const infoPrestadores = Array.isArray(prestadoresData) ? prestadoresData.map((prestador: any) => ({
+        idConvenio: prestador.idConvenio._text,
+        nombre: prestador.nombre._text
+      })) : [{
+        idConvenio: prestadoresData.idConvenio._text,
+        nombre: prestadoresData.nombre._text
+      }];
+
+      return infoPrestadores;
+    } catch (error) {
+      console.log('Error en la función RecepcionRespuestaPrestadores');
+      return [];
+    }
+  };
+
+  // Función para realizar la consulta a la API
+  const ObtenerInformacionPrestadores = async (idAfiliado: string, cadena: string) => {
+    try {
+      const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscarCartillaPrestadoresPracticas?IMEI=&idAfiliado=${idAfiliado}&cadena=${cadena}`);
+      const xmlData = response.data;
+      const informacionPrestadores = RecepcionRespuestaPrestadores(xmlData);
+      // console.log('el useState informacionPrestadores --&&&----&&--&&-->:', informacionPrestadores);
+      set({ cadena: '' }); // Este set es para que el useEffect no entre en bucle
+      return informacionPrestadores;
+    } catch (error) {
+      console.log('Ha ocurrido un error al obtener informacionPrestadores de Estudios Médicos:--->', error);
+      return [];
+    }
+  };
+
+  return ObtenerInformacionPrestadores(idAfiliado, cadena);
+},
+
+
+
+  
+
   GuardarIdPrestador: async ( idPrestador: string): Promise<string[]> => {
     try {
       set({ idPrestador: idPrestador })

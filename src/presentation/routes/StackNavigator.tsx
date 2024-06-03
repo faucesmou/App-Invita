@@ -29,6 +29,7 @@ import { FormularioElegido } from '../screens/tramites/formulariosEspeciales/For
 import { CartillaMedicaScreen } from '../screens/cartilla/cartillaMedica/CartillaMedicaScreen';
 import { CartillaScreen } from '../screens/cartilla/CartillaScreen';
 import { CartillaMedicaEspecialidad } from '../screens/cartilla/cartillaMedica/CartillaMedicaEspecialidad';
+import { EstudiosMedicosScreen } from '../screens/cartilla/estudiosMedicos/EstudiosMedicosScreen';
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
@@ -56,6 +57,7 @@ export type RootStackParams = {
   CartillaMedicaScreen: undefined,
   MiSalud: undefined,
   CartillaMedicaEspecialidad: { idCartilla: string };
+  EstudiosMedicosScreen: undefined, 
 
 }
 
@@ -128,6 +130,8 @@ export const StackNavigator = () => {
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="CartillaMedicaEspecialidad" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
+      <Stack.Screen name="EstudiosMedicosScreen" component={EstudiosMedicosScreen} options={{ headerShown: true }} />
+      
 {/* MI GESTIÓN (TramitesScreen): */}
 
 {/* Solicitar orden de consulta: */}
