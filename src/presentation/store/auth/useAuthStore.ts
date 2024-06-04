@@ -220,28 +220,75 @@ export const useAuthStore = create<AuthState>()((set /* , get */) => ({
 
 /*    Verificación de la estructura del resultado */
       if (!result || !result.Resultado || !result.Resultado.fila || !result.Resultado.fila.tablaPrestadores) {
-        console.error('La respuesta XML no contiene los datos esperados');
+        console.log('se disparò ObtenerPrestadoresEstudiosMedicos y la recepcion de respuesta prestadores dice :  La respuesta XML no contiene los datos esperados');
         return [];
       }
 
       const prestadoresData = result.Resultado.fila.tablaPrestadores;
       console.log('prestadoresData:', prestadoresData);
 
+/*   Mapear los datos correctamente */
+      let infoPrestadores: Prestador[];
+
+      if (Array.isArray(prestadoresData.idConvenio)) {
+        // Si hay múltiples respuestas
+        infoPrestadores = prestadoresData.idConvenio.map((_, index) => ({
+          idConvenio: prestadoresData.idConvenio[index]._text,
+          nombre: prestadoresData.nombre[index]._text,
+          ordenAccion: prestadoresData.ordenAccion[index]._text // Incluir ordenAccion si es necesario
+        }));
+      } else {
+        // Si hay una sola respuesta
+        infoPrestadores = [{
+          idConvenio: prestadoresData.idConvenio._text,
+          nombre: prestadoresData.nombre._text,
+          ordenAccion: prestadoresData.ordenAccion._text // Incluir ordenAccion si es necesario
+        }];
+      }
+
    /*   Mapear los datos correctamente */
-      const infoPrestadores = Array.isArray(prestadoresData) ? prestadoresData.map((prestador: any) => ({
+/*    const infoPrestadores = prestadoresData.map((prestador: any) => ({
+    idConvenio: prestador.idConvenio._text,
+    nombre: prestador.nombre._text ? prestador.nombre._text.trim() : "Nombre no disponible"
+  })); */
+    /*   ESTE FUNCIONA: const infoPrestadores = Array.isArray(prestadoresData) ? prestadoresData.map((prestador: any) => ({
         idConvenio: prestador.idConvenio._text,
-        nombre: prestador.nombre._text
-      })) : [{
+        nombre: prestador.nombre._text,
+        ordenAccion: prestador.ordenAccion_text,
+      })) : [prestadoresData].map((prestador: any) => ({
+        idConvenio: prestador.idConvenio._text,
+        nombre: prestador.nombre._text,
+        ordenAccion: prestador.ordenAccion._text,
+      }));  */
+      /* [{
         idConvenio: prestadoresData.idConvenio._text,
         nombre: prestadoresData.nombre._text
-      }];
+      }]; */
 
+   /* Mapear los datos correctamente */
+  /*  const infoPrestadores = Array.isArray(prestadoresData) ? prestadoresData.reduce((acc: any[], prestador: any) => {
+    const idConvenio = prestador.idConvenio._text;
+    const nombre = prestador.nombre._text;
+
+    acc.push({ idConvenio, nombre });
+    return acc;
+  }, []) : [prestadoresData].reduce((acc: any[], prestador: any) => {
+    const idConvenio = prestador.idConvenio._text;
+    const nombre = prestador.nombre._text;
+
+    acc.push({ idConvenio, nombre });
+    return acc;
+  }, []);
+
+
+*/
+      console.log('infoPrestadores:', infoPrestadores);
       return infoPrestadores;
     } catch (error) {
-      console.log('Error en la función RecepcionRespuestaPrestadores');
+      console.log('Error en la función RecepcionRespuestaPrestadores', error);
       return [];
     }
-  };
+  }; 
 
   // Función para realizar la consulta a la API
   const ObtenerInformacionPrestadores = async (idAfiliado: string, cadena: string) => {

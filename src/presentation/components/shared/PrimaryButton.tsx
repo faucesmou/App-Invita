@@ -13,14 +13,23 @@ interface Props {
 
 
 export const PrimaryButton = ( { onPress, label, color, disabled }: Props) => {
-
+  const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.profile2);
     const navigation = useNavigation();
-    const backColor = color? color : globalColors.profile2;
+   /*  const backColor = color? color : globalColors.profile2; */
   return (
   
     <Pressable
-    onPress={ () => onPress() }
-    style={ {...globalStyles.primaryButton, backgroundColor: backColor} }>
+   /*  onPress={ () => onPress() }
+    style={ {...globalStyles.primaryButton, backgroundColor: backColor} }> */
+    onPress={disabled ? undefined : onPress}
+    style={({ pressed }) => [
+      {
+        backgroundColor: pressed && !disabled ? globalColors.pressed : backColor,
+        opacity: disabled ? 0.5 : 1, // Cambia la opacidad si está deshabilitado
+      },
+      globalStyles.primaryButton
+    ]}
+  >
       <Text style={ globalStyles.buttonText }>
         {label}
       </Text>

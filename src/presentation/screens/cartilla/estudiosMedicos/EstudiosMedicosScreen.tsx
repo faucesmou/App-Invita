@@ -5,10 +5,10 @@ import { Picker } from '@react-native-picker/picker';
 
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
-import { IndexPath, Layout, Select, SelectItem, SelectGroup, Input, Button } from '@ui-kitten/components'
+import { IndexPath, Layout, Select, SelectItem, SelectGroup, Input, InputProps, Button } from '@ui-kitten/components'
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 import { RootStackParams } from '../../../routes/StackNavigator';
-import { globalStyles } from '../../../theme/theme';
+import { globalColors, globalStyles } from '../../../theme/theme';
 import CustomHeader from '../../../components/CustomHeader';
 import { BackButton } from '../../../components/shared/BackButton';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
@@ -16,7 +16,15 @@ import { MyIcon } from '../../../components/ui/MyIcon';
 
 
 
+interface MyInputProps extends InputProps {
+  placeholderStyle: {
+    fontSize?: number; // Define las propiedades que necesitas
+  };
+}
 export const EstudiosMedicosScreen = () => {
+
+
+
 
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, cadena, ObtenerEspecialidades, ObtenerPrestadores, ObtenerPrestadoresEstudiosMedicos, GuardarIdPrestador, GuardarIdFamiliarSeleccionado } = useAuthStore();
 
@@ -52,54 +60,70 @@ export const EstudiosMedicosScreen = () => {
 
 
 
-  
+
   //---------------------LOGICA PARA EL SELECT DE PRESTADOR ELEGIDO-------------------------------------->
   const [PrestadoresObtenidosObjeto, setPrestadoresObtenidosObjeto] = useState<string[]>([]);
-  const [NombresDePrestadores, setNombresDePrestadores] = useState<string[]>([]);
+  const [NombresDePrestadores, setNombresDePrestadores] = useState<string[]>([' Incluya al menos 3 caracteres']);
   const [SelectedPrestadorNombre, setSelectedPrestadorNombre] = useState<string | null>(null);
   const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
   const [IdPrestadorElegido, setIdPrestadorElegido] = useState<string>('');
 
   //--------------------- LOGICA PARA EL INPUT DE BÙSQUEDA DE PRESTADOR-------------------------------------->
   const [isPosting, setIsPosting] = useState(false)
-  const [busqueda, setBusqueda] = useState({ cadena: ''})
+  const [busqueda, setBusqueda] = useState({ cadena: '' })
+  const [clickedSearch, setClickedSearch] = useState<boolean>(false);
+
   const obtenerPrestadoresConsulta = async () => {
 
-    if ( busqueda.cadena.length < 2) {
+  /*   if (busqueda.cadena.length > 1 && busqueda.cadena.length < 3) {
       Alert.alert('Error', 'La bùsqueda debe incluir al menos 3 caracteres');
       return false;
-    }; 
-   
+    }; */
+
     try {
 
-      if (idAfiliado !== undefined && busqueda.cadena !== '' ) {
+      if (idAfiliado !== undefined && busqueda.cadena !== '') {
         const PrestadoresObtenidos: any = await ObtenerPrestadoresEstudiosMedicos(idAfiliado, busqueda.cadena);
         setPrestadoresObtenidosObjeto(PrestadoresObtenidos);
-        const nombresPrestadores = PrestadoresObtenidos.map((prestador: any) => prestador.nombre);
+
+        const nombresPrestadores = PrestadoresObtenidos.map((prestador: any) => {
+          if (Array.isArray(prestador.nombre)) {
+            return prestador.nombre[0];
+          } else {
+            return prestador.nombre;
+          }
+        });
+
         if (nombresPrestadores[0] === "No se encontraron prestadores para la busqueda indicada.") {
           setNombresDePrestadores(["Elija familiar y prestador"]);
         } else {
           setNombresDePrestadores(nombresPrestadores);
+           // Si solo hay un prestador, seleccionarlo automáticamente
+           if (nombresPrestadores.length === 1) {
+            handleSelectPrestador(nombresPrestadores[0], 0);
+          }
+          console.log('nombresPrestadores:---->', nombresPrestadores);
+          
         }
-
+       
         return true;
 
       } else {
-        Alert.alert('Error', 'El ID de afiliado o la cadena están vacíos. No se puede realizar la búsqueda.');
-        console.error('idAfiliado  o cadena esta vacio. No se puede llamar a ObtenerPrestadoresEstudiosMedicos.');
-       return false;
+     
+        console.log('idAfiliado  o cadena esta vacio. No se puede llamar a ObtenerPrestadoresEstudiosMedicos.');
+        return false;
       }
     } catch (error) {
-      console.error(' No se puede llamar a ObtenerPrestadoresEstudiosMedicos desde el EstudiosMedicosScreen.');
+      console.log(' No se puede llamar a ObtenerPrestadoresEstudiosMedicos desde el EstudiosMedicosScreen.');
     }
   };
 
   const HandleBuscarPrestador = async () => {
-    
-    setIsPosting(true); 
+
+    setIsPosting(true);
     const respuestaExitosa = await obtenerPrestadoresConsulta()
     setIsPosting(false);
-    if (!respuestaExitosa){
+    if (!respuestaExitosa) {
       Alert.alert('Error', 'Dificultades tecnicas en la busqueda');
       return;
     }
@@ -107,55 +131,44 @@ export const EstudiosMedicosScreen = () => {
   }
 
 
-  //--------------------- LOGICA PARA EL SELECT DE ESPECIALIDAD ELEGIDA-------------------------------------->
-  //
-  //useStates: State 1 (NombresDeEspecialidades): para guardar un listado de solamente NOMBRES de especialidades (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (EspecialidadesObtenidasObjeto): datos de las especialidades obtenidas de la consulta (nombre y id). state 3(SelectedEspecialidadNombre): nombre de la especialidad seleccionada. state4(EspecialidadSeleccionadaDatos) : nombre y id de la especialidad seleccionada. 
-  const [NombresDeEspecialidades, setNombresDeEspecialidades] = useState<string[]>([]);
-  const [EspecialidadesObtenidasObjeto, setEspecialidadesObtenidasObjeto] = useState<string[]>([]); // 
-  const [SelectedEspecialidadNombre, setSelectedEspecialidadNombre] = useState<string | null>(null);
-  const [EspecialidadSeleccionadaDatos, setEspecialidadSeleccionadaDatos] = useState<string[]>([]);
-  const [IdEspecialidadElegida, setIdEspecialidadElegida] = useState<string>('');
+    const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
+      console.log('entrando a handleSelectPrestador--->', itemValue, itemIndex );
+      setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
 
-  const handleSelectEspecialidad = (itemValue: string | number, itemIndex: number) => {
-    setSelectedEspecialidadNombre(NombresDeEspecialidades[itemIndex]);
-    const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === itemValue);
-    if (EspecialidadEncontrada) {
-      setEspecialidadSeleccionadaDatos(EspecialidadEncontrada)
-      const { nombreParaAfiliado, idPrestacion }: { nombreParaAfiliado: string, idPrestacion: string } = EspecialidadEncontrada;
-      //podemos luego guardar estas constantes en el context.
-      setIdEspecialidadElegida(idPrestacion)
+      console.log('SelectedPrestadorNombre--->', SelectedPrestadorNombre );
+      console.log('PrestadoresObtenidosObjeto--->', PrestadoresObtenidosObjeto );
+      
+      // Asegúrate de que `itemValue` es una cadena
+      const selectedNombre = typeof itemValue === 'string' ? itemValue : itemValue.toString();
 
-    }
+      const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.nombre === selectedNombre);
+      if (PrestadorEncontrado) {
+        setPrestadorSeleccionadoDatos(PrestadorEncontrado)
+        const { nombre, idConvenio }: { nombre: string, idConvenio: string } = PrestadorEncontrado;
+        console.log('Nombre del Prestador:', nombre);
+        console.log('ID del convenio del Prestador:', idConvenio);
+        setIdPrestadorElegido(idConvenio)
+        GuardarIdPrestador(idConvenio)
+      } else {
+        console.log('No se encontró la especialidad');
+      }
+    }; 
 
-
-  };
-
-
-/*   const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
-    setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
-    const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);
-    if (PrestadorEncontrado) {
-      setPrestadorSeleccionadoDatos(PrestadorEncontrado)
-      const { prestador, idPrestador }: { prestador: string, idPrestador: string } = PrestadorEncontrado;
-      console.log('Nombre del Prestador:', prestador);
-      console.log('ID del Prestador:', idPrestador);
-      setIdPrestadorElegido(idPrestador)
-      GuardarIdPrestador(idPrestador)
-    } else {
-      console.log('No se encontró la especialidad');
-
-    }
-
-  }; */
-
-
-
-
+    useEffect(() => {
+      obtenerPrestadoresConsulta();
+    }, [idAfiliado, busqueda.cadena]);
+  
+    useEffect(() => {
+      // Si solo hay un prestador y no hay uno seleccionado, seleccionarlo automáticamente
+      if (NombresDePrestadores.length === 1 && !SelectedPrestadorNombre) {
+        handleSelectPrestador(NombresDePrestadores[0], 0);
+      }
+    }, [NombresDePrestadores]);
 
   useEffect(() => {
 
     console.log('FamiliarSeleccionadoDatos------>>>', FamiliarSeleccionadoDatos);
-    console.log('EspecialidadSeleccionadaDatos------>>>', EspecialidadSeleccionadaDatos);
+   
     console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSeleccionadoDatos);
 
     const obtenerFamiliaresConsulta = async () => {
@@ -180,27 +193,10 @@ export const EstudiosMedicosScreen = () => {
         console.error('idAfiliado es undefined. No se puede llamar a ObtenerFamiliares desde el tramitesScreen.');
       }
     };
-    const obtenerEspecialidadesConsulta = async () => {
-      try {
-        if (idAfiliado !== undefined && idAfiliadoTitular !== undefined) {
-          const especialidadesObtenidas = await ObtenerEspecialidades(idAfiliado, idAfiliadoTitular);
-          setEspecialidadesObtenidasObjeto(especialidadesObtenidas);
-          const mensajePredeterminado = 'Desliza hacia abajo';
-          const nombresEspecialidades = [mensajePredeterminado, ...especialidadesObtenidas.map((especialidad) => especialidad.nombreParaAfiliado)];
-          setNombresDeEspecialidades(nombresEspecialidades)
-          return especialidadesObtenidas
-
-        } else {
-          console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades.');
-        }
-      } catch (error) {
-        console.error('idAfiliado  o idAfiliadoTitular es undefined. No se puede llamar a ObtenerEspecialidades desde el ConsultaScreen.');
-      }
-    };
-   
+  
     obtenerFamiliaresConsulta();
-/*     obtenerEspecialidadesConsulta();
-    obtenerPrestadoresConsulta(); */
+    /*     obtenerEspecialidadesConsulta();
+        obtenerPrestadoresConsulta(); */
   }, [/* selectedFamiliarNombre, */ /* SelectedEspecialidadNombre, */ /* IdEspecialidadElegida,*/ /* SelectedPrestadorNombre */])
 
 
@@ -217,9 +213,9 @@ export const EstudiosMedicosScreen = () => {
       <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', /* backgroundColor: 'orange' */ }}>Solicitar Estudio Médico</Text>
 
       <View
-        style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 35 }}>
+        style={{  /* backgroundColor: 'black', */  flex: 1, marginBottom: 30, marginTop: 35 }}>
 
-          {/* -----------------FAMILIAR---------------- */}
+        {/* -----------------FAMILIAR---------------- */}
 
         <View style={{ /*  backgroundColor: 'yellow', */ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
@@ -229,7 +225,7 @@ export const EstudiosMedicosScreen = () => {
               selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectFamiliar(itemValue, itemIndex)
-              }         
+              }
               itemStyle={globalStyles.itemStyle}
             >
               {nombresDeFamiliares.map((item, index) => (
@@ -239,32 +235,35 @@ export const EstudiosMedicosScreen = () => {
             </Picker>
           </View>
         </View>
-      
+
 
         {/* -----------------INPUT PARA ESCRIBIR EL PRESTADOR---------------- */}
 
         <Layout style={{ marginTop: 20 }}>
-      
+
           <Input
-            placeholder="Escriba un prestador"
+            placeholder="Escriba un prestador para buscar"
             autoCapitalize="none"
             value={busqueda.cadena}
             onChangeText={(cadena) => setBusqueda({ cadena })}
             accessoryLeft={<MyIcon name="arrowhead-right-outline" />}
             style={{ marginBottom: 10 }}
+         
+          
           />
         </Layout>
 
-        <Layout style={{ marginTop: 20 }}>
-          <Button
-            disabled={isPosting}
-            accessoryRight={<MyIcon name="arrow-forward-outline" white />}
-            onPress={HandleBuscarPrestador}
-          >
-            Buscar Prestador
-          </Button>
+{/* BOTON OPCIONAL PARA EJECUTAR LA BÙSQUEDA: */}
 
-        </Layout>
+        {/* <Layout style={{
+          marginHorizontal: 90,
+        }}>
+          <PrimaryButton
+            onPress={() => HandleBuscarPrestador()}
+            label=" Buscar Prestador"
+            disabled={isPosting}
+          />
+        </Layout> */}
 
 
 
@@ -276,10 +275,10 @@ export const EstudiosMedicosScreen = () => {
           <View style={globalStyles.pickerWrapper}>
             <Picker
               style={globalStyles.inputIOS}
-             /*  selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
+               selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
-                handleSelectPrestador(itemValue, itemIndex)
-              } */
+                 handleSelectPrestador(itemValue, itemIndex)
+               }  
               itemStyle={globalStyles.itemStyle}
             >
               {NombresDePrestadores.map((item, index) => (
@@ -302,3 +301,30 @@ export const EstudiosMedicosScreen = () => {
   )
 }
 
+/* BOTON OPCIONAL PARA MANEJAR LA BÙSQUEDA:  */
+
+{/*  <Layout style={{
+                   marginTop: 5,
+                   borderRadius: 25,
+                   marginBottom: 5,
+                   marginHorizontal: 80,
+                   marginVertical:90,
+                   paddingHorizontal: 0,
+                   paddingVertical:0,
+                 }}>
+                   <Button
+                     disabled={isPosting}
+                     accessoryRight={<MyIcon name="arrow-forward-outline" white />}
+                     onPress={HandleBuscarPrestador}
+                     style={{ ...globalStyles.searchButton, backgroundColor: globalColors.profile2 }}
+                    
+                   >
+                      {() => (
+                   <Text   style={globalStyles.searchButtonText}>
+                     Buscar Prestador
+                   </Text>
+                 )}
+                
+                   </Button>
+         
+                 </Layout> */}

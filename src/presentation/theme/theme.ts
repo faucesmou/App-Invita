@@ -12,6 +12,8 @@ export const globalColors = {
     profile2:'#3457e6',
     orange: '#ed843e',
     select: '#efe3e3',
+    disabled: '#92c0f0',
+    pressed: '#3d8ee5',
   
 
     background:'#fff', 
@@ -90,6 +92,25 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center'
         
+    },
+    searchButton: {
+      borderRadius: 5,
+      padding: 0,
+      margin: 0,
+      marginBottom: 5,
+      marginHorizontal: 0,
+      paddingHorizontal: 0,
+      alignItems: 'center',
+      textAlign: 'center',
+      justifyContent: 'center',
+     
+    },
+    searchButtonText: {
+      fontSize: 18,
+      paddingHorizontal: 5,
+      fontWeight: 'normal',
+      color: 'white',
+      fontFamily: 'Quicksand-Light',
     },
     buttonText: {
         color: globalColors.background,
