@@ -14,6 +14,7 @@ import { BackButton } from '../../../components/shared/BackButton';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { MyIcon } from '../../../components/ui/MyIcon';
 import UploadImage from '../../../components/shared/UploadImage';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -212,6 +213,7 @@ export const EstudiosMedicosScreen = () => {
 
       <View
         style={{  /* backgroundColor: 'black', */  flex: 1, marginBottom: 30, marginTop: 35 }}>
+          <ScrollView>
 
         {/* -----------------FAMILIAR---------------- */}
 
@@ -304,6 +306,7 @@ export const EstudiosMedicosScreen = () => {
           onPress={() => navigation.navigate('MiOrdenConsulta')}
           label=" Solicitar Estudios Medicos"
         />
+        </ScrollView>
       </View>
       
     </View>

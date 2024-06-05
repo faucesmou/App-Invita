@@ -8,7 +8,15 @@
   <string>Ionicons.ttf</string>
 </array>
 
+<!-- Aquí van los permisos para la biblioteca react-native-image-picker -->
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Necesitamos acceso a tu biblioteca de fotos</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Necesitamos acceso a tu cámara</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Necesitamos acceso para guardar fotos</string>
 
+  <!-- El resto de tus configuraciones van aquí -->
 
 
 	<key>CFBundleDevelopmentRegion</key>
