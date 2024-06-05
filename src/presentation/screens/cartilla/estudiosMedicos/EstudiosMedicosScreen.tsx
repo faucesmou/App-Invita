@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, Alert } from 'react-native'
+import { Text, View, Alert, TextInput, StyleSheet } from 'react-native'
 import { xml2js } from 'xml-js';
 import { Picker } from '@react-native-picker/picker';
 
@@ -21,9 +21,12 @@ interface MyInputProps extends InputProps {
     fontSize?: number; // Define las propiedades que necesitas
   };
 }
+interface CustomInputProps extends InputProps {
+  placeholder: string;
+}
 export const EstudiosMedicosScreen = () => {
 
-
+  const [text, setText] = useState('');
 
 
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, cadena, ObtenerEspecialidades, ObtenerPrestadores, ObtenerPrestadoresEstudiosMedicos, GuardarIdPrestador, GuardarIdFamiliarSeleccionado } = useAuthStore();
@@ -71,7 +74,7 @@ export const EstudiosMedicosScreen = () => {
   //--------------------- LOGICA PARA EL INPUT DE BÙSQUEDA DE PRESTADOR-------------------------------------->
   const [isPosting, setIsPosting] = useState(false)
   const [busqueda, setBusqueda] = useState({ cadena: '' })
-  const [clickedSearch, setClickedSearch] = useState<boolean>(false);
+ 
 
   const obtenerPrestadoresConsulta = async () => {
 
@@ -93,9 +96,11 @@ export const EstudiosMedicosScreen = () => {
             return prestador.nombre;
           }
         });
+console.log('nombresPrestadores: --->',nombresPrestadores );
 
-        if (nombresPrestadores[0] === "No se encontraron prestadores para la busqueda indicada.") {
-          setNombresDePrestadores(["Elija familiar y prestador"]);
+        if (nombresPrestadores.length === 0 ) {
+          setNombresDePrestadores(["No se encontraron prestadores"]);
+          console.log('NombresDePrestadores acaa: --->',NombresDePrestadores );
         } else {
           setNombresDePrestadores(nombresPrestadores);
            // Si solo hay un prestador, seleccionarlo automáticamente
@@ -237,9 +242,9 @@ export const EstudiosMedicosScreen = () => {
         </View>
 
 
-        {/* -----------------INPUT PARA ESCRIBIR EL PRESTADOR---------------- */}
+        {/* -----------------INPUT 1 PARA ESCRIBIR EL PRESTADOR---------------- */}
 
-        <Layout style={{ marginTop: 20 }}>
+      {/*   <Layout style={{ marginTop: 20 }}>
 
           <Input
             placeholder="Escriba un prestador para buscar"
@@ -247,11 +252,21 @@ export const EstudiosMedicosScreen = () => {
             value={busqueda.cadena}
             onChangeText={(cadena) => setBusqueda({ cadena })}
             accessoryLeft={<MyIcon name="arrowhead-right-outline" />}
-            style={{ marginBottom: 10 }}
-         
-          
+            style={{ marginBottom: 10}}         
           />
-        </Layout>
+        </Layout> */}
+    {/* -----------------INPUT 2 PARA ESCRIBIR EL PRESTADOR---------------- */}
+        <View  style={globalStyles.containerInput2} >
+      <TextInput
+        style={globalStyles.estilosInput2}
+        placeholder="Escriba un prestador"
+        placeholderTextColor="gray"
+        value={busqueda.cadena}
+        onChangeText={(cadena) => setBusqueda({ cadena })}
+        
+      />
+    </View>
+     
 
 {/* BOTON OPCIONAL PARA EJECUTAR LA BÙSQUEDA: */}
 
@@ -300,6 +315,7 @@ export const EstudiosMedicosScreen = () => {
     </View>
   )
 }
+
 
 /* BOTON OPCIONAL PARA MANEJAR LA BÙSQUEDA:  */
 

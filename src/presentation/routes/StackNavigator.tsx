@@ -51,13 +51,14 @@ export type RootStackParams = {
   SideMenuNavigator: undefined,
   CredencialScreenPrueba:undefined,
   ConsultaScreen: undefined,
-  ConsultaScreenFinal: undefined,
+  Consulta: undefined,
   FormularioElegido:undefined,
   CartillaScreen: undefined,
   CartillaMedicaScreen: undefined,
   MiSalud: undefined,
+  Formularios:undefined,
   CartillaMedicaEspecialidad: { idCartilla: string };
-  EstudiosMedicosScreen: undefined, 
+  EstudiosMedicos: undefined, 
 
 }
 
@@ -130,12 +131,12 @@ export const StackNavigator = () => {
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="CartillaMedicaEspecialidad" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
-      <Stack.Screen name="EstudiosMedicosScreen" component={EstudiosMedicosScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="EstudiosMedicos" component={EstudiosMedicosScreen} options={{ headerShown: true }} />
       
 {/* MI GESTIÓN (TramitesScreen): */}
 
 {/* Solicitar orden de consulta: */}
-      <Stack.Screen name="ConsultaScreenFinal" component={ConsultaScreenFinal} options={{ headerShown: true }} />
+      <Stack.Screen name="Consulta" component={ConsultaScreenFinal} options={{ headerShown: true }} />
 
 {/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />

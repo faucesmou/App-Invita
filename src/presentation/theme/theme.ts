@@ -27,22 +27,20 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: /* 'yellow' */ globalColors.background  , 
         textAlign: 'center',
         justifyContent: 'center',
-      
-        
     },
     inputIOS: {
       padding: 0,
       width: '100%',
       height: 50,
       color: 'black',
-      fontSize: 5,
+      fontSize: 10,
       fontFamily: 'Quicksand-Light',
       borderRadius: 15,
      backgroundColor: '#efe3e3',
   
     },
     itemStyle:{
-      fontSize: 16,
+      fontSize: 20,
       fontFamily: 'Quicksand-Light',
       flex: 1,
       justifyContent: 'center',
@@ -127,5 +125,22 @@ export const globalStyles = StyleSheet.create({
       paddingHorizontal: 20,
       backgroundColor: '#e9f6f8'
         
+    },
+    /* estilos para el input numero 2: */
+    containerInput2: {
+      marginTop: 20,
+      marginBottom:10,
+      justifyContent: 'center',
+      paddingHorizontal: 30,
+      /* backgroundColor: 'blue' */
+    },
+    estilosInput2: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      paddingLeft: 15,
+      fontSize: 20, // Establecer el tamaño de fuente deseado para el texto del input
+      fontFamily: 'Quicksand-Light',
+      borderRadius: 15,
     },
 })
