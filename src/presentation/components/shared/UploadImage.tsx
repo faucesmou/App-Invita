@@ -1,24 +1,68 @@
 import React, { useState } from 'react';
 import { View, Text, Button, Image, StyleSheet, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import RNFS from 'react-native-fs';
 import axios from 'axios';
+import { useAuthStore } from '../../store/auth/useAuthStore';
 
 const UploadImage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [fileSent, setFileSent] = useState(false);
   const [fileNotSent, setFileNotSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { GuardarImagenes } = useAuthStore();
 
-  const handleImagePicker = () => {
-    launchImageLibrary({ mediaType: 'photo' }, (response) => {
-      if (response.assets && response.assets.length > 0) {
-        const asset = response.assets[0];
-        setSelectedImage(asset.uri);
-      }
+  const [base64Image, setBase64Image] = useState<string | null>(null);
+
+  const convertImageToBase64 = async (imageUri: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      // Leer la imagen y convertirla a Base64
+      RNFS.readFile(imageUri, 'base64')
+        .then((base64String: string) => {
+          resolve(base64String);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
     });
   };
 
-  const handleImageUpload = async () => {
+  const handleImagePicker = async () => {
+    try {
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+      });
+  
+      if (result.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (result.errorCode) {
+        console.error('ImagePicker Error: ', result.errorCode);
+      } else if (result.assets && result.assets.length > 0) {
+        const asset = result.assets[0];
+        setSelectedImage(asset.uri || null);
+  
+        // Convertir la imagen a Base64
+        const base64String = await convertImageToBase64(asset.uri);
+        console.log('Imagen convertida a Base64: el useState lo contiene---> base64String ');
+        setBase64Image(base64String); // Guardar la imagen convertida en el estado
+      // Guardar la imagen en el estado global
+      const resultado = await GuardarImagenes(base64String);
+
+      // Manejar el resultado de GuardarImagenes(recibe true o false)
+      if (resultado) {
+        console.log('Imagen guardada exitosamente en zustand');
+        
+      } else {
+        console.log('un problemita para guardar la imagen en zustand');
+      }
+      
+      }
+    } catch (error) {
+      console.error('ImagePicker Error: ', error);
+    }
+  };
+  
+   const handleImageUpload = async () => {
     try {
       if (!selectedImage) {
         Alert.alert('Error', 'Debes seleccionar una imagen.');
