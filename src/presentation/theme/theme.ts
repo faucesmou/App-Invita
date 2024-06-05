@@ -24,7 +24,7 @@ export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: /* 'yellow' */ globalColors.background  , 
+        backgroundColor: /* 'yellow' */  globalColors.background   , 
         textAlign: 'center',
         justifyContent: 'center',
     },
@@ -139,8 +139,28 @@ export const globalStyles = StyleSheet.create({
       borderColor: 'gray',
       borderWidth: 1,
       paddingLeft: 15,
-      fontSize: 20, // Establecer el tamaño de fuente deseado para el texto del input
+      fontSize: 20, 
       fontFamily: 'Quicksand-Light',
       borderRadius: 15,
     },
+    /* estilos para estudios medicos enviados: */
+     containerEstudiosMedicosEnv: {
+   /*  flex: 0.5, */
+    paddingHorizontal: 20,
+    marginTop: 20, 
+    backgroundColor: 'yellow',
+    marginBottom:10,
+
+  },
+    titleEstudiosMedicosEnv: {
+      marginBottom: 5,
+      fontSize: 25,
+      fontFamily: 'Quicksand-Light',
+    },
+    resultText: {
+      fontSize: 18,
+      fontFamily: 'Quicksand-Light',
+      margin:10,
+    },
+
 })

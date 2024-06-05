@@ -299,11 +299,11 @@ export const EstudiosMedicosScreen = () => {
             </Picker>
           </View>
         </View>
-
+        {/* componente para cargar imagenes: */}
         <UploadImage />
 
         <PrimaryButton
-          onPress={() => navigation.navigate('MiOrdenConsulta')}
+          onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
           label=" Solicitar Estudios Medicos"
         />
         </ScrollView>
