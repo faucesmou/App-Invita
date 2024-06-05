@@ -13,17 +13,10 @@ import CustomHeader from '../../../components/CustomHeader';
 import { BackButton } from '../../../components/shared/BackButton';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { MyIcon } from '../../../components/ui/MyIcon';
+import UploadImage from '../../../components/shared/UploadImage';
 
 
 
-interface MyInputProps extends InputProps {
-  placeholderStyle: {
-    fontSize?: number; // Define las propiedades que necesitas
-  };
-}
-interface CustomInputProps extends InputProps {
-  placeholder: string;
-}
 export const EstudiosMedicosScreen = () => {
 
   const [text, setText] = useState('');
@@ -74,14 +67,14 @@ export const EstudiosMedicosScreen = () => {
   //--------------------- LOGICA PARA EL INPUT DE BÙSQUEDA DE PRESTADOR-------------------------------------->
   const [isPosting, setIsPosting] = useState(false)
   const [busqueda, setBusqueda] = useState({ cadena: '' })
- 
+
 
   const obtenerPrestadoresConsulta = async () => {
 
-  /*   if (busqueda.cadena.length > 1 && busqueda.cadena.length < 3) {
-      Alert.alert('Error', 'La bùsqueda debe incluir al menos 3 caracteres');
-      return false;
-    }; */
+    /*   if (busqueda.cadena.length > 1 && busqueda.cadena.length < 3) {
+        Alert.alert('Error', 'La bùsqueda debe incluir al menos 3 caracteres');
+        return false;
+      }; */
 
     try {
 
@@ -96,25 +89,25 @@ export const EstudiosMedicosScreen = () => {
             return prestador.nombre;
           }
         });
-console.log('nombresPrestadores: --->',nombresPrestadores );
+        console.log('nombresPrestadores: --->', nombresPrestadores);
 
-        if (nombresPrestadores.length === 0 ) {
+        if (nombresPrestadores.length === 0) {
           setNombresDePrestadores(["No se encontraron prestadores"]);
-          console.log('NombresDePrestadores acaa: --->',NombresDePrestadores );
+          console.log('NombresDePrestadores acaa: --->', NombresDePrestadores);
         } else {
           setNombresDePrestadores(nombresPrestadores);
-           // Si solo hay un prestador, seleccionarlo automáticamente
-           if (nombresPrestadores.length === 1) {
+          // Si solo hay un prestador, seleccionarlo automáticamente
+          if (nombresPrestadores.length === 1) {
             handleSelectPrestador(nombresPrestadores[0], 0);
           }
           console.log('nombresPrestadores:---->', nombresPrestadores);
-          
+
         }
-       
+
         return true;
 
       } else {
-     
+
         console.log('idAfiliado  o cadena esta vacio. No se puede llamar a ObtenerPrestadoresEstudiosMedicos.');
         return false;
       }
@@ -136,44 +129,44 @@ console.log('nombresPrestadores: --->',nombresPrestadores );
   }
 
 
-    const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
-      console.log('entrando a handleSelectPrestador--->', itemValue, itemIndex );
-      setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
+  const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
+    console.log('entrando a handleSelectPrestador--->', itemValue, itemIndex);
+    setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
 
-      console.log('SelectedPrestadorNombre--->', SelectedPrestadorNombre );
-      console.log('PrestadoresObtenidosObjeto--->', PrestadoresObtenidosObjeto );
-      
-      // Asegúrate de que `itemValue` es una cadena
-      const selectedNombre = typeof itemValue === 'string' ? itemValue : itemValue.toString();
+    console.log('SelectedPrestadorNombre--->', SelectedPrestadorNombre);
+    console.log('PrestadoresObtenidosObjeto--->', PrestadoresObtenidosObjeto);
 
-      const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.nombre === selectedNombre);
-      if (PrestadorEncontrado) {
-        setPrestadorSeleccionadoDatos(PrestadorEncontrado)
-        const { nombre, idConvenio }: { nombre: string, idConvenio: string } = PrestadorEncontrado;
-        console.log('Nombre del Prestador:', nombre);
-        console.log('ID del convenio del Prestador:', idConvenio);
-        setIdPrestadorElegido(idConvenio)
-        GuardarIdPrestador(idConvenio)
-      } else {
-        console.log('No se encontró la especialidad');
-      }
-    }; 
+    // Asegúrate de que `itemValue` es una cadena
+    const selectedNombre = typeof itemValue === 'string' ? itemValue : itemValue.toString();
 
-    useEffect(() => {
-      obtenerPrestadoresConsulta();
-    }, [idAfiliado, busqueda.cadena]);
-  
-    useEffect(() => {
-      // Si solo hay un prestador y no hay uno seleccionado, seleccionarlo automáticamente
-      if (NombresDePrestadores.length === 1 && !SelectedPrestadorNombre) {
-        handleSelectPrestador(NombresDePrestadores[0], 0);
-      }
-    }, [NombresDePrestadores]);
+    const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.nombre === selectedNombre);
+    if (PrestadorEncontrado) {
+      setPrestadorSeleccionadoDatos(PrestadorEncontrado)
+      const { nombre, idConvenio }: { nombre: string, idConvenio: string } = PrestadorEncontrado;
+      console.log('Nombre del Prestador:', nombre);
+      console.log('ID del convenio del Prestador:', idConvenio);
+      setIdPrestadorElegido(idConvenio)
+      GuardarIdPrestador(idConvenio)
+    } else {
+      console.log('No se encontró la especialidad');
+    }
+  };
+
+  useEffect(() => {
+    obtenerPrestadoresConsulta();
+  }, [idAfiliado, busqueda.cadena]);
+
+  useEffect(() => {
+    // Si solo hay un prestador y no hay uno seleccionado, seleccionarlo automáticamente
+    if (NombresDePrestadores.length === 1 && !SelectedPrestadorNombre) {
+      handleSelectPrestador(NombresDePrestadores[0], 0);
+    }
+  }, [NombresDePrestadores]);
 
   useEffect(() => {
 
     console.log('FamiliarSeleccionadoDatos------>>>', FamiliarSeleccionadoDatos);
-   
+
     console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSeleccionadoDatos);
 
     const obtenerFamiliaresConsulta = async () => {
@@ -198,7 +191,7 @@ console.log('nombresPrestadores: --->',nombresPrestadores );
         console.error('idAfiliado es undefined. No se puede llamar a ObtenerFamiliares desde el tramitesScreen.');
       }
     };
-  
+
     obtenerFamiliaresConsulta();
     /*     obtenerEspecialidadesConsulta();
         obtenerPrestadoresConsulta(); */
@@ -244,7 +237,7 @@ console.log('nombresPrestadores: --->',nombresPrestadores );
 
         {/* -----------------INPUT 1 PARA ESCRIBIR EL PRESTADOR---------------- */}
 
-      {/*   <Layout style={{ marginTop: 20 }}>
+        {/*   <Layout style={{ marginTop: 20 }}>
 
           <Input
             placeholder="Escriba un prestador para buscar"
@@ -255,20 +248,20 @@ console.log('nombresPrestadores: --->',nombresPrestadores );
             style={{ marginBottom: 10}}         
           />
         </Layout> */}
-    {/* -----------------INPUT 2 PARA ESCRIBIR EL PRESTADOR---------------- */}
-        <View  style={globalStyles.containerInput2} >
-      <TextInput
-        style={globalStyles.estilosInput2}
-        placeholder="Escriba un prestador"
-        placeholderTextColor="gray"
-        value={busqueda.cadena}
-        onChangeText={(cadena) => setBusqueda({ cadena })}
-        
-      />
-    </View>
-     
+        {/* -----------------INPUT 2 PARA ESCRIBIR EL PRESTADOR---------------- */}
+        <View style={globalStyles.containerInput2} >
+          <TextInput
+            style={globalStyles.estilosInput2}
+            placeholder="Escriba un prestador"
+            placeholderTextColor="gray"
+            value={busqueda.cadena}
+            onChangeText={(cadena) => setBusqueda({ cadena })}
 
-{/* BOTON OPCIONAL PARA EJECUTAR LA BÙSQUEDA: */}
+          />
+        </View>
+
+
+        {/* BOTON OPCIONAL PARA EJECUTAR LA BÙSQUEDA: */}
 
         {/* <Layout style={{
           marginHorizontal: 90,
@@ -290,10 +283,10 @@ console.log('nombresPrestadores: --->',nombresPrestadores );
           <View style={globalStyles.pickerWrapper}>
             <Picker
               style={globalStyles.inputIOS}
-               selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
+              selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
-                 handleSelectPrestador(itemValue, itemIndex)
-               }  
+                handleSelectPrestador(itemValue, itemIndex)
+              }
               itemStyle={globalStyles.itemStyle}
             >
               {NombresDePrestadores.map((item, index) => (
@@ -305,13 +298,14 @@ console.log('nombresPrestadores: --->',nombresPrestadores );
           </View>
         </View>
 
+        <UploadImage />
 
         <PrimaryButton
           onPress={() => navigation.navigate('MiOrdenConsulta')}
           label=" Solicitar Estudios Medicos"
         />
       </View>
-
+      
     </View>
   )
 }

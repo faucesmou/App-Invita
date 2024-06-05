@@ -245,43 +245,6 @@ export const useAuthStore = create<AuthState>()((set /* , get */) => ({
           ordenAccion: prestadoresData.ordenAccion._text // Incluir ordenAccion si es necesario
         }];
       }
-
-   /*   Mapear los datos correctamente */
-/*    const infoPrestadores = prestadoresData.map((prestador: any) => ({
-    idConvenio: prestador.idConvenio._text,
-    nombre: prestador.nombre._text ? prestador.nombre._text.trim() : "Nombre no disponible"
-  })); */
-    /*   ESTE FUNCIONA: const infoPrestadores = Array.isArray(prestadoresData) ? prestadoresData.map((prestador: any) => ({
-        idConvenio: prestador.idConvenio._text,
-        nombre: prestador.nombre._text,
-        ordenAccion: prestador.ordenAccion_text,
-      })) : [prestadoresData].map((prestador: any) => ({
-        idConvenio: prestador.idConvenio._text,
-        nombre: prestador.nombre._text,
-        ordenAccion: prestador.ordenAccion._text,
-      }));  */
-      /* [{
-        idConvenio: prestadoresData.idConvenio._text,
-        nombre: prestadoresData.nombre._text
-      }]; */
-
-   /* Mapear los datos correctamente */
-  /*  const infoPrestadores = Array.isArray(prestadoresData) ? prestadoresData.reduce((acc: any[], prestador: any) => {
-    const idConvenio = prestador.idConvenio._text;
-    const nombre = prestador.nombre._text;
-
-    acc.push({ idConvenio, nombre });
-    return acc;
-  }, []) : [prestadoresData].reduce((acc: any[], prestador: any) => {
-    const idConvenio = prestador.idConvenio._text;
-    const nombre = prestador.nombre._text;
-
-    acc.push({ idConvenio, nombre });
-    return acc;
-  }, []);
-
-
-*/
       console.log('infoPrestadores:', infoPrestadores);
       return infoPrestadores;
     } catch (error) {
