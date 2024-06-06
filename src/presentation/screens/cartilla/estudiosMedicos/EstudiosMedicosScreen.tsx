@@ -188,11 +188,11 @@ export const EstudiosMedicosScreen = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 10, marginTop: 15, fontSize: 25, textAlign: 'center',  backgroundColor: 'orange'  }}>Solicitar Estudio Médico</Text>
+      <Text style={{ marginBottom: 10, marginTop: 15, fontSize: 25, textAlign: 'center'/* ,  backgroundColor: 'orange'  */ }}>Solicitar Estudio Médico</Text>
 
       <View
         style={{   /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 10 }}>
-          <ScrollView>
+        {/*   <ScrollView> */}
 
         {/* -----------------FAMILIAR---------------- */}
 
@@ -233,7 +233,7 @@ export const EstudiosMedicosScreen = () => {
         <View style={globalStyles.containerInput2} >
           <TextInput
             style={globalStyles.estilosInput2}
-            placeholder="Escriba un prestador"
+            placeholder="Escriba aquí el prestador deseado"
             placeholderTextColor="gray"
             value={busqueda.cadena}
             onChangeText={(cadena) => setBusqueda({ cadena })}
@@ -279,6 +279,8 @@ export const EstudiosMedicosScreen = () => {
           </View>
         </View>
         {/* componente para cargar imagenes: */}
+
+        <ScrollView>
         <UploadImage />
 
         <PrimaryButton

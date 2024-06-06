@@ -8,15 +8,16 @@ import { useAuthStore } from '../../store/auth/useAuthStore';
 const UploadImage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [SelectedFileName, setSelectedFileName] = useState<string | null>(null);
+  /* Estados para manejar un posible envio (no se esta usando por ahora) */
   const [fileSent, setFileSent] = useState(false);
   const [fileNotSent, setFileNotSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const { GuardarImagenes } = useAuthStore();
 
   const [base64Image, setBase64Image] = useState<string | null>(null);
-  
-  /* inicio la imagen1 con un string vacio para evitar undefined */
-/*   GuardarImagenes(''); */
+/* Primera prueba cargando varias imagenes:  */
+  const [images, setImages] = useState<(string | null)[]>([null, null, null, null, null]);
+  const [fileNames, setFileNames] = useState<(string | null)[]>([null, null, null, null, null]);
 
   const convertImageToBase64 = async (imageUri: string): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -101,7 +102,7 @@ const UploadImage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cargar Imagenes de Estudios</Text>
+      <Text style={styles.title}>Cargar Imágenes de Estudios</Text>
 
       <Button title="Seleccionar Imagen" onPress={handleImagePicker} />
 
@@ -117,6 +118,7 @@ const UploadImage: React.FC = () => {
       {fileNotSent && <Text style={styles.errorMessage}>Error al enviar la imagen: {errorMessage}</Text>}
 
      {/*  <Button title="Enviar Imagen" onPress={handleImageUpload} /> */}
+
     </View>
   );
 };
