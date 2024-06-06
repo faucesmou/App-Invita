@@ -39,6 +39,8 @@ export interface AuthState {
   idCartillaSeleccionada?:string;
   cadena: string;
   imagen1: string | undefined;
+  imagenes: (string | null)[];
+  
   loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
   ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
@@ -46,7 +48,8 @@ export interface AuthState {
   ObtenerPrestadores: (idAfiliado: string, idAfiliadoTitular:string, idPrestacion: string)=> Promise<any[]>;
   ObtenerPrestadoresEstudiosMedicos: (idAfiliado: string, cadena: string)=> Promise<any[]>;
   GuardarIdPrestador: (idPrestador: string)=> Promise<any[]>;
-  GuardarImagenes: (base64String: string) => Promise<boolean>;
+  GuardarImagenes: (newImages: (string | null)[]) => Promise<boolean>;
+ /*  GuardarImagenes: (base64String: string) => Promise<boolean>; */
   GuardarIdFamiliarSeleccionado: (idAfiliado: string)=> Promise<any[]>;
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
@@ -70,6 +73,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   idCartillaSeleccionada:undefined,
   cadena: '',
   imagen1: '',
+  imagenes: [null, null, null, null, null],
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
     try {
 
@@ -282,14 +286,24 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
      return [];
     }
   },
- GuardarImagenes: async ( base64String: string): Promise<boolean> => {
+/*  GuardarImagenes: async ( base64String: string): Promise<boolean> => {
     try {
       set({ imagen1: base64String })
- 
+      console.log('Se han guardado correctamente las imagenes en el context de zustand');
     return true; 
   } catch (error) {
-      console.log('ha ocurrido un error al guardar idPrestador en el useAuthStore');
+      console.log('Ocurrió un error al guardar las imagenes en el context de zustand');
      return false;
+    }
+  }, */
+  GuardarImagenes: async (newImages: (string | null)[]): Promise<boolean> => {
+    try {
+      set({ imagenes: newImages });
+      console.log('Se han guardado correctamente las imágenes en el contexto de Zustand');
+      return true;
+    } catch (error) {
+      console.log('Ocurrió un error al guardar las imágenes en el contexto de Zustand');
+      return false;
     }
   },
   GuardarIdFamiliarSeleccionado: async ( idAfiliado: string): Promise<string[]> => {

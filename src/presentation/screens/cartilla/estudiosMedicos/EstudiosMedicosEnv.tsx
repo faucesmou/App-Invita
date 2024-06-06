@@ -19,7 +19,7 @@ import { globalStyles } from '../../../theme/theme'
 
 export const EstudiosMedicosEnv = () => {
 
-  const { idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado, imagen1, GuardarIdFamiliarSeleccionado, GuardarIdPrestador, GuardarImagenes } = useAuthStore();
+  const { idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado, imagen1, GuardarIdFamiliarSeleccionado, GuardarIdPrestador, GuardarImagenes, imagenes } = useAuthStore();
  
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
@@ -43,11 +43,11 @@ export const EstudiosMedicosEnv = () => {
         const params = new URLSearchParams({
           idAfiliadoTitular: idAfiliadoTitular || '',
           idAfiliado: idAfiliadoSeleccionado || '',
-          imagen1: imagen1 || '',
-          imagen2: '',
-          imagen3: '',
-          imagen4: '',
-          imagen5: '',
+          imagen1: imagenes[0] || '',
+          imagen2: imagenes[1] ||  '',
+          imagen3: imagenes[2] ||  '',
+          imagen4: imagenes[3] ||  '',
+          imagen5: imagenes[4] ||  '',
           IMEI: '',
           idConvenio: idPrestador || '',
         });
@@ -83,7 +83,7 @@ export const EstudiosMedicosEnv = () => {
         });
         setError(null);
         // Restablecer los valores en el contexto después de la solicitud exitosa
-        await GuardarImagenes('');
+        await GuardarImagenes([null, null, null, null, null]);
         await GuardarIdPrestador('');
         await GuardarIdFamiliarSeleccionado('');
  
