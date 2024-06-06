@@ -57,7 +57,7 @@ export interface AuthState {
 
 
 
-export const useAuthStore = create<AuthState>()((set /* , get */) => ({
+export const useAuthStore = create<AuthState>()((set , get) => ({
   status: 'checking',
   token: undefined,
   user: undefined,
@@ -69,7 +69,7 @@ export const useAuthStore = create<AuthState>()((set /* , get */) => ({
   idAfiliadoSeleccionado:undefined,
   idCartillaSeleccionada:undefined,
   cadena: '',
-  imagen1: undefined,
+  imagen1: '',
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
     try {
 
@@ -275,7 +275,7 @@ export const useAuthStore = create<AuthState>()((set /* , get */) => ({
  GuardarIdPrestador: async ( idPrestador: string): Promise<string[]> => {
     try {
       set({ idPrestador: idPrestador })
- 
+      console.log(' Se guardo correctamente el idPrestador en el useAuthStore');
     return []; 
   } catch (error) {
       console.log('ha ocurrido un error al guardar idPrestador en el useAuthStore');

@@ -39,24 +39,14 @@ export const EstudiosMedicosScreen = () => {
     if (familiarEncontrado) {
       setFamiliarSeleccionadoDatos(familiarEncontrado)
       const { apellidoYNombre, idAfiliado }: { apellidoYNombre: string, idAfiliado: string } = familiarEncontrado;
-      console.log('Apellido y Nombre:', apellidoYNombre);
-      console.log('ID de Afiliado:', idAfiliado);
       GuardarIdFamiliarSeleccionado(idAfiliado);
+      
     } else {
       console.log('No se encontró el familiar');
 
     }
 
   };
-
-
-
-
-
-
-
-
-
 
   //---------------------LOGICA PARA EL SELECT DE PRESTADOR ELEGIDO-------------------------------------->
   const [PrestadoresObtenidosObjeto, setPrestadoresObtenidosObjeto] = useState<string[]>([]);
@@ -90,18 +80,16 @@ export const EstudiosMedicosScreen = () => {
             return prestador.nombre;
           }
         });
-        console.log('nombresPrestadores: --->', nombresPrestadores);
 
         if (nombresPrestadores.length === 0) {
           setNombresDePrestadores(["No se encontraron prestadores"]);
-          console.log('NombresDePrestadores acaa: --->', NombresDePrestadores);
-        } else {
+             } else {
           setNombresDePrestadores(nombresPrestadores);
           // Si solo hay un prestador, seleccionarlo automáticamente
           if (nombresPrestadores.length === 1) {
             handleSelectPrestador(nombresPrestadores[0], 0);
           }
-          console.log('nombresPrestadores:---->', nombresPrestadores);
+          
 
         }
 
@@ -131,11 +119,9 @@ export const EstudiosMedicosScreen = () => {
 
 
   const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
-    console.log('entrando a handleSelectPrestador--->', itemValue, itemIndex);
+
     setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
 
-    console.log('SelectedPrestadorNombre--->', SelectedPrestadorNombre);
-    console.log('PrestadoresObtenidosObjeto--->', PrestadoresObtenidosObjeto);
 
     // Asegúrate de que `itemValue` es una cadena
     const selectedNombre = typeof itemValue === 'string' ? itemValue : itemValue.toString();
@@ -144,8 +130,6 @@ export const EstudiosMedicosScreen = () => {
     if (PrestadorEncontrado) {
       setPrestadorSeleccionadoDatos(PrestadorEncontrado)
       const { nombre, idConvenio }: { nombre: string, idConvenio: string } = PrestadorEncontrado;
-      console.log('Nombre del Prestador:', nombre);
-      console.log('ID del convenio del Prestador:', idConvenio);
       setIdPrestadorElegido(idConvenio)
       GuardarIdPrestador(idConvenio)
     } else {
@@ -162,21 +146,16 @@ export const EstudiosMedicosScreen = () => {
     if (NombresDePrestadores.length === 1 && !SelectedPrestadorNombre) {
       handleSelectPrestador(NombresDePrestadores[0], 0);
     }
-  }, [NombresDePrestadores]);
+  }, [NombresDePrestadores, IdPrestadorElegido]);
 
   useEffect(() => {
-
-    console.log('FamiliarSeleccionadoDatos------>>>', FamiliarSeleccionadoDatos);
-
-    console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSeleccionadoDatos);
 
     const obtenerFamiliaresConsulta = async () => {
 
       try {
         if (idAfiliado !== undefined) {
           const FamiliaresObtenidosObjeto = await ObtenerFamiliares(idAfiliado);
-          /*      console.log('familiares obtenidos objeto datos--->', FamiliaresObtenidosObjeto); */
-
+       
           setFamiliaresObtenidosObjeto(FamiliaresObtenidosObjeto);
           const mensajePredeterminado = 'Desliza hacia abajo';
           const nombresFamiliares = [mensajePredeterminado, ...FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre)];
@@ -196,7 +175,7 @@ export const EstudiosMedicosScreen = () => {
     obtenerFamiliaresConsulta();
     /*     obtenerEspecialidadesConsulta();
         obtenerPrestadoresConsulta(); */
-  }, [/* selectedFamiliarNombre, */ /* SelectedEspecialidadNombre, */ /* IdEspecialidadElegida,*/ /* SelectedPrestadorNombre */])
+  }, [/* selectedFamiliarNombre, */ /* SelectedEspecialidadNombre, */ /* IdEspecialidadElegida,*/ /* SelectedPrestadorNombre *//* IdPrestadorElegido */])
 
 
 
@@ -209,10 +188,10 @@ export const EstudiosMedicosScreen = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', /* backgroundColor: 'orange' */ }}>Solicitar Estudio Médico</Text>
+      <Text style={{ marginBottom: 10, marginTop: 15, fontSize: 25, textAlign: 'center',  backgroundColor: 'orange'  }}>Solicitar Estudio Médico</Text>
 
       <View
-        style={{  /* backgroundColor: 'black', */  flex: 1, marginBottom: 30, marginTop: 35 }}>
+        style={{   /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 10 }}>
           <ScrollView>
 
         {/* -----------------FAMILIAR---------------- */}

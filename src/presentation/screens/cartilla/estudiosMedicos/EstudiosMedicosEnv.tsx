@@ -19,10 +19,8 @@ import { globalStyles } from '../../../theme/theme'
 
 export const EstudiosMedicosEnv = () => {
 
-  const { idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado, imagen1 } = useAuthStore();
-  /*   console.log('id idAfiliadoSeleccionado: ', idAfiliadoSeleccionado);
-    console.log(' titular orden de consulta: ',  idAfiliadoTitular );
-    console.log('prestacion: ',  idPrestacion ); */
+  const { idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado, imagen1, GuardarIdFamiliarSeleccionado, GuardarIdPrestador, GuardarImagenes } = useAuthStore();
+ 
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
@@ -31,27 +29,50 @@ export const EstudiosMedicosEnv = () => {
   const [ordenConsulta, setOrdenConsulta] = useState(null);
   const [isConsulting, setIsConsulting] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [verificacionMensaje, setVerificacionMensaje] = useState<string | null>(null);
 
   useEffect(() => {
 
     const EstudiosMedicosRequest = async () => {
       try {
         setIsConsulting(true);
-        console.log('Datos idAfiliadoTitular----->>:', idAfiliadoTitular);
-        console.log('Datos idAfiliadoSeleccionado----->>:', idAfiliadoSeleccionado);
-        console.log('Datos idPrestador----->>:', idPrestador);
-        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPSolicitarPractica?idAfiliadoTitular=${idAfiliadoTitular}&idAfiliado=${idAfiliadoSeleccionado}&imagen1=&imagen2=&imagen3=&imagen4=&imagen5=&IMEI=&idConvenio=${idPrestador}`);
 
+    /*     console.log('ENTRANDO A ESTUDIOS MEDICOS Y VIENDO EL ID PRESTADOR, ID AFILIADO TITULAR, ID AFILIADO SELECCIONADO ELEGIDO Y ID PRESTADOR(idConvenio) ----->>:',  idAfiliadoTitular, idAfiliadoSeleccionado, idPrestador); */
+
+        const params = new URLSearchParams({
+          idAfiliadoTitular: idAfiliadoTitular || '',
+          idAfiliado: idAfiliadoSeleccionado || '',
+          imagen1: imagen1 || '',
+          imagen2: '',
+          imagen3: '',
+          imagen4: '',
+          imagen5: '',
+          IMEI: '',
+          idConvenio: idPrestador || '',
+        });
+        
+        const response = await axios.post(
+          'https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPSolicitarPractica',
+          params.toString(),
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          }
+        );
+     
         // Convertir la respuesta XML a JSON
         const result = xml2js(response.data, { compact: true });
-        console.log('Datos JSON convertidos ----->>:', result);
-
+      
         // Verificación de la estructura del resultado
         if (!result || !result.Resultado || !result.Resultado.fila) {
           console.log('La respuesta XML no contiene los datos esperados');
-         
+          setError('La respuesta no contiene los datos esperados');
           return;
         }
+
+
         const fila = result.Resultado.fila;
         setResult({
           valorDevuelto: fila.valorDevuelto._text,
@@ -60,10 +81,26 @@ export const EstudiosMedicosEnv = () => {
           fecSolicitud: fila.fecSolicitud._text,
           idEstado: fila.idEstado._text,
         });
-        setIsConsulting(false);
-      } catch (error) {
+        setError(null);
+        // Restablecer los valores en el contexto después de la solicitud exitosa
+        await GuardarImagenes('');
+        await GuardarIdPrestador('');
+        await GuardarIdFamiliarSeleccionado('');
+ 
+        if (useAuthStore.getState().imagen1 === '' && useAuthStore.getState().idPrestador === '' && useAuthStore.getState().idAfiliadoSeleccionado === '') {
+          console.log('Todos los valores fueron borrados del contexto');
+        } else {
+          console.log('Algunos valores NO fueron borrados del contexto');
+        }
+
+      } catch (error: any) {
         console.error('Error al realizar la solicitud desde el useEffect--->', error);
+        const errorMessage = error.response?.data || 'Hubo un problema al realizar la solicitud';
+        setError(errorMessage);
+        setIsConsulting(errorMessage);
+      } finally {
         setIsConsulting(false);
+        
       }
     }
 
@@ -73,12 +110,12 @@ export const EstudiosMedicosEnv = () => {
 
   return (
     <View
-    style={{
-      flex: 1,
-      paddingHorizontal: 20,
-      marginTop: 0,
-      backgroundColor: 'green'
-    }}
+      style={{
+        flex: 1,
+        paddingHorizontal: 20,
+        marginTop: 0,
+        backgroundColor: 'green'
+      }}
     >
       <HamburgerMenu />
       <CustomHeader />
@@ -95,17 +132,27 @@ export const EstudiosMedicosEnv = () => {
           </View>
         )
           :
-          <View style={ globalStyles.containerEstudiosMedicosEnv }>
+          <View style={globalStyles.containerEstudiosMedicosEnv}>
 
 
-            <Text style={globalStyles.titleEstudiosMedicosEnv }>Estudios Medicos Solicitados:</Text>
             {result && (
+
+
               <View>
+                <Text style={globalStyles.titleEstudiosMedicosEnv}>Estudios Medicos Solicitados</Text>
+
                 <Text style={globalStyles.resultText}>Valor Devuelto: {result.valorDevuelto}</Text>
                 <Text style={globalStyles.resultText}>Mensaje: {result.mensaje}</Text>
                 <Text style={globalStyles.resultText}>ID Orden: {result.idOrden}</Text>
                 <Text style={globalStyles.resultText}>Fecha de Solicitud: {result.fecSolicitud}</Text>
                 <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text>
+                {verificacionMensaje && <Text>{verificacionMensaje}</Text>}
+              </View>
+            )}
+            {error && (
+              <View style={globalStyles.errorContainerEstudios}>
+                <Text style={globalStyles.titleErrorEstMedicosEnv}>Problemas en la solicitud</Text>
+                <Text style={globalStyles.errorTextEstudios}>Error: {error}</Text>
               </View>
             )}
           </View>
@@ -115,6 +162,3 @@ export const EstudiosMedicosEnv = () => {
 }
 
 
-{/*  <Text style={{ marginBottom: 5, fontSize: 25 }}>Orden de Consulta Link:</Text> */ }
-{/*       <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15 }}>{`Orden Link: ${ordenConsulta}`}</Text>
-<Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15 }}>{`Orden Link: ${ordenConsulta}`}</Text> */}

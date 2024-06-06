@@ -156,11 +156,30 @@ export const globalStyles = StyleSheet.create({
       marginBottom: 5,
       fontSize: 25,
       fontFamily: 'Quicksand-Light',
+      textAlign: 'center',
     },
     resultText: {
       fontSize: 18,
       fontFamily: 'Quicksand-Light',
       margin:10,
+    },
+    errorContainerEstudios: {
+      marginTop: 20,
+      padding: 10,
+      backgroundColor: '#f8d7da',
+      borderRadius: 5,
+    },
+    titleErrorEstMedicosEnv: {
+      marginBottom: 5,
+      fontSize: 25,
+      fontFamily: 'Quicksand-Light',
+      textAlign: 'center',
+    },
+    errorTextEstudios: {
+      fontSize: 20,
+      color: '#721c24',
+      fontFamily: 'Quicksand-Light',
+      textAlign: 'center',
     },
 
 })
