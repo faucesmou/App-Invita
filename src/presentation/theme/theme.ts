@@ -178,7 +178,7 @@ export const globalStyles = StyleSheet.create({
       textAlign: 'center',
     },
     errorTextEstudios: {
-      fontSize: 20,
+      fontSize: 18,
       color: '#721c24',
       fontFamily: 'Quicksand-Light',
       textAlign: 'center',

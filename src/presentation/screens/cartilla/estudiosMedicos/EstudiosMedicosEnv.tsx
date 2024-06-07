@@ -20,7 +20,7 @@ import { globalStyles } from '../../../theme/theme'
 export const EstudiosMedicosEnv = () => {
 
   const { idAfiliadoTitular, idPrestador, idAfiliadoSeleccionado, imagen1, GuardarIdFamiliarSeleccionado, GuardarIdPrestador, GuardarImagenes, imagenes } = useAuthStore();
- 
+
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
@@ -33,26 +33,28 @@ export const EstudiosMedicosEnv = () => {
   const [verificacionMensaje, setVerificacionMensaje] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false); // Nuevo estado
+  const [showErrorMessage, setShowErrorMessage] = useState(false); // Nuevo estado
+
   useEffect(() => {
 
     const EstudiosMedicosRequest = async () => {
       try {
         setIsConsulting(true);
 
-      console.log('ENTRANDO A ESTUDIOS MEDICOS Y VIENDO EL ID AFILIADO TITULAR, ID AFILIADO SELECCIONADO ELEGIDO Y ID PRESTADOR(idConvenio) ----->>:',  idAfiliadoTitular, idAfiliadoSeleccionado, idPrestador); 
+        console.log('ENTRANDO A ESTUDIOS MEDICOS Y VIENDO EL ID AFILIADO TITULAR, ID AFILIADO SELECCIONADO ELEGIDO Y ID PRESTADOR(idConvenio) ----->>:', idAfiliadoTitular, idAfiliadoSeleccionado, idPrestador);
 
         const params = new URLSearchParams({
           idAfiliadoTitular: idAfiliadoTitular || '',
           idAfiliado: idAfiliadoSeleccionado || '',
           imagen1: imagenes[0] || '',
-          imagen2: imagenes[1] ||  '',
-          imagen3: imagenes[2] ||  '',
-          imagen4: imagenes[3] ||  '',
-          imagen5: imagenes[4] ||  '',
+          imagen2: imagenes[1] || '',
+          imagen3: imagenes[2] || '',
+          imagen4: imagenes[3] || '',
+          imagen5: imagenes[4] || '',
           IMEI: '',
           idConvenio: idPrestador || '',
         });
-        
+
         const response = await axios.post(
           'https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPSolicitarPractica',
           params.toString(),
@@ -62,10 +64,10 @@ export const EstudiosMedicosEnv = () => {
             },
           }
         );
-     
+
         // Convertir la respuesta XML a JSON
         const result = xml2js(response.data, { compact: true });
-      
+
         // Verificación de la estructura del resultado
         if (!result || !result.Resultado || !result.Resultado.fila) {
           console.log('La respuesta XML no contiene los datos esperados');
@@ -82,12 +84,15 @@ export const EstudiosMedicosEnv = () => {
           fecSolicitud: fila.fecSolicitud._text,
           idEstado: fila.idEstado._text,
         });
-         // Verificar si el valor devuelto es "00"
-         if (fila.valorDevuelto._text === "00") {
+        // Verificar si el valor devuelto es "00"
+        if (fila.valorDevuelto._text === "00") {
           setShowSuccessMessage(true);// Mostrar el mensaje de éxito
           setShowSuccessModal(true); // Mostrar el modal de éxito
+          setError(null);
+        } else {
+          setShowErrorMessage(true);    // Mostrar el mensaje de error
         }
-        setError(null);
+        
 
       } catch (error: any) {
         console.error('Error al realizar la solicitud desde el useEffect--->', error);
@@ -96,7 +101,7 @@ export const EstudiosMedicosEnv = () => {
         setIsConsulting(errorMessage);
       } finally {
         setIsConsulting(false);
-        
+
       }
     }
 
@@ -110,7 +115,7 @@ export const EstudiosMedicosEnv = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-      /*   backgroundColor: 'green' */
+        /*   backgroundColor: 'green' */
       }}
     >
       <HamburgerMenu />
@@ -130,38 +135,47 @@ export const EstudiosMedicosEnv = () => {
           :
           <View style={globalStyles.containerEstudiosMedicosEnv}>
 
-              {/* View para mostrar éxito */}
-              {showSuccessMessage && (
+            {/* View para mostrar éxito */}
+            {showSuccessMessage && (
               <View style={styles.successContainer}>
                 <Text style={styles.successMessage}>Datos enviados con éxito!</Text>
-                <Image  source={require('../../../assets/images/MailSent-rafiki.png')}  style={styles.successImage} />
+                <Image source={require('../../../assets/images/MailSent-rafiki.png')} style={styles.successImage} />
               </View>
             )}
 
-            {result && (
+            {/* View para mostrar mensaje de mensaje no enviado con exito*/}
+            {showErrorMessage && (
+              <View style={styles.successContainer}>
+                <Text style={styles.successMessage}>Problemas al enviar los datos</Text>
+                <Image source={require('../../../assets/images/400ErrorBadRequest-bro.png')} style={styles.successImage} />
+              </View>
+            )}
+
+            { !showErrorMessage && result && (
 
 
               <View>
-                <Text style={globalStyles.titleEstudiosMedicosEnv}>Datos de la solicitud</Text>
-{/* 
-                <Text style={globalStyles.resultText}>Valor Devuelto: {result.valorDevuelto}</Text>
-               */}
-                <Text style={globalStyles.resultText}>{result.mensaje}</Text> 
+                <Text style={globalStyles.titleEstudiosMedicosEnv}>Información de la solicitud</Text>
+             
+                {/* <Text style={globalStyles.resultText}>Valor Devuelto: {result.valorDevuelto}</Text> */}
+            
+                <Text style={globalStyles.resultText}>{result.mensaje}</Text>
                 <Text style={globalStyles.resultText}>ID Orden: {result.idOrden}</Text>
-               {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
+                {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
                 <Text style={globalStyles.resultText}>Fecha de Solicitud: {result.fecSolicitud}</Text>
                 {verificacionMensaje && <Text>{verificacionMensaje}</Text>}
               </View>
             )}
-            {error && (
+            {showErrorMessage && (
               <View style={globalStyles.errorContainerEstudios}>
                 <Text style={globalStyles.titleErrorEstMedicosEnv}>Problemas en la solicitud</Text>
-                <Text style={globalStyles.errorTextEstudios}>Error: {error}</Text>
+                <Text style={{...globalStyles.resultText, textAlign:'center'}}>Intente nuevamente más tarde</Text>
+                <Text style={globalStyles.errorTextEstudios}>Datos incompletos{/* {result.mensaje} */}</Text>
               </View>
             )}
-          
+
           </View>
-          
+
       }
     </View>
   )
@@ -173,8 +187,9 @@ export const EstudiosMedicosEnv = () => {
 const styles = StyleSheet.create({
   successContainer: {
     marginTop: 20,
-    marginBottom:20,
-/*     padding: 20, */
+    marginBottom: 20,
+   
+    /*     padding: 20, */
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
@@ -186,11 +201,12 @@ const styles = StyleSheet.create({
   },
   successMessage: {
     fontSize: 25,
+    marginTop:10,
     marginBottom: 10,
   },
   successImage: {
-    width: 150,
-    height: 150,
+    width: 220,
+    height: 220,
   },
   modalContainer: {
     flex: 1,
