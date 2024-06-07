@@ -19,7 +19,7 @@ import { globalStyles } from '../../../theme/theme'
 
 export const EstudiosMedicosEnv = () => {
 
-  const { idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado, imagen1, GuardarIdFamiliarSeleccionado, GuardarIdPrestador, GuardarImagenes, imagenes } = useAuthStore();
+  const { idAfiliadoTitular, idPrestador, idAfiliadoSeleccionado, imagen1, GuardarIdFamiliarSeleccionado, GuardarIdPrestador, GuardarImagenes, imagenes } = useAuthStore();
  
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
@@ -38,7 +38,7 @@ export const EstudiosMedicosEnv = () => {
       try {
         setIsConsulting(true);
 
-    /*     console.log('ENTRANDO A ESTUDIOS MEDICOS Y VIENDO EL ID PRESTADOR, ID AFILIADO TITULAR, ID AFILIADO SELECCIONADO ELEGIDO Y ID PRESTADOR(idConvenio) ----->>:',  idAfiliadoTitular, idAfiliadoSeleccionado, idPrestador); */
+      console.log('ENTRANDO A ESTUDIOS MEDICOS Y VIENDO EL ID AFILIADO TITULAR, ID AFILIADO SELECCIONADO ELEGIDO Y ID PRESTADOR(idConvenio) ----->>:',  idAfiliadoTitular, idAfiliadoSeleccionado, idPrestador); 
 
         const params = new URLSearchParams({
           idAfiliadoTitular: idAfiliadoTitular || '',
@@ -83,15 +83,21 @@ export const EstudiosMedicosEnv = () => {
         });
         setError(null);
         // Restablecer los valores en el contexto después de la solicitud exitosa
-        await GuardarImagenes([null, null, null, null, null]);
+      /*   await GuardarImagenes([null, null, null, null, null]);
         await GuardarIdPrestador('');
         await GuardarIdFamiliarSeleccionado('');
  
-        if (useAuthStore.getState().imagen1 === '' && useAuthStore.getState().idPrestador === '' && useAuthStore.getState().idAfiliadoSeleccionado === '') {
-          console.log('Todos los valores fueron borrados del contexto');
+        
+        if (useAuthStore.getState().imagenes === ([null, null, null, null, null]) && useAuthStore.getState().idPrestador === '' && useAuthStore.getState().idAfiliadoSeleccionado === '') {
+          console.log('Todos los valores: imagenes, idPrestador y idAfiliadoSeleccionado fueron borrados del contexto.');
         } else {
-          console.log('Algunos valores NO fueron borrados del contexto');
+          console.log('Algunos valores NO fueron borrados del contexto idPrestador: ', idPrestador);
         }
+        if (idPrestador === '') {
+          console.log('idPrestador fue borrado correctamente');
+        } else {
+          console.log('idPrestador NO fue borrado');
+        } */
 
       } catch (error: any) {
         console.error('Error al realizar la solicitud desde el useEffect--->', error);

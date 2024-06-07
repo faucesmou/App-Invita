@@ -47,7 +47,7 @@ export interface AuthState {
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
   ObtenerPrestadores: (idAfiliado: string, idAfiliadoTitular:string, idPrestacion: string)=> Promise<any[]>;
   ObtenerPrestadoresEstudiosMedicos: (idAfiliado: string, cadena: string)=> Promise<any[]>;
-  GuardarIdPrestador: (idPrestador: string)=> Promise<any[]>;
+  GuardarIdPrestador: (idPrestador: string)=> Promise<boolean> ;
   GuardarImagenes: (newImages: (string | null)[]) => Promise<boolean>;
  /*  GuardarImagenes: (base64String: string) => Promise<boolean>; */
   GuardarIdFamiliarSeleccionado: (idAfiliado: string)=> Promise<any[]>;
@@ -74,6 +74,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   cadena: '',
   imagen1: '',
   imagenes: [null, null, null, null, null],
+  idPrestador:'',
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
     try {
 
@@ -276,14 +277,14 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
 
   return ObtenerInformacionPrestadores(idAfiliado, cadena);
 },
- GuardarIdPrestador: async ( idPrestador: string): Promise<string[]> => {
+ GuardarIdPrestador: async ( idPrestador: string): Promise<boolean> => {
     try {
       set({ idPrestador: idPrestador })
       console.log(' Se guardo correctamente el idPrestador en el useAuthStore');
-    return []; 
+    return true; 
   } catch (error) {
       console.log('ha ocurrido un error al guardar idPrestador en el useAuthStore');
-     return [];
+     return false;
     }
   },
 /*  GuardarImagenes: async ( base64String: string): Promise<boolean> => {

@@ -75,50 +75,7 @@ const UploadImage: React.FC = () => {
     } catch (error) {
       console.error('ImagePicker Error: ', error);
     }
-    /* primera prueba de cargar 5 imagfenes: */
-         /*  if (resultado) {
-            console.log('Imagen guardada exitosamente en zustand');
-            setFileSent(true);
-            setFileNotSent(false);
-          } else {
-            console.log('Un problemita para guardar la imagen en zustand');
-            setFileSent(false);
-            setFileNotSent(true);
-            setErrorMessage('Error al guardar la imagen en el estado global');
-          }
-        } else {
-          console.log('Ya se han cargado 5 imágenes');
-        }
-      }
-    } catch (error) {
-      console.error('ImagePicker Error: ', error);
-      setFileSent(false);
-      setFileNotSent(true);
-      setErrorMessage('Error al seleccionar la imagen');
-    } */
-
-          /* ----------antes del cambio a 5 imagenes */
-          /*   setSelectedImage(asset.uri || null);
-            setSelectedFileName(asset.fileName || null); */ // Aquí guardas el nombre del archivo
-          // Convertir la imagen a Base64
-          /*    const base64String = await convertImageToBase64(asset.uri); */
-          /*    setBase64Image(base64String);  */// Guardar la imagen convertida en el estado
-          // Guardar la imagen en el estado global
-          /*    const resultado = await GuardarImagenes(base64String); */
-          
-          
-          // Manejar el resultado de GuardarImagenes(recibe true o false)
-        /*   if (resultado) {
-            console.log('Imagen guardada exitosamente en zustand');
-          } else {
-            console.log('un problemita para guardar la imagen en zustand');
-          }
-          
-        }
-      } catch (error) {
-        console.error('ImagePicker Error: ', error);
-      } */
-      /* ----------antes del cambio a 5 imagenes */
+    
     };
 
     const handleImageUpload = async () => {
@@ -169,39 +126,7 @@ const UploadImage: React.FC = () => {
           </View>
         )
       ))}
-{/*       {fileSent && <Text style={styles.successMessage}>Imagen enviada exitosamente!!</Text>}
-      {fileNotSent && <Text style={styles.errorMessage}>Error al enviar la imagen: {errorMessage}</Text>} */}
 
-
-
-     {/*    {images.map((image, index) => (
-        image ? (
-          <View key={index}>
-            <Text style={styles.title}>Imagen {index + 1}:</Text>
-            <Text style={styles.subitle}>{fileNames[index]}</Text>
-          </View>
-        ) : null
-      ))}
-
-      {images.some(image => image === null) && (
-        <Button title="Seleccionar Imagen" onPress={handleImagePicker} />
-      )} */}
-
-
-    {/*     <Button title="Seleccionar Imagen" onPress={handleImagePicker} /> */}
-
-      {/*   {selectedImage && (
-          <>
-            <Text style={styles.title}>Imagen1: </Text>
-            <Text style={styles.subitle}>{SelectedFileName}</Text>
-          </>
-
-        )} */}
-
-{/*         {fileSent && <Text style={styles.successMessage}>Imagen enviada exitosamente!!</Text>}
-        {fileNotSent && <Text style={styles.errorMessage}>Error al enviar la imagen: {errorMessage}</Text>} */}
-
-        {/*  <Button title="Enviar Imagen" onPress={handleImageUpload} /> */}
 
       </View>
     );
