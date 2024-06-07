@@ -146,15 +146,16 @@ export const globalStyles = StyleSheet.create({
     /* estilos para estudios medicos enviados: */
      containerEstudiosMedicosEnv: {
    /*  flex: 0.5, */
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     marginTop: 20, 
-    backgroundColor: 'yellow',
+
+   /*  backgroundColor: 'yellow', */
     marginBottom:10,
 
   },
     titleEstudiosMedicosEnv: {
       marginBottom: 5,
-      fontSize: 25,
+      fontSize: 21,
       fontFamily: 'Quicksand-Light',
       textAlign: 'center',
     },
@@ -162,6 +163,7 @@ export const globalStyles = StyleSheet.create({
       fontSize: 18,
       fontFamily: 'Quicksand-Light',
       margin:10,
+      marginTop: 10, 
     },
     errorContainerEstudios: {
       marginTop: 20,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, Text, TouchableOpacity, View } from 'react-native'
+import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 
@@ -31,7 +31,8 @@ export const EstudiosMedicosEnv = () => {
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [verificacionMensaje, setVerificacionMensaje] = useState<string | null>(null);
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // Nuevo estado
   useEffect(() => {
 
     const EstudiosMedicosRequest = async () => {
@@ -81,23 +82,12 @@ export const EstudiosMedicosEnv = () => {
           fecSolicitud: fila.fecSolicitud._text,
           idEstado: fila.idEstado._text,
         });
-        setError(null);
-        // Restablecer los valores en el contexto después de la solicitud exitosa
-      /*   await GuardarImagenes([null, null, null, null, null]);
-        await GuardarIdPrestador('');
-        await GuardarIdFamiliarSeleccionado('');
- 
-        
-        if (useAuthStore.getState().imagenes === ([null, null, null, null, null]) && useAuthStore.getState().idPrestador === '' && useAuthStore.getState().idAfiliadoSeleccionado === '') {
-          console.log('Todos los valores: imagenes, idPrestador y idAfiliadoSeleccionado fueron borrados del contexto.');
-        } else {
-          console.log('Algunos valores NO fueron borrados del contexto idPrestador: ', idPrestador);
+         // Verificar si el valor devuelto es "00"
+         if (fila.valorDevuelto._text === "00") {
+          setShowSuccessMessage(true);// Mostrar el mensaje de éxito
+          setShowSuccessModal(true); // Mostrar el modal de éxito
         }
-        if (idPrestador === '') {
-          console.log('idPrestador fue borrado correctamente');
-        } else {
-          console.log('idPrestador NO fue borrado');
-        } */
+        setError(null);
 
       } catch (error: any) {
         console.error('Error al realizar la solicitud desde el useEffect--->', error);
@@ -120,7 +110,7 @@ export const EstudiosMedicosEnv = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-        backgroundColor: 'green'
+      /*   backgroundColor: 'green' */
       }}
     >
       <HamburgerMenu />
@@ -140,18 +130,26 @@ export const EstudiosMedicosEnv = () => {
           :
           <View style={globalStyles.containerEstudiosMedicosEnv}>
 
+              {/* View para mostrar éxito */}
+              {showSuccessMessage && (
+              <View style={styles.successContainer}>
+                <Text style={styles.successMessage}>Datos enviados con éxito!</Text>
+                <Image  source={require('../../../assets/images/MailSent-rafiki.png')}  style={styles.successImage} />
+              </View>
+            )}
 
             {result && (
 
 
               <View>
-                <Text style={globalStyles.titleEstudiosMedicosEnv}>Estudios Medicos Solicitados</Text>
-
+                <Text style={globalStyles.titleEstudiosMedicosEnv}>Datos de la solicitud</Text>
+{/* 
                 <Text style={globalStyles.resultText}>Valor Devuelto: {result.valorDevuelto}</Text>
-                <Text style={globalStyles.resultText}>Mensaje: {result.mensaje}</Text>
+               */}
+                <Text style={globalStyles.resultText}>{result.mensaje}</Text> 
                 <Text style={globalStyles.resultText}>ID Orden: {result.idOrden}</Text>
+               {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
                 <Text style={globalStyles.resultText}>Fecha de Solicitud: {result.fecSolicitud}</Text>
-                <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text>
                 {verificacionMensaje && <Text>{verificacionMensaje}</Text>}
               </View>
             )}
@@ -161,10 +159,64 @@ export const EstudiosMedicosEnv = () => {
                 <Text style={globalStyles.errorTextEstudios}>Error: {error}</Text>
               </View>
             )}
+          
           </View>
+          
       }
     </View>
   )
 }
 
 
+
+
+const styles = StyleSheet.create({
+  successContainer: {
+    marginTop: 20,
+    marginBottom:20,
+/*     padding: 20, */
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  successMessage: {
+    fontSize: 25,
+    marginBottom: 10,
+  },
+  successImage: {
+    width: 150,
+    height: 150,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+})
+/* ALTERNATIVA DE MODAL PARA MOSTRAR DATOS ENVIADOS CON EXITO:  */
+{/*  <Modal
+   transparent={true}
+   visible={showSuccessModal}
+   onRequestClose={() => setShowSuccessModal(false)}
+ >
+   <View style={styles.modalContainer}>
+     <View style={styles.modalContent}>
+       <Text style={styles.successMessage}>Datos enviados con éxito</Text>
+       <Image  source={require('path-to-your-image.png')}  style={styles.successImage} />
+       <Button title="Cerrar" onPress={() => setShowSuccessModal(false)} />
+     </View>
+   </View>
+ </Modal> */}
