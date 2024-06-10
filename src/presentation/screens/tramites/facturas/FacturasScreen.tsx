@@ -12,6 +12,8 @@ import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../../routes/StackNavigator';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import datos from '../facturas/datosPrueba.json';
+
 
 
 // Define los tipos
@@ -44,10 +46,11 @@ export const FacturasScreen = () => {
   const { top } = useSafeAreaInsets();
 
   const [formularios, setFormularios] = useState<{ nombre: string; descripcion: string; nombreArchivo: string }[]>([]);
-  const [Saldos, setSaldos] = useState<Saldo[]>(initialSaldo);
+/*   const [Saldos, setSaldos] = useState<Saldo[]>(initialSaldo); */
   const [showAfiliados, setShowAfiliados] = useState(false);
   const [errores, setErrores] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const Saldos = datos.data;
   useEffect(() => {
 
     const FacturaRequest = async () => {
@@ -93,9 +96,9 @@ export const FacturasScreen = () => {
         setError("Error con los datos");
       }
     };
-    FacturaRequest()
+   /*  FacturaRequest() */
     console.log('la respuesta de cristian Saldos es--------->>>>', Saldos);
-  }, [Saldos])
+  }, [])
   
   const handlePress = (url: string) => {
     Linking.openURL(url).catch((err) => console.error('Error al abrir el enlace:', err));
@@ -139,7 +142,7 @@ export const FacturasScreen = () => {
 
                 {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
             <View key={padronIndex}>
-               <Text style={globalStyles.resultText2}>Nombre: {padron.nombre}</Text>
+               <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
               {/* Detalles del afiliado */}
             </View>
           ))}
