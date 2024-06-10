@@ -50,7 +50,7 @@ export const HomeScreen = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-        backgroundColor: 'green'
+       /*  backgroundColor: 'green' */
       }}
     >
       <CustomHeader />
@@ -63,7 +63,7 @@ export const HomeScreen = () => {
           paddingHorizontal: 20,
           marginTop: -160,
           marginBottom: 20,
-          backgroundColor: 'yellow'
+         /*  backgroundColor: 'yellow' */
         }}
       >
 

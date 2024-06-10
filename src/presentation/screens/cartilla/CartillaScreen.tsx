@@ -20,8 +20,8 @@ export const CartillaScreen = () => {
      
         flex: 1,
         paddingHorizontal: 20,
-        marginTop: 0,
-        backgroundColor: 'green'
+        marginTop:10,
+       /*  backgroundColor: 'green' */
     }}>
         <CustomHeader />
       <HamburgerMenu />

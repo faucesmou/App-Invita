@@ -183,5 +183,11 @@ export const globalStyles = StyleSheet.create({
       fontFamily: 'Quicksand-Light',
       textAlign: 'center',
     },
-
+     /* estilos para estudios consulta de facturas: */
+     resultText2: {
+      fontSize: 18,
+      fontFamily: 'Quicksand-Light',
+      margin:0,
+      marginTop: 0, 
+    },
 })

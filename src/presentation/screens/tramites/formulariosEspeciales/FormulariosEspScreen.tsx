@@ -32,7 +32,7 @@ import { RootStackParams } from '../../../routes/StackNavigator';
 export const FormulariosEspScreen = () => {
 
   const { idAfiliadoTitular } = useAuthStore();
-  console.log('idAfiliadoTitular---->', idAfiliadoTitular);
+  console.log('idAfiliadoTitular ---->', idAfiliadoTitular);
 
 
   const { top } = useSafeAreaInsets();

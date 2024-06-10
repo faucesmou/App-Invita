@@ -31,6 +31,7 @@ import { CartillaScreen } from '../screens/cartilla/CartillaScreen';
 import { CartillaMedicaEspecialidad } from '../screens/cartilla/cartillaMedica/CartillaMedicaEspecialidad';
 import { EstudiosMedicosScreen } from '../screens/cartilla/estudiosMedicos/EstudiosMedicosScreen';
 import { EstudiosMedicosEnv } from '../screens/cartilla/estudiosMedicos/EstudiosMedicosEnv';
+import { FacturasScreen } from '../screens/tramites/facturas/FacturasScreen';
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
@@ -61,6 +62,7 @@ export type RootStackParams = {
   CartillaMedicaEspecialidad: { idCartilla: string };
   EstudiosMedicos: undefined, 
   EstudiosMedicosEnviados:undefined,
+  Facturas: undefined,
 
 }
 
@@ -148,6 +150,12 @@ export const StackNavigator = () => {
       <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
 
       <Stack.Screen name="FormularioElegido" component={FormularioElegido} options={{ headerShown: true }} />
+
+{/* Facturas del usuario */}
+
+     <Stack.Screen name="Facturas" component={FacturasScreen} options={{ headerShown: true }} /> 
+
+
 
 {/* DRAWER----------> */}
 

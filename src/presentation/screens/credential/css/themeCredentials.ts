@@ -91,7 +91,7 @@ export const globalStylesCredentials = StyleSheet.create({
     borderRadius: 10,    
   },
   frenteCardHome: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: 'black',
    /*  padding: 10, */
     marginTop: 10,

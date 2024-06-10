@@ -31,6 +31,7 @@ export interface AuthState {
   queryIdAfiliado?: string;
   idAfiliado?: string;
   idAfiliadoTitular?: string;
+  cuilTitular: string;
   idsFamiliares?:string[];
   idsEspecialidades?:string;
   idPrestacion?: string;
@@ -66,6 +67,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   user: undefined,
   idAfiliado: undefined,
   idAfiliadoTitular: undefined,
+  cuilTitular: '',
   idsFamiliares:[],
   idsEspecialidades:undefined,
   idPrestacion:undefined,
@@ -87,17 +89,19 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
       console.log('usuario, password y administradora: en loginGonzaMejorado:', USUARIO, PASSWORD, ADMINISTRADORA);
 
       const respuestaFrancoMejorada = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=${USUARIO}&password=${PASSWORD}&administradora=${ADMINISTRADORA}&datosAfiliado=${dni}`);
-      console.log('esta es la respuesta de Franco: ', respuestaFrancoMejorada);
+      console.log('esta es la respuesta de FRANCO--->-->->->->->_>->_>_>->->->->: ', respuestaFrancoMejorada);
 
       if (respuestaFrancoMejorada && respuestaFrancoMejorada.data && respuestaFrancoMejorada.data.length > 0) {
           const idAfiliado = respuestaFrancoMejorada.data[0].idAfiliado;
           const idAfiliadoTitular = respuestaFrancoMejorada.data[0].idAfiliadoTitular;
+          const cuilTitular = respuestaFrancoMejorada.data[0].cuilTitular;
          
         console.log('idAfiliado', idAfiliado);
         console.log('idAfiliadoTitular', idAfiliadoTitular);
+        console.log('cuilTitular', cuilTitular);
 
         console.log('Ingreso aprobado');
-        set({ status: 'authenticated', idAfiliado: idAfiliado, idAfiliadoTitular: idAfiliadoTitular });
+        set({ status: 'authenticated', idAfiliado: idAfiliado, idAfiliadoTitular: idAfiliadoTitular, cuilTitular: cuilTitular });
         return true;
       } else {
         console.log('El servidor respondió con un estado diferente a 200');

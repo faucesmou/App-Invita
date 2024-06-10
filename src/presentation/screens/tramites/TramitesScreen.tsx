@@ -53,7 +53,7 @@ export const TramitesScreen = () => {
     <View style={{/* globalStyles.container */  flex: 1,
     paddingHorizontal: 20,
     marginTop: 0,
-    backgroundColor: 'yellow'}}>
+   /*  backgroundColor: 'yellow' */}}>
 
       <CustomHeader />
       <HamburgerMenu />
@@ -69,7 +69,7 @@ export const TramitesScreen = () => {
         )}
       /> */}
       <View
-        style={{ marginBottom: 225, marginTop:10, backgroundColor: 'green', flex: 1 }}
+        style={{ marginBottom: 225, marginTop:10, /* backgroundColor: 'green', */ flex: 1 }}
       >
 
         <PrimaryButton
@@ -80,6 +80,10 @@ export const TramitesScreen = () => {
         <PrimaryButton
           onPress={() => navigation.navigate('Formularios')}
           label="Obtener Formularios Especiales"
+        /> 
+        <PrimaryButton
+          onPress={() => navigation.navigate('Facturas')}
+          label="Mis Facturas"
         /> 
 
 
