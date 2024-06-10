@@ -3,6 +3,8 @@ import { type NavigationProp, useNavigation } from '@react-navigation/native';
 import { Linking, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import axios from 'axios';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BoxShadow } from 'react-native-shadow';
+
 
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 import { BackButton } from '../../../components/shared/BackButton';
@@ -36,6 +38,19 @@ interface Saldo {
 // Estado inicial vacío
 const initialSaldo: Saldo[] = [];
 
+
+const shadowOpt = {
+  width: 350,
+  height: 200,
+  color: "#000",
+  border: 8,
+  radius: 3,
+  opacity: 0.2,
+  x: 0,
+  y: 3,
+  style: { marginVertical: 5 }
+};
+
 export const FacturasScreen = () => {
 
   const { idAfiliadoTitular, cuilTitular } = useAuthStore();
@@ -46,7 +61,7 @@ export const FacturasScreen = () => {
   const { top } = useSafeAreaInsets();
 
   const [formularios, setFormularios] = useState<{ nombre: string; descripcion: string; nombreArchivo: string }[]>([]);
-/*   const [Saldos, setSaldos] = useState<Saldo[]>(initialSaldo); */
+  /*   const [Saldos, setSaldos] = useState<Saldo[]>(initialSaldo); */
   const [showAfiliados, setShowAfiliados] = useState(false);
   const [errores, setErrores] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -90,16 +105,16 @@ export const FacturasScreen = () => {
           setError("Error con los datos");
           console.log('la respuesta con errores de Cta Cte es--------->>>>', error);
         }
-        
+
       } catch (error) {
         console.error('Error al obtener las facturas:', error);
         setError("Error con los datos");
       }
     };
-   /*  FacturaRequest() */
+    /*  FacturaRequest() */
     console.log('la respuesta de cristian Saldos es--------->>>>', Saldos);
   }, [])
-  
+
   const handlePress = (url: string) => {
     Linking.openURL(url).catch((err) => console.error('Error al abrir el enlace:', err));
   };
@@ -116,58 +131,87 @@ export const FacturasScreen = () => {
       <BackButton />
 
       <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Estado de Pagos</Text>
-        <ScrollView>
-      
-      <View style={globalStyles.containerEstudiosMedicosEnv2}>
-        {error ? (
-          <View style={globalStyles.errorContainerEstudios}>
-            <Text style={globalStyles.titleErrorEstMedicosEnv}>Problemas en la solicitud</Text>
-            <Text style={globalStyles.errorTextEstudios}>Error: {error}</Text>
-          </View>
-        ) : (
-          Saldos.map((saldo, index) => (
-              <View key={index} style={{ alignItems:'center', backgroundColor: 'lightgrey', marginBottom: 10, paddingTop:10, paddingHorizontal: 40 }}>
-              {/*   <Text style={globalStyles.titleEstudiosMedicosEnv}>Información del saldo</Text> */}
-               {/*  <Text style={globalStyles.resultText2}>Periodo: {saldo.periodo}</Text> */}
-                 <Text style={globalStyles.resultText2}>{saldo.tipoSaldo}</Text> 
+      <ScrollView>
+
+        <View style={globalStyles.containerEstudiosMedicosEnv2}>
+          {error ? (
+            <View style={globalStyles.errorContainerEstudios}>
+              <Text style={globalStyles.titleErrorEstMedicosEnv}>Problemas en la solicitud</Text>
+              <Text style={globalStyles.errorTextEstudios}>Error: {error}</Text>
+            </View>
+          ) : (
+            Saldos.map((saldo, index) => (
+              <View style={styles.container}/*  key={index} style={{ alignItems:'center', backgroundColor: 'yellow', marginBottom: 10, paddingTop:10, paddingHorizontal: 40 }}  */>
+                <BoxShadow  setting={shadowOpt} /* setting={{
+                  width: 300,
+                  height: 100,
+                  color: "#000",
+                  border: 2,
+                  radius: 3,
+                  opacity: 0.1,
+                  x: 0,
+                  y: 3,
+                  style: { marginVertical: 5 },
+                }} */>
+                   <View  style={styles.card}>
+                {/*   <Text style={globalStyles.titleEstudiosMedicosEnv}>Información del saldo</Text> */}
+                {/*  <Text style={globalStyles.resultText2}>Periodo: {saldo.periodo}</Text> */}
+                <Text style={globalStyles.resultText2}>{saldo.tipoSaldo}</Text>
                 <Text style={globalStyles.resultText2}>Estado del pago: {saldo.pagado ? 'Pagado' : 'Pendiente'}</Text>
                 <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text>
                 <TouchableOpacity style={globalStyles.primaryButton2} onPress={() => handlePress(saldo.linkDePago)}>
-              <Text style={globalStyles.buttonText}>
-                Link de Pago
-              </Text>
-            </TouchableOpacity>
+                  <Text style={globalStyles.buttonText}>
+                    Link de Pago
+                  </Text>
+                </TouchableOpacity>
 
-              {/*   <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 18, textAlign: 'center', }}>Afiliados:</Text> */}
+                {/*   <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 18, textAlign: 'center', }}>Afiliados:</Text> */}
 
                 {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
-            <View key={padronIndex}>
-               <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
-              {/* Detalles del afiliado */}
-            </View>
-          ))}
-          <TouchableOpacity
-            onPress={() => setShowAfiliados(!showAfiliados)}
-            style={globalStyles.primaryButton3}
-          >
-            <Text style={{ fontSize: 16 }}>
-              {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
-            </Text>
-          </TouchableOpacity>
-   
+                  <View key={padronIndex}>
+                    <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
+                    {/* Detalles del afiliado */}
+                  </View>
+                ))}
+                <TouchableOpacity
+                  onPress={() => setShowAfiliados(!showAfiliados)}
+                  style={globalStyles.primaryButton3}
+                >
+                  <Text style={{ fontSize: 16 }}>
+                    {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
+                  </Text>
+                </TouchableOpacity>
+                </View>
+                </BoxShadow>
 
-               
               </View>
-          ))
-        )}
-      </View>
+            ))
+          )}
+        </View>
 
 
-          </ScrollView>
+      </ScrollView>
 
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  card: {
+    width: 350,
+    height: 200,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+
 {/*  {saldo.padrones.map((padron: any, padronIndex: number) => (
                   <View key={padronIndex}>
                     <Text style={globalStyles.resultText2}>Nombre: {padron.nombre}</Text>
@@ -175,5 +219,5 @@ export const FacturasScreen = () => {
                   </View>
                 ))} */}
 
-     {/*  <Text style={globalStyles.resultText2}>CUIL: {padron.cuil}</Text>
+{/*  <Text style={globalStyles.resultText2}>CUIL: {padron.cuil}</Text>
                     <Text style={globalStyles.resultText2}>Edad: {padron.edad}</Text> */}
