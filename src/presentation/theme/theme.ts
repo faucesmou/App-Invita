@@ -184,10 +184,48 @@ export const globalStyles = StyleSheet.create({
       textAlign: 'center',
     },
      /* estilos para estudios consulta de facturas: */
+     containerEstudiosMedicosEnv2: {
+    /*    flex: 0.5,  */
+       paddingHorizontal:0,
+       marginTop: 20, 
+       alignItems:'center',
+      /*  backgroundColor: 'yellow', */
+       marginBottom:10,
+   
+     },
      resultText2: {
       fontSize: 18,
       fontFamily: 'Quicksand-Light',
       margin:0,
       marginTop: 0, 
+     
     },
+    primaryButton2: {
+      backgroundColor: globalColors.profile2,
+      borderRadius: 5,
+      padding: 5,
+      margin: 10,
+      marginTop:15,
+      marginBottom: 15,
+      marginHorizontal: 60,
+      paddingHorizontal: 10,
+      alignItems: 'center',
+      textAlign: 'center',
+      justifyContent: 'center'
+      
+  },
+    primaryButton3: {
+      backgroundColor: 'lightgrey'/* globalColors.profile2 */,
+      borderRadius: 5,
+      padding: 5,
+      margin: 10,
+      marginTop:0,
+      marginBottom: 15,
+      marginHorizontal: 60,
+      paddingHorizontal: 10,
+      alignItems: 'center',
+      textAlign: 'center',
+      justifyContent: 'center',
+       
+  },
 })
