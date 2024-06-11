@@ -14,6 +14,7 @@ export const globalColors = {
     select: '#efe3e3',
     disabled: '#92c0f0',
     pressed: '#3d8ee5',
+    pressed2: '#ee5a3d',
   
 
     background:'#fff', 
@@ -198,8 +199,14 @@ export const globalStyles = StyleSheet.create({
       fontFamily: 'Quicksand-Light',
       margin:0,
       marginTop: 0, 
-     
     },
+     resultText3: {
+      fontSize: 18,
+      fontFamily: 'Quicksand-Light',
+      margin:0,
+      marginTop: 10, 
+    },
+   
     primaryButton2: {
       backgroundColor: globalColors.profile2,
       borderRadius: 5,

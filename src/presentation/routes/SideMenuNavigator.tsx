@@ -66,9 +66,9 @@ export const SideMenuNavigator = () => {
       screenOptions={{
         headerShown: false,
         drawerType: (dimensions.width >= 758) ? 'permanent' : 'slide',
-        drawerActiveBackgroundColor: globalColors.orange,
+        drawerActiveBackgroundColor: globalColors.pressed2,
         drawerActiveTintColor: 'white',
-        drawerInactiveTintColor: globalColors.orange,
+        drawerInactiveTintColor: globalColors.pressed2,
         drawerItemStyle: {
           borderRadius: 100,
           paddingHorizontal: 20,
@@ -97,7 +97,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       <View
         style={{
           height: 200,
-          backgroundColor: globalColors.orange,
+          backgroundColor: globalColors.pressed2,
           margin: 30,
           borderRadius: 50,
         }}
@@ -108,10 +108,10 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       <Button
         style={{
           height: 45,
-          backgroundColor: globalColors.orange,
+          backgroundColor: globalColors.pressed2,
           margin: 10,
           borderRadius: 50,
-          borderColor: globalColors.orange,
+          borderColor: globalColors.pressed2,
           flexDirection: 'row',
 
           alignItems: 'center',

@@ -4,9 +4,11 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import axios from 'axios';
 import { useAuthStore } from '../../store/auth/useAuthStore';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const UploadImage: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  /* quiero usar estos estados par mostra la imagen y chequear si estan guardandose o quitandse */
+  const [selectedImages, setSelectedImages] = useState<string | null[]>([]);
   const [SelectedFileName, setSelectedFileName] = useState<string | null>(null);
   /* Estados para manejar un posible envio (no se esta usando por ahora) */
   const [fileSent, setFileSent] = useState(false);
@@ -44,6 +46,7 @@ const UploadImage: React.FC = () => {
         console.error('ImagePicker Error: ', result.errorCode);
       } else if (result.assets && result.assets.length > 0) {
         const asset = result.assets[0];
+     
         const base64String = await convertImageToBase64(asset.uri);
 
         const emptyIndex = imagenes.findIndex(image => image === null);
@@ -68,6 +71,7 @@ const UploadImage: React.FC = () => {
           } else {
             console.log('Un problema para guardar la imagen en zustand');
           }
+      
         } else {
           console.log('No se pueden cargar más de 5 imágenes');
         }
@@ -113,16 +117,44 @@ const UploadImage: React.FC = () => {
       }
     };
 
+    const handleRemoveImage = async (index: any) => {
+      const newImages = [...imagenes];
+      const newFileNames = [...fileNames];
+      newImages[index] = null;
+      newFileNames[index] = null;
+      setImagenes(newImages);
+      setFileNames(newFileNames);
+  
+      // Guardar los cambios en el estado global
+      const resultado = await GuardarImagenes(newImages);
+      if (resultado) {
+        console.log('Imagen removida exitosamente en zustand');
+      } else {
+        console.log('Un problema para remover la imagen en zustand');
+      }
+    };
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Cargar Imágenes de Estudios</Text>
 
         <Button title="Seleccionar Imagen" onPress={handleImagePicker} />
-      {fileNames.map((fileName, index) => (
+      {fileNames.map((fileName, index ) => (
         fileName && (
           <View key={index}>
             <Text style={styles.title}>Imagen {index + 1}:</Text>
             <Text style={styles.subitle}>{fileName}</Text>
+     
+      {/*       {selectedImages && (
+        <Image source={{ uri: selectedImages }} style={styles.image} />
+      )} */}
+      
+            <TouchableOpacity
+              style={styles.removeButton}
+              onPress={() => handleRemoveImage(index)}
+            >
+              <Text style={styles.removeButtonText}>Quitar Imagen</Text>
+            </TouchableOpacity>
           </View>
         )
       ))}
@@ -163,6 +195,20 @@ const UploadImage: React.FC = () => {
     errorMessage: {
       color: 'red',
       marginTop: 20,
+    },
+    imageContainer: {
+      marginBottom: 20,
+    },
+    removeButton: {
+      backgroundColor: '#ee5a3d',
+      padding: 5,
+      borderRadius: 5,
+      marginHorizontal:120,
+      marginTop:5,
+    },
+    removeButtonText: {
+      color: 'white',
+      textAlign: 'center',
     },
   });
 

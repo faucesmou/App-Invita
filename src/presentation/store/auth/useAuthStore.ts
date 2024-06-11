@@ -304,7 +304,8 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   GuardarImagenes: async (newImages: (string | null)[]): Promise<boolean> => {
     try {
       set({ imagenes: newImages });
-      console.log('Se han guardado correctamente las imágenes en el contexto de Zustand');
+      console.log('Se han guardado correctamente las imágenes en el contexto de Zustand: son las siguientes:', );
+
       return true;
     } catch (error) {
       console.log('Ocurrió un error al guardar las imágenes en el contexto de Zustand');
