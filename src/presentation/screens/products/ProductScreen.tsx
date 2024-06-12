@@ -7,12 +7,20 @@ import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 import { BackButton } from '../../components/shared/BackButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomHeader from '../../components/CustomHeader';
+import Credencial from '../../components/shared/Credencial';
+import { CredencialFamiliar } from '../../components/shared/CredencialFamiliar';
+
 
 export const ProductScreen = () => {
 
   const { top } = useSafeAreaInsets();
 
 const params = useRoute<RouteProp<RootStackParams, 'Product'>>().params;
+console.log('ESTE ES EL PARAMS: ---->--->', params);
+
+const idAfiliado = params.idAfiliado;
+console.log('ESTE ES EL idAfiliado: ---->--->',idAfiliado);
+
 const navigation = useNavigation();
 
 /* 
@@ -42,7 +50,8 @@ navigation.setOptions({
       <View
       style={{ 
         justifyContent: 'center', 
-        alignItems: 'center' 
+        alignItems: 'center' ,
+      /*  backgroundColor: 'yellow',  */
       }}
       >
         <Text
@@ -50,15 +59,34 @@ navigation.setOptions({
           fontSize: 35, 
           marginBottom: 10 
         }}
-        > Product Screen</Text>
+        > Credencial</Text>
 
         <Text style={{
           fontSize:25,
           textAlign: 'center',
           marginTop: 25
         }}>
-          { params.id } - { params.name }
+          { params.id }  
         </Text>
+
+       {/*  <Text style={{
+          fontSize:15,
+          textAlign: 'center',
+          marginTop: 25
+        }}>
+          id Afiliado: { params.idAfiliado }  
+        </Text> */}
+
+      </View>
+
+      <View
+        style={{
+          /* marginBottom: 350, marginTop: 0, */ /* backgroundColor: 'yellow',  */  flex: 1,  justifyContent: 'top',
+          alignItems: 'center', marginHorizontal:60
+        }}
+      >
+
+        <CredencialFamiliar idAfiliado={idAfiliado} />
 
       </View>
 

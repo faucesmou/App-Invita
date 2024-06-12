@@ -20,13 +20,13 @@ export const HomeScreen = () => {
 
   const { top } = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
- 
+
 
   /* usando el State del Profile Store:  */
-/*   const name = useProfileStore(state => state.name);
-  const email = useProfileStore(state => state.email);
-
-  const count = useCounterStore(state => state.count); */
+  /*   const name = useProfileStore(state => state.name);
+    const email = useProfileStore(state => state.email);
+  
+    const count = useCounterStore(state => state.count); */
 
   /* useEffect(() => {
     navigation.setOptions({
@@ -50,7 +50,7 @@ export const HomeScreen = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-       /*  backgroundColor: 'green' */
+        /*  backgroundColor: 'green' */
       }}
     >
       <CustomHeader />
@@ -63,12 +63,12 @@ export const HomeScreen = () => {
           paddingHorizontal: 20,
           marginTop: -160,
           marginBottom: 20,
-         /*  backgroundColor: 'yellow' */
+          /*  backgroundColor: 'yellow' */
         }}
       >
 
         <PrimaryButton
-          onPress={() => navigation.navigate('Products2')}
+          onPress={() => navigation.navigate('Afiliados')}
           label="Afiliados a Cargo"
         />
         <PrimaryButton

@@ -71,7 +71,7 @@ export const globalStyles = StyleSheet.create({
         margin: 10,
         marginBottom: 5,
         marginHorizontal: 20,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         alignItems: 'center',
         textAlign: 'center',
         justifyContent: 'center'

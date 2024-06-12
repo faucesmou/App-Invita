@@ -138,7 +138,7 @@ const UploadImage: React.FC = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Cargar Imágenes de Estudios</Text>
 
-        <Button title="Seleccionar Imagen" onPress={handleImagePicker} />
+        <Button title="Seleccionar Imágenes" onPress={handleImagePicker} />
       {fileNames.map((fileName, index ) => (
         fileName && (
           <View key={index}>

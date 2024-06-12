@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { HamburgerMenu } from '../components/shared/HamburgerMenu';
 import { useProfileStore } from '../store/profile-store';
 
-import { ProductsScreen2 } from '../screens/products/ProductsScreen2';
+import { Afiliados/* , ProductsScreen2  */} from '../screens/products/Afiliados';
 import { MisDatosScreen } from '../screens/profile/MisDatosScreen';
 import { BottomTabsNavigator } from './BottomTabsNavigator';
 import { MiOrdenConsultaScreen } from '../screens/tramites/MiOrdenConsultaScreen';
@@ -40,7 +40,7 @@ export type RootStackParams = {
   home: undefined,
   Product: { id: number, name: string },
   Products: undefined,
-  Products2: undefined,
+  Afiliados: undefined,
   Settings: undefined,
   Tramites: undefined,
   MisDatos: undefined,
@@ -121,7 +121,7 @@ export const StackNavigator = () => {
 
 {/*  HOME (INICIO): */}
                         {/* Afiliados a Cargo: */}
-      <Stack.Screen name="Products2" component={ProductsScreen2} options={{ headerShown: true }} /> 
+      <Stack.Screen name="Afiliados" component={Afiliados} options={{ headerShown: true }} /> 
 
       {/* Desde Afiliados a Cargo podemos navegar al Product Screen (componente reutilizable) */}
       <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: true }} />

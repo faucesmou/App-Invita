@@ -66,7 +66,7 @@ export const globalStylesCredentials = StyleSheet.create({
     textAlign: 'center',
   },
   frenteCard: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: 'black',
    /*  padding: 10, */
     marginTop: 10,
@@ -84,7 +84,7 @@ export const globalStylesCredentials = StyleSheet.create({
     marginBottom:10,
     flexDirection: 'column',
     overflow: 'hidden', 
-    marginVertical: 0,
+    marginVertical: 20,
     width: 380,
     height: 220,
     color: 'white',
@@ -109,6 +109,7 @@ export const globalStylesCredentials = StyleSheet.create({
   /*   padding: 10,
     marginTop: 10, */
     marginTop:30,
+    paddingHorizontal: 0,
     marginBottom:10,
     flexDirection: 'column',
    /*  overflow: 'hidden',  */
