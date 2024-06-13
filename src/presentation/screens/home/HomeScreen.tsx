@@ -1,7 +1,7 @@
 //import { globalStyles } from '../../theme/theme'
 import { type NavigationProp, useNavigation, DrawerActions } from '@react-navigation/native';
 import React, { useEffect } from 'react'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { PrimaryButton } from '../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../routes/StackNavigator';
 import { useProfileStore } from '../../store/profile-store';
@@ -14,6 +14,7 @@ import CustomHeader from '../../components/CustomHeader';
 //import { MyIcon } from '../../components/ui/MyIcon';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import Credencial from '../../components/shared/Credencial';
+import { SecondaryButton } from '../../components/shared/SecondaryButton';
 
 export const HomeScreen = () => {
   console.log('Entrando al homeScreen---->')
@@ -50,46 +51,97 @@ export const HomeScreen = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-        /*  backgroundColor: 'green' */
+     /*    backgroundColor: 'green' */
       }}
     >
       <CustomHeader />
       <HamburgerMenu />
       <Credencial />
 
+
       <View
-        style={{
-          flex: 1,
-          paddingHorizontal: 20,
-          marginTop: -160,
-          marginBottom: 20,
-          /*  backgroundColor: 'yellow' */
-        }}
+        style={styles.container}
       >
+        <View
+          style={styles.buttonContainer}
+        >
 
-        <PrimaryButton
-          onPress={() => navigation.navigate('Afiliados')}
-          label="Afiliados a Cargo"
-        />
-        <PrimaryButton
-          onPress={() => navigation.navigate('Settings')}
-          label="Settings"
-        />
+          <SecondaryButton
+            onPress={() => navigation.navigate('Afiliados')}
+            label="Afiliados a Cargo"
+            iconName='heart-outline'
+          />
+          <SecondaryButton
+            onPress={() => navigation.navigate('Settings')}
+            label="Settings"
+            iconName='home-outline'
+          />
+        </View>
+        <View
+          style={styles.buttonContainer}
+        >
 
+          <SecondaryButton
+            onPress={() => navigation.navigate('Afiliados')}
+            label="Afiliados a Cargo"
+            iconName='heart-outline'
+          />
+          <SecondaryButton
+            onPress={() => navigation.navigate('Settings')}
+            label="Settings"
+            iconName='home-outline'
+          />
+        </View>
 
       </View>
-      {/*   <Text style={{ marginBottom: 5, marginTop:15 }}> { name }</Text>
-        <Text style={{ marginBottom: 15 }}> { email } </Text>
-        <Text style={{ marginBottom: 5 }}> Productos: { count } </Text> */}
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    paddingHorizontal:10,
+    marginTop: 10,
+    marginBottom: 180,
+  /*   backgroundColor: 'yellow', */
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+
+    flexDirection: 'row',
+    alignItems: 'center',
+/*     backgroundColor: 'orange', */
+    justifyContent: 'center',
+    paddingHorizontal: 30,
+  },
+});
 
 
-      {/*  <Button
+
+{/*  <Button
           accessoryLeft={<MyIcon name="log-out-outline" white />} 
           onPress={ logout } >
             Cerrar sesión
           </Button> */}
+ {/*       <View
+          style={{
+            paddingHorizontal: 10,
+            marginTop: 10,
+            marginBottom: 50,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            backgroundColor: 'yellow'
+          }}
+        >
 
+          <PrimaryButton
+            onPress={() => navigation.navigate('Afiliados')}
+            label="Afiliados a Cargo"
+          />
+          <PrimaryButton
+            onPress={() => navigation.navigate('Settings')}
+            label="Settings"
+          />
 
-    </View>
-  )
-}
+        </View> */}
