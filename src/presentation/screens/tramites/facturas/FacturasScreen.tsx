@@ -142,46 +142,46 @@ export const FacturasScreen = () => {
           ) : (
             Saldos.map((saldo, index) => (
               <View style={styles.cardWrapper}/*  key={index} style={{ alignItems:'center', backgroundColor: 'yellow', marginBottom: 10, paddingTop:10, paddingHorizontal: 40 }}  */>
-                <BoxShadow  setting={{ ...shadowOpt, height: showAfiliados ? 210 : 175 }} /* setting={{
-                  width: 300,
-                  height: 100,
-                  color: "#000",
-                  border: 2,
-                  radius: 3,
-                  opacity: 0.1,
-                  x: 0,
-                  y: 3,
-                  style: { marginVertical: 5 },
-                }} */>
-                   <View  style={styles.card}>
-                {/*   <Text style={globalStyles.titleEstudiosMedicosEnv}>Información del saldo</Text> */}
-                {/*  <Text style={globalStyles.resultText2}>Periodo: {saldo.periodo}</Text> */}
-                <Text style={globalStyles.resultText3}>{saldo.tipoSaldo}</Text>
-                <Text style={globalStyles.resultText2}>Estado del pago: {saldo.pagado ? 'Pagado' : 'Pendiente'}</Text>
-                <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text>
-                <TouchableOpacity style={globalStyles.primaryButton2} onPress={() => handlePress(saldo.linkDePago)}>
-                  <Text style={globalStyles.buttonText}>
-                    Link de Pago
-                  </Text>
-                </TouchableOpacity>
+                <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 175 }} /* setting={{
+                        width: 300,
+                        height: 100,
+                        color: "#000",
+                        border: 2,
+                        radius: 3,
+                        opacity: 0.1,
+                        x: 0,
+                        y: 3,
+                        style: { marginVertical: 5 },
+                      }} */>
+                  <View style={styles.card}>
+                    {/*   <Text style={globalStyles.titleEstudiosMedicosEnv}>Información del saldo</Text> */}
+                    {/*  <Text style={globalStyles.resultText2}>Periodo: {saldo.periodo}</Text> */}
+                    <Text style={globalStyles.resultText3}>{saldo.tipoSaldo}</Text>
+                    <Text style={globalStyles.resultText2}>Estado del pago: {saldo.pagado ? 'Pagado' : 'Pendiente'}</Text>
+                    <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text>
+                    <TouchableOpacity style={globalStyles.primaryButton2} onPress={() => handlePress(saldo.linkDePago)}>
+                      <Text style={globalStyles.buttonText}>
+                        Link de Pago
+                      </Text>
+                    </TouchableOpacity>
 
-                {/*   <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 18, textAlign: 'center', }}>Afiliados:</Text> */}
+                    {/*   <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 18, textAlign: 'center', }}>Afiliados:</Text> */}
 
-                {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
-                  <View key={padronIndex} >
-                    <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
-                    {/* Detalles del afiliado */}
+                    {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
+                      <View key={padronIndex} >
+                        <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
+                        {/* Detalles del afiliado */}
+                      </View>
+                    ))}
+                    <TouchableOpacity
+                      onPress={() => setShowAfiliados(!showAfiliados)}
+                      style={globalStyles.primaryButton3}
+                    >
+                      <Text style={{ fontSize: 16 }}>
+                        {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
-                ))}
-                <TouchableOpacity
-                  onPress={() => setShowAfiliados(!showAfiliados)}
-                  style={globalStyles.primaryButton3}
-                >
-                  <Text style={{ fontSize: 16}}>
-                    {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
-                  </Text>
-                </TouchableOpacity>
-                </View>
                 </BoxShadow>
 
               </View>
@@ -210,11 +210,11 @@ const styles = StyleSheet.create({
   card: {
     width: 350,
     height: 'auto',
-    marginTop:0,
+    marginTop: 0,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    padding:10,
+    padding: 10,
   },
 });
 

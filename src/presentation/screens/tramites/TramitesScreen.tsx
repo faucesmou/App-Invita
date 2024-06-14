@@ -8,6 +8,7 @@ import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import CustomHeader from '../../components/CustomHeader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
+import { TertiaryButton } from '../../components/shared/TertiaryButton'
 
 const tramites = [
   { id: 1, name: 'Autorizar prestación' },
@@ -21,19 +22,19 @@ const tramites = [
 export const TramitesScreen = () => {
   console.log('Entrando a TramitesScreen (Mi Gestion)')
 
- 
- /*  useEffect(() => {
-    navigation.setOptions({
-      headerStyle: {
-        backgroundColor: globalColors.primary, 
-        height: 130,
-      },
-      headerTintColor: 'white',
-      headerTitleStyle: {
-        fontSize: 28, 
-      },
-    })
-    }, []); */
+
+  /*  useEffect(() => {
+     navigation.setOptions({
+       headerStyle: {
+         backgroundColor: globalColors.primary, 
+         height: 130,
+       },
+       headerTintColor: 'white',
+       headerTitleStyle: {
+         fontSize: 28, 
+       },
+     })
+     }, []); */
 
 
   /* 
@@ -51,50 +52,55 @@ export const TramitesScreen = () => {
   /* console.error('Entrando a TramitesScreen (Mi Gestion)') */
   return (
     <View style={{/* globalStyles.container */  flex: 1,
-    paddingHorizontal: 20,
-    marginTop: 0,
-    /* backgroundColor: 'yellow' */}}>
+      paddingHorizontal: 20,
+      marginTop: 0,
+      /* backgroundColor: 'yellow' */
+    }}>
 
-      <CustomHeader />
+      <CustomHeader color={globalColors.gray} />
       <HamburgerMenu />
-     {/*  <Text style={{ marginBottom: 20,  marginTop: 10 ,fontSize: 25, textAlign: 'center',}}> Mis Trámites</Text> */}
-
-      {/* <FlatList
-        data={tramites}
-        renderItem={({ item }) => (
-          <PrimaryButton
-            onPress={() => navigation.navigate('Product', { id: item.id, name: item.name })}
-            label={item.name}
-          />
-        )}
-      /> */}
-      <View
-        style={{ marginBottom: 225, marginTop:10, /*  backgroundColor: 'green', */  flex: 1 }}
-      >
-
-        <PrimaryButton
+   
+      <View style={{ /* backgroundColor: 'yellow', */ marginTop: 40, }}>
+        <TertiaryButton
           onPress={() => navigation.navigate('Consulta')}
           label="Solicitar orden de consulta"
-        />
-
-        <PrimaryButton
+          color={globalColors.profile2}
+          iconName='people-outline'
+          description='Gestioná la orden de tus estudios'
+        />{/* <ion-icon name="people-outline"></ion-icon> */}
+        <TertiaryButton
           onPress={() => navigation.navigate('Formularios')}
           label="Obtener Formularios Especiales"
-        /> 
-        <PrimaryButton
+          color={globalColors.profile2}
+          iconName='document-text-outline'
+          description='Descargá tus formularios'
+        />
+     
+        <TertiaryButton
           onPress={() => navigation.navigate('Facturas')}
           label="Mis Facturas"
-        /> 
+          color={globalColors.profile2}
+          iconName='file-tray-full-outline'
+          description='Accedé a todas tus facturas'
+        />
+      </View>
+      <View
+        style={{ marginBottom: 20, 
+          marginTop: 10,  
+          /* backgroundColor: 'green',  */ 
+          flex: 1, alignItems: 'center' }}
+      >
+        <Text style={{
+          fontSize:25,
+          textAlign: 'center',
+        }} >
+          Contenido complementario
+        </Text>
 
 
       </View>
 
-      {/*   <Text style={{ marginBottom: 70, fontSize:25 }}>Mis tramites</Text> */}
 
-      {/*   <PrimaryButton
-    onPress={ ()=> navigation.navigate('Settings' as never )}
-    label={"Ajustes"}
-    /> */}
     </View>
   )
 }

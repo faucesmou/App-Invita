@@ -15,6 +15,7 @@ import CustomHeader from '../../components/CustomHeader';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import Credencial from '../../components/shared/Credencial';
 import { SecondaryButton } from '../../components/shared/SecondaryButton';
+import { globalColors } from '../../theme/theme';
 
 export const HomeScreen = () => {
   console.log('Entrando al homeScreen---->')
@@ -51,10 +52,10 @@ export const HomeScreen = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-     /*    backgroundColor: 'green' */
+        /*    backgroundColor: 'green' */
       }}
     >
-      <CustomHeader />
+      <CustomHeader  color={globalColors.gray}  />
       <HamburgerMenu />
       <Credencial />
 
@@ -62,34 +63,37 @@ export const HomeScreen = () => {
       <View
         style={styles.container}
       >
+          <View style={styles.rowContainer}>
+            <SecondaryButton
+              onPress={() => navigation.navigate('Afiliados')}
+              label="Afiliados "
+              iconName='people-circle-outline'
+              description='Tu Grupo Familiar y credenciales'
+            />
+        
+            <SecondaryButton
+              onPress={() => navigation.navigate('Settings')}
+              label="Settings"
+              iconName='settings-outline'
+              description='Tu configuracion personalizada'
+            />
+          </View>
+        
         <View
-          style={styles.buttonContainer}
+          style={styles.rowContainer}
         >
 
           <SecondaryButton
             onPress={() => navigation.navigate('Afiliados')}
-            label="Afiliados a Cargo"
-            iconName='heart-outline'
+            label="Buscar guardia"
+            iconName='fitness-outline'
+            description='Prestadores Cercanos'
           />
           <SecondaryButton
             onPress={() => navigation.navigate('Settings')}
-            label="Settings"
-            iconName='home-outline'
-          />
-        </View>
-        <View
-          style={styles.buttonContainer}
-        >
-
-          <SecondaryButton
-            onPress={() => navigation.navigate('Afiliados')}
-            label="Afiliados a Cargo"
-            iconName='heart-outline'
-          />
-          <SecondaryButton
-            onPress={() => navigation.navigate('Settings')}
-            label="Settings"
-            iconName='home-outline'
+            label="Asistencia"
+            iconName='chatbubbles-outline'
+            description='Chateá con nuestro soporte'
           />
         </View>
 
@@ -100,20 +104,27 @@ export const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    paddingHorizontal:10,
-    marginTop: 10,
+    flex: 1,
+    paddingHorizontal: 10,
+    marginTop: 0,
     marginBottom: 180,
-  /*   backgroundColor: 'yellow', */
-    justifyContent: 'center',
+/*     backgroundColor: 'violet', */
+    marginLeft:0,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    marginBottom: -10,
+/*     backgroundColor: 'yellow',  */
+    maxWidth:'50%', 
+    maxHeight:'70%',
+    marginTop: 5,
   },
   buttonContainer: {
-
     flexDirection: 'row',
     alignItems: 'center',
-/*     backgroundColor: 'orange', */
+ /*    backgroundColor: 'orange', */
     justifyContent: 'center',
-    paddingHorizontal: 30,
+    paddingHorizontal:0,
   },
 });
 
@@ -124,7 +135,7 @@ const styles = StyleSheet.create({
           onPress={ logout } >
             Cerrar sesión
           </Button> */}
- {/*       <View
+{/*       <View
           style={{
             paddingHorizontal: 10,
             marginTop: 10,

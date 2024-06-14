@@ -112,10 +112,11 @@ export const StackNavigator = () => {
       <Stack.Screen name='home' component={BottomTabsNavigator} options={{ headerShown: false }} />
 {/* vistas a las que se accede desde el botomTabsNavigator: */}
 
-{/* (Mi Gestion): */}
-     <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: false }} />
 {/* (Mi Salud): */}
       <Stack.Screen name="CartillaScreen" component={CartillaScreen} options={{ headerShown: true }} />
+
+{/* (Mi Gestion): */}
+     <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: false }} />
 
 {/* ----------VISTAS SECUNDARIAS: -------------->*/}
 

@@ -12,12 +12,13 @@ export const globalColors = {
   profile2: '#3457e6',
   orange: '#ed843e',
   select: '#efe3e3',
-  disabled: '#92c0f0',
+  disabled: '#c4d2da',
   pressed: '#3d8ee5',
   pressed2: '#ee5a3d',
   orange2: '#d83414',
   brown: '#362521',
   yellow: '#d25e1b',
+  gray:'#505050',
 
 
   background: '#fff',
@@ -120,7 +121,7 @@ export const globalStyles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonText2: {
-    color: globalColors.orange,
+    color: 'black',
     fontSize: 18,
     textAlign: 'center',
   },
@@ -244,12 +245,12 @@ export const globalStyles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     fontWeight: 'normal',
-    marginLeft: 5, // Añadir margen izquierdo para separar el texto del icono
-
+/*     marginLeft: 5,  */
+    flexWrap: 'wrap',
   },
   secondaryButton2: {
     backgroundColor: 'white',
-    minWidth: '50%', 
+  /*   minWidth: '50%', */ 
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 15,
@@ -257,7 +258,6 @@ export const globalStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 }, // Desplazamiento de la sombra
     shadowOpacity: 0.60, // Opacidad de la sombra
     shadowRadius: 20, // Radio de la sombra
- /*    elevation: 20, */
     padding: 10,
     margin: 5,
     marginBottom: 5,
@@ -272,16 +272,60 @@ export const globalStyles = StyleSheet.create({
   contentWrapper: {
     flexDirection: 'column',
     alignItems: 'flex-start',
-    justifyContent: 'center',
-  
+    justifyContent: 'space-between',
+    paddingHorizontal:5,  
   },
     icon: {
-    marginRight: 5, // Espacio entre el icono y el texto
-/*     marginLeft:20 */
+    marginRight: 0, // Espacio entre el icono y el texto
   },
   iconWrapper: {
     alignItems: 'center', // Alinea el icono al centro horizontalmente
     marginBottom: 5, // Añadir margen inferior para separar el icono del texto
-    marginLeft:5
+ /*    marginLeft:5 */
   },
+  descriptionText: {
+    color: 'gray',
+    fontSize: 18,
+    flexWrap: 'wrap',
+  },
+    /* probando nuesvos estilos de botones: TertiaryButton componente:  */
+
+    TertiaryButton: {
+      backgroundColor: 'white',
+      minWidth: '50%', 
+      borderColor: 'gray',
+      borderWidth: 1,
+      borderRadius: 15,
+      shadowColor: '#000', // Color de la sombra
+      shadowOffset: { width: 0, height: 0 }, // Desplazamiento de la sombra
+      shadowOpacity: 0.60, // Opacidad de la sombra
+      shadowRadius: 20, // Radio de la sombra
+      padding: 10,
+      margin: 5,
+      marginBottom: 5,
+      marginHorizontal: 15,//distancia entre botones 
+      paddingHorizontal: 10,//este si afecta
+      paddingVertical:15,
+      alignItems: 'center',
+      textAlign: 'center',
+      justifyContent: 'center'
+  
+    },
+    contentWrapper2: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    
+    },
+      icon2: {
+      marginRight: 5, 
+      alignItems: 'flex-end',
+    },
+    iconWrapper2: {
+      alignItems: 'flex-end', 
+      marginBottom: 0, 
+      marginLeft:75
+    },
+
+
 })

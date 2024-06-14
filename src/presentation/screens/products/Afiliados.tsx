@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomHeader from '../../components/CustomHeader';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import Credencial from '../../components/shared/Credencial';
+import { TertiaryButton } from '../../components/shared/TertiaryButton';
 
 
 
@@ -56,7 +57,7 @@ export const Afiliados = () => {
 
   }, [])
 
-  const color = globalColors.orange
+  const color = globalColors.gray
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
   console.log('este es el products:', products);
   return (
@@ -67,6 +68,7 @@ export const Afiliados = () => {
         marginTop: 20,
         /* backgroundColor: 'green', */
         marginBottom: 0,
+        
       }}
     >
       <CustomHeader color={color} />
@@ -76,23 +78,25 @@ export const Afiliados = () => {
       
       <View
         style={{
-          marginBottom: 100, marginTop: 0, /* backgroundColor: 'yellow', */
+          marginBottom: 10, marginTop: 0, /* backgroundColor: 'yellow', */
           alignItems: 'center',
         }}>
         <Text
           style={{
-            fontSize: 15,
+            fontSize: 20,
             marginBottom: 10,
             marginTop: 10,
+            padding:0,
+            marginHorizontal:0,
           }}
         > Selecciona un familiar para ver su credencial</Text>
 
 
       <FlatList
-        style={{ /* backgroundColor: 'orange', */ marginBottom: 30 }}
+        style={{ /* backgroundColor: 'orange', */ marginBottom: 0 }}
         data={products}
         renderItem={({ item }) => (
-          <PrimaryButton
+          <TertiaryButton
             onPress={() => navigation.navigate('Product', { id: item.apellidoYNombre, nroAfiliado: item.nroAfiliado, idAfiliado: item.idAfiliado  })}
             label={item.apellidoYNombre}
             color={color}
@@ -103,9 +107,19 @@ export const Afiliados = () => {
 
 
       </View>
+      <View style={{  /* backgroundColor: 'yellow', */  marginTop: 0, }}>
+      <TertiaryButton
+        onPress={() => navigation.navigate('EstudiosMedicos')}
+        label="TertiaryButton Example"
+        color={globalColors.profile2}
+        iconName='medkit-outline'
+        description='Gestioná la orden de tus estudios'
+      />
+    
+      </View>
       <View
         style={{
-          marginBottom: 100, marginTop: 0, /* backgroundColor: 'yellow', */ justifyContent: 'center',
+          marginBottom: 100, marginTop: 20, /* backgroundColor: 'yellow', */ justifyContent: 'center',
           alignItems: 'center',
         }}>
         <Text
