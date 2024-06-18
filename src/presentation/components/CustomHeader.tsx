@@ -13,7 +13,7 @@ const CustomHeader = ( {color} : Props) => {
 
 
   const { top, bottom } = useSafeAreaInsets();
-  const headerHeight = 80; // Altura inicial del encabezado
+  const headerHeight = 100; // Altura inicial del encabezado
   const adjustedHeaderHeight = headerHeight + top; // Ajusta la altura para tener en cuenta los márgenes seguros
   const backColor = color ? color : globalColors.profile2
 
@@ -22,10 +22,12 @@ const CustomHeader = ( {color} : Props) => {
       headerStyle: {
         backgroundColor: backColor, 
         height: adjustedHeaderHeight,
+        borderRadius: 15,
       },
       headerTintColor: 'white',
       headerTitleStyle: {
         fontSize: 28, // tamaño título del header
+        
       },
     });
   }, []);

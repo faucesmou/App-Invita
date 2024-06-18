@@ -16,7 +16,7 @@ interface Props {
 
 
 export const TertiaryButton = ( { onPress, label, color, disabled, iconName, description }: Props) => {
-  const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.yellow);
+  const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
   console.log('backColor', backColor)  
   const navigation = useNavigation();
 

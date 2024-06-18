@@ -5,12 +5,13 @@ import { Picker } from '@react-native-picker/picker';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 import { RootStackParams } from '../../../routes/StackNavigator';
-import { globalStyles } from '../../../theme/theme';
+import { globalColors, globalStyles } from '../../../theme/theme';
 import CustomHeader from '../../../components/CustomHeader';
 import { BackButton } from '../../../components/shared/BackButton';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import UploadImage from '../../../components/shared/UploadImage';
 import { ScrollView } from 'react-native-gesture-handler';
+import { TertiaryButton } from '../../../components/shared/TertiaryButton';
 
 
 
@@ -279,9 +280,16 @@ export const EstudiosMedicosScreen = () => {
         <ScrollView>
         <UploadImage />
 
-        <PrimaryButton
+       {/*  <PrimaryButton
           onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
           label=" Solicitar Estudios Medicos"
+        /> */}
+         <TertiaryButton
+          onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
+          label="Solicitar Estudios Medicos"
+          color={globalColors.profile2}
+          iconName='medkit-outline'
+         description='Continuar con la solicitud' 
         />
         </ScrollView>
       </View>

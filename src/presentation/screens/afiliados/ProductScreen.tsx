@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Pressable, Text, View } from 'react-native'
 import { RootStackParams } from '../../routes/StackNavigator';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { globalStyles } from '../../theme/theme';
+import { globalColors, globalStyles } from '../../theme/theme';
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 import { BackButton } from '../../components/shared/BackButton';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -43,7 +43,7 @@ navigation.setOptions({
     <View 
     style={{...globalStyles.productScreen, marginTop: top }}
     >
-      <CustomHeader color='green'  />
+      <CustomHeader color={globalColors.gray2}   />
       
       <BackButton /> 
 

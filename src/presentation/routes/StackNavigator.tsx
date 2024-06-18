@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-import { ProductScreen } from '../screens/products/ProductScreen';
+import { ProductScreen } from '../screens/afiliados/ProductScreen';
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { HamburgerMenu } from '../components/shared/HamburgerMenu';
 import { useProfileStore } from '../store/profile-store';
 
-import { Afiliados/* , ProductsScreen2  */} from '../screens/products/Afiliados';
+import { Afiliados/* , ProductsScreen2  */} from '../screens/afiliados/Afiliados';
 import { MisDatosScreen } from '../screens/profile/MisDatosScreen';
 import { BottomTabsNavigator } from './BottomTabsNavigator';
 import { MiOrdenConsultaScreen } from '../screens/tramites/MiOrdenConsultaScreen';
@@ -113,10 +113,10 @@ export const StackNavigator = () => {
 {/* vistas a las que se accede desde el botomTabsNavigator: */}
 
 {/* (Mi Salud): */}
-      <Stack.Screen name="CartillaScreen" component={CartillaScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="CartillaScreen" component={CartillaScreen} options={{ headerShown: false }} />
 
 {/* (Mi Gestion): */}
-     <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: false }} />
+     <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: true }} />
 
 {/* ----------VISTAS SECUNDARIAS: -------------->*/}
 

@@ -29,7 +29,7 @@ export const SecondaryButton = ({ onPress, label, color, disabled, iconName, des
       onPress={disabled ? undefined : onPress}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed && !disabled ? globalColors.pressed : backColor,
+          backgroundColor: pressed && !disabled ? 'lightgray' : backColor,
           opacity: disabled ? 0.5 : 1, // Cambia la opacidad si está deshabilitado
         },
         styles.secondaryButton

@@ -36,8 +36,8 @@ export const Afiliados = () => {
     const ProductsRequest = async () => {
       try {
         const response = await axios.get(`https://andessalud.createch.com.ar/api/obtenerFamiliares?idAfiliado=${idAfiliado}`);
-      /*   console.log('EL RESPONSE DE AFILIADOS ES : ---------x-x-x-x-x-x->', response); */
-        
+        /*   console.log('EL RESPONSE DE AFILIADOS ES : ---------x-x-x-x-x-x->', response); */
+
         const mappedProducts = response.data.data.map((item: { apellidoYNombre: any; nroAfiliado: any; idAfiliado: any }) => ({
           apellidoYNombre: item.apellidoYNombre,
           nroAfiliado: item.nroAfiliado,
@@ -68,14 +68,14 @@ export const Afiliados = () => {
         marginTop: 20,
         /* backgroundColor: 'green', */
         marginBottom: 0,
-        
+
       }}
     >
-      <CustomHeader color={color} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
       <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center', }}>Afiliados a Cargo</Text>
-      
+
       <View
         style={{
           marginBottom: 10, marginTop: 0, /* backgroundColor: 'yellow', */
@@ -86,40 +86,41 @@ export const Afiliados = () => {
             fontSize: 20,
             marginBottom: 10,
             marginTop: 10,
-            padding:0,
-            marginHorizontal:0,
+            padding: 0,
+            marginHorizontal: 0,
           }}
         > Selecciona un familiar para ver su credencial</Text>
 
 
-      <FlatList
-        style={{ /* backgroundColor: 'orange', */ marginBottom: 0 }}
-        data={products}
-        renderItem={({ item }) => (
-          <TertiaryButton
-            onPress={() => navigation.navigate('Product', { id: item.apellidoYNombre, nroAfiliado: item.nroAfiliado, idAfiliado: item.idAfiliado  })}
-            label={item.apellidoYNombre}
-            color={color}
-          />
-        )}
-      />
+        <FlatList
+          style={{ /* backgroundColor: 'orange', */ marginBottom: 0 }}
+          data={products}
+          renderItem={({ item }) => (
+            <TertiaryButton
+              onPress={() => navigation.navigate('Product', { id: item.apellidoYNombre, nroAfiliado: item.nroAfiliado, idAfiliado: item.idAfiliado })}
+              label={item.apellidoYNombre}
+              color={color}
+            />
+          )}
+        />
 
 
 
       </View>
-      <View style={{  /* backgroundColor: 'yellow', */  marginTop: 0, }}>
-      <TertiaryButton
-        onPress={() => navigation.navigate('EstudiosMedicos')}
-        label="TertiaryButton Example"
-        color={globalColors.profile2}
-        iconName='medkit-outline'
-        description='Gestioná la orden de tus estudios'
-      />
-    
-      </View>
+
+     {/*  <View style={{ marginTop: 0, }}>
+        <TertiaryButton
+          onPress={() => navigation.navigate('EstudiosMedicos')}
+          label="TertiaryButton Example"
+          color={globalColors.profile2}
+          iconName='medkit-outline'
+          description='Gestioná la orden de tus estudios'
+        />
+
+      </View> */}
       <View
         style={{
-          marginBottom: 100, marginTop: 20, /* backgroundColor: 'yellow', */ justifyContent: 'center',
+          marginBottom: 100, marginTop: 50, /* backgroundColor: 'yellow', */ justifyContent: 'center',
           alignItems: 'center',
         }}>
         <Text

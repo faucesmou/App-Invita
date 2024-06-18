@@ -41,16 +41,16 @@ export const BottomTabsNavigator = () => {
     >
 
       <Tab.Screen name="HomeScreen"
-        options={{ title: 'Inicio', tabBarIcon: ({ color }) => (<IonIcon name='home-outline' color={color}  />) }}
+        options={{ title: 'Inicio', tabBarIcon: ({ color }) => (<IonIcon name='home-outline' color={color}  />), headerShown: false  }}
         component={HomeScreen} />
       <Tab.Screen name="Cartilla"
-        options={{ title: 'MiSalud', tabBarIcon: ({ color }) => (<IonIcon name='heart-outline' color={color} />) }}
+        options={{ title: 'MiSalud', tabBarIcon: ({ color }) => (<IonIcon name='heart-outline' color={color} />), headerShown: false   }}
         component={CartillaScreen} />
 {/*       <Tab.Screen name="Credencial"
         options={{ title: 'Credencial', tabBarIcon: ({ color }) => (<IonIcon name='card-outline' color={color} />) }}
         component={CredencialScreenPrueba} /> */}
       <Tab.Screen name="Tramites"
-        options={{ title: 'Mi Gestión', tabBarIcon: ({ color }) => (<IonIcon name='document-text-outline' color={color} />) }}
+        options={{ title: 'Mi Gestión', tabBarIcon: ({ color }) => (<IonIcon name='document-text-outline' color={color} />), headerShown: false  }}
         component={TramitesScreen} />
 {/*       <Tab.Screen name="Mas"
         options={{ title: 'Mas', tabBarIcon: ({ color }) => (<IonIcon name='menu-outline' color={color} />) }}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 
 import { Picker } from '@react-native-picker/picker';
-import { globalStyles } from '../../theme/theme'
+import { globalColors, globalStyles } from '../../theme/theme'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
@@ -10,6 +10,7 @@ import CustomHeader from '../../components/CustomHeader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
 import { IndexPath, Layout, Select, SelectItem, SelectGroup, } from '@ui-kitten/components'
 import { BackButton } from '../../components/shared/BackButton'
+import { TertiaryButton } from '../../components/shared/TertiaryButton';
 
 
 export const ConsultaScreenFinal = () => {
@@ -181,7 +182,7 @@ export const ConsultaScreenFinal = () => {
       <View
         style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 35 }}>
 
-          {/* -----------------FAMILIAR---------------- */}
+        {/* -----------------FAMILIAR---------------- */}
 
         <View style={{ /*  backgroundColor: 'yellow', */ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
@@ -191,7 +192,7 @@ export const ConsultaScreenFinal = () => {
               selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectFamiliar(itemValue, itemIndex)
-              }         
+              }
               itemStyle={globalStyles.itemStyle}
             >
               {nombresDeFamiliares.map((item, index) => (
@@ -204,7 +205,7 @@ export const ConsultaScreenFinal = () => {
 
         {/* -----------------ESPECIALIDAD---------------- */}
 
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center'}}>
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona una Especialidad</Text>
           <View style={globalStyles.pickerWrapper}>
             <Picker
@@ -247,9 +248,17 @@ export const ConsultaScreenFinal = () => {
         </View>
 
 
-        <PrimaryButton
+      {/*   <PrimaryButton
           onPress={() => navigation.navigate('MiOrdenConsulta')}
-          label=" Solicitar Orden de consulta"
+          label="Solicitar Orden de consulta"
+        /> */}
+
+        <TertiaryButton
+          onPress={() => navigation.navigate('MiOrdenConsulta')}
+          label="Solicitar Orden de consulta"
+          color={globalColors.profile2}
+          iconName='people-outline'
+         description='Continuar con la solicitud' 
         />
       </View>
 
