@@ -92,7 +92,7 @@ export const globalStylesCredentials = StyleSheet.create({
   },
   frenteCardHome: {
     borderWidth: 0.5,
-    borderColor: 'black',
+    borderColor: 'white',
    /*  padding: 10, */
     marginTop: 10,
     flexDirection: 'column',

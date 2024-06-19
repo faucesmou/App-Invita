@@ -96,7 +96,7 @@ const Credencial = () => {
           <LinearGradient colors={planColors} style={globalStylesCredentials.frenteCardHome}>
             <ImageBackground source={require('../../screens/credential/CredentialsData/images/logogris4.png')} 
             imageStyle={{
-              resizeMode: "cover",
+              resizeMode: "contain",/* cover o contain */
               flex: 1,
               justifyContent: 'flex-start',
               width: '80%',

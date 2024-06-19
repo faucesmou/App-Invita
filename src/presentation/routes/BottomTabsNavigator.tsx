@@ -33,7 +33,7 @@ export const BottomTabsNavigator = () => {
           shadowColor: 'transparent',
         },
         tabBarStyle: {
-          borderTopWidth: 5,
+          borderTopWidth: 1,
           elevation: 10,
           height: 100,
         }

@@ -25,101 +25,108 @@ export const TramitesScreen = () => {
   return (
     <View style={styles.screenContainer}
     >
-    
+
       <View style={[styles.headerContainer, { height: adjustedHeaderHeight }]}>
 
-        <View style={{  width: '80%' }}>
-     
+        <View style={{ width: '80%', marginBottom: 10  }}>
+
           <Text style={{
             fontSize: 30,
-             textAlign: 'center', 
+            textAlign: 'center',
             color: 'white'
           }} >
             Mi Gestión
           </Text>
         </View>
-        <CustomHeader color={globalColors.gray}  />
-      <View style={{ position: 'absolute', zIndex: 2, left: 0, width:'100%'  }}>
-      <HamburgerMenu />
-      </View>
+        <CustomHeader color={globalColors.gray} />
+       {/*  <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
+          <HamburgerMenu />
+        </View> */}
       </View>
 
 
-      <View  style={styles.cardContainer} >
+      <View style={styles.cardContainer} >
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Turnos en agenda</Text>
           <Text style={styles.cardSubtitle}>Contactá con nuestros asesores</Text>
         </View>
       </View>
+      <View style={styles.bigContentContainer} >
 
-      <View style={styles.buttonsContainer} /* style={{ backgroundColor: 'yellow',  marginTop: 40 }} */
-      >
-        
-        <TertiaryButton
-          onPress={() => navigation.navigate('Consulta')}
-          label="Solicitar orden de consulta"
-          color={globalColors.profile2}
-          iconName='people-outline'
-          description='Gestioná la orden de tus estudios'
-        />{/* <ion-icon name="people-outline"></ion-icon> */}
-        <TertiaryButton
-          onPress={() => navigation.navigate('Formularios')}
-          label="Obtener Formularios Especiales"
-          color={globalColors.profile2}
-          iconName='document-text-outline'
-          description='Descargá tus formularios'
-        />
 
-        <TertiaryButton
-          onPress={() => navigation.navigate('Facturas')}
-          label="Mis Facturas"
-          color={globalColors.profile2}
-          iconName='file-tray-full-outline'
-          description='Accedé a todas tus facturas'
-        />
-      </View>
-      <View
-      >
-      </View>
-      <View style={styles.imageContainer}>
+          <View style={styles.buttonsContainer} /* style={{ backgroundColor: 'yellow',  marginTop: 40 }} */
+            >
 
-        <View
-          style={styles.innerContainer}
-        >
-          <Text style={{
-            fontSize: 25,
-            textAlign: 'center',
-          }} >
-            posible texto
-          </Text>
+          <TertiaryButton
+            onPress={() => navigation.navigate('Consulta')}
+            label="Solicitar orden de consulta"
+            color={globalColors.profile2}
+            iconName='people-outline'
+            description='Gestioná la orden de tus estudios'
+          />{/* <ion-icon name="people-outline"></ion-icon> */}
+          <TertiaryButton
+            onPress={() => navigation.navigate('Formularios')}
+            label="Obtener Formularios Especiales"
+            color={globalColors.profile2}
+            iconName='document-text-outline'
+            description='Descargá tus formularios'
+          />
 
-          <Image source={require('../../assets/images/logogris.png')}
-            style={styles.image}
-            resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
+          <TertiaryButton
+            onPress={() => navigation.navigate('Facturas')}
+            label="Mis Facturas"
+            color={globalColors.profile2}
+            iconName='file-tray-full-outline'
+            description='Accedé a todas tus facturas'
           />
         </View>
+      
+      <View
+      >
+
+        <View style={styles.imageContainer}>
+
+          <View
+            style={styles.innerContainer}
+          >
+            <Text style={{
+              fontSize: 25,
+              textAlign: 'center',
+            }} >
+              Andes Salud
+            </Text>
+
+            <Image source={require('../../assets/images/logogris.png')}
+              style={styles.image}
+              resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
+            />
+          </View>
+        </View>
+      </View>
       </View>
     </View>
   )
 }
 const styles = StyleSheet.create({
- 
+
   screenContainer: {
     flex: 1,
     paddingHorizontal: 0,
     marginTop: 0,
+  /*   backgroundColor: 'violet', */
+    zIndex: 0.5,
   },
   headerContainer: {
-    zIndex: 1, // Asegúrate de que el zIndex sea menor
+    zIndex: 0.25, 
     width: '100%',
-    backgroundColor: globalColors.gray,
+    backgroundColor: globalColors.gray3,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
   },
   cardContainer: {
     position: 'absolute',
-    top: 120, // Ajusta este valor según sea necesario revisar si lo podemos dejar dinamico y proporcional al headerContainer 
+    top: 110, // Ajusta este valor según sea necesario revisar si lo podemos dejar dinamico y proporcional al headerContainer 
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -129,6 +136,13 @@ const styles = StyleSheet.create({
     /*     backgroundColor:'violet', */
     borderRadius: 20,
   },
+  bigContentContainer: {
+    flex: 1,
+    marginTop: -25,
+    zIndex: 0.5,
+    borderRadius: 15,
+    backgroundColor: globalColors.white2
+  },
   card: {
     width: '90%',
     padding: 20,
@@ -136,9 +150,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 15 },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.2,
     shadowRadius: 15,
     elevation: 5,
+    borderColor: 'white',
+   
   },
   cardTitle: {
     fontSize: 22,
@@ -152,22 +168,24 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   buttonsContainer: {
-    marginTop: 40,
     zIndex: 1.5,
     marginTop: 70,
     borderRadius: 15,
-  /*   backgroundColor: 'yellow' */
+/*     backgroundColor: 'yellow' */
   },
   imageContainer: {
-    marginBottom: 20,
-    marginTop: 35,
-    flex: 1,
+    marginBottom: 30,
+    marginHorizontal:35,
+    marginTop: 40,
+    zIndex: 1.5,
     alignItems: 'center',
-    justifyContent: 'flex-end',
+     justifyContent: 'center', 
+    minHeight:'40%',
+    minWidth: '50%'
   },
   innerContainer: {
-    marginBottom: 10,
-    marginTop: 55,
+    marginBottom: 15,
+    marginTop: 15,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
