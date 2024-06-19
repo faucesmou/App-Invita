@@ -173,7 +173,7 @@ export const ConsultaScreenFinal = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader />
+      <CustomHeader color={globalColors.gray3} />
 
       <BackButton />
 

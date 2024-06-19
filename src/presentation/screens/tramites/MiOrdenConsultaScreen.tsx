@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Linking, Text, TouchableOpacity, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
-import { globalStyles } from '../../theme/theme'
+import { globalColors, globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
@@ -66,7 +66,7 @@ export const MiOrdenConsultaScreen = () => {
       }}
       >
       <HamburgerMenu />
-      <CustomHeader />
+      <CustomHeader color={globalColors.gray3} />
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (

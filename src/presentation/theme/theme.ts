@@ -33,7 +33,7 @@ export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: /* 'yellow' */  globalColors.background,
+    backgroundColor: /* 'yellow' */ 'white' /* globalColors.background */,
     textAlign: 'center',
     justifyContent: 'center',
   },
@@ -45,7 +45,7 @@ export const globalStyles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Quicksand-Light',
     borderRadius: 15,
-    backgroundColor: '#efe3e3',
+    backgroundColor: 'white' /* '#efe3e3' */,
 
   },
   itemStyle: {
@@ -69,7 +69,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: 'white', // Fondo para ver el borderRadius
     shadowColor: '#000', // Color de la sombra
     shadowOffset: { width: -5, height: 6 }, // Desplazamiento de la sombra
-    shadowOpacity: 0.5, // Opacidad de la sombra
+    shadowOpacity: 0.2, // Opacidad de la sombra
     shadowRadius: 8, // Radio de la sombra
   },
   primaryButton: {

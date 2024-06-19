@@ -126,7 +126,7 @@ export const FacturasScreen = () => {
 
       style={globalStyles.container}
     >
-      <CustomHeader />
+      <CustomHeader color={globalColors.gray} />
 
       <BackButton />
 

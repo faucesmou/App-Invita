@@ -101,7 +101,7 @@ export const FormulariosEspScreen = () => {
       style={globalStyles.container}
   
     >
-      <CustomHeader color={color} />
+      <CustomHeader color={globalColors.gray} /* color={color} */ />
 
       <BackButton />
 
