@@ -26,39 +26,32 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.screenContainer}
-    /* style={{
-      flex: 1,
-      paddingHorizontal: 20,
-      marginTop: 0,
-    }} */
     >
 
-      <View style={[styles.headerContainer, { height: adjustedHeaderHeight }]}>
+            <View style={[styles.headerContainer, { height: adjustedHeaderHeight }]}>
 
-        <View style={{ width: '80%' }}>
+                  <View style={{ width: '80%' }}>
 
-          <Text style={{
-            fontSize: 30,
-            textAlign: 'center',
-            color: 'white'
-          }} >
-            Home
-          </Text>
-        </View>
-        <CustomHeader color={globalColors.gray} />
-        <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
+                      <Text style={{
+                      fontSize: 30,
+                      textAlign: 'center',
+                      color: 'white'
+                    }} >
+                      Home
+                      </Text>
+                  </View>
+              <CustomHeader color={globalColors.gray} />
+              <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
 
-        </View>
-      </View>
+              </View>
+            </View>
 
-      <View style={styles.cardContainer} >
+              <View style={styles.cardContainer} >
 
-        <Credencial />
+                <Credencial />
 
-      </View>
-
-      <View style={styles.bigContentContainer} >
-        <View style={styles.imageContainer}>
+                </View>
+  <View style={styles.imageContainer}>
 
           <View
             style={styles.innerContainer}
@@ -72,55 +65,58 @@ export const HomeScreen = () => {
               resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
             />
           </View>
-        </View>
+        </View> 
 
+            <View
+              style={styles.bigContentContainer}
+              >
+              <View
+              style={styles.buttonsContainer}
+              >
+                  <View  style={styles.rowContainer} >
+                    <SecondaryButton
+                      onPress={() => {
+                        console.log('presiono el boton ');
+                        navigation.navigate('Afiliados')
+                      }}
+                      label="Afiliados"
+                      iconName='people-circle-outline'
+                      description='Tu Grupo Familiar y credenciales'
+                    />
 
-        <View
-          style={styles.ButtonsContainer}
-        >
-          <View style={styles.rowContainer}>
-            <SecondaryButton
-              onPress={() => {
-                console.log('presiono el boton ');
-                navigation.navigate('CartillaMedicaScreen')
-              }}
-              label="Cartilla "
-              iconName='people-circle-outline'
-              description='Tu Grupo Familiar y credenciales'
-            />
+                    <SecondaryButton
+                      onPress={() => {
+                        console.log('presiono el boton Settings');
+                        navigation.navigate('Settings');
+                      }}
+                      label="Settings"
+                      iconName='settings-outline'
+                      description='Tu configuracion personalizada'
+                    />
+                  </View>
 
-            <SecondaryButton
-               onPress={() => {
-                console.log('presiono el boton Settings');
-                navigation.navigate('Settings');
-              }}
-              label="Settings"
-              iconName='settings-outline'
-              description='Tu configuracion personalizada'
-            />
-          </View>
+                    <View
+                      style={styles.rowContainer} 
+                    >
 
-          <View
-            style={styles.rowContainer}
-          >
+                      <SecondaryButton
+                        onPress={() => navigation.navigate('Afiliados')}
+                        label="Buscar guardia"
+                        iconName='fitness-outline'
+                        description='Prestadores Cercanos'
+                      />
+                      <SecondaryButton
+                        onPress={() => navigation.navigate('Settings')}
+                        label="Asistencia"
+                        iconName='chatbubbles-outline'
+                        description='Chateá con nuestro soporte'
+                      />
+                      
+                    </View>
+              </View>
 
-            <SecondaryButton
-              onPress={() => navigation.navigate('Afiliados')}
-              label="Buscar guardia"
-              iconName='fitness-outline'
-              description='Prestadores Cercanos'
-            />
-            <SecondaryButton
-              onPress={() => navigation.navigate('Settings')}
-              label="Asistencia"
-              iconName='chatbubbles-outline'
-              description='Chateá con nuestro soporte'
-            />
             
           </View>
-
-        </View>
-      </View>
     </View>
   )
 }
@@ -131,9 +127,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginTop: 0,
     zIndex: 0.5,
+    backgroundColor: globalColors.white2  
   },
   headerContainer: {
-    zIndex: 0.25, 
+    zIndex: 1, 
     width: '100%',
     backgroundColor: globalColors.gray3,
     justifyContent: 'center',
@@ -144,20 +141,38 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 110, 
     width: '100%',
-    height:'90%',
+    height:'0%',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1,
+    zIndex: 3,
     paddingHorizontal: 0,
     marginBottom: 10,
     borderRadius: 20,
+    backgroundColor: /* globalColors.white2  */ 'blue' 
   },
   bigContentContainer: {
     flex: 1,
     marginTop: -25,
-    zIndex: 0.5,
+    marginBottom: '5%',
+    zIndex: 2,
     borderRadius: 15,
-    backgroundColor: globalColors.white2 /* 'brown'  */
+    backgroundColor: globalColors.white2  
+  },
+  buttonsContainer: {
+    zIndex: 1,
+    flex: 1,
+    paddingHorizontal: 10,
+    marginTop: 10,
+    marginBottom: '20%',
+    marginLeft:0,
+  /*   backgroundColor:'green' */
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    marginBottom: -10,
+    maxWidth:'50%', 
+    maxHeight:'70%',
+    marginTop: 5,
   },
  card: {
   width: '90%',
@@ -181,25 +196,9 @@ cardSubtitle: {
   textAlign: 'center',
   color: 'black',
 },
-ButtonsContainer: {
-  zIndex: 10,
-  flex: 1,
-  paddingHorizontal: 10,
-  marginTop: 10,
-  marginBottom: '20%',
-  marginLeft:0,
-},
-rowContainer: {
-  flexDirection: 'row',
-  zIndex: 10,
-  marginBottom: -10,
-  maxWidth:'50%', 
-  maxHeight:'70%',
-  marginTop: 5,
-},
 imageContainer: {
-  marginBottom: 0,
-  marginTop: 200,
+  marginBottom: 10,
+  marginTop: 175,
   flex: 0.5,
   alignItems: 'center',
   flexDirection:'row',
@@ -208,7 +207,7 @@ imageContainer: {
 },
 innerContainer: {
   marginBottom: 10,
-  marginTop: 15,
+  marginTop: 5,
   flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
@@ -234,6 +233,8 @@ text: {
 
 });
 
+
+    
   /* usando el State del Profile Store:  */
   /*   const name = useProfileStore(state => state.name);
     const email = useProfileStore(state => state.email);

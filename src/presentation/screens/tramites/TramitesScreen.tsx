@@ -11,6 +11,7 @@ import { useAuthStore } from '../../store/auth/useAuthStore'
 import { TertiaryButton } from '../../components/shared/TertiaryButton'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SecondaryButton } from '../../components/shared/SecondaryButton'
 
 export const TramitesScreen = () => {
   console.log('Entrando a TramitesScreen (Mi Gestion)')
@@ -79,6 +80,7 @@ export const TramitesScreen = () => {
             iconName='file-tray-full-outline'
             description='Accedé a todas tus facturas'
           />
+            
         </View>
       
       <View
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     position: 'absolute',
-    top: 110, // Ajusta este valor según sea necesario revisar si lo podemos dejar dinamico y proporcional al headerContainer 
+    top: 110, 
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',

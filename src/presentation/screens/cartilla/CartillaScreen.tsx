@@ -83,6 +83,7 @@ export const CartillaScreen = () => {
             iconName='heart-outline'
             description='Accedé a todas las cartillas'
           />
+          
         </View>
       </View>
 
