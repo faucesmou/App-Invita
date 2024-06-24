@@ -59,6 +59,9 @@ export const LoginScreen = ({ navigation }: Props) => {
         <Layout style={{ paddingTop: height * 0.20 }}>
           <Text category="h1"
             style={{ marginBottom: 20 }}
+          >Bienvenido a Andes Salud </Text>
+          <Text category="h1"
+            style={{ marginBottom: 20, fontSize: 20 }}
           > Ingresar </Text>
           <Text category="p2"> Por favor, ingrese su DNI para continuar</Text>
         </Layout>
