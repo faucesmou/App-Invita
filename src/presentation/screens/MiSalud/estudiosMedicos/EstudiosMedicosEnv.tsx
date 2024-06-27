@@ -11,7 +11,8 @@ import { BackButton } from '../../../components/shared/BackButton'
 import { FullScreenLoader } from '../../../components/ui/FullScreenLoader'
 import { useAuthStore } from '../../../store/auth/useAuthStore'
 import { xml2js } from 'xml-js';
-import { globalStyles } from '../../../theme/theme'
+import { globalColors, globalStyles } from '../../../theme/theme'
+import { globalStylesCredentials } from '../../credential/css/themeCredentials'
 
 
 
@@ -119,7 +120,7 @@ export const EstudiosMedicosEnv = () => {
       }}
     >
       <HamburgerMenu />
-      <CustomHeader />
+      <CustomHeader color={globalColors.gray3} />
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (

@@ -29,7 +29,7 @@ const navigation = useNavigation< NavigationProp < RootStackParams > >()
       data={ products }
       renderItem={ ( {item} )=> (
         <PrimaryButton
-        onPress={ ()=> navigation.navigate('Product', { id: item.id, name: item.name} )}
+        onPress={ ()=> navigation.navigate('Credenciales', { id: item.id, name: item.name} )}
         label={ item.name}
         />
       )}

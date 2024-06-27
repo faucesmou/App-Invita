@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 //import { SettingsScreen } from '../screens/settings/SettingsScreen';
-import { CartillaScreen } from '../screens/cartilla/CartillaScreen';
+import { CartillaScreen } from '../screens/MiSalud/CartillaScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

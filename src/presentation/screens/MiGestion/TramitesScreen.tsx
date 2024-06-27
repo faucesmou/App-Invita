@@ -74,11 +74,11 @@ export const TramitesScreen = () => {
           />
 
           <TertiaryButton
-            onPress={() => navigation.navigate('Facturas')}
-            label="Mis Facturas"
+            onPress={() => navigation.navigate('Pagos')}
+            label="Mis Pagos"
             color={globalColors.profile2}
             iconName='file-tray-full-outline'
-            description='Accedé a todas tus facturas'
+            description='Accedé al estado de tus pagos'
           />
             
         </View>

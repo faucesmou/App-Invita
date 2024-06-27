@@ -132,7 +132,7 @@ export const globalStyles = StyleSheet.create({
   productScreen: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: '#e9f6f8'
+    backgroundColor: globalColors.white2  
 
   },
   /* estilos para el input numero 2: */
@@ -216,7 +216,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   primaryButton2: {
-    backgroundColor: globalColors.profile2,
+    backgroundColor: '#b74a4a',/* globalColors.profile2 */
     borderRadius: 5,
     padding: 5,
     margin: 10,

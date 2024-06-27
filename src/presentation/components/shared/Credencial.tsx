@@ -17,7 +17,7 @@ type PlanName = 'titanium' | 'platinum' | 'black' | 'gold' | 'green';
 
 const PlanPalettes: Record<PlanName, string[]> =  {
   titanium: ['#8a6fa2', '#452a64', '#452a64', '#452a64'],
-  platinum: ['#939095', '#8c9292', '#8c9292', '#8c9292'],
+  platinum: ['#8c9292', '#8c9292', '#8c9292', '#8c9292'],
   black: ['#474648', '#161516', '#161516', '#161516'],
   gold: ['#98671e', '#8d7249', '#8d7249', '#8d7249'],
   green: ['#29bd0f', '#47ac34', '#47ac34', '#47ac34'],

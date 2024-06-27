@@ -14,6 +14,7 @@ import { CredencialFamiliar } from '../../components/shared/CredencialFamiliar';
 export const ProductScreen = () => {
 
   const { top } = useSafeAreaInsets();
+ const heightWanted = top - 25;
 
 const params = useRoute<RouteProp<RootStackParams, 'Product'>>().params;
 console.log('ESTE ES EL PARAMS: ---->--->', params);
@@ -41,7 +42,7 @@ navigation.setOptions({
 
   return (
     <View 
-    style={{...globalStyles.productScreen, marginTop: top }}
+    style={{...globalStyles.productScreen, marginTop: 0 }}
     >
       <CustomHeader color={globalColors.gray2}   />
       
@@ -51,20 +52,21 @@ navigation.setOptions({
       style={{ 
         justifyContent: 'center', 
         alignItems: 'center' ,
-      /*  backgroundColor: 'yellow',  */
+       /*  backgroundColor: 'yellow',  */ 
       }}
       >
-        <Text
+       {/*  <Text
         style={{ 
           fontSize: 35, 
           marginBottom: 10 
         }}
-        > Credencial</Text>
+        > Credencial</Text> */}
 
         <Text style={{
           fontSize:25,
           textAlign: 'center',
-          marginTop: 25
+          marginTop: 0,
+          padding: 15,
         }}>
           { params.id }  
         </Text>
@@ -81,8 +83,8 @@ navigation.setOptions({
 
       <View
         style={{
-          /* marginBottom: 350, marginTop: 0, */ /* backgroundColor: 'yellow',  */  flex: 1,  justifyContent: 'top',
-          alignItems: 'center', marginHorizontal:60
+          /* marginBottom: 350, marginTop: 0, */   /* backgroundColor: 'yellow',  */    flex: 1,  justifyContent: 'top',
+          alignItems: 'center', marginHorizontal:60, marginTop: -15,
         }}
       >
 

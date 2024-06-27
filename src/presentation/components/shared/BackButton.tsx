@@ -30,7 +30,7 @@ const handlePress = () => {
         navigation.setOptions({
           headerLeft: () => (
             <Pressable onPress={handlePress}
-            style={{marginLeft:20}}
+            style={{marginLeft:20, marginBottom: 20}}
             >
            <IonIcon name='arrow-back' color= { 'white' } size = {35}/> 
             </Pressable>

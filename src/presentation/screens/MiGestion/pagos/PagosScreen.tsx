@@ -14,7 +14,7 @@ import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../../routes/StackNavigator';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import datos from '../facturas/datosPrueba.json';
+import datos from './datosPrueba.json';
 
 
 
@@ -51,7 +51,7 @@ const shadowOpt = {
   style: { marginVertical: 5 }
 };
 
-export const FacturasScreen = () => {
+export const PagosScreen = () => {
 
   const { idAfiliadoTitular, cuilTitular } = useAuthStore();
   /*   console.log('idAfiliadoTitular desde el FACTURA SCREEN---->', idAfiliadoTitular); */
@@ -65,10 +65,12 @@ export const FacturasScreen = () => {
   const [showAfiliados, setShowAfiliados] = useState(false);
   const [errores, setErrores] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+
+  //MOMENTANEAMENTE DEJO ESTO CON JSON: REVISAR LA CONSULTA PARA QUE NO SEA TAN PESADA. 
   const Saldos = datos.data;
   useEffect(() => {
 
-    const FacturaRequest = async () => {
+    const PagosRequest = async () => {
       try {
         const response = await axios.post(`https://fiscalizacion.createch.com.ar/contratos/paginador/cuenta?afiliado=${cuilTitular}&offset=1`);
 
@@ -107,11 +109,11 @@ export const FacturasScreen = () => {
         }
 
       } catch (error) {
-        console.error('Error al obtener las facturas:', error);
+        console.error('Error al obtener los pagos:', error);
         setError("Error con los datos");
       }
     };
-    /*  FacturaRequest() */
+    /*  PagosRequest() */
     console.log('la respuesta de cristian Saldos es--------->>>>', Saldos);
   }, [])
 
@@ -120,13 +122,12 @@ export const FacturasScreen = () => {
   };
 
 
-
   return (
     <View
 
       style={globalStyles.container}
     >
-      <CustomHeader color={globalColors.gray} />
+      <CustomHeader color={globalColors.gray3} />
 
       <BackButton />
 

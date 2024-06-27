@@ -12,10 +12,10 @@ import { useProfileStore } from '../store/profile-store';
 import { Afiliados/* , ProductsScreen2  */} from '../screens/afiliados/Afiliados';
 import { MisDatosScreen } from '../screens/profile/MisDatosScreen';
 import { BottomTabsNavigator } from './BottomTabsNavigator';
-import { MiOrdenConsultaScreen } from '../screens/tramites/MiOrdenConsultaScreen';
+import { MiOrdenConsultaScreen } from '../screens/MiGestion/MiOrdenConsultaScreen';
 import { CredencialScreen } from '../screens/credential/CredencialScreen';
 import { TopTabsNavigator } from './TopTabsNavigator';
-import { TramitesScreen } from '../screens/tramites/TramitesScreen';
+import { TramitesScreen } from '../screens/MiGestion/TramitesScreen';
 
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
@@ -24,25 +24,28 @@ import { useAuthStore } from '../store/auth/useAuthStore';
 import { CredencialScreenPrueba } from '../screens/credential/CredencialScreenPrueba';
 import { ConsultaScreen } from '../screens/ordenConsulta/ConsultaScreen';
 import { ConsultaScreenFinal } from '../screens/ordenConsulta/ConsultaScreenFinal';
-import { FormulariosEspScreen } from '../screens/tramites/formulariosEspeciales/FormulariosEspScreen';
-import { FormularioElegido } from '../screens/tramites/formulariosEspeciales/FormularioElegido';
-import { CartillaMedicaScreen } from '../screens/cartilla/cartillaMedica/CartillaMedicaScreen';
-import { CartillaScreen } from '../screens/cartilla/CartillaScreen';
-import { CartillaMedicaEspecialidad } from '../screens/cartilla/cartillaMedica/CartillaMedicaEspecialidad';
-import { EstudiosMedicosScreen } from '../screens/cartilla/estudiosMedicos/EstudiosMedicosScreen';
-import { EstudiosMedicosEnv } from '../screens/cartilla/estudiosMedicos/EstudiosMedicosEnv';
-import { FacturasScreen } from '../screens/tramites/facturas/FacturasScreen';
+import { FormulariosEspScreen } from '../screens/MiGestion/formulariosEspeciales/FormulariosEspScreen';
+import { FormularioElegido } from '../screens/MiGestion/formulariosEspeciales/FormularioElegido';
+import { CartillaMedicaScreen } from '../screens/MiSalud/cartillaMedica/CartillaMedicaScreen';
+import { CartillaScreen } from '../screens/MiSalud/CartillaScreen';
+import { CartillaMedicaEspecialidad } from '../screens/MiSalud/cartillaMedica/CartillaMedicaEspecialidad';
+import { EstudiosMedicosScreen } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosScreen';
+import { EstudiosMedicosEnv } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosEnv';
+import { PagosScreen } from '../screens/MiGestion/pagos/PagosScreen';
+
 
 
 /* type es similar a interfaz, es decir defnimos la estructura que tienen que tener los props. */
 
 export type RootStackParams = {
   home: undefined,
-  Product: { id: number, name: string },
+ /*  Product: { id: number, name: string }, */
+  Credenciales: { id: number, name: string },
   Products: undefined,
   Afiliados: undefined,
   Settings: undefined,
-  Tramites: undefined,
+ /*  Tramites: undefined, */
+  MiGestión: undefined,
   MisDatos: undefined,
   MiOrdenConsulta: undefined,
   Credencial: undefined,
@@ -55,6 +58,7 @@ export type RootStackParams = {
   ConsultaScreen: undefined,
   Consulta: undefined,
   FormularioElegido:undefined,
+ /*  CartillaScreen: undefined, */
   CartillaScreen: undefined,
   CartillaMedicaScreen: undefined,
   MiSalud: undefined,
@@ -62,7 +66,7 @@ export type RootStackParams = {
   CartillaMedicaEspecialidad: { idCartilla: string };
   EstudiosMedicos: undefined, 
   EstudiosMedicosEnviados:undefined,
-  Facturas: undefined,
+  Pagos: undefined,
 
 }
 
@@ -113,10 +117,10 @@ export const StackNavigator = () => {
 {/* vistas a las que se accede desde el botomTabsNavigator: */}
 
 {/* (Mi Salud): */}
-      <Stack.Screen name="CartillaScreen" component={CartillaScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="MiSalud" component={CartillaScreen} options={{ headerShown: false }} />
 
 {/* (Mi Gestion): */}
-     <Stack.Screen name="Tramites" component={TramitesScreen} options={{ headerShown: true }} />
+     <Stack.Screen name="MiGestión" component={TramitesScreen} options={{ headerShown: true }} />
 
 {/* ----------VISTAS SECUNDARIAS: -------------->*/}
 
@@ -125,7 +129,7 @@ export const StackNavigator = () => {
       <Stack.Screen name="Afiliados" component={Afiliados} options={{ headerShown: true }} /> 
 
       {/* Desde Afiliados a Cargo podemos navegar al Product Screen (componente reutilizable) */}
-      <Stack.Screen name="Product" component={ProductScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Credenciales" component={ProductScreen} options={{ headerShown: true }} />
 
   {/* Settings: */}
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: true }} />
@@ -154,7 +158,7 @@ export const StackNavigator = () => {
 
 {/* Facturas del usuario */}
 
-     <Stack.Screen name="Facturas" component={FacturasScreen} options={{ headerShown: true }} /> 
+     <Stack.Screen name="Pagos" component={PagosScreen} options={{ headerShown: true }} /> 
 
 
 

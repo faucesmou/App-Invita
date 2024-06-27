@@ -79,7 +79,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
       style={globalStyles.container}
 
     >
-      <CustomHeader color={color} />
+      <CustomHeader color={globalColors.gray3} />
 
       <BackButton />
 

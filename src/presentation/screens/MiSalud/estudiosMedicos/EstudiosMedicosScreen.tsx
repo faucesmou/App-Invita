@@ -209,7 +209,7 @@ export const EstudiosMedicosScreen = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.gray} />
+      <CustomHeader color={globalColors.gray3} />
 
       <BackButton />
 

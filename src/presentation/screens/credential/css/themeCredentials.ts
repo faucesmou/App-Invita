@@ -187,7 +187,7 @@ export const globalStylesCredentials = StyleSheet.create({
   /*   backgroundImage: "url('/images/logogris.png'), repeating-linear-gradient(36deg, rgba(255,255,255, 0.1), rgba(255,255,255, 0.1) 1px, transparent 0px, transparent 2px)", */
   },
   platinum: {
-    backgroundColor: '#b5b5b5',
+    backgroundColor: '#dcd0d0',
    /*  backgroundImage: "url('/images/logogris.png'), linear-gradient(-72deg, #c7c7c7, #999999 72%, #9b9b9b 80%, #b4b4b4 84%, #555564)", */
   },
   gold: {

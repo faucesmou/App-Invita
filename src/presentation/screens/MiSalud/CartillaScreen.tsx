@@ -37,7 +37,7 @@ export const CartillaScreen = () => {
             Mi Salud
           </Text>
         </View>
-        <CustomHeader color={globalColors.gray} />
+        <CustomHeader color={globalColors.gray3} />
         <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
           <HamburgerMenu />
         </View>

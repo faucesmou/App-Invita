@@ -17,7 +17,7 @@ type PlanName = 'titanium' | 'platinum' | 'black' | 'gold' | 'green';
 
 const PlanPalettes: Record<PlanName, string[]> = {
   titanium: ['#8a6fa2', '#452a64', '#452a64', '#452a64'],
-  platinum: ['#939095', '#8c9292', '#8c9292', '#8c9292'],
+  platinum: ['#8c9292', '#8c9292', '#8c9292', '#8c9292'],
   black: ['#474648', '#161516', '#161516', '#161516'],
   gold: ['#98671e', '#8d7249', '#8d7249', '#8d7249'],
   green: ['#29bd0f', '#47ac34', '#47ac34', '#47ac34'],
@@ -92,18 +92,18 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
   }, [idAfiliado]);
 
   return (
-    <View style={{ /* flex: 1, */ marginBottom: 40, /*  backgroundColor: 'green' */ }}>
+    <View style={{ /* flex: 1, */ marginBottom: 40,   /* backgroundColor: 'green', */ /* marginRight:45, marginLeft: 45  */ }}>
       {isConsulting ? (
-        /*   <FullScreenLoader /> */
+        /*   <FullScreenLoader /> resolvere esto luego */
         <> 
         </>
       ) : (
         <View  style={{
-        margin: 15, alignItems: 'center', /* backgroundColor: 'orange',  */marginBottom:3}} >
+        margin: 15, alignItems: 'center', /*  backgroundColor: 'blue',  */  marginBottom:3, marginRight:45, marginLeft: 45 }} >
           <LinearGradient colors={planColors} style={{...globalStylesCredentials.frenteCardHome, marginBottom: 0,}}>
             <ImageBackground source={require('../../screens/credential/CredentialsData/images/logogris4.png')} 
             imageStyle={{
-              resizeMode: "cover",
+             /*  resizeMode: "cover", */
               flex: 1,
               justifyContent: 'flex-start',
               width: '80%',
@@ -138,7 +138,8 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
 
                 <LinearGradient
                   colors={planColors}
-                  style={globalStylesCredentials.frenteCard}
+                  /* style={globalStylesCredentials.frenteCard} */
+                  style={{...globalStylesCredentials.frenteCardHome, marginBottom:10,}}
                 >
 
                   <View  >

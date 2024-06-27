@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //import { TopTabsNavigator } from './TopTabsNavigator';
-import { TramitesScreen } from '../screens/tramites/TramitesScreen';
+import { TramitesScreen } from '../screens/MiGestion/TramitesScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
 //import { MasScreen } from '../screens/mas/MasScreen';
 //import { CredencialScreen } from '../screens/credential/CredencialScreen';
@@ -9,7 +9,7 @@ import { HomeScreen } from '../screens/home/HomeScreen';
 import { globalColors } from '../theme/theme';
 import { IonIcon } from '../components/shared/IonIcon';
 //import { CredencialScreenPrueba } from '../screens/credential/CredencialScreenPrueba';
-import { CartillaScreen } from '../screens/cartilla/CartillaScreen';
+import { CartillaScreen } from '../screens/MiSalud/CartillaScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,7 +49,7 @@ export const BottomTabsNavigator = () => {
 {/*       <Tab.Screen name="Credencial"
         options={{ title: 'Credencial', tabBarIcon: ({ color }) => (<IonIcon name='card-outline' color={color} />) }}
         component={CredencialScreenPrueba} /> */}
-      <Tab.Screen name="Tramites"
+      <Tab.Screen name="MiGestión"
         options={{ title: 'Mi Gestión', tabBarIcon: ({ color }) => (<IonIcon name='document-text-outline' color={color} />), headerShown: false  }}
         component={TramitesScreen} />
 {/*       <Tab.Screen name="Mas"
