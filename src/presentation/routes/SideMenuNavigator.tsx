@@ -43,8 +43,8 @@ export const SideMenuNavigator = () => {
       <Drawer.Navigator
         initialRouteName={/* 'home' */ 'LoginScreen' }
         screenOptions={{
-          /* swipeEdgeWidth: 0, */ //con esta propiedad no permito que se pueda abrir
-          headerShown: false,
+        swipeEdgeWidth: 0,  //con esta propiedad no permito que se pueda abrir
+        headerShown: false,
         
         }}
         drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -56,24 +56,30 @@ export const SideMenuNavigator = () => {
       </Drawer.Navigator>
     );
   }
+
   // si está correctamente autenticado muestro este drawer:
 
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-
-      /* esta parte de screenOptions no està funcionando */
+      //MOMENTANEAMENTE HE DESABILITADO EL SIDE MENU -  EN PROXIMAS ETAPAS LO INCORPORAREMOS.
       screenOptions={{
+        swipeEdgeWidth: 0,  //con esta propiedad no permito que se pueda abrir
+        headerShown: false,
+        }}
+      /* esta parte de screenOptions debo habilitarla para que se vea. funciona parcialmente. */
+     /*  screenOptions={{
         headerShown: false,
         drawerType: (dimensions.width >= 758) ? 'permanent' : 'slide',
-        drawerActiveBackgroundColor: globalColors.pressed2,
+        drawerActiveBackgroundColor: globalColors.gray,
         drawerActiveTintColor: 'white',
-        drawerInactiveTintColor: globalColors.pressed2,
+        drawerInactiveTintColor: globalColors.gray,
         drawerItemStyle: {
           borderRadius: 100,
           paddingHorizontal: 20,
         }
-      }}>
+      }} */
+      >
 
       <Drawer.Screen
         options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color}  />), /* intento sacar el onAnimatedValueUpdate agregando esto: : title: 'Home' */ }}
@@ -97,7 +103,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       <View
         style={{
           height: 200,
-          backgroundColor: globalColors.pressed2,
+          backgroundColor: globalColors.gray3,
           margin: 30,
           borderRadius: 50,
         }}
@@ -108,10 +114,10 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
       <Button
         style={{
           height: 45,
-          backgroundColor: globalColors.pressed2,
+          backgroundColor: globalColors.gray,
           margin: 10,
           borderRadius: 50,
-          borderColor: globalColors.pressed2,
+          borderColor: globalColors.gray,
           flexDirection: 'row',
 
           alignItems: 'center',

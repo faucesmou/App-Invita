@@ -26,7 +26,7 @@ export const FormularioElegido = ({ route }) => {
     return <Text>Error: Route no esta definido</Text>
   }
   const { url } = route.params;
-  const color = globalColors.orange
+  const color = globalColors.gray3
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 

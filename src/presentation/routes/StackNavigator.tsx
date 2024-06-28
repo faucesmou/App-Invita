@@ -43,7 +43,8 @@ export type RootStackParams = {
   Credenciales: { id: number, name: string },
   Products: undefined,
   Afiliados: undefined,
-  Settings: undefined,
+  Perfil: undefined,
+/*   Settings: undefined, */
  /*  Tramites: undefined, */
   MiGestión: undefined,
   MisDatos: undefined,
@@ -57,13 +58,16 @@ export type RootStackParams = {
   CredencialScreenPrueba:undefined,
   ConsultaScreen: undefined,
   Consulta: undefined,
-  FormularioElegido:undefined,
+  Formulario:undefined,
+ /*  FormularioElegido:undefined, */
  /*  CartillaScreen: undefined, */
   CartillaScreen: undefined,
-  CartillaMedicaScreen: undefined,
+  Cartillas: undefined,
+ /*  CartillaMedicaScreen: undefined, */
   MiSalud: undefined,
   Formularios:undefined,
-  CartillaMedicaEspecialidad: { idCartilla: string };
+  Prestadores: { idCartilla: string };
+/*   CartillaMedicaEspecialidad: { idCartilla: string }; */
   EstudiosMedicos: undefined, 
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
@@ -132,13 +136,13 @@ export const StackNavigator = () => {
       <Stack.Screen name="Credenciales" component={ProductScreen} options={{ headerShown: true }} />
 
   {/* Settings: */}
-      <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Perfil" component={SettingsScreen} options={{ headerShown: true }} />
 
 {/* MI SALUD (CartillaScreen): */}
 
-      <Stack.Screen name="CartillaMedicaScreen" component={CartillaMedicaScreen} options={{ headerShown: true }} /> 
+      <Stack.Screen name="Cartillas" component={CartillaMedicaScreen} options={{ headerShown: true }} /> 
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
-      <Stack.Screen name="CartillaMedicaEspecialidad" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
+      <Stack.Screen name="Prestadores" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
       <Stack.Screen name="EstudiosMedicos" component={EstudiosMedicosScreen} options={{ headerShown: true }} />
       
@@ -154,7 +158,7 @@ export const StackNavigator = () => {
 {/* Obtener Formularios Especiales: */}
       <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
 
-      <Stack.Screen name="FormularioElegido" component={FormularioElegido} options={{ headerShown: true }} />
+      <Stack.Screen name="Formulario" component={FormularioElegido} options={{ headerShown: true }} />
 
 {/* Facturas del usuario */}
 

@@ -1,7 +1,7 @@
 //import { globalStyles } from '../../theme/theme'
 import { type NavigationProp, useNavigation, DrawerActions } from '@react-navigation/native';
-import React, { useEffect } from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, Text, Image, Linking, } from 'react-native'
 import { RootStackParams } from '../../routes/StackNavigator';
 import { useProfileStore } from '../../store/profile-store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -17,12 +17,39 @@ import { globalColors } from '../../theme/theme';
 export const HomeScreen = () => {
   console.log('Entrando al homeScreen---->')
 
+
+//prueba para conectar boton:
+const [ordenConsulta, setOrdenConsulta] = useState("");
+let Url = `https://api.whatsapp.com/send?phone=542613300622&text=%C2%A1Hola%2C%20Pixi!%20Vengo%20de%20la%20APP%20y%20tengo%20algunas%20consultas.%20%F0%9F%91%8D`
+
+const handleOpenURL = () => {
+  console.log('entrando a whatsapp');
+  
+  setOrdenConsulta(Url);
+}
+
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   const { top, bottom } = useSafeAreaInsets();
   const headerHeight = 120; // Altura inicial del encabezado
   const adjustedHeaderHeight = headerHeight + top // Ajusta la altura para tener en cuenta los márgenes seguros
 
+  useEffect(() => {
+    
+    const openURL = async () =>{
+      if(ordenConsulta){
+        try{
+        await Linking.openURL(ordenConsulta)
+    }catch(err){
+      console.log('error al intentar ingresar a whatsapp:', err); 
+    }finally {
+      // Restablecer el estado después de intentar abrir la URL
+      setOrdenConsulta('');
+    }
+    }
+    }
+    openURL();
+  }, [ordenConsulta]);
 
   return (
     <View style={styles.screenContainer}
@@ -33,7 +60,7 @@ export const HomeScreen = () => {
                   <View style={{ width: '80%' }}>
 
                       <Text style={{
-                      fontSize: 30,
+                      fontSize: 35,
                       textAlign: 'center',
                       color: 'white'
                     }} >
@@ -79,19 +106,19 @@ export const HomeScreen = () => {
                         console.log('presiono el boton ');
                         navigation.navigate('Afiliados')
                       }}
-                      label="Afiliados"
+                      label="Mi Grupo Familiar"
                       iconName='people-circle-outline'
                       description='Tu Grupo Familiar y credenciales'
                     />
 
                     <SecondaryButton
                       onPress={() => {
-                        console.log('presiono el boton Settings');
-                        navigation.navigate('Settings');
+                        console.log('presiona el boton perfil');
+                        navigation.navigate('Perfil');
                       }}
-                      label="Settings"
-                      iconName='settings-outline'
-                      description='Tu configuracion personalizada'
+                      label="Mi Perfil"
+                      iconName='person-circle-outline'
+                      description='Tu cuenta personalizada'
                     />
                   </View>
 
@@ -100,13 +127,13 @@ export const HomeScreen = () => {
                     >
 
                       <SecondaryButton
-                        onPress={() => navigation.navigate('Afiliados')}
-                        label="Buscar guardia"
-                        iconName='fitness-outline'
-                        description='Prestadores Cercanos'
+                        onPress={() => navigation.navigate('Pagos')}
+                        label="Mis Pagos"
+                        iconName='file-tray-full-outline'
+                        description='Accedé al estado de tus pagos'
                       />
                       <SecondaryButton
-                        onPress={() => navigation.navigate('Settings')}
+                        onPress={handleOpenURL}
                         label="Asistencia"
                         iconName='chatbubbles-outline'
                         description='Chateá con nuestro soporte'

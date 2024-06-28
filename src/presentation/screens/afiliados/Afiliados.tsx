@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import axios from 'axios';
 import { globalColors, globalStyles } from '../../theme/theme';
@@ -87,9 +87,9 @@ export const Afiliados = () => {
             marginBottom: 10,
             marginTop: 10,
             padding: 0,
-            marginHorizontal: 0,
+            marginHorizontal: 10,
           }}
-        > Selecciona un familiar para ver su credencial</Text>
+        >Selecciona un familiar para ver su credencial</Text>
 
 
         <FlatList
@@ -108,7 +108,7 @@ export const Afiliados = () => {
 
       </View>
 
-     {/*  <View style={{ marginTop: 0, }}>
+      {/*  <View style={{ marginTop: 0, }}>
         <TertiaryButton
           onPress={() => navigation.navigate('EstudiosMedicos')}
           label="TertiaryButton Example"
@@ -118,9 +118,27 @@ export const Afiliados = () => {
         />
 
       </View> */}
-      <View
+      <View style={styles.imageContainer}>
+
+        <View
+          style={styles.innerContainer}
+        >
+          <Text style={{
+            fontSize: 25,
+            textAlign: 'center',
+          }} >
+            Andes Salud
+          </Text>
+
+          <Image source={require('../../assets/images/logogris.png')}
+            style={styles.image}
+            resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
+          />
+        </View>
+      </View>
+     {/*  <View
         style={{
-          marginBottom: 100, marginTop: 50, /* backgroundColor: 'yellow', */ justifyContent: 'center',
+          marginBottom: 100, marginTop: 50, justifyContent: 'center',
           alignItems: 'center',
         }}>
         <Text
@@ -128,9 +146,8 @@ export const Afiliados = () => {
             fontSize: 20,
             marginBottom: 10
           }}
-        > texto o imagen complementaria</Text>
-
-      </View>
+        > Texto / imagen </Text>
+      </View> */}
       {/*  <View
         style={{
           marginBottom: 350, marginTop: 0, backgroundColor: 'yellow', flex: 1, justifyContent: 'top',
@@ -144,3 +161,30 @@ export const Afiliados = () => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    marginBottom: 30,
+    marginHorizontal:35,
+    marginTop: 40,
+    zIndex: 1.5,
+    alignItems: 'center',
+     justifyContent: 'center', 
+    minHeight:'40%',
+    minWidth: '50%'
+  },
+  innerContainer: {
+    marginBottom: 15,
+    marginTop: 15,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
+  },
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    margin: 10,
+  }
+});

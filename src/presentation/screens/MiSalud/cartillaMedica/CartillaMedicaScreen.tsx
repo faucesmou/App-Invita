@@ -80,7 +80,7 @@ export const CartillaMedicaScreen = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Cartilla médica Screen</Text>
+      <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Especialidades</Text>
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 30, marginTop: 15 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
@@ -95,7 +95,7 @@ export const CartillaMedicaScreen = () => {
                 console.log('Valor de idCartilla ACA ACA ACAA:', cartilla.idCartilla);
               let idCartilla = cartilla.idCartilla;
                 GuardarIdCartillaSeleccionada(idCartilla); 
-                navigation.navigate('CartillaMedicaEspecialidad', { idCartilla: cartilla.idCartilla })}
+                navigation.navigate('Prestadores', { idCartilla: cartilla.idCartilla })}
               }
               style={{ fontSize: 16, textAlign: 'center', }}>{cartilla.nombre}</Text>
             {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}

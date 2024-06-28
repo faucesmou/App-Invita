@@ -32,7 +32,7 @@ export const TramitesScreen = () => {
         <View style={{ width: '80%', marginBottom: 10  }}>
 
           <Text style={{
-            fontSize: 30,
+            fontSize: 35,
             textAlign: 'center',
             color: 'white'
           }} >
@@ -83,8 +83,7 @@ export const TramitesScreen = () => {
             
         </View>
       
-      <View
-      >
+      <View>
 
         <View style={styles.imageContainer}>
 

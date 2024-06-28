@@ -64,18 +64,20 @@ export const MisDatosScreen = () => {
   }, [])
   const colorNaranja = globalColors.orange
   return (
-    <View style={{
-      flex: 1,
+    <View  style={{
+     /*  flex: 1,
       paddingHorizontal: 20,
-      marginTop: top,
-      backgroundColor: '#e9f6f8'
-    }}>
-      <CustomHeader color={colorNaranja} />
-      <BackButton />
+      marginTop: top, */
+      marginTop: 0,
+     /*  backgroundColor: 'yellow' */
+    }}
+    
+    >
+
 
       <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center' }}>Mis Datos</Text>
 
-      <BackButton onPress={() => navigation.navigate('home')} />
+   {/*    <BackButton onPress={() => navigation.navigate('home')} /> */}
       {
         isConsulting ? (
 
@@ -83,6 +85,7 @@ export const MisDatosScreen = () => {
             style={{
               flex: 0.5,
               marginTop: top - 10,
+              marginBottom:40,
             }}
           >
             <FullScreenLoader />
@@ -94,8 +97,6 @@ export const MisDatosScreen = () => {
             data={afiliado}
             renderItem={({ item }) => (
               <View>
-
-
                 <View>
                   <View >
                     <Text style={{ marginBottom: 5, marginTop: 15, fontSize: 15, textAlign: 'center' }}>{`Nombre; ${item.apellidoYNombre}`}</Text>

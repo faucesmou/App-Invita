@@ -8,9 +8,11 @@ import { BackButton } from '../../components/shared/BackButton'
 import CustomHeader from '../../components/CustomHeader'
 import { TertiaryButton } from '../../components/shared/TertiaryButton'
 import { RootStackParams } from '../../routes/StackNavigator'
+import { MisDatosScreen } from '../profile/MisDatosScreen'
+import { useAuthStore } from '../../store/auth/useAuthStore'
 
 export const SettingsScreen = () => {
-
+  const { logout } = useAuthStore()
   const { top } = useSafeAreaInsets()
 
  const navigator =useNavigation(); 
@@ -21,13 +23,16 @@ const colorNaranja = globalColors.orange
     style={ {
       flex: 1,
       paddingHorizontal: 20,
-      marginTop: top ,
-      backgroundColor: '#e9f6f8'
+      marginTop: 20 ,
+/*       backgroundColor: 'green' */
     }}
     >
-      <CustomHeader  color={globalColors.gray2}  />
+      <CustomHeader  color={globalColors.gray3}  />
        <BackButton /> 
-        <Text style={{marginBottom: 10}}> Settings Screen</Text>
+     {/*    <Text style={{marginBottom: 10}}> Settings Screen</Text> */}
+
+
+        <MisDatosScreen/>
 
          <TertiaryButton
            onPress={()=> navigator.goBack() }
@@ -38,12 +43,15 @@ const colorNaranja = globalColors.orange
         />
 
          <TertiaryButton
-          onPress={()=> navigator.dispatch( StackActions.popToTop ) }
-          label="Regresar al Home"
+          onPress={logout}
+          label="Cerrar Sesión"
           color={globalColors.profile2}
-          iconName='medkit-outline'
+          iconName='power-outline' 
+          /*  iconName='caret-forward-circle-outline' */
+         /*  iconName='log-out-outline' */
       /*     description='Gestioná la orden de tus estudios' */
         />
+
     </View>
   )
 }

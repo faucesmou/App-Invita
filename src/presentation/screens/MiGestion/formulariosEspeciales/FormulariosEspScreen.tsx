@@ -90,7 +90,7 @@ export const FormulariosEspScreen = () => {
     const url = `https://www.prestacional.saludnuevocuyo.com.ar/ClientBin/DocumentosDownload/${nombreArchivo}`;
     
     // Navega a la vista FormularioElegido pasando la URL como parámetro
-    navigation.navigate('FormularioElegido', { url });
+    navigation.navigate('Formulario', { url });
   };
 
   const color = globalColors.orange
@@ -101,7 +101,7 @@ export const FormulariosEspScreen = () => {
       style={globalStyles.container}
   
     >
-      <CustomHeader color={globalColors.gray} /* color={color} */ />
+      <CustomHeader color={globalColors.gray3} /* color={color} */ />
 
       <BackButton />
 

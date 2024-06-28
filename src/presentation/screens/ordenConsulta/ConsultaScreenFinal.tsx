@@ -255,10 +255,10 @@ export const ConsultaScreenFinal = () => {
 
         <TertiaryButton
           onPress={() => navigation.navigate('MiOrdenConsulta')}
-          label="Solicitar Orden de consulta"
+          label="Continuar con la solicitud"
           color={globalColors.profile2}
           iconName='people-outline'
-         description='Continuar con la solicitud' 
+         description='Presiona para continuar' 
         />
       </View>
 
