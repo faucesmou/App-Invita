@@ -143,7 +143,7 @@ export const PagosScreen = () => {
           ) : (
             Saldos.map((saldo, index) => (
               <View style={styles.cardWrapper}/*  key={index} style={{ alignItems:'center', backgroundColor: 'yellow', marginBottom: 10, paddingTop:10, paddingHorizontal: 40 }}  */>
-                <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 175 }} /* setting={{
+                <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 105 }} /* setting={{
                         width: 300,
                         height: 100,
                         color: "#000",
@@ -159,29 +159,52 @@ export const PagosScreen = () => {
                     {/*  <Text style={globalStyles.resultText2}>Periodo: {saldo.periodo}</Text> */}
                     <Text style={globalStyles.resultText3}>{saldo.tipoSaldo}</Text>
                     <Text style={globalStyles.resultText2}>Estado del pago: {saldo.pagado ? 'Pagado' : 'Pendiente'}</Text>
-                    <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text>
-                    <TouchableOpacity style={globalStyles.primaryButton2} onPress={() => handlePress(saldo.linkDePago)}>
+               {/*      <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text> */}
+
+                    { saldo.pagado === false ? 
+                      (
+
+                        <TouchableOpacity style={globalStyles.primaryButton2} onPress={() => handlePress(saldo.linkDePago)}>
+                          <Text style={globalStyles.buttonText}>
+                            Link de Pago
+                          </Text>
+                        </TouchableOpacity>
+
+                      ) : (
+
+
+                    <TouchableOpacity style={globalStyles.paidButton} >
                       <Text style={globalStyles.buttonText}>
-                        Link de Pago
+                        Pagado
                       </Text>
                     </TouchableOpacity>
 
+
+                      )
+                    }
+
+
                     {/*   <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 18, textAlign: 'center', }}>Afiliados:</Text> */}
 
-                    {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
+                    {/* Detalles del afiliado: */}
+                    
+                   {/*  {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
                       <View key={padronIndex} >
                         <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
-                        {/* Detalles del afiliado */}
                       </View>
-                    ))}
-                    <TouchableOpacity
+                    ))} */}
+
+                    {/* boton mostrar Afiliados:  */}
+
+                    {/* <TouchableOpacity
                       onPress={() => setShowAfiliados(!showAfiliados)}
                       style={globalStyles.primaryButton3}
                     >
                       <Text style={{ fontSize: 16 }}>
                         {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
                       </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+
                   </View>
                 </BoxShadow>
 

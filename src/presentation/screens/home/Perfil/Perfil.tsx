@@ -1,15 +1,15 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import { globalColors, globalStyles } from '../../theme/theme'
-import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { StackActions, type NavigationProp, useNavigation} from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { BackButton } from '../../components/shared/BackButton'
-import CustomHeader from '../../components/CustomHeader'
-import { TertiaryButton } from '../../components/shared/TertiaryButton'
-import { RootStackParams } from '../../routes/StackNavigator'
-import { MisDatosScreen } from '../profile/MisDatosScreen'
-import { useAuthStore } from '../../store/auth/useAuthStore'
+import { useAuthStore } from '../../../store/auth/useAuthStore'
+import { RootStackParams } from '../../../routes/StackNavigator'
+import { globalColors } from '../../../theme/theme'
+import CustomHeader from '../../../components/CustomHeader'
+import { BackButton } from '../../../components/shared/BackButton'
+import { MisDatosScreen } from '../../profile/MisDatosScreen'
+import { TertiaryButton } from '../../../components/shared/TertiaryButton'
+
 
 export const SettingsScreen = () => {
   const { logout } = useAuthStore()
@@ -34,6 +34,13 @@ const colorNaranja = globalColors.orange
 
         <MisDatosScreen/>
 
+         <TertiaryButton
+           onPress={()=> navigation.navigate('Buzon') }
+          label="Buzón de Avisos"
+          color={globalColors.profile2}
+          iconName='mail-unread-outline'
+      /*     description='Gestioná la orden de tus estudios' */
+        />
          <TertiaryButton
            onPress={()=> navigator.goBack() }
           label="Regresar"

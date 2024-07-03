@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { globalColors, globalStyles } from '../../theme/theme'
@@ -64,20 +64,20 @@ export const MisDatosScreen = () => {
   }, [])
   const colorNaranja = globalColors.orange
   return (
-    <View  style={{
-     /*  flex: 1,
-      paddingHorizontal: 20,
-      marginTop: top, */
+    <View style={{
+      /*  flex: 1,
+       paddingHorizontal: 20,
+       marginTop: top, */
       marginTop: 0,
-     /*  backgroundColor: 'yellow' */
+      /*  backgroundColor: 'yellow' */
     }}
-    
+
     >
 
 
       <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center' }}>Mis Datos</Text>
 
-   {/*    <BackButton onPress={() => navigation.navigate('home')} /> */}
+      {/*    <BackButton onPress={() => navigation.navigate('home')} /> */}
       {
         isConsulting ? (
 
@@ -85,7 +85,7 @@ export const MisDatosScreen = () => {
             style={{
               flex: 0.5,
               marginTop: top - 10,
-              marginBottom:40,
+              marginBottom: 40,
             }}
           >
             <FullScreenLoader />
@@ -98,15 +98,15 @@ export const MisDatosScreen = () => {
             renderItem={({ item }) => (
               <View>
                 <View>
-                  <View >
-                    <Text style={{ marginBottom: 5, marginTop: 15, fontSize: 15, textAlign: 'center' }}>{`Nombre; ${item.apellidoYNombre}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`edad: ${item.edad}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`estado afiliacion: ${item.estadoAfiliacion}`}</Text>
-                    <Text style={{ marginBottom: 5, fontSize: 15, textAlign: 'center' }}>{`plan prestacional: ${item.planPrestacional}`}</Text>
+                  <View style={styles.container}>
+                    <Text style={styles.text}>{`${item.apellidoYNombre}`}</Text>
+                    <Text style={styles.text}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
+                 {/*    <Text style={styles.text}>{`Edad: ${item.edad}`}</Text> */}
+                    <Text style={styles.text}>{`Estado: ${item.estadoAfiliacion}`}</Text>
+                    <Text style={styles.text}>{`Plan: ${item.planPrestacional}`}</Text>
 
                   </View>
-              
+
                 </View>
 
 
@@ -114,7 +114,23 @@ export const MisDatosScreen = () => {
             )
             }
           />
-}
+      }
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  text: {
+    marginBottom: 5,
+    marginTop: 5,
+    fontSize: 18,
+    textAlign: 'left',
+   
+  },
+  container: {
+    marginHorizontal:20,
+   marginTop: 10,
+   marginBottom:20,
+  }
+
+})

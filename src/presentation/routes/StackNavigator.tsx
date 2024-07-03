@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 
 import { ProductScreen } from '../screens/afiliados/ProductScreen';
-import { SettingsScreen } from '../screens/settings/SettingsScreen';
+/* import { SettingsScreen } from '../screens/settings/Perfil'; */
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 
@@ -32,6 +32,9 @@ import { CartillaMedicaEspecialidad } from '../screens/MiSalud/cartillaMedica/Ca
 import { EstudiosMedicosScreen } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosScreen';
 import { EstudiosMedicosEnv } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosEnv';
 import { PagosScreen } from '../screens/MiGestion/pagos/PagosScreen';
+import { SettingsScreen } from '../screens/home/Perfil/Perfil';
+import { Buzon } from '../screens/home/Perfil/Buzon';
+import { Buzon1 } from '../screens/home/Perfil/Buzon1';
 
 
 
@@ -43,6 +46,8 @@ export type RootStackParams = {
   Credenciales: { id: number, name: string },
   Products: undefined,
   Afiliados: undefined,
+  Buzon: undefined,
+  Buzon1: undefined,
   Perfil: undefined,
 /*   Settings: undefined, */
  /*  Tramites: undefined, */
@@ -131,6 +136,8 @@ export const StackNavigator = () => {
 {/*  HOME (INICIO): */}
                         {/* Afiliados a Cargo: */}
       <Stack.Screen name="Afiliados" component={Afiliados} options={{ headerShown: true }} /> 
+    <Stack.Screen name="Buzon" component={Buzon} options={{ headerShown: true }} /> 
+    <Stack.Screen name="Buzon1" component={Buzon1} options={{ headerShown: true }} /> 
 
       {/* Desde Afiliados a Cargo podemos navegar al Product Screen (componente reutilizable) */}
       <Stack.Screen name="Credenciales" component={ProductScreen} options={{ headerShown: true }} />
