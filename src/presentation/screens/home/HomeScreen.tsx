@@ -11,6 +11,7 @@ import CustomHeader from '../../components/CustomHeader';
 import Credencial from '../../components/shared/Credencial';
 import { SecondaryButton } from '../../components/shared/SecondaryButton';
 import { globalColors } from '../../theme/theme';
+import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
 
 
 
@@ -70,31 +71,40 @@ const handleOpenURL = () => {
               <CustomHeader color={globalColors.gray} />
               <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
 
-              </View>
-            </View>
+        </View>
+      </View>
 
-              <View style={styles.cardContainer} >
+      <View style={styles.cardContainer} >
 
-                <Credencial />
+        <Credencial />
 
-                </View>
-  <View style={styles.imageContainer}>
+      </View>
+      <View style={styles.imageContainer}>
 
-          <View
-            style={styles.innerContainer}
-          >
-            <Text style={styles.text} >
-              Bienvenido a Andes Salud
-            </Text>
+        <View
+          style={styles.innerContainer}
+        >
+          <Text style={styles.text} >
+            Bienvenido a Andes Salud
+          </Text>
 
-            <Image source={require('../../assets/images/logogris.png')}
-              style={styles.image}
-              resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
+          <Image source={require('../../assets/images/logogris.png')}
+            style={styles.image}
+            resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
+          />
+        </View>
+      </View>
+
+      <QuaternaryButton
+              onPress={() => navigation.navigate('Perfil')}
+              label={'Descargá tus Facturas'}
+              iconName='cloud-download-outline'
+              iconName2='mail-outline'
+              description='Accedé a todas tus facturas'
+              /* color={color} */ 
             />
-          </View>
-        </View> 
-
-            <View
+        
+      <View
               style={styles.bigContentContainer}
               >
               <View
@@ -175,15 +185,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginBottom: 10,
     borderRadius: 20,
-    backgroundColor: /* globalColors.white2  */ 'blue' 
+    backgroundColor: globalColors.white2  /* 'blue'  */
   },
   bigContentContainer: {
     flex: 1,
-    marginTop: -25,
-    marginBottom: '5%',
+    marginTop: -35,
+    marginBottom: '2%',
     zIndex: 2,
     borderRadius: 15,
-    backgroundColor: globalColors.white2  
+   /*  backgroundColor: globalColors.white2   */
   },
   buttonsContainer: {
     zIndex: 1,
@@ -208,7 +218,7 @@ const styles = StyleSheet.create({
   borderRadius: 20,
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 15 },
-  shadowOpacity: 0.2,
+  shadowOpacity: 0.1,
   shadowRadius: 15,
   elevation: 5,
 },
@@ -224,24 +234,27 @@ cardSubtitle: {
   color: 'black',
 },
 imageContainer: {
-  marginBottom: 10,
-  marginTop: 175,
-  flex: 0.5,
+  marginBottom: 0,
+  marginTop: 162,
+  flex: 0.2,
   alignItems: 'center',
   flexDirection:'row',
   justifyContent: 'center',
   maxHeight:'10%',
+  marginHorizontal:0,
+  padding:0,
 },
 innerContainer: {
-  marginBottom: 10,
+  marginBottom: 0,
   marginTop: 5,
   flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
   width: '80%',
   flexDirection:'row',
-  height: '50%',
+  height: '40%',
   marginHorizontal:40,
+ /*  backgroundColor: 'blue', */
 },
 image: {
   flex: 0.2,
@@ -249,7 +262,7 @@ image: {
   height: '100%',
 },
 text: {
-  fontSize: 25,
+  fontSize: 24,
   textAlign: 'center',
   flex: 1,
   width: '100%',
