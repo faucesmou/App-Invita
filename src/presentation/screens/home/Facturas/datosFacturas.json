@@ -1,0 +1,82 @@
+{
+  "status": 400,
+  "meta": {
+    "nombreTitular": "ELIAS CRISTIAN NICOLAS",
+    "CUIL": 20402731258,
+    "msg": "Facturas Totales",
+    "length": 7,
+    "link": "https://fiscalizacion.createch.com.ar/facturacion/api/total?titular=20402731258"
+  },
+  "data": [
+    {
+      "id": 56065,
+      "valor": 0,
+      "periodo": 202403,
+      "idUnico": "202403a5c12719dfe24b0097cb0d71c09b669d",
+      "sujetoFacturable": 20402731258,
+      "pagados": 1,
+      "linkMp": "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=359490283-6adc2791-e3cc-4fc3-b507-338b616b5a05",
+      "facturas": "No"
+    },
+    {
+      "id": 57509,
+      "valor": 0,
+      "periodo": 202402,
+      "idUnico": "2024015da088c89a664a7c972b26181c8d47bc",
+      "sujetoFacturable": 20402731258,
+      "pagados": 1,
+      "linkMp": "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=359490283-46536615-307c-475f-9653-e31a6391f695",
+      "facturas": "No"
+    },
+    {
+      "id": 62049,
+      "valor": 0,
+      "periodo": 202404,
+      "idUnico": "20240468d8bad1c4924b85a9c6095e2f97f06a",
+      "sujetoFacturable": 20402731258,
+      "pagados": 1,
+      "linkMp": "",
+      "facturas": "No"
+    },
+    {
+      "id": 67942,
+      "valor": 0,
+      "periodo": 202405,
+      "idUnico": "202405dc5c6763b764450485f0aa8807551dc4",
+      "sujetoFacturable": 20402731258,
+      "pagados": 1,
+      "linkMp": "",
+      "facturas": "No"
+    },
+    {
+      "id": 73805,
+      "valor": 0,
+      "periodo": 202406,
+      "idUnico": "202406b1a476aecf254d529627ff3c2c19ce9f",
+      "sujetoFacturable": 20402731258,
+      "pagados": 1,
+      "linkMp": "",
+      "facturas": "No"
+    },
+    {
+      "id": 75703,
+      "valor": 0,
+      "periodo": 202401,
+      "idUnico": "202401828ae666846544e88280c35b10297cfe",
+      "sujetoFacturable": 20402731258,
+      "pagados": 1,
+      "linkMp": "",
+      "facturas": "No"
+    },
+    {
+      "id": 79647,
+      "valor": 0,
+      "periodo": 202407,
+      "idUnico": "2024078b4a8040759f4cb89bac8135690355a5",
+      "sujetoFacturable": 20402731258,
+      "pagados": 1,
+      "linkMp": "",
+      "facturas": "No"
+    }
+  ]
+}

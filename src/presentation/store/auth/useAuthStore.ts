@@ -38,6 +38,7 @@ export interface AuthState {
   idPrestador?: string;
   idAfiliadoSeleccionado?:string;
   idCartillaSeleccionada?:string;
+  idUnicoFactura:string;
   cadena: string;
   imagen1: string | undefined;
   imagenes: (string | null)[];
@@ -56,6 +57,7 @@ export interface AuthState {
   logout: () => Promise<void>;
   registerUser: (email: string, password: string, fullName: string) => Promise<void>;
   GuardarIdCartillaSeleccionada:(idCartilla: string)=> Promise<any[]>;
+  GuardarIdUnicoFacturaSeleccionada:(idUnicoFactura: string)=> Promise<any[]>;
 
 }
 
@@ -73,6 +75,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   idPrestacion:undefined,
   idAfiliadoSeleccionado:undefined,
   idCartillaSeleccionada:undefined,
+  idUnicoFactura:undefined,
   cadena: '',
   imagen1: '',
   imagenes: [null, null, null, null, null],
@@ -329,6 +332,16 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
     return []; 
   } catch (error) {
       console.log('ha ocurrido un error al guardar idCartilla en el useAuthStore');
+     return [];
+    }
+  },
+  GuardarIdUnicoFacturaSeleccionada: async ( idUnicoFactura: string): Promise<string[]> => {
+    try {
+      set({ idUnicoFactura: idUnicoFactura })
+ 
+    return []; 
+  } catch (error) {
+      console.log('ha ocurrido un error al guardar idUnicoFactura en el useAuthStore');
      return [];
     }
   },

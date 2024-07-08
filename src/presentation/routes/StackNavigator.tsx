@@ -35,6 +35,9 @@ import { PagosScreen } from '../screens/MiGestion/pagos/PagosScreen';
 import { SettingsScreen } from '../screens/home/Perfil/Perfil';
 import { Buzon } from '../screens/home/Perfil/Buzon';
 import { Buzon1 } from '../screens/home/Perfil/Buzon1';
+import { HomeScreen } from '../screens/home/HomeScreen';
+import { Facturas } from '../screens/home/Facturas/Facturas';
+import { Factura } from '../screens/home/Facturas/Factura';
 
 
 
@@ -49,8 +52,6 @@ export type RootStackParams = {
   Buzon: undefined,
   Buzon1: undefined,
   Perfil: undefined,
-/*   Settings: undefined, */
- /*  Tramites: undefined, */
   MiGestión: undefined,
   MisDatos: undefined,
   MiOrdenConsulta: undefined,
@@ -64,18 +65,16 @@ export type RootStackParams = {
   ConsultaScreen: undefined,
   Consulta: undefined,
   Formulario:undefined,
- /*  FormularioElegido:undefined, */
- /*  CartillaScreen: undefined, */
   CartillaScreen: undefined,
   Cartillas: undefined,
- /*  CartillaMedicaScreen: undefined, */
   MiSalud: undefined,
   Formularios:undefined,
   Prestadores: { idCartilla: string };
-/*   CartillaMedicaEspecialidad: { idCartilla: string }; */
   EstudiosMedicos: undefined, 
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
+  Facturas:undefined,
+  Factura:undefined,
 
 }
 
@@ -122,7 +121,9 @@ export const StackNavigator = () => {
 {/* ------------VISTAS DESDE EL BOTTOM TAB: -------------->*/}
 
 {/* La vista PADRE es el home con BottomTabsNavigator: */}
-      <Stack.Screen name='home' component={BottomTabsNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name='home' component={BottomTabsNavigator} options={{ headerShown: false }} /> 
+
+      {/* <Stack.Screen name= 'home' component={HomeScreen} />  */}
 {/* vistas a las que se accede desde el botomTabsNavigator: */}
 
 {/* (Mi Salud): */}
@@ -134,16 +135,18 @@ export const StackNavigator = () => {
 {/* ----------VISTAS SECUNDARIAS: -------------->*/}
 
 {/*  HOME (INICIO): */}
-                        {/* Afiliados a Cargo: */}
-      <Stack.Screen name="Afiliados" component={Afiliados} options={{ headerShown: true }} /> 
-    <Stack.Screen name="Buzon" component={Buzon} options={{ headerShown: true }} /> 
-    <Stack.Screen name="Buzon1" component={Buzon1} options={{ headerShown: true }} /> 
+                        {/* Descarga tu factura: */}
+  <Stack.Screen name="Facturas" component={Facturas} options={{ headerShown: true }} /> 
+  <Stack.Screen name="Factura" component={Factura} options={{ headerShown: true }} /> 
 
-      {/* Desde Afiliados a Cargo podemos navegar al Product Screen (componente reutilizable) */}
+                        {/* Mi grupo Familiar : */}
+      <Stack.Screen name="Afiliados" component={Afiliados} options={{ headerShown: true }} /> 
+      {/* Desde Mi grupo Familiar a Cargo podemos navegar al Product Screen (componente reutilizable) */}
       <Stack.Screen name="Credenciales" component={ProductScreen} options={{ headerShown: true }} />
 
-  {/* Settings: */}
+                          {/* Settings: */}
       <Stack.Screen name="Perfil" component={SettingsScreen} options={{ headerShown: true }} />
+    <Stack.Screen name="Buzon" component={Buzon} options={{ headerShown: true }} /> 
 
 {/* MI SALUD (CartillaScreen): */}
 
@@ -194,6 +197,6 @@ export const StackNavigator = () => {
 {/* <Stack.Screen name="Settings2" component={ ProfileScreen } /> */ }
 /* initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'} */
 /*    initialRouteName={status === 'authenticated' ? 'home': 'LoginScreen'}  */
-{/*       <Stack.Screen name= 'home' component={HomeScreen} /> */ }
+    
 
     {/*  <Stack.Screen name='Cartilla' component={TopTabsNavigator} options={{ headerShown: true }} /> */}

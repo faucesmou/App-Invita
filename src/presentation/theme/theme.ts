@@ -179,7 +179,7 @@ export const globalStyles = StyleSheet.create({
   errorContainerEstudios: {
     marginTop: 20,
     padding: 10,
-    backgroundColor: '#f8d7da',
+    backgroundColor: '#d7e5f8',
     borderRadius: 5,
   },
   titleErrorEstMedicosEnv: {

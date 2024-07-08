@@ -18,8 +18,6 @@ import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
 export const HomeScreen = () => {
   console.log('Entrando al homeScreen---->')
 
-
-//prueba para conectar boton:
 const [ordenConsulta, setOrdenConsulta] = useState("");
 let Url = `https://api.whatsapp.com/send?phone=542613300622&text=%C2%A1Hola%2C%20Pixi!%20Vengo%20de%20la%20APP%20y%20tengo%20algunas%20consultas.%20%F0%9F%91%8D`
 
@@ -96,7 +94,7 @@ const handleOpenURL = () => {
       </View>
 
       <QuaternaryButton
-              onPress={() => navigation.navigate('Perfil')}
+              onPress={() => navigation.navigate('Facturas')}
               label={'Descargá tus Facturas'}
               iconName='cloud-download-outline'
               iconName2='mail-outline'
@@ -185,7 +183,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginBottom: 10,
     borderRadius: 20,
-    backgroundColor: globalColors.white2  /* 'blue'  */
+    backgroundColor: globalColors.white2  
   },
   bigContentContainer: {
     flex: 1,
@@ -193,7 +191,6 @@ const styles = StyleSheet.create({
     marginBottom: '2%',
     zIndex: 2,
     borderRadius: 15,
-   /*  backgroundColor: globalColors.white2   */
   },
   buttonsContainer: {
     zIndex: 1,
@@ -202,7 +199,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: '20%',
     marginLeft:0,
-  /*   backgroundColor:'green' */
   },
   rowContainer: {
     flexDirection: 'row',
@@ -254,7 +250,6 @@ innerContainer: {
   flexDirection:'row',
   height: '40%',
   marginHorizontal:40,
- /*  backgroundColor: 'blue', */
 },
 image: {
   flex: 0.2,
