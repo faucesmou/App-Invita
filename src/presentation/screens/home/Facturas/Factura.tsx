@@ -54,9 +54,9 @@ const shadowOpt = {
 
 export const Factura = () => {
 
-  const { idAfiliadoTitular, cuilTitular, idUnicoFactura } = useAuthStore();
+  const { idAfiliadoTitular, cuilTitular } = useAuthStore();
   /*   console.log('idAfiliadoTitular desde el FACTURA SCREEN---->', idAfiliadoTitular); */
-  console.log('Entrando a Factura----> este es el idUnicoFactura:', idUnicoFactura);
+  console.log('Entrando a Factura----> este es el idUnicoFactura:');
 
 
   const { top } = useSafeAreaInsets();
@@ -96,20 +96,20 @@ const parsearFecha = (numero: any): string => {
 }  */
  
  /*  const Facturas = datos.data; */
-  useEffect(() => {
+/*   useEffect(() => {
 
     const FacturaPeriodoRequest = async ( ) => {
       try {
-        const response = await axios.get(`https://fiscalizacion.createch.com.ar/facturacion/api/external?idUnico=${idUnicoFactura}`);
+        const response = await axios.get(`https://fiscalizacion.createch.com.ar/facturacion/api/external?idUnico=${}`);
 
         console.log('la respuesta de cristian es: response.data.data--------->>>>', response.data.data);
   
       const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
         if (response.status === 200) {
-          // Procesa la respuesta de la API
+       
           const data = await response.data.data;
-    /*       console.log('esta es la variable data donde guardo el await response.data.data---x-x-x->', data); */
+ 
           
 
           if (Array.isArray(data)) {
@@ -137,7 +137,7 @@ const parsearFecha = (numero: any): string => {
     };
     FacturaPeriodoRequest( ) 
     console.log('la respuesta de cristian Facturas es--------->>>>', Facturas);
-  }, [])
+  }, []) */
 
   const handlePress = (url: string) => {
     Linking.openURL(url).catch((err) => console.error('Error al abrir el enlace:', err));

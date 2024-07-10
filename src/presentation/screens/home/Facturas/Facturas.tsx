@@ -54,21 +54,22 @@ const shadowOpt = {
 
 export const Facturas = () => {
 
-  const { idAfiliadoTitular, cuilTitular, GuardarIdUnicoFacturaSeleccionada, idUnicoFactura } = useAuthStore();
-  /*   console.log('idAfiliadoTitular desde el FACTURA SCREEN---->', idAfiliadoTitular); */
-  console.log('cuilTitular desde el FACTURA SCREEN---->', cuilTitular);
+  const { idAfiliadoTitular, cuilTitular,  } = useAuthStore();
+
+
+  console.log('ENTRANDO A FACTURAS---->>>', );
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
   const { top } = useSafeAreaInsets();
 
   const [formularios, setFormularios] = useState<{ nombre: string; descripcion: string; nombreArchivo: string }[]>([]);
-  /*   const [Saldos, setSaldos] = useState<Saldo[]>(initialSaldo);  */
+ 
   const [Facturas, setFacturas] = useState<FacturasInt[]>(initialSaldo);
   const [UrlDescarga, setUrlDescarga] = useState<FacturasInt[]>(initialSaldo);
   const [showAfiliados, setShowAfiliados] = useState(false);
   const [errores, setErrores] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-
+  const [FacturaNoDisponible, setFacturaNoDisponible] = useState(false);
 
 
   const parsearFecha = (numero: any): string => {
@@ -97,13 +98,14 @@ export const Facturas = () => {
   }  */
 
   /*  const Facturas = datos.data; */
+
   useEffect(() => {
 
     const FacturasRequest = async () => {
       try {
         const response = await axios.get(`https://fiscalizacion.createch.com.ar/facturacion/api/total?titular=${cuilTitular}`);
 
-        console.log('la respuesta de cristian es: response.data.data--------->>>>', response.data.data);
+       /*  console.log('la respuesta de cristian es: response.data.data--------->>>>', response.data.data); */
 
         const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
@@ -139,27 +141,28 @@ export const Facturas = () => {
       }
     };
     FacturasRequest()
-    console.log('la respuesta de cristian Facturas es--------->>>>', Facturas);
-  }, [])
+    
+/*     console.log('la respuesta de cristian Facturas es--------->>>>', Facturas); */
+  }, [/* idUnicoFactura */])
 
   const handlePress = (url: string ) => {
 
     Linking.openURL(url).catch((err) => console.error('Error al abrir el enlace de factura:', err));
-
+ 
   
 }
-  
-  const FacturasRequest2 = async ( existeFactura: string) => {
-    /* usar esta funcion solo si la propiedad facturas està en "si" */
- /*    if (existeFactura === "Si") { */
+
+
+  const FacturasRequest2 = async ( existeFactura: string, idUnico: string) => {
+
+      console.log('entrando a FACTURAREQUEST2 ---------->');
       
-    
     try {
-      const response = await axios.get(`https://fiscalizacion.createch.com.ar/facturacion/api/external?idUnico=${idUnicoFactura}`);
+     if (existeFactura === "Si" ) {  
+      console.log('INICIANDO CONSULTA DE FACTURA CON idUnicoFactura---------->', idUnico);
+      const response = await axios.get(`https://fiscalizacion.createch.com.ar/facturacion/api/external?idUnico=${idUnico}`);
 
-      console.log('la respuesta de FacturaRequest2  es: response.data.data--------->>>>', response.data.data);
 
-      const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
       if (response.status === 200) {
         // Procesa la respuesta de la API
@@ -167,27 +170,33 @@ export const Facturas = () => {
         if ((data)) {
           let UrlDescarga = data.UrlComprobante;
           console.log('la UrlDescarga es-------------->>>>>>>>>>>: ', UrlDescarga);
-          
-         handlePress(UrlDescarga, existeFactura)
-        }
-        else {
+      
+         handlePress(UrlDescarga)
+        } else {
           setError('El formato de los datos recibidos no es el esperado.');
           console.log('no es array');
-
+       
         }
       } else {
         setError("Error con los datos");
-        console.log('la respuesta con errores de Cta Cte es--------->>>>', error);
-      }
-
-    } catch (error) {
-      console.error('Error al obtener los pagos:', error);
-      setError("Error con los datos");
+        console.log('Error en la consulta factura con id unico.Error>>>>', error);
+     
+      } 
+      
+    }  else {
+     
+      console.log('No existe factura para descargar');
+   
     }
-/*   } 
-    console.log('no existen facturas') */
-  
+    } catch (error) {
+      console.error('Error al obtener las facturas:', error);
+    /*   console.log('Detalles completos del error---->', error.response); */
+      setError("Error con los datos");
+     
+    }
+    console.log('Fin de la funcion FacturaRequest2 con el idUnico >>>', idUnicoFactura);
   }
+
   
 
   return (
@@ -219,7 +228,6 @@ export const Facturas = () => {
                   <View style={styles.card}>
 
                     <Text style={globalStyles.resultText3}>Período: {factura.periodoString}</Text>
-                    {/* <Text style={globalStyles.resultText3}>ID Unico: {factura.idUnico}</Text> */}
                     <Text style={globalStyles.resultText2}>Estado del pago: {factura.pagados ? 'Pagado' : 'Pendiente'}</Text>
 
                     {!factura.pagados ? 
@@ -238,27 +246,42 @@ export const Facturas = () => {
                       (
                         <TouchableOpacity
                           style={globalStyles.paidButton}
-                          /*   onPress={() => handlePress(factura.linkMp)} */
-                          onPress={() => {
-                            console.log('Has tocado en Descargar Factura este es el idUnico:', factura.idUnico);
-                            let idUnico = factura.idUnico;
-                            GuardarIdUnicoFacturaSeleccionada(idUnico);
+                          onPress={ async () => {
                             let existeFactura = factura.facturas;
-                            console.log('existeFactura es.::::::::', existeFactura);
+                            let idUnico = factura.idUnico;
                             
-                            FacturasRequest2(existeFactura)
-                          /*   navigation.navigate('Factura') */
-                          }
-                          }
+                            console.log('existeFactura es.::::::::', existeFactura);
+                              console.log('Has tocado en Descargar Factura usando este idUnico:', factura.idUnico);
+                              await FacturasRequest2(existeFactura, idUnico)
+                          }}
                         >
+                          {!FacturaNoDisponible ? 
+                          ( 
                           <Text style={globalStyles.buttonText}>
                             Descargar
                           </Text>
-                        </TouchableOpacity>
+                          
+                          )
+                          :
+                          (
+                          
+                            <View>  
+                            <Text style={globalStyles.buttonText}>
+                            Factura no disponible
+                          </Text>
+                            </View>
+                          )
+                          
+                          }
 
+
+
+                        </TouchableOpacity>
+                        
 
                       )
                     }
+                     
 
 
                     {/*   <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 18, textAlign: 'center', }}>Afiliados:</Text> */}
