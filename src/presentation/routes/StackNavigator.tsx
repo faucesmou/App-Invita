@@ -70,6 +70,7 @@ export type RootStackParams = {
   Formularios:undefined,
   Prestadores: { idCartilla: string };
   EstudiosMedicos: undefined, 
+  "Estudios Médicos": undefined,
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
   Facturas:undefined,
@@ -152,7 +153,7 @@ export const StackNavigator = () => {
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="Prestadores" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
-      <Stack.Screen name="EstudiosMedicos" component={EstudiosMedicosScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Estudios Médicos" component={EstudiosMedicosScreen} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} />
       
 {/* MI GESTIÓN (TramitesScreen): */}
 

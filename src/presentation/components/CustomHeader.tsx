@@ -6,9 +6,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Props {
   color?: string;
+  titleSize?: number;
 }
 
-const CustomHeader = ( {color} : Props) => {
+const CustomHeader = ( {color, titleSize} : Props) => {
   const navigation = useNavigation();
 
 
@@ -26,7 +27,7 @@ const CustomHeader = ( {color} : Props) => {
       },
       headerTintColor: 'white',
       headerTitleStyle: {
-        fontSize: 35, // tamaño título del header
+        fontSize: titleSize? titleSize : 35, // tamaño título del header
         marginBottom: 25,
         
       },

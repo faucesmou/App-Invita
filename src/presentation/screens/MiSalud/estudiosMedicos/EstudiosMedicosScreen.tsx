@@ -220,7 +220,7 @@ export const EstudiosMedicosScreen = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray3} titleSize={30} />
 
       <BackButton />
 
@@ -234,9 +234,10 @@ export const EstudiosMedicosScreen = () => {
 
         <View style={{  /*  backgroundColor: 'orange', */  borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
-          <View style={globalStyles.pickerWrapper}>
+          <View style={globalStyles.pickerWrapper2}>
+          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
             <Picker
-              style={globalStyles.inputIOS}
+              style={globalStyles.inputIOS2}
               selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectFamiliar(itemValue, itemIndex)
@@ -269,7 +270,7 @@ export const EstudiosMedicosScreen = () => {
 
         <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25 }}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Prestadores encontrados: {NumeroPrestadoresEncontrados} </Text>
-          <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Desliza verticalmente para visualizarlos:</Text>
+        {/*   <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Desliza verticalmente para visualizarlos:</Text> */}
           
           <View style={globalStyles.pickerWrapper2}>
        {/*    <Image 
