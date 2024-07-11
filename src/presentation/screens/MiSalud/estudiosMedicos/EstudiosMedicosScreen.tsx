@@ -220,7 +220,7 @@ export const EstudiosMedicosScreen = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.gray3} titleSize={30} />
+      <CustomHeader color={globalColors.gray3} titleSize={33} />
 
       <BackButton />
 
@@ -305,7 +305,7 @@ export const EstudiosMedicosScreen = () => {
  
 
          <TertiaryButton
-          onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
+          onPress={() => navigation.navigate('Estudios enviados')}
           label="Solicitar mi estudio"
           color={globalColors.profile2}
           iconName='medkit-outline'

@@ -71,6 +71,7 @@ export type RootStackParams = {
   Prestadores: { idCartilla: string };
   EstudiosMedicos: undefined, 
   "Estudios Médicos": undefined,
+  "Estudios enviados": undefined,
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
   Facturas:undefined,
@@ -162,7 +163,7 @@ export const StackNavigator = () => {
 
 {/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
       <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="EstudiosMedicosEnviados" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
+      <Stack.Screen name="Estudios enviados" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
 
 {/* Obtener Formularios Especiales: */}
       <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
