@@ -102,8 +102,8 @@ export const MisDatosScreen = () => {
                     <Text style={styles.text}>{`${item.apellidoYNombre}`}</Text>
                     <Text style={styles.text}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
                  {/*    <Text style={styles.text}>{`Edad: ${item.edad}`}</Text> */}
-                    <Text style={styles.text}>{`Estado: ${item.estadoAfiliacion}`}</Text>
                     <Text style={styles.text}>{`Plan: ${item.planPrestacional}`}</Text>
+                    <Text style={styles.text}>{`Estado: ${item.estadoAfiliacion}`}</Text>
 
                   </View>
 

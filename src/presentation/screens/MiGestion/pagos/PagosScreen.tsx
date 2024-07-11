@@ -44,8 +44,9 @@ const shadowOpt = {
   height: 200,
   color: "#000",
   border: 8,
+  shadowRadius: 15,
   radius: 3,
-  opacity: 0.2,
+  opacity: 0.1,
   x: -5,
   y: 20,
   style: { marginVertical: 5 }
@@ -97,6 +98,7 @@ export const PagosScreen = () => {
             }));
 
             setSaldos(extractedData);
+          
           }
           else {
             setError('El formato de los datos recibidos no es el esperado.');
@@ -143,23 +145,15 @@ export const PagosScreen = () => {
           ) : (
             Saldos.map((saldo, index) => (
               <View style={styles.cardWrapper}/*  key={index} style={{ alignItems:'center', backgroundColor: 'yellow', marginBottom: 10, paddingTop:10, paddingHorizontal: 40 }}  */>
-                <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 105 }} /* setting={{
-                        width: 300,
-                        height: 100,
-                        color: "#000",
-                        border: 2,
-                        radius: 3,
-                        opacity: 0.1,
-                        x: 0,
-                        y: 3,
-                        style: { marginVertical: 5 },
-                      }} */>
+                <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 105 }} 
+                  >
+
                   <View style={styles.card}>
                     {/*   <Text style={globalStyles.titleEstudiosMedicosEnv}>Información del saldo</Text> */}
                     {/*  <Text style={globalStyles.resultText2}>Periodo: {saldo.periodo}</Text> */}
                     <Text style={globalStyles.resultText3}>{saldo.tipoSaldo}</Text>
-                    <Text style={globalStyles.resultText2}>Estado del pago: {saldo.pagado ? 'Pagado' : 'Pendiente'}</Text>
-               {/*      <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text> */}
+{/*                     <Text style={globalStyles.resultText2}>Estado del pago: {saldo.pagado ? 'Pagado' : 'Pendiente'}</Text> */}
+                    <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text> 
 
                     { saldo.pagado === false ? 
                       (
@@ -239,6 +233,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
+    borderRadius: 15,
   },
 });
 

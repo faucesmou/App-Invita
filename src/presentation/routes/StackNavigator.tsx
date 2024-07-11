@@ -37,7 +37,6 @@ import { Buzon } from '../screens/home/Perfil/Buzon';
 import { Buzon1 } from '../screens/home/Perfil/Buzon1';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { Facturas } from '../screens/home/Facturas/Facturas';
-import { Factura } from '../screens/home/Facturas/Factura';
 
 
 
@@ -74,7 +73,6 @@ export type RootStackParams = {
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
   Facturas:undefined,
-  Factura:undefined,
 
 }
 
@@ -137,7 +135,7 @@ export const StackNavigator = () => {
 {/*  HOME (INICIO): */}
                         {/* Descarga tu factura: */}
   <Stack.Screen name="Facturas" component={Facturas} options={{ headerShown: true }} /> 
-  <Stack.Screen name="Factura" component={Factura} options={{ headerShown: true }} /> 
+ 
 
                         {/* Mi grupo Familiar : */}
       <Stack.Screen name="Afiliados" component={Afiliados} options={{ headerShown: true }} /> 
@@ -170,7 +168,7 @@ export const StackNavigator = () => {
 
       <Stack.Screen name="Formulario" component={FormularioElegido} options={{ headerShown: true }} />
 
-{/* Facturas del usuario */}
+{/* Pagos del usuario */}
 
      <Stack.Screen name="Pagos" component={PagosScreen} options={{ headerShown: true }} /> 
 

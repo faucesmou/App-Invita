@@ -200,7 +200,7 @@ export const globalStyles = StyleSheet.create({
     paddingHorizontal: 0,
     marginTop: 20,
     alignItems: 'center',
-    /*  backgroundColor: 'yellow', */
+/*      backgroundColor: 'yellow',  */
     marginBottom: 10,
 
   },
@@ -232,7 +232,7 @@ export const globalStyles = StyleSheet.create({
 
   },
   paidButton: {
-    backgroundColor: '#13a710',/* globalColors.profile2 */
+    backgroundColor: '#39b536',/* globalColors.profile2 */
     borderRadius: 5,
     padding: 5,
     margin: 10,

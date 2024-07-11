@@ -46,7 +46,8 @@ const shadowOpt = {
   color: "#000",
   border: 8,
   radius: 3,
-  opacity: 0.2,
+  shadowRadius: 15,
+  opacity: 0.1,
   x: -5,
   y: 20,
   style: { marginVertical: 5 }
@@ -69,7 +70,7 @@ export const Facturas = () => {
   const [showAfiliados, setShowAfiliados] = useState(false);
   const [errores, setErrores] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [FacturaNoDisponible, setFacturaNoDisponible] = useState(false);
+ 
 
 
   const parsearFecha = (numero: any): string => {
@@ -143,7 +144,7 @@ export const Facturas = () => {
     FacturasRequest()
     
 /*     console.log('la respuesta de cristian Facturas es--------->>>>', Facturas); */
-  }, [/* idUnicoFactura */])
+  }, [])
 
   const handlePress = (url: string ) => {
 
@@ -208,10 +209,10 @@ export const Facturas = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Tus Facturas</Text>
+{/*       <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Tus Facturas</Text> */}
       <ScrollView>
 
-        <View style={globalStyles.containerEstudiosMedicosEnv2}>
+        <View style={{...globalStyles.containerEstudiosMedicosEnv2, marginTop: 0}}>
           {error ? (
             <View style={globalStyles.errorContainerEstudios}>
               <Text style={globalStyles.titleErrorEstMedicosEnv}>Factura no encontrada, intente nuevamente más tarde.</Text>
@@ -219,6 +220,8 @@ export const Facturas = () => {
             </View>
           ) : (
             Facturas.map((factura, index) => (
+
+        
               <View style={styles.cardWrapper}
                 /*  key={index} style={{ alignItems:'center', backgroundColor: 'yellow', marginBottom: 10, paddingTop:10, paddingHorizontal: 40 }}  */
                 key={index}
@@ -244,41 +247,43 @@ export const Facturas = () => {
                       ) : 
                       
                       (
+                        factura.facturas === "Si" ? (
+                         
                         <TouchableOpacity
                           style={globalStyles.paidButton}
                           onPress={ async () => {
                             let existeFactura = factura.facturas;
                             let idUnico = factura.idUnico;
-                            
-                            console.log('existeFactura es.::::::::', existeFactura);
-                              console.log('Has tocado en Descargar Factura usando este idUnico:', factura.idUnico);
                               await FacturasRequest2(existeFactura, idUnico)
                           }}
                         >
-                          {!FacturaNoDisponible ? 
-                          ( 
+                         
                           <Text style={globalStyles.buttonText}>
                             Descargar
                           </Text>
                           
-                          )
-                          :
-                          (
-                          
-                            <View>  
-                            <Text style={globalStyles.buttonText}>
-                            Factura no disponible
+                       </TouchableOpacity>
+
+                        ) 
+                        :
+                        (
+                          <TouchableOpacity
+                          style={globalStyles.paidButton}
+                          onPress={ async () => {
+                            let existeFactura = factura.facturas;
+                            let idUnico = factura.idUnico;
+                              await FacturasRequest2(existeFactura, idUnico)
+                          }}
+                        >
+                         
+                          <Text style={globalStyles.buttonText}>
+                            No disponible
                           </Text>
-                            </View>
-                          )
                           
-                          }
+                       </TouchableOpacity>
 
-
-
-                        </TouchableOpacity>
-                        
-
+                        )              
+                          
                       )
                     }
                      
@@ -288,22 +293,7 @@ export const Facturas = () => {
 
                     {/* Detalles del afiliado: */}
 
-                    {/*  {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
-                      <View key={padronIndex} >
-                        <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
-                      </View>
-                    ))} */}
-
-                    {/* boton mostrar Afiliados:  */}
-
-                    {/* <TouchableOpacity
-                      onPress={() => setShowAfiliados(!showAfiliados)}
-                      style={globalStyles.primaryButton3}
-                    >
-                      <Text style={{ fontSize: 16 }}>
-                        {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
-                      </Text>
-                    </TouchableOpacity> */}
+                 
 
                   </View>
                 </BoxShadow>
@@ -330,6 +320,7 @@ const styles = StyleSheet.create({
   cardWrapper: {
     alignItems: 'center',
     marginBottom: 10,
+    borderRadius: 15,
   },
   card: {
     width: 350,
@@ -339,6 +330,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
+    borderRadius: 15,
   },
 });
 
@@ -350,5 +342,23 @@ const styles = StyleSheet.create({
                   </View>
                 ))} */}
 
+                /* logica para mostrar afiliados: */
+
 {/*  <Text style={globalStyles.resultText2}>CUIL: {padron.cuil}</Text>
                     <Text style={globalStyles.resultText2}>Edad: {padron.edad}</Text> */}
+   {/*  {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
+                      <View key={padronIndex} >
+                        <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
+                      </View>
+                    ))} */}
+
+                    {/* boton mostrar Afiliados:  */}
+
+                    {/* <TouchableOpacity
+                      onPress={() => setShowAfiliados(!showAfiliados)}
+                      style={globalStyles.primaryButton3}
+                    >
+                      <Text style={{ fontSize: 16 }}>
+                        {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
+                      </Text>
+                    </TouchableOpacity> */}

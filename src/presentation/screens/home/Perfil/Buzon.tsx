@@ -28,6 +28,7 @@ export const Buzon = () => {
   const { top } = useSafeAreaInsets();
   const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]);
   const [isConsulting, setIsConsulting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setIsConsulting(true);
@@ -35,7 +36,7 @@ export const Buzon = () => {
       let camote = '301936D8-6482-4625-82DD-38A932A4FC5A'
       try {
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENPRAC?idAfiliado=${idAfiliado}&IMEI=`);
-/*         console.log('EL RESPONSE DEL BUZON ES : ---------x-x-x-x-x-x->', response); */
+        /*         console.log('EL RESPONSE DEL BUZON ES : ---------x-x-x-x-x-x->', response); */
 
         const xmlData = response.data;
 
@@ -46,9 +47,13 @@ export const Buzon = () => {
 
         const notificacionesData = result.Resultado?.tablaDatos;
         console.log('notificacionesData-------------->>---->->>>---->><<<<---->>:', notificacionesData);
-
+        if (notificacionesData === undefined) {
+          console.log('notificacionesData es undefined: No hay notificaciones para este usuario.');
+          setIsConsulting(false);
+          return;
+        }
         if (!notificacionesData) {
-          throw new Error('Estructura del JSON inesperada o sin datos en tablaDatos');
+          setError('El formato de los datos recibidos no es el esperado.');
         }
 
         // Mapear los datos 
@@ -63,9 +68,13 @@ export const Buzon = () => {
 
         setNotificaciones(mappedNotificaciones);
         console.log('Mapped notificaciones:', mappedNotificaciones);
-         setIsConsulting(false); 
+        console.log('Notificaciones:', notificaciones);
+        setIsConsulting(false);
+
       } catch (error) {
         console.error('Error al obtener las notificaciones:', error);
+        setError('Error al obtener las notificaciones');
+        setIsConsulting(false)
       }
     };
 
@@ -75,14 +84,14 @@ export const Buzon = () => {
 
   const color = globalColors.gray;
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
-  console.log('este es el products:', notificaciones);
+  console.log('estas son las notificaciones:', notificaciones);
   return (
     <View
       style={{
         flex: 1,
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
         marginTop: 20,
-        /* backgroundColor: 'green', */
+        /*      backgroundColor: 'green',  */
         marginBottom: 0,
       }}
     >
@@ -96,105 +105,111 @@ export const Buzon = () => {
           alignItems: 'center',
           /*    backgroundColor: 'green', */
         }}>
-        <Text
-          style={{
-            fontSize: 20,
-            marginBottom: 10,
-            marginTop: 10,
-            padding: 0,
-            marginHorizontal: 10,
-          }}
-        >Notificaciones: </Text>
 
-        <View style={{ /* flex: 1, */ marginBottom: 30, marginTop: 10 }}>
+        <View style={{ marginBottom: 30, marginTop: 10 }}>
           <ScrollView>
 
             {isConsulting ?
-
               (
-                <View style={ styles.TertiaryButton }>
-                <FullScreenLoader />
+                <View style={styles.TertiaryButton}>
+                  <FullScreenLoader />
                 </View>
               )
               :
-              (
+              error ? (
+                <View style={styles.errorContainerBuzon} >
+                  <Text style={styles.titleErrorBuzon} >No se encontraron notificaciones.</Text>
+                  <Text style={styles.titleErrorBuzon} >Intente nuevamente más tarde.</Text>
+
+                </View>
+              ) :
                 notificaciones.length > 0 ?
                   (
                     notificaciones.map((notificacion, index) => (
-                      <Pressable 
-                      onPress = {() => {
-                        console.log('se toco en la notificacion')
+                      <Pressable
+                        onPress={() => {
+                          console.log('se toco en la notificacion')
                         }}
-                      
+
                       >
-                      <View key={index} style={ styles.TertiaryButton }>
-                       {/*  <Text style={{ fontSize: 16, textAlign: 'center' }}>{notificacion.afiliado}</Text> */}
-                        {/*   <Text style={{ fontSize: 16, textAlign: 'center' }}>Estado:{notificacion.estado}</Text>
-                            <Text style={{ fontSize: 16, textAlign: 'center' }}> Fecha de solicitud: {notificacion.fecSolicitud}</Text> */}
+                        <View key={index} style={styles.TertiaryButton}>
+                          {/*  <Text style={{ fontSize: 16, textAlign: 'center' }}>{notificacion.afiliado}</Text> */}
+                          <View style={styles.contentWrapper2}>
+                            <View style={styles.textWrapper}>
+                              {notificacion.afiliado && (
+                                <Text style={styles.buttonText}>
+                                  {notificacion.afiliado}
+                                </Text>
+                              )}
+                              {notificacion.estado && (
+                                <Text style={styles.descriptionText}>
+                                  Estado:{notificacion.estado}
+                                </Text>
+                              )}
+                              {notificacion.fecSolicitud && (
+                                <Text style={styles.descriptionText}>
+                                  Solicitud: {notificacion.fecSolicitud}
+                                </Text>
+                              )}
+                            </View>
 
-                        <View style={styles.contentWrapper2}>
-                          <View style={styles.textWrapper}>
-                            {notificacion.afiliado && (
-                              <Text style={styles.buttonText}>
-                                {notificacion.afiliado}
-                              </Text>
-                            )}
-                            {notificacion.estado && (
-                              <Text style={styles.descriptionText}>
-                                Estado:{notificacion.estado}
-                              </Text>
-                            )}
-                            {notificacion.fecSolicitud && (
-                              <Text style={styles.descriptionText}>
-                                Solicitud: {notificacion.fecSolicitud}
-                              </Text>
-                            )}
                           </View>
-                      
+
                         </View>
-                        {/*  <Text style={{ fontSize: 16, textAlign: 'center' }}>{notificacion.fecFinalizacion}</Text> */}
-
-                      </View>
                       </Pressable>
-                    ))
-
-                  )
-                  :
+                    )
+                    )
+                  ) :
                   (
-                    <Text style={{ color: 'black', textAlign: 'center' }}>No hay notificaciones disponibles</Text>
+                    <>
+                    <View  style={ styles.SinNotificacionesContainerBuzon } >
+                    <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones!</Text>
+                  </View>
 
-                  )
-              )
+                    <View style={styles.imageContainer}>
 
+                    <View
+                      style={styles.innerContainer}
+                    >
+                     <Image source={require('../../../assets/images/logogris.png')}
+                        style={styles.image}
+                        resizeMode="contain"
+                      /> 
+                    </View>
+
+                    </View>
+                    </>
+        )
             }
-          </ScrollView>
-        </View>
 
-
-
-      </View>
-
-      <View style={styles.imageContainer}>
-
-        <View
-          style={styles.innerContainer}
-        >
-          <Text style={{
-            fontSize: 25,
-            textAlign: 'center',
-          }} >
-            Andes Salud
-          </Text>
-
-          <Image source={require('../../../assets/images/logogris.png')}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        </View>
-
-      </View>
-
+      </ScrollView>
     </View>
+
+
+
+      </View >
+
+  <View style={styles.imageContainer}>
+
+    <View
+      style={styles.innerContainer}
+    >
+      <Text style={{
+        fontSize: 25,
+        textAlign: 'center',
+      }} >
+        Andes Salud
+      </Text>
+
+      <Image source={require('../../../assets/images/logogris.png')}
+        style={styles.image}
+        resizeMode="contain"
+      />
+    </View>
+
+  </View>
+
+    </View >
   );
 };
 
@@ -203,14 +218,12 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginBottom: 30,
     marginHorizontal: 35,
-    marginTop: 5,
+    marginTop: 85,
     /*    zIndex: 1.5, */
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '30%',
     minWidth: '30%',
-    backgroundColor: 'yellow',
-/*     flex: 1 */
   },
   innerContainer: {
     marginBottom: 15,
@@ -218,10 +231,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-    backgroundColor: 'blue',
+   /*  backgroundColor: 'blue', */
   },
   image: {
-    flex: 1,
+  /*   flex: 1, */
     width: '100%',
     height: '100%',
     margin: 10,
@@ -237,11 +250,11 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.1,
-    shadowRadius: 20,
+    shadowRadius: 15,
     padding: 10,
     margin: 5,
     marginBottom: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -267,6 +280,30 @@ const styles = StyleSheet.create({
   descriptionText: {
     color: 'gray',
     fontSize: 18,
+  },
+  errorContainerBuzon: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#d7e5f8',
+    borderRadius: 5,
+  },
+  titleErrorBuzon: {
+    marginBottom: 5,
+    fontSize: 25,
+    fontFamily: 'Quicksand-Light',
+    textAlign: 'center',
+  },
+  SinNotificacionesContainerBuzon: {
+    marginTop: 20,
+    padding: 30,
+    backgroundColor: '#d7e5f8' /*  'green' */,
+    borderRadius: 5,
+  },
+  SinNotificacionesTitleBuzon: {
+    marginBottom: 5,
+    fontSize: 25,
+    fontFamily: 'Quicksand-Light',
+    textAlign: 'center',
   },
 
 });
