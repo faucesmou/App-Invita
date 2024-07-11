@@ -117,11 +117,27 @@ export const Buzon = () => {
               )
               :
               error ? (
+                <>
                 <View style={styles.errorContainerBuzon} >
-                  <Text style={styles.titleErrorBuzon} >No se encontraron notificaciones.</Text>
-                  <Text style={styles.titleErrorBuzon} >Intente nuevamente más tarde.</Text>
+                  <Text style={styles.titleErrorBuzon} >No se encontraron notificaciones</Text>
+                  <Text style={styles.titleErrorBuzon} >Intente nuevamente más tarde</Text>
 
                 </View>
+                
+                <View style={styles.imageContainer}>
+
+                  <View
+                    style={styles.innerContainer}
+                  >
+                  <Image source={require('../../../assets/images/logogris.png')}
+                      style={styles.image}
+                      resizeMode="contain"
+                    /> 
+                  </View>
+
+                  </View>
+                
+                </>
               ) :
                 notificaciones.length > 0 ?
                   (

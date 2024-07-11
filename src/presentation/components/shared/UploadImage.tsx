@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button, Image, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, Alert, ScrollView } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import axios from 'axios';
@@ -139,6 +139,8 @@ const UploadImage: React.FC = () => {
         <Text style={styles.title}>Cargar Imágenes de Estudios</Text>
 
         <Button title="Seleccionar Imágenes" onPress={handleImagePicker} />
+        <ScrollView>
+ 
       {fileNames.map((fileName, index ) => (
         fileName && (
           <View key={index}>
@@ -158,7 +160,7 @@ const UploadImage: React.FC = () => {
           </View>
         )
       ))}
-
+ </ScrollView>
 
       </View>
     );
@@ -171,7 +173,8 @@ const UploadImage: React.FC = () => {
       marginTop: 0,
       justifyContent: 'center',
       alignItems: 'center',
-      /*  backgroundColor:'green', */
+  /*   backgroundColor:'green',  */
+    maxHeight: '40%',
     },
     title: {
       fontSize: 20,

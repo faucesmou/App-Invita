@@ -41,17 +41,28 @@ export const globalStyles = StyleSheet.create({
   },
   inputIOS: {
     padding: 0,
+    flex:1, /* esto lo agregamos para la imagen es prueba */
     width: '100%',
-    height: 50,
+    height: '100%',
     color: 'black',
     fontSize: 10,
     fontFamily: 'Quicksand-Light',
     borderRadius: 15,
     backgroundColor: 'white' /* '#efe3e3' */,
-
+  },
+  inputIOS2: {
+    padding: 0,
+    flex:1, /* esto lo agregamos para la imagen es prueba */
+    width: '100%',
+    height: '80%',
+    color: 'black',
+    fontSize: 10,
+    fontFamily: 'Quicksand-Light',
+    borderRadius: 15,
+    backgroundColor: 'white' /* '#efe3e3' */,
   },
   itemStyle: {
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: 'Quicksand-Light',
     flex: 1,
     justifyContent: 'center',
@@ -60,6 +71,19 @@ export const globalStyles = StyleSheet.create({
     color: 'black',
     alignItems: 'center',
     borderRadius: 15,
+  },
+  //para la imagen de flechita:
+  arrowImage: {
+    width: 50,
+    height: 50,
+    marginLeft: 10, // Ajusta el margen según sea necesario
+    backgroundColor:'orange'
+  },
+  //segunda prueba para colocar flecha en estudios medicos
+  icon: {
+    alignItems: 'flex-start',
+    /*     backgroundColor: 'yellow', */
+    marginBottom: 0,
   },
   //para la sombra: 
   pickerWrapper: {
@@ -71,8 +95,22 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: 'white', // Fondo para ver el borderRadius
     shadowColor: '#000', // Color de la sombra
     shadowOffset: { width: -5, height: 6 }, // Desplazamiento de la sombra
-    shadowOpacity: 0.2, // Opacidad de la sombra
+    shadowOpacity: 0, // Opacidad de la sombra
     shadowRadius: 8, // Radio de la sombra
+    flexDirection: 'row', // Esto permite que el Picker y la imagen se alineen en fila
+  },
+  pickerWrapper2: {
+    width: '90%',
+    height: 50,
+    marginBottom: 10,
+    padding: 0,
+    borderRadius: 15,
+    backgroundColor: 'white', // Fondo para ver el borderRadius
+    shadowColor: '#000', // Color de la sombra
+    shadowOffset: { width: -5, height: 6 }, // Desplazamiento de la sombra
+    shadowOpacity: 0, // Opacidad de la sombra
+    shadowRadius: 8, // Radio de la sombra
+    flexDirection: 'row', // Esto permite que el Picker y la imagen se alineen en fila
   },
   primaryButton: {
     backgroundColor: globalColors.profile2,
@@ -139,11 +177,11 @@ export const globalStyles = StyleSheet.create({
   },
   /* estilos para el input numero 2: */
   containerInput2: {
-    marginTop: 20,
+    marginTop: 5,
     marginBottom: 10,
     justifyContent: 'center',
     paddingHorizontal: 30,
-    /* backgroundColor: 'blue' */
+   /*   backgroundColor: 'yellow'  */
   },
   estilosInput2: {
     height: 40,

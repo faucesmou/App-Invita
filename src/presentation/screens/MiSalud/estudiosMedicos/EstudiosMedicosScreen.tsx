@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, Alert, TextInput, } from 'react-native'
+import { Text, View, Alert, TextInput, ScrollView, Image  } from 'react-native'
 import { xml2js } from 'xml-js';
 import { Picker } from '@react-native-picker/picker';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
@@ -10,8 +10,9 @@ import CustomHeader from '../../../components/CustomHeader';
 import { BackButton } from '../../../components/shared/BackButton';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import UploadImage from '../../../components/shared/UploadImage';
-import { ScrollView } from 'react-native-gesture-handler';
+/* import { ScrollView } from 'react-native-gesture-handler'; */
 import { TertiaryButton } from '../../../components/shared/TertiaryButton';
+import { IonIcon } from '../../../components/shared/IonIcon';
 
 
 
@@ -81,10 +82,13 @@ export const EstudiosMedicosScreen = () => {
   const [SelectedPrestadorNombre, setSelectedPrestadorNombre] = useState<string | null>(null);
   const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
   const [IdPrestadorElegido, setIdPrestadorElegido] = useState<string>('');
+  const [NumeroPrestadoresEncontrados, setNumeroDePrestadoresEncontrados] = useState<number>(0);
+ 
 
   //--------------------- LOGICA PARA EL INPUT DE BÙSQUEDA DE PRESTADOR-------------------------------------->
   const [isPosting, setIsPosting] = useState(false)
   const [busqueda, setBusqueda] = useState({ cadena: '' })
+
 
 
   const obtenerPrestadoresConsulta = async () => {
@@ -106,15 +110,22 @@ export const EstudiosMedicosScreen = () => {
           } else {
             return prestador.nombre;
           }
+
         });
+        console.log('nombresPrestadores-->', nombresPrestadores);
+        
 
         if (nombresPrestadores.length === 0) {
           setNombresDePrestadores(["No se encontraron prestadores"]);
+          setNumeroDePrestadoresEncontrados(0)
              } else {
           setNombresDePrestadores(nombresPrestadores);
-          // Si solo hay un prestador, seleccionarlo automáticamente
+          let CantidadDePrestadoresEncontrados = nombresPrestadores.length;
+          setNumeroDePrestadoresEncontrados(CantidadDePrestadoresEncontrados)
+          // Si solo hay un prestador, seleccionarlo automáticamente:
           if (nombresPrestadores.length === 1) {
             handleSelectPrestador(nombresPrestadores[0], 0);
+            setNumeroDePrestadoresEncontrados(1)
           }          
         }
         return true;
@@ -171,7 +182,7 @@ export const EstudiosMedicosScreen = () => {
     if (NombresDePrestadores.length === 1 && !SelectedPrestadorNombre) {
       handleSelectPrestador(NombresDePrestadores[0], 0);
     }
-  }, [NombresDePrestadores, IdPrestadorElegido]);
+  }, [NombresDePrestadores, IdPrestadorElegido, ]);
 
   useEffect(() => {
 
@@ -213,15 +224,15 @@ export const EstudiosMedicosScreen = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 10, marginTop: 15, fontSize: 25, textAlign: 'center'/* ,  backgroundColor: 'orange'  */ }}>Solicitar Estudio Médico</Text>
+  {/*     <Text style={{ marginBottom: 5, marginTop: 10, fontSize: 25, textAlign: 'center'}}>Solicitar Estudio Médico</Text> */}
 
       <View
-        style={{   /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 10 }}>
+        style={{   /* backgroundColor: 'green', */ flex: 1, marginBottom: 60, marginTop: 10 }}>
         {/*   <ScrollView> */}
 
         {/* -----------------FAMILIAR---------------- */}
 
-        <View style={{ /*  backgroundColor: 'yellow', */ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
+        <View style={{  /*  backgroundColor: 'orange', */  borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper}>
             <Picker
@@ -257,10 +268,18 @@ export const EstudiosMedicosScreen = () => {
          {/* -----------------PRESTADOR---------------- */}
 
         <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25 }}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Prestadores encontrados:</Text>
-          <View style={globalStyles.pickerWrapper}>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Prestadores encontrados: {NumeroPrestadoresEncontrados} </Text>
+          <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Desliza verticalmente para visualizarlos:</Text>
+          
+          <View style={globalStyles.pickerWrapper2}>
+       {/*    <Image 
+            source={require('../../../assets/images/logogris.png')} 
+            style={globalStyles.arrowImage} 
+            resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
+            /> */}
+             <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
             <Picker
-              style={globalStyles.inputIOS}
+              style={globalStyles.inputIOS2}
               selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectPrestador(itemValue, itemIndex)
@@ -273,31 +292,35 @@ export const EstudiosMedicosScreen = () => {
                 />
               ))}
             </Picker>
+          
+        
           </View>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Prestador Seleccionado:</Text>
+          <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>{SelectedPrestadorNombre} </Text>
         </View>
         {/* componente para cargar imagenes: */}
 
-        <ScrollView>
         <UploadImage />
+ 
 
-       {/*  <PrimaryButton
-          onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
-          label=" Solicitar Estudios Medicos"
-        /> */}
          <TertiaryButton
           onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
-          label="Solicitar Estudios Medicos"
+          label="Solicitar mi estudio"
           color={globalColors.profile2}
           iconName='medkit-outline'
-         description='Continuar con la solicitud' 
+         description='Presiona aquí para continuar' 
         />
-        </ScrollView>
+        
       </View>
       
     </View>
   )
 }
 
+       {/*  <PrimaryButton
+          onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
+          label=" Solicitar Estudios Medicos"
+        /> */}
        {/* -----------------INPUT 1 POSIBLE PARA ESCRIBIR EL PRESTADOR (VARIANTE)---------------- */}
 {/* La desventaja de este input es que no logro customisar el placeholder */}
        
