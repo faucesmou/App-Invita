@@ -124,7 +124,10 @@ export const Facturas = () => {
               facturas: item.facturas,
               periodoString: parsearFecha(item.periodo),
             }));
-            setFacturas(extractedData);
+            //invierto el orden para mostrar del más reciente al más antiguo:
+            const reversedData = extractedData.reverse();
+
+            setFacturas(reversedData);
           }
           else {
             setError('El formato de los datos recibidos no es el esperado.');
@@ -268,12 +271,12 @@ export const Facturas = () => {
                         :
                         (
                           <TouchableOpacity
-                          style={globalStyles.paidButton}
-                          onPress={ async () => {
+                          style={globalStyles.notAvailableButton}
+                         /*  onPress={ async () => {
                             let existeFactura = factura.facturas;
                             let idUnico = factura.idUnico;
                               await FacturasRequest2(existeFactura, idUnico)
-                          }}
+                          }} */
                         >
                          
                           <Text style={globalStyles.buttonText}>
