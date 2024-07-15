@@ -23,7 +23,8 @@ const CustomHeader = ( {color, titleSize} : Props) => {
       headerStyle: {
         backgroundColor: backColor, 
         height: adjustedHeaderHeight,
-        borderRadius: 15,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
       },
       headerTintColor: 'white',
       headerTitleStyle: {
@@ -32,7 +33,7 @@ const CustomHeader = ( {color, titleSize} : Props) => {
         
       },
     });
-  }, []);
+  }, [navigation, backColor, titleSize, adjustedHeaderHeight]);
 
   return null; 
 };

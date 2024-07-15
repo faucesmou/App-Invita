@@ -111,6 +111,7 @@ export const globalStyles = StyleSheet.create({
     shadowOpacity: 0, // Opacidad de la sombra
     shadowRadius: 8, // Radio de la sombra
     flexDirection: 'row', // Esto permite que el Picker y la imagen se alineen en fila
+  
   },
   primaryButton: {
     backgroundColor: globalColors.profile2,
@@ -283,7 +284,7 @@ export const globalStyles = StyleSheet.create({
     justifyContent: 'center'
   },
   notAvailableButton: {
-    backgroundColor:  globalColors.gray3 /* '#eedede' */,/* globalColors.profile2 */
+    backgroundColor:  globalColors.gray3,
     borderRadius: 5,
     padding: 5,
     margin: 10,

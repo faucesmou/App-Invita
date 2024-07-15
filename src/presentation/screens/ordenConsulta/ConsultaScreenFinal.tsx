@@ -11,6 +11,8 @@ import { useAuthStore } from '../../store/auth/useAuthStore'
 import { IndexPath, Layout, Select, SelectItem, SelectGroup, } from '@ui-kitten/components'
 import { BackButton } from '../../components/shared/BackButton'
 import { TertiaryButton } from '../../components/shared/TertiaryButton';
+import { IonIcon } from '../../components/shared/IonIcon';
+import Divider from '../../components/shared/Divider';
 
 
 export const ConsultaScreenFinal = () => {
@@ -97,7 +99,7 @@ export const ConsultaScreenFinal = () => {
 
     console.log('FamiliarSeleccionadoDatos------>>>', FamiliarSeleccionadoDatos);
     console.log('EspecialidadSeleccionadaDatos------>>>', EspecialidadSeleccionadaDatos);
-    console.log('PrestadorSeleccionadoDatos CONCHITUMADREEEE------>>>', PrestadorSeleccionadoDatos);
+    console.log('PrestadorSeleccionadoDatos ------>>>', PrestadorSeleccionadoDatos);
 
     const obtenerFamiliaresConsulta = async () => {
 
@@ -173,20 +175,23 @@ export const ConsultaScreenFinal = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
-      <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', /* backgroundColor: 'orange' */ }}>Solicitar orden de consulta</Text>
+      <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', }}>Solicitar orden de consulta</Text> 
 
       <View
-        style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 35 }}>
+        style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 20 }}>
 
         {/* -----------------FAMILIAR---------------- */}
 
         <View style={{ /*  backgroundColor: 'yellow', */ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
-          <View style={globalStyles.pickerWrapper}>
+          <View style={globalStyles.pickerWrapper2}>
+          <View style={{  marginTop: 10, marginLeft:10 }}>
+          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+            </View>
             <Picker
               style={globalStyles.inputIOS}
               selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
@@ -200,14 +205,19 @@ export const ConsultaScreenFinal = () => {
                 />
               ))}
             </Picker>
+           
           </View>
         </View>
 
+        <Divider />
         {/* -----------------ESPECIALIDAD---------------- */}
 
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginTop: 10, marginBottom:20  }}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona una Especialidad</Text>
-          <View style={globalStyles.pickerWrapper}>
+          <View style={globalStyles.pickerWrapper2}>
+          <View style={{  marginTop: 10, marginLeft:10 }}>
+          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+            </View>
             <Picker
               style={globalStyles.inputIOS}
               selectedValue={SelectedEspecialidadNombre !== null ? SelectedEspecialidadNombre : undefined}
@@ -223,13 +233,39 @@ export const ConsultaScreenFinal = () => {
               ))}
             </Picker>
           </View>
+          <View>
+            
+          </View>
+            <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Especialidad Seleccionada:</Text>
+            <View
+            style={{ borderRadius: 15,
+              paddingHorizontal: 10, 
+              paddingVertical: 5,
+              marginHorizontal: 40,
+              backgroundColor: SelectedEspecialidadNombre ? globalColors.gray3  : 'white' 
+            }}
+            >
+          <Text style={{ 
+            fontSize: 15, 
+            textAlign: 'center', 
+            marginBottom: 5, 
+            marginTop: 5, 
+            
+             }}
+             >{SelectedEspecialidadNombre} </Text>
+
+            </View>
         </View>
 
+        <Divider />
         {/* -----------------PRESTADOR---------------- */}
 
-        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25 }}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona un Prestador</Text>
-          <View style={globalStyles.pickerWrapper}>
+        <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25, marginTop: 15  }}>
+          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un Prestador</Text>
+          <View style={globalStyles.pickerWrapper2}>
+            <View style={{  marginTop: 10, marginLeft:10 }}>
+          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+            </View>
             <Picker
               style={globalStyles.inputIOS}
               selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
@@ -245,6 +281,29 @@ export const ConsultaScreenFinal = () => {
               ))}
             </Picker>
           </View>
+         
+
+            <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Prestador Seleccionado:</Text>
+          {/* <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>{SelectedPrestadorNombre} </Text> */}
+          <View
+            style={{ borderRadius: 15,
+              paddingHorizontal: 10, 
+              paddingVertical: 5,
+              marginHorizontal: 40,
+              backgroundColor: SelectedPrestadorNombre ? globalColors.gray3 : 'white' 
+            }}
+            >
+          <Text style={{ 
+            fontSize: 15, 
+            textAlign: 'center', 
+            marginBottom: 5, 
+            marginTop: 5, 
+            
+             }}
+             >{SelectedPrestadorNombre} </Text>
+
+      
+          </View>
         </View>
 
 
@@ -254,7 +313,7 @@ export const ConsultaScreenFinal = () => {
         /> */}
 
         <TertiaryButton
-          onPress={() => navigation.navigate('MiOrdenConsulta')}
+          onPress={() => navigation.navigate('Orden Enviada')}
           label="Continuar con la solicitud"
           color={globalColors.profile2}
           iconName='people-outline'

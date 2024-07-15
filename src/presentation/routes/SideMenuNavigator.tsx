@@ -41,7 +41,7 @@ export const SideMenuNavigator = () => {
 
     return (
       <Drawer.Navigator
-        initialRouteName={/* 'home' */ 'LoginScreen' }
+       /*  initialRouteName={'home' 'LoginScreen2' } */
         screenOptions={{
         swipeEdgeWidth: 0,  //con esta propiedad no permito que se pueda abrir
         headerShown: false,

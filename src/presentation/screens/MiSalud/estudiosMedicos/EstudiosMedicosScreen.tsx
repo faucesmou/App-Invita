@@ -13,6 +13,8 @@ import UploadImage from '../../../components/shared/UploadImage';
 /* import { ScrollView } from 'react-native-gesture-handler'; */
 import { TertiaryButton } from '../../../components/shared/TertiaryButton';
 import { IonIcon } from '../../../components/shared/IonIcon';
+import Divider from '../../../components/shared/Divider';
+
 
 
 
@@ -220,7 +222,7 @@ export const EstudiosMedicosScreen = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.gray3} titleSize={33} />
+      <CustomHeader color={globalColors.gray2} titleSize={33} />
 
       <BackButton />
 
@@ -232,12 +234,14 @@ export const EstudiosMedicosScreen = () => {
 
         {/* -----------------FAMILIAR---------------- */}
 
-        <View style={{  /*  backgroundColor: 'orange', */  borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
+        <View style={{  /*  backgroundColor: 'orange', */  borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 10 }}>
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper2}>
+          <View style={{  marginTop: 10 }}>
           <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+            </View>
             <Picker
-              style={globalStyles.inputIOS2}
+              style={globalStyles.inputIOS}
               selectedValue={selectedFamiliarNombre !== null ? selectedFamiliarNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectFamiliar(itemValue, itemIndex)
@@ -252,10 +256,15 @@ export const EstudiosMedicosScreen = () => {
           </View>
         </View>
 
+      
 
 
         {/* -----------------INPUT 2 PARA ESCRIBIR EL PRESTADOR---------------- */}
+        <Divider />
+
+
         <View style={globalStyles.containerInput2} >
+        <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 15 }}>Selecciona un prestador</Text>
           <TextInput
             style={globalStyles.estilosInput2}
             placeholder="Escriba aquí el prestador deseado"
@@ -278,9 +287,11 @@ export const EstudiosMedicosScreen = () => {
             style={globalStyles.arrowImage} 
             resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
             /> */}
-             <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+             <View style={{  marginTop: 10 }}>
+          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+            </View>
             <Picker
-              style={globalStyles.inputIOS2}
+              style={globalStyles.inputIOS}
               selectedValue={SelectedPrestadorNombre !== null ? SelectedPrestadorNombre : undefined}
               onValueChange={(itemValue: string | number, itemIndex: number) =>
                 handleSelectPrestador(itemValue, itemIndex)
@@ -296,11 +307,31 @@ export const EstudiosMedicosScreen = () => {
           
         
           </View>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Prestador Seleccionado:</Text>
-          <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>{SelectedPrestadorNombre} </Text>
-        </View>
-        {/* componente para cargar imagenes: */}
+          <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Prestador Seleccionado:</Text>
 
+        <View
+            style={{ borderRadius: 15,
+              paddingHorizontal: 10, 
+              paddingVertical: 5,
+              marginHorizontal: 40,
+              backgroundColor: SelectedPrestadorNombre ? globalColors.gray3 : 'white' 
+            }}
+            >
+          <Text style={{ 
+            fontSize: 15, 
+            textAlign: 'center', 
+            marginBottom: 5, 
+            marginTop: 5, 
+            
+             }}
+             >{SelectedPrestadorNombre} </Text>
+
+      
+          </View>
+        </View>
+
+        {/* componente para cargar imagenes: */}
+        <Divider />
         <UploadImage />
  
 

@@ -37,6 +37,7 @@ import { Buzon } from '../screens/home/Perfil/Buzon';
 import { Buzon1 } from '../screens/home/Perfil/Buzon1';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { Facturas } from '../screens/home/Facturas/Facturas';
+import { LoginScreen2 } from '../screens/auth/LoginScreen2';
 
 
 
@@ -53,10 +54,12 @@ export type RootStackParams = {
   Perfil: undefined,
   MiGestión: undefined,
   MisDatos: undefined,
-  MiOrdenConsulta: undefined,
+  "Orden Enviada": undefined,
   Credencial: undefined,
   Cartilla: undefined,
   LoginScreen: undefined,
+  LoginScreen2: undefined,
+  LoginGonzalo: undefined,
   RegisterScreen: undefined,
   LoadingScreen: undefined,
   SideMenuNavigator: undefined,
@@ -99,7 +102,7 @@ export const StackNavigator = () => {
   return (
     <Stack.Navigator
     /* ATENCIÒN ACÁ: INITIAL RouteName: esto define el loging sino anda usar la variante de abajo comentada. */
-      initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreen'}
+      initialRouteName={status === 'authenticated' ? 'home' : 'LoginGonzalo'}
    /*    initialRouteName={'home'} */
       screenOptions={{
         headerShown: false,
@@ -112,7 +115,8 @@ export const StackNavigator = () => {
 {/* ------------VISTAS PRINCIPALES: -------------->*/}
 
 {/* ------------VISTAS INICIO SESIÓN: -------------->*/}
-      <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false }} />
+    <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false }} /> 
+      {/* <Stack.Screen name='LoginGonzalo' component={LoginScreen2} options={{ headerShown: false }} /> */}
       <Stack.Screen name='RegisterScreen' component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name='LoadingScreen' component={LoadingScreen} options={{ headerShown: true }} />
 
@@ -162,7 +166,7 @@ export const StackNavigator = () => {
       <Stack.Screen name="Consulta" component={ConsultaScreenFinal} options={{ headerShown: true }} />
 
 {/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
-      <Stack.Screen name="MiOrdenConsulta" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Orden Enviada" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
       <Stack.Screen name="Estudios enviados" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
 
 {/* Obtener Formularios Especiales: */}

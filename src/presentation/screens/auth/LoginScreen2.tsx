@@ -1,29 +1,24 @@
 import { Layout, Text, Input, Button } from "@ui-kitten/components"
-import { Alert, useWindowDimensions } from "react-native"
+import { Alert, useWindowDimensions, Modal, View, StyleSheet  } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
-
 import { StackScreenProps } from "@react-navigation/stack";
-
 import { useState } from "react";
 import { useAuthStore } from "../../store/auth/useAuthStore";
 import { MyIcon } from "../../components/ui/MyIcon";
 import { RootStackParams } from "../../routes/StackNavigator";
-/* import { API_URL, STAGE } from "@env";
-import { useCredentialStore } from "../../store/credentials/useCredentialStore"; */
+import { RNCamera } from 'react-native-camera';
+/* import AsyncStorage from '@react-native-async-storage/async-storage';  */
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
 
+interface Props extends StackScreenProps<RootStackParams, 'LoginGonzalo'> { }
 
-interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 
-
-export const LoginScreen = ({ navigation }: Props) => {
+export const LoginScreen2 = ({ navigation }: Props) => {
 
   const { height } = useWindowDimensions();
 
-
-
   const { loginGonzaMejorado } = useAuthStore();
-  /*   const { consultaDatosCredencial } = useCredentialStore(); */
 
   const [isPosting, setIsPosting] = useState(false)
   const [form, setForm] = useState({
@@ -32,10 +27,12 @@ export const LoginScreen = ({ navigation }: Props) => {
     dni: '',
   })
 
+  const [isScannerVisible, setIsScannerVisible] = useState(false);
+
   const onLoginGonza = async () => {
 
    
-    if (/* form.email.length === 0 || form.password.length === 0 || */ form.dni.length === 0) {
+    if ( form.dni.length === 0) {
       Alert.alert('Error', 'Dni es campo obligatorio');
       return;
     }
@@ -49,7 +46,59 @@ export const LoginScreen = ({ navigation }: Props) => {
     return;
   }
 
-  /* console.log({ apiUrl: API_URL, stage: STAGE} ) */
+/* primera funcion para integrar el escaneo  */
+const onBarCodeRead = async (e: any) => {
+  const qrData = e.data; // Datos del QR escaneado
+  const { identifier, dni } = extractDataFromQR(qrData); // Función que extrae datos del QR
+
+  if (identifier && dni) {
+    const isValid = await validateDNI(dni); // Función que valida el DNI en tu sistema
+    if (isValid) {
+   /*    await AsyncStorage.setItem('userToken', identifier); */
+      setForm({ ...form, dni });
+      setIsScannerVisible(false);
+    } else {
+      Alert.alert('Invalid DNI', 'The DNI is not registered in the system.');
+    }
+  } else {
+    Alert.alert('Invalid QR', 'The QR code does not contain valid data.');
+  }
+};
+
+/* Segunda funcion para escaneo */
+
+const extractDataFromQR = (qrData: string) => {
+  try {
+    const parsedData = JSON.parse(qrData);
+    return { identifier: parsedData.id, dni: parsedData.dni };
+  } catch (error) {
+    console.error('Error parsing QR data', error);
+    return {};
+  }
+};
+
+/* Tercer funcion para escaneo: */
+
+const validateDNI = async (dni: string) => {
+  /* try {
+    const response = await fetch(`https://your-system-api.com/validateDNI?dni=${dni}`);
+    const result = await response.json();
+    return result.isValid;
+  } catch (error) {
+    console.error(error);
+    return false;
+  } */
+  setIsPosting(true); 
+  
+  const salioBien = await loginGonzaMejorado(form.email, form.password, dni)
+  setIsPosting(false);
+
+  if (salioBien) return;
+  Alert.alert('Error', 'Usuario o contraseña incorrectos');
+  return;
+};
+
+  
 
   //si no sucede esto:form.dni.length === 0 ni es un login exitoso se muestran las siguientes vistas:-------->
 
@@ -59,7 +108,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         <Layout style={{ paddingTop: height * 0.20 }}>
           <Text category="h1"
             style={{ marginBottom: 20 }}
-          >Bienvenido a Andes Salud </Text>
+          >Bienvenido a Andes Salud Login2</Text>
           <Text category="h1"
             style={{ marginBottom: 20, fontSize: 20 }}
           > Ingresar </Text>
@@ -105,16 +154,23 @@ export const LoginScreen = ({ navigation }: Props) => {
 
         {/* Button: */}
 
-        <Layout style={{ marginTop: 20 }}>
+        <Layout style={{ marginTop: 20, marginHorizontal:30, /* maxHeight:35, */ marginBottom:10 }}>
           <Button
             disabled={isPosting}
             accessoryRight={<MyIcon name="arrow-forward-outline" white />}
             onPress={onLoginGonza}
+            style={{ marginTop: 0, maxHeight:40 }}
           >
             Ingresar
           </Button>
-
+          <Button
+            style={{ marginTop: 10 }}
+            onPress={() => setIsScannerVisible(true)}
+          >
+            Ingresar con escaneo de DNI
+          </Button>
         </Layout>
+        
 
         {/* informacion para crear cuenta */}
 
@@ -140,8 +196,46 @@ export const LoginScreen = ({ navigation }: Props) => {
 
       </ScrollView>
 
+      {/* Modal para abrir la camara y escanear: */}
+      {isScannerVisible && (
+        <Modal
+          visible={isScannerVisible}
+          transparent={false}
+          animationType="slide"
+        >
+          <RNCamera
+            style={{ flex: 1 }}
+            onBarCodeRead={onBarCodeRead}
+            captureAudio={false}
+          >
+            <View style={styles.overlay}>
+              <Text style={styles.centerText}>Escanea el código QR de tu DNI</Text>
+              <Button onPress={() => setIsScannerVisible(false)}>Cancelar</Button>
+            </View>
+          </RNCamera>
+        </Modal>
+      )}
+
     </Layout>
   )
 
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  camera: {
+    flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  centerText: {
+    fontSize: 18,
+    padding: 32,
+    color: '#fff',
+  },
+});

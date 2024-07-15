@@ -136,7 +136,7 @@ const UploadImage: React.FC = () => {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Cargar Imágenes de Estudios</Text>
+        <Text style={styles.title}>Carga las imágenes de tus Estudios</Text>
 
         <Button title="Seleccionar Imágenes" onPress={handleImagePicker} />
         <ScrollView>
@@ -170,7 +170,7 @@ const UploadImage: React.FC = () => {
     container: {
       /*    flex: 1, */
       padding: 10,
-      marginTop: 0,
+      marginTop: 10,
       justifyContent: 'center',
       alignItems: 'center',
   /*   backgroundColor:'green',  */

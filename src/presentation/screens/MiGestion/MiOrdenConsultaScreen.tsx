@@ -14,8 +14,6 @@ import { useAuthStore } from '../../store/auth/useAuthStore'
 
 
 
-
-
 export const MiOrdenConsultaScreen = () => {
 
   const {  idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado } = useAuthStore();
@@ -62,11 +60,11 @@ export const MiOrdenConsultaScreen = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: top,
-        /*  backgroundColor: '#e9f6f8' */
+         backgroundColor: 'white' 
       }}
       >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (
@@ -80,10 +78,16 @@ export const MiOrdenConsultaScreen = () => {
           </View>
         )
           :
-          <View>
+          <View 
+          style={{
+             marginTop:10,
+             backgroundColor: 'white' 
+          }}
+          >
            
 
-            <Text style={{ marginBottom: 5, fontSize: 25 }}>Orden de Consulta Link:</Text>
+            <Text style={{ marginBottom: 5, fontSize: 25, }}>Orden generada</Text>
+            <Text style={{ marginBottom: 5, fontSize: 20, }}>Ingrese al siguiente link para su descarga:</Text>
             <TouchableOpacity onPress={handleOpenURL}>
               <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15, color: 'blue' }}>
                 Orden Link: {ordenConsulta}
