@@ -11,6 +11,7 @@ import CustomHeader from '../../../components/CustomHeader';
 import { BackButton } from '../../../components/shared/BackButton';
 import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
 import { IonIcon } from '../../../components/shared/IonIcon';
+import Divider from '../../../components/shared/Divider';
 
 
 
@@ -30,7 +31,8 @@ export const Buzon = () => {
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [modalVisible, setModalVisible] = useState(false);
+ const [modalVisible, setModalVisible] = useState(false); 
+/* const [modalVisible, setModalVisible] = useState([]); */
   const [modalData, setModalData] = useState<[]>([]);
 
 
@@ -71,7 +73,7 @@ export const Buzon = () => {
         })) : [];
 
         setNotificaciones(mappedNotificaciones);
-        console.log('Mapped notificaciones:', mappedNotificaciones);
+       /*  console.log('Mapped notificaciones:', mappedNotificaciones); */
         /*   console.log('Notificaciones:', notificaciones); */
         setIsConsulting(false);
 
@@ -87,6 +89,7 @@ export const Buzon = () => {
   }, [idAfiliado]);
 
   const PracticaResueltaRequest = async (idOrden: string) => {
+    console.log('Ingresando en  PRACTICA RESUELTA REQUEST-->>>>>>>idOrden:', idOrden);
     try {
       const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPDatosPracticaResuelta?IMEI=&idOrdenAPP=${idOrden}`)
       const xmlData = response.data;
@@ -102,43 +105,10 @@ export const Buzon = () => {
       console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
       console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData);
 
-      // Verificar si practicaResueltaData e idOrdenENC están definidos
-/* if (practicaResueltaData && practicaResueltaData.idOrdenENC) {
-      // Mapear los datos 
-      const mappedPracticaResueltaData = practicaResueltaData.idOrdenENC.map((_: any, index: number) => ({
-        idOrden: practicaResueltaData.idOrdenENC[index]._text,
-        idOrdenParcial: practicaResueltaData.idOrdenParcialENC[index]._text,
-        nombreConvenio: practicaResueltaData.nombreConvenioENC[index]._text,
-        coseguroENC: practicaResueltaData.coseguroENC[index]._text,
-        palabraClaveENC: practicaResueltaData.palabraClaveENC[index]._text,
-        fecFinENC: practicaResueltaData.fecFinENC[index]._text,
-        fecVencimientoENC: practicaResueltaData.fecVencimientoENC[index]._text,
-        domRenglon1: practicaResueltaData.domRenglon1[index]._text,
-        domRenglon2: practicaResueltaData.domRenglon2[index]._text
-      })); */
+
       // Verificar si practicaResueltaData y sus atributos necesarios están definidos
 if (practicaResueltaData && practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) {
-  // Extraer datos de tablaEncabezado y tablaDetalle
- /*  const encabezados = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
-    idOrden: item._text,
-    idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
-    nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
-    coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
-    palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
-    fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
-    fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
-    domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text,
-    domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text,
-  }));
 
-  const detalles = practicaResueltaData.tablaDetalle.idOrdenDET.map((item: any, index: number) => ({
-    idOrdenDET: item._text,
-    idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
-    idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
-    cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
-    prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
-    coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text,
-  })); */
 
   const combinedData = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
     idOrden: item._text,
@@ -188,10 +158,15 @@ setModalData(combinedData);
 
     return 'Pendiente';
   };
+  //este es el original :
   const closeModal = () => {
     setModalVisible(false);
-    setModalData([]); // Limpiar modalData al cerrar los modales
-  };
+    setModalData([]); 
+  }; 
+
+
+
+  
   const color = globalColors.gray;
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   /*  console.log('estas son las notificaciones:', notificaciones); */
@@ -316,27 +291,31 @@ setModalData(combinedData);
         <View style={styles.overlay} />
       )}
 
-            {modalData.map((data, index) => (
             <Modal
-            key={index}
+         /*    key={index} */
             animationType="slide"
             transparent={true}
             visible={modalVisible}
-            onRequestClose={closeModal}
-          >
+            onRequestClose={closeModal} 
+            >
              <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <View>
-                {/* <Text style={styles.textStyle}>Id: {data.idOrden}</Text> */}
+            {modalData.map((data, index) => (
+              <>
+              <View style={{marginTop:10}}>
                 <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text>
                 <Text style={styles.textStyle}>Fec. Vencimiento:      {data.fecVencimientoENC}</Text>
                 <Text style={styles.textStyle}>Prestador: {data.nombreConvenio}</Text>
                 <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
-             {/*    <Text style={styles.textStyle}>{data.domRenglon2}</Text> */}
                 <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
                 <Text style={styles.textStylePractica}>Práctica: {data.prestacionDET}</Text>
-             
               </View>
+              
+              <Divider/>
+              </>
+
+              ))}
+
               <Pressable
                 style={styles.button}
                 onPress={closeModal}
@@ -346,7 +325,6 @@ setModalData(combinedData);
             </View>
             </View>
           </Modal>
-            ))}
             </>
           </ScrollView>
 
@@ -506,10 +484,11 @@ const styles = StyleSheet.create({
   },
   textStylePractica: {
     color: 'black',
-    fontWeight: 'normal',
+    fontWeight: 'bold',
    /*  textAlign: 'justify', */
     marginTop:7,
     marginBottom:15,
+    fontSize:12,
   /*   lineHeight: 10, */
   },
   textStyleCoseguro: {
@@ -523,6 +502,8 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize:18,
+    marginTop:10,
   },
   //estilos para lograr un background borroso cuando esta el modal:
   overlay: {
@@ -531,7 +512,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(196, 193, 193, 0.5)', // Fondo semitransparente
+    backgroundColor: 'rgba(196, 193, 193, 0.27)', // Fondo semitransparente
     zIndex: 1, // Asegúrate de que esté por debajo del modal
   },
   centeredView: {
