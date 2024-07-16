@@ -93,12 +93,17 @@ export const Buzon = () => {
 
       // Convertir XML a JSON
       const result = xml2js(xmlData, { compact: true });
-      const practicaResueltaData = result.root?.tablaEncabezado;
+     /*  const practicaResueltaData = result.root?.tablaEncabezado; */
+
+      const practicaResueltaData = {
+        tablaEncabezado: result?.root?.tablaEncabezado,
+        tablaDetalle: result?.root?.tablaDetalle,
+      };
       console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
       console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData);
 
       // Verificar si practicaResueltaData e idOrdenENC están definidos
-if (practicaResueltaData && practicaResueltaData.idOrdenENC) {
+/* if (practicaResueltaData && practicaResueltaData.idOrdenENC) {
       // Mapear los datos 
       const mappedPracticaResueltaData = practicaResueltaData.idOrdenENC.map((_: any, index: number) => ({
         idOrden: practicaResueltaData.idOrdenENC[index]._text,
@@ -110,10 +115,54 @@ if (practicaResueltaData && practicaResueltaData.idOrdenENC) {
         fecVencimientoENC: practicaResueltaData.fecVencimientoENC[index]._text,
         domRenglon1: practicaResueltaData.domRenglon1[index]._text,
         domRenglon2: practicaResueltaData.domRenglon2[index]._text
-      }));
-      console.log('mappedPracticaResueltaData -->>>>>>>>:', mappedPracticaResueltaData);
-      // Almacenar los datos convertidos en el estado
-          setModalData(mappedPracticaResueltaData); 
+      })); */
+      // Verificar si practicaResueltaData y sus atributos necesarios están definidos
+if (practicaResueltaData && practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) {
+  // Extraer datos de tablaEncabezado y tablaDetalle
+ /*  const encabezados = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
+    idOrden: item._text,
+    idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
+    nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
+    coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
+    palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
+    fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
+    fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
+    domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text,
+    domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text,
+  }));
+
+  const detalles = practicaResueltaData.tablaDetalle.idOrdenDET.map((item: any, index: number) => ({
+    idOrdenDET: item._text,
+    idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
+    idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
+    cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
+    prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
+    coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text,
+  })); */
+
+  const combinedData = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
+    idOrden: item._text,
+    idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
+    nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
+    coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
+    palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
+    fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
+    fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
+    domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text,
+    domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text,
+    idOrdenDET: practicaResueltaData.tablaDetalle.idOrdenDET[index]._text,
+    idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
+    idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
+    cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
+    prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
+    coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text,
+}));
+
+setModalData(combinedData);
+
+
+  console.log('combinedData -->>>>>>>>:', combinedData);
+
       setModalVisible(true);
     } else {
         console.error('practicaResueltaData or idOrdenENC is undefined');
@@ -280,11 +329,13 @@ if (practicaResueltaData && practicaResueltaData.idOrdenENC) {
               <View>
                 {/* <Text style={styles.textStyle}>Id: {data.idOrden}</Text> */}
                 <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text>
-                <Text style={styles.textStyle}>Fec. Vencimiento: {data.fecVencimientoENC}</Text>
+                <Text style={styles.textStyle}>Fec. Vencimiento:      {data.fecVencimientoENC}</Text>
                 <Text style={styles.textStyle}>Prestador: {data.nombreConvenio}</Text>
-                <Text style={styles.textStyle}>Dirección: {data.domRenglon1}</Text>
-                <Text style={styles.textStyle}>{data.domRenglon2}</Text>
-                <Text style={styles.textStyle}>Coseguro: {data.coseguroENC}</Text>
+                <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
+             {/*    <Text style={styles.textStyle}>{data.domRenglon2}</Text> */}
+                <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
+                <Text style={styles.textStylePractica}>Práctica: {data.prestacionDET}</Text>
+             
               </View>
               <Pressable
                 style={styles.button}
@@ -450,6 +501,22 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'normal',
     textAlign: 'justify',
+    marginTop:7,
+  /*   lineHeight: 10, */
+  },
+  textStylePractica: {
+    color: 'black',
+    fontWeight: 'normal',
+   /*  textAlign: 'justify', */
+    marginTop:7,
+    marginBottom:15,
+  /*   lineHeight: 10, */
+  },
+  textStyleCoseguro: {
+    color: 'red',
+    fontWeight: 'normal',
+    textAlign: 'justify',
+    marginTop:7,
   /*   lineHeight: 10, */
   },
   textCloseStyle: {
