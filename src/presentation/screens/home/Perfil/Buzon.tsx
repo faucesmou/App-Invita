@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { View, Text, ScrollView, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, Pressable, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { xml2js } from 'xml-js';
@@ -30,23 +30,27 @@ export const Buzon = () => {
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalData, setModalData] = useState<[]>([]);
+
+
   useEffect(() => {
     setIsConsulting(true);
     const ProductsRequest = async () => {
       let camote = '301936D8-6482-4625-82DD-38A932A4FC5A'
       try {
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENPRAC?idAfiliado=${idAfiliado}&IMEI=`);
-        /*         console.log('EL RESPONSE DEL BUZON ES : ---------x-x-x-x-x-x->', response); */
+        /*   console.log('EL RESPONSE DEL BUZON ES : ---------x-x-x-x-x-x->', response); */
 
         const xmlData = response.data;
 
         // Convertir XML a JSON
         const result = xml2js(xmlData, { compact: true });
 
-        console.log('Datos JSON convertidos:', result);
+        /*    console.log('Datos JSON convertidos:', result); */
 
         const notificacionesData = result.Resultado?.tablaDatos;
-        console.log('notificacionesData-------------->>---->->>>---->><<<<---->>:', notificacionesData);
+
         if (notificacionesData === undefined) {
           console.log('notificacionesData es undefined: No hay notificaciones para este usuario.');
           setIsConsulting(false);
@@ -68,7 +72,7 @@ export const Buzon = () => {
 
         setNotificaciones(mappedNotificaciones);
         console.log('Mapped notificaciones:', mappedNotificaciones);
-        console.log('Notificaciones:', notificaciones);
+        /*   console.log('Notificaciones:', notificaciones); */
         setIsConsulting(false);
 
       } catch (error) {
@@ -82,9 +86,66 @@ export const Buzon = () => {
 
   }, [idAfiliado]);
 
+  const PracticaResueltaRequest = async (idOrden: string) => {
+    try {
+      const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPDatosPracticaResuelta?IMEI=&idOrdenAPP=${idOrden}`)
+      const xmlData = response.data;
+
+      // Convertir XML a JSON
+      const result = xml2js(xmlData, { compact: true });
+      const practicaResueltaData = result.root?.tablaEncabezado;
+      console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
+      console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData);
+
+      // Verificar si practicaResueltaData e idOrdenENC están definidos
+if (practicaResueltaData && practicaResueltaData.idOrdenENC) {
+      // Mapear los datos 
+      const mappedPracticaResueltaData = practicaResueltaData.idOrdenENC.map((_: any, index: number) => ({
+        idOrden: practicaResueltaData.idOrdenENC[index]._text,
+        idOrdenParcial: practicaResueltaData.idOrdenParcialENC[index]._text,
+        nombreConvenio: practicaResueltaData.nombreConvenioENC[index]._text,
+        coseguroENC: practicaResueltaData.coseguroENC[index]._text,
+        palabraClaveENC: practicaResueltaData.palabraClaveENC[index]._text,
+        fecFinENC: practicaResueltaData.fecFinENC[index]._text,
+        fecVencimientoENC: practicaResueltaData.fecVencimientoENC[index]._text,
+        domRenglon1: practicaResueltaData.domRenglon1[index]._text,
+        domRenglon2: practicaResueltaData.domRenglon2[index]._text
+      }));
+      console.log('mappedPracticaResueltaData -->>>>>>>>:', mappedPracticaResueltaData);
+      // Almacenar los datos convertidos en el estado
+          setModalData(mappedPracticaResueltaData); 
+      setModalVisible(true);
+    } else {
+        console.error('practicaResueltaData or idOrdenENC is undefined');
+      }
+
+    } catch (error) {
+      console.error('Error al obtener las notificaciones:', error);
+
+    }
+  }
+
+
+  const getButtonText = (notificacion: string) => {
+    if (notificacion === 'PRACTAUT') {
+      return 'Autorizada';
+    }
+    else if (notificacion === 'AUD') {
+      return 'En revisión';
+    }
+    else if (notificacion === 'RECHAZOPRACTICA') {
+      return 'Rechazada';
+    }
+
+    return 'Pendiente';
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+    setModalData([]); // Limpiar modalData al cerrar los modales
+  };
   const color = globalColors.gray;
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
-  console.log('estas son las notificaciones:', notificaciones);
+  /*  console.log('estas son las notificaciones:', notificaciones); */
   return (
     <View
       style={{
@@ -95,7 +156,7 @@ export const Buzon = () => {
         marginBottom: 0,
       }}
     >
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
@@ -118,25 +179,25 @@ export const Buzon = () => {
               :
               error ? (
                 <>
-                <View style={styles.errorContainerBuzon} >
-                  <Text style={styles.titleErrorBuzon} >No se encontraron notificaciones</Text>
-                  <Text style={styles.titleErrorBuzon} >Intente nuevamente más tarde</Text>
-
-                </View>
-                
-                <View style={styles.imageContainer}>
-
-                  <View
-                    style={styles.innerContainer}
-                  >
-                  <Image source={require('../../../assets/images/logogris.png')}
-                      style={styles.image}
-                      resizeMode="contain"
-                    /> 
-                  </View>
+                  <View style={styles.errorContainerBuzon} >
+                    <Text style={styles.titleErrorBuzon} >No se encontraron notificaciones</Text>
+                    <Text style={styles.titleErrorBuzon} >Intente nuevamente más tarde</Text>
 
                   </View>
-                
+
+                  <View style={styles.imageContainer}>
+
+                    <View
+                      style={styles.innerContainer}
+                    >
+                      <Image source={require('../../../assets/images/logogris.png')}
+                        style={styles.image}
+                        resizeMode="contain"
+                      />
+                    </View>
+
+                  </View>
+
                 </>
               ) :
                 notificaciones.length > 0 ?
@@ -145,6 +206,7 @@ export const Buzon = () => {
                       <Pressable
                         onPress={() => {
                           console.log('se toco en la notificacion')
+                          PracticaResueltaRequest(notificacion.idOrden)
                         }}
 
                       >
@@ -159,7 +221,10 @@ export const Buzon = () => {
                               )}
                               {notificacion.estado && (
                                 <Text style={styles.descriptionText}>
-                                  Estado:{notificacion.estado}
+
+                                  Estado:{
+                                    getButtonText(notificacion.estado)
+                                  }
                                 </Text>
                               )}
                               {notificacion.fecSolicitud && (
@@ -178,52 +243,89 @@ export const Buzon = () => {
                   ) :
                   (
                     <>
-                    <View  style={ styles.SinNotificacionesContainerBuzon } >
-                    <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones!</Text>
-                  </View>
+                      <View style={styles.SinNotificacionesContainerBuzon} >
+                        <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones!</Text>
+                      </View>
 
-                    <View style={styles.imageContainer}>
+                      <View style={styles.imageContainer}>
 
-                    <View
-                      style={styles.innerContainer}
-                    >
-                     <Image source={require('../../../assets/images/logogris.png')}
-                        style={styles.image}
-                        resizeMode="contain"
-                      /> 
-                    </View>
+                        <View
+                          style={styles.innerContainer}
+                        >
+                          <Image source={require('../../../assets/images/logogris.png')}
+                            style={styles.image}
+                            resizeMode="contain"
+                          />
+                        </View>
 
-                    </View>
+                      </View>
                     </>
-        )
+                  )
             }
+            <>
+            {modalVisible && (
+        <View style={styles.overlay} />
+      )}
 
-      </ScrollView>
-    </View>
+            {modalData.map((data, index) => (
+            <Modal
+            key={index}
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={closeModal}
+          >
+             <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View>
+                {/* <Text style={styles.textStyle}>Id: {data.idOrden}</Text> */}
+                <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text>
+                <Text style={styles.textStyle}>Fec. Vencimiento: {data.fecVencimientoENC}</Text>
+                <Text style={styles.textStyle}>Prestador: {data.nombreConvenio}</Text>
+                <Text style={styles.textStyle}>Dirección: {data.domRenglon1}</Text>
+                <Text style={styles.textStyle}>{data.domRenglon2}</Text>
+                <Text style={styles.textStyle}>Coseguro: {data.coseguroENC}</Text>
+              </View>
+              <Pressable
+                style={styles.button}
+                onPress={closeModal}
+              >
+                <Text style={styles.textCloseStyle}>Cerrar</Text>
+              </Pressable>
+            </View>
+            </View>
+          </Modal>
+            ))}
+            </>
+          </ScrollView>
+
+
+
+        </View>
 
 
 
       </View >
 
-  <View style={styles.imageContainer}>
+      <View style={styles.imageContainer}>
 
-    <View
-      style={styles.innerContainer}
-    >
-      <Text style={{
-        fontSize: 25,
-        textAlign: 'center',
-      }} >
-        Andes Salud
-      </Text>
+        <View
+          style={styles.innerContainer}
+        >
+          <Text style={{
+            fontSize: 25,
+            textAlign: 'center',
+          }} >
+            Andes Salud
+          </Text>
 
-      <Image source={require('../../../assets/images/logogris.png')}
-        style={styles.image}
-        resizeMode="contain"
-      />
-    </View>
+          <Image source={require('../../../assets/images/logogris.png')}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
 
-  </View>
+      </View>
 
     </View >
   );
@@ -247,10 +349,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-   /*  backgroundColor: 'blue', */
+    /*  backgroundColor: 'blue', */
   },
   image: {
-  /*   flex: 1, */
+    /*   flex: 1, */
     width: '100%',
     height: '100%',
     margin: 10,
@@ -320,6 +422,55 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
+  },
+  //estilos para el MODAL :
+  modalView: {
+    margin: 20,
+    marginTop: '20%',
+    backgroundColor: 'white'/* globalColors.gray3 */,
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    zIndex: 2, // Asegúrate de que el modal esté por encima del overlay
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: 'black',
+    fontWeight: 'normal',
+    textAlign: 'justify',
+  /*   lineHeight: 10, */
+  },
+  textCloseStyle: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  //estilos para lograr un background borroso cuando esta el modal:
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(196, 193, 193, 0.5)', // Fondo semitransparente
+    zIndex: 1, // Asegúrate de que esté por debajo del modal
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
 });

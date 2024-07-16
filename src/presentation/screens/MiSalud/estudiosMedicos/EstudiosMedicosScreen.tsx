@@ -332,6 +332,8 @@ export const EstudiosMedicosScreen = () => {
 
         {/* componente para cargar imagenes: */}
         <Divider />
+       
+
         <UploadImage />
  
 

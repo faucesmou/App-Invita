@@ -149,11 +149,11 @@ export const Facturas = () => {
           }
         } else {
           setError("Error con los datos");
-          console.log('la respuesta con errores de Cta Cte es--------->>>>', error);
+          console.log('la respuesta con errores de FacturasRequest es--------->>>>', error);
         }
 
       } catch (error) {
-        console.error('Error al obtener los pagos:', error);
+        console.error('Error al obtener FacturasRequest :', error);
         setError("Error con los datos");
       }
     };
@@ -273,8 +273,12 @@ export const Facturas = () => {
 
   const GenerarFactura2 = async (id: string, existeFactura: string, idUnico: string, periodo2: string) => {
     try {
+      console.log('INICIANDO CONSULTA DE GenerarFactura2 ---------->');
       if (existeFactura === "No") {
         const response = await axios.post(`https://fiscalizacion.createch.com.ar/facturacion/api/url-factura?titular=${cuilTitular}&idUnico=${idUnico}&periodo=${periodo2}`);
+
+        console.log('RESPONSE DE CONSULTA DE GenerarFactura2---------->', response);
+
         const data = response.data.meta;
         if (data) {
           const mensajeFacturaGenerada = data.msg;
@@ -379,14 +383,14 @@ export const Facturas = () => {
                           (
                             <>
 
-                              <Text style={{
+                            {/*   <Text style={{
                                 color: 'black',
                                 fontSize: 18,
                                 textAlign: 'center',
                                 marginBottom: 0
                               }}>
                                 No disponible
-                              </Text>
+                              </Text> */}
 
                               {/* <TouchableOpacity
                                 style={globalStyles.paidButton}

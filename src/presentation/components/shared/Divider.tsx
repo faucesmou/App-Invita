@@ -9,7 +9,7 @@ const Divider: React.FC = () => {
 
 const styles = StyleSheet.create({
   divider: {
-    height: 0.5,
+    height: 0.4,
     backgroundColor: globalColors.gray2,
     marginHorizontal: 40,
     alignSelf: 'stretch',
