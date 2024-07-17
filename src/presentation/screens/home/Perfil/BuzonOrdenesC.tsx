@@ -12,17 +12,21 @@ import { BackButton } from '../../../components/shared/BackButton';
 import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
 import { IonIcon } from '../../../components/shared/IonIcon';
 import Divider from '../../../components/shared/Divider';
-import { BuzonOrdenesC } from './BuzonOrdenesC';
 
 
 
 interface Notificacion {
   idOrden: string;
-  afiliado: string;
+  prestador: string;
+  dom1Prestador: string;
+  dom2Prestador: string;
+  codAutorizacion: string;
   fecSolicitud: string;
-  estado: string;
-  fecFinalizacion: string;
-  comentarioRechazo: string;
+  fecVencimiento: string;
+  afiliado: string;
+  codEstado: string;
+  coseguro: string;
+
 }
 interface Rechazo {
   idOrden: string,
@@ -39,7 +43,10 @@ interface AutorizadasData {
   prestacionDET: string;
 }
 
-export const Buzon = () => {
+export const BuzonOrdenesC = () => {
+  console.log('Ingresando en  BuzonOrdenesC -->>>>>>>', );
+
+
   const { idAfiliado } = useAuthStore();
   const { top } = useSafeAreaInsets();
   const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]);
@@ -58,9 +65,13 @@ export const Buzon = () => {
     setIsConsulting(true);
     const ProductsRequest = async () => {
       let camote = '301936D8-6482-4625-82DD-38A932A4FC5A'
+      console.log('Ingresando en ProductsRequest de BuzonOrdenesC -->>>>>>>', );
       try {
-        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENPRAC?idAfiliado=${idAfiliado}&IMEI=`);
+        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENAMB?idAfiliado=${idAfiliado}&IMEI=` );
         /*   console.log('EL RESPONSE DEL BUZON ES : ---------x-x-x-x-x-x->', response); */
+        /* console.log('Este es el response de BuzonOrdenesC -->>>>>>>', response ); */
+
+        console.log('Convirtiendo el response xmlData a result de BuzonOrdenesC -->>>>>>>>>>>>>>>');
 
         const xmlData = response.data;
 
@@ -71,6 +82,7 @@ export const Buzon = () => {
 
         // @ts-ignore
         const notificacionesData = result.Resultado?.tablaDatos;
+     /*    console.log('Este es el notificacionesData de BuzonOrdenesC -->>>>>>>', notificacionesData ); */
 
         if (notificacionesData === undefined) {
           console.log('En ProductsRequest notificacionesData es undefined: No hay notificaciones para este usuario.');
@@ -86,11 +98,20 @@ export const Buzon = () => {
         // Mapear los datos 
         const mappedNotificaciones = Array.isArray(notificacionesData.idOrden) ? notificacionesData.idOrden.map((_: any, index: number) => ({
           idOrden: notificacionesData.idOrden[index]._text,
+          prestador: notificacionesData.prestador[index]._text,
+          dom1Prestador: notificacionesData.dom1Prestador[index]._text,
+          dom2Prestador: notificacionesData.dom2Prestador[index]._text,
+          codAutorizacion: notificacionesData.codAutorizacion[index]._text,
+          fecSolicitud: notificacionesData.fecSolicitud[index]._text,
+          fecVencimiento: notificacionesData.fecVencimiento[index]._text,
           afiliado: notificacionesData.afiliado[index]._text,
+          codEstado: notificacionesData.codEstado[index]._text,
+          coseguro: notificacionesData.coseguro[index]._text,
+        /*   afiliado: notificacionesData.afiliado[index]._text,
           fecSolicitud: notificacionesData.fecSolicitud[index]._text,
           estado: notificacionesData.estado[index]._text,
           fecFinalizacion: notificacionesData.fecFinalizacion[index]._text,
-          comentarioRechazo: notificacionesData.comentarioRechazo[index]._text,
+          comentarioRechazo: notificacionesData.comentarioRechazo[index]._text, */
         })) : [];
 
         setNotificaciones(mappedNotificaciones);
@@ -99,8 +120,8 @@ export const Buzon = () => {
         setIsConsulting(false);
 
       } catch (error) {
-        console.error('Error al obtener las notificaciones:', error);
-        setError('Error al obtener las notificaciones');
+        console.error('Error al obtener las notificaciones de ordenes de consulta:', error);
+        setError('Error al obtener las notificaciones de ordenes de consulta');
         setIsConsulting(false)
       }
     };
@@ -142,8 +163,8 @@ export const Buzon = () => {
         // @ts-ignore
         tablaDetalle: result?.root?.tablaDetalle,
       };
-      console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
-      console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData);
+   /*    console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
+      console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData); */
 
       if (practicaResueltaData.tablaEncabezado === undefined || practicaResueltaData.tablaDetalle === undefined ) {
         console.log('En PracticaResueltaRequest practicaResueltaData tabla encabezado o tabla detalle es undefined: No hay notificaciones para este usuario.');
@@ -195,7 +216,7 @@ export const Buzon = () => {
 
 
   const getButtonText = (notificacion: string) => {
-    if (notificacion === 'PRACTAUT') {
+    if (notificacion === 'AUT') {
       return 'Autorizada';
     }
     else if (notificacion === 'AUD') {
@@ -215,78 +236,15 @@ export const Buzon = () => {
     setModalData([]);
   };
 
- const exampleModalData = [
-    {
-      palabraClaveENC: "DG9-M93VFUA5",
-      fecVencimientoENC: "31/07/2024 16:29:54",
-      nombreConvenio: "TERRAZAS ALTA MEDICINA SA",
-      domRenglon1: "Calle: PATRICIAS MENDOCINAS, Nº: 873, ",
-      domRenglon2: "MENDOZA - MENDOZA (C.P.:5500)",
-      coseguroENC: "0.00",
-      prestacionDET: "(Cod: 420169) CONSULTA GINECOLOGICA VESTIDA"
-    },
-    {
-      palabraClaveENC: "FZY-57B64TF9",
-      fecVencimientoENC: "31/07/2024 16:29:54",
-      nombreConvenio: "A MANO",
-      domRenglon1: "Calle: BELTRAN , Nº: 95, ",
-      domRenglon2: "MENDOZA - GODOY CRUZ (C.P.:5501)",
-      coseguroENC: "0.00",
-      prestacionDET: "(Cod: 420101) CONSULTA EN CONSULTORIO"
-    },
-    {
-      palabraClaveENC: "FZY-57B64TF9",
-      fecVencimientoENC: "31/07/2024 16:29:54",
-      nombreConvenio: "A MANO",
-      domRenglon1: "Calle: BELTRAN , Nº: 95, ",
-      domRenglon2: "MENDOZA - GODOY CRUZ (C.P.:5501)",
-      coseguroENC: "0.00",
-      prestacionDET: "(Cod: 420101) CONSULTA EN CONSULTORIO"
-    }
-    ,
-    {
-      palabraClaveENC: "FZY-57B64TF9",
-      fecVencimientoENC: "31/07/2024 16:29:54",
-      nombreConvenio: "A MANO",
-      domRenglon1: "Calle: BELTRAN , Nº: 95, ",
-      domRenglon2: "MENDOZA - GODOY CRUZ (C.P.:5501)",
-      coseguroENC: "0.00",
-      prestacionDET: "(Cod: 420101) CONSULTA EN CONSULTORIO"
-    }
-  ];
-
-
   const color = globalColors.gray;
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   /*  console.log('estas son las notificaciones:', notificaciones); */
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingHorizontal: 10,
-        marginTop: 20,
-        /*      backgroundColor: 'green',  */
-        marginBottom: 0,
-      }}
-    >
-      <CustomHeader color={globalColors.gray2} />
-
-      <BackButton />
-
-      <View
-        style={{
-          marginBottom: 30, marginTop: 0,
-          alignItems: 'center',
-          /*     backgroundColor: 'orange', */
-             maxHeight:'90%',
-             minHeight:'80%',
-             marginHorizontal:20
-        }}>
-
-        <View style={{ /* marginBottom: 30,  */marginTop: 10,  /* backgroundColor: 'green', */ maxHeight:'50%',minHeight:'40%', width: '100%'}}>
+    <>
+        <View style={{ marginBottom: 30, marginTop: 10, /*  backgroundColor: 'blue', */  maxHeight:'50%',minHeight:'40%', width: '100%', marginHorizontal: 30,}}>
 
           <View style={styles.ContainerEstudiosMedicosTitle} >
-            <Text style={styles.titleEstudiosMedicos} >Estudios Medicos:</Text>
+            <Text style={styles.titleEstudiosMedicos} >Ordenes de Consulta:</Text>
           </View>
           <ScrollView>
 
@@ -300,7 +258,7 @@ export const Buzon = () => {
               error ? (
                 <>
                   <View style={styles.errorContainerBuzon} >
-                      <Text style={styles.titleErrorBuzon} >Sin notificaciones</Text>  
+                     <Text style={styles.titleErrorBuzon} >Sin notificaciones</Text>  
 
                   <View style={styles.imageContainer}>
 
@@ -316,18 +274,19 @@ export const Buzon = () => {
                   </View>
                   </View>
 
+
                 </>
               ) :
                 notificaciones.length > 0 ?
                   (
                     <>
-                      
+                     
 
                       {notificaciones.map((notificacion, index) => (
                       <Pressable
                         onPress={() => {
                           console.log('se toco en la notificacion')
-                          PracticaResueltaRequest(notificacion.idOrden, notificacion.estado, notificacion.comentarioRechazo)
+                        /*   PracticaResueltaRequest(notificacion.idOrden, notificacion.estado, notificacion.comentarioRechazo) */
                         }}
 
                       >
@@ -335,16 +294,17 @@ export const Buzon = () => {
                           {/*  <Text style={{ fontSize: 16, textAlign: 'center' }}>{notificacion.afiliado}</Text> */}
                           <View style={styles.contentWrapper2}>
                             <View style={styles.textWrapper}>
+
                               {notificacion.afiliado && (
                                 <Text style={styles.buttonText}>
                                   {notificacion.afiliado}
                                 </Text>
                               )}
-                              {notificacion.estado && (
+                              {notificacion.codEstado && (
                                 <Text style={styles.descriptionText}>
 
                                   Estado:{
-                                    getButtonText(notificacion.estado)
+                                    getButtonText(notificacion.codEstado)
                                   }
                                 </Text>
                               )}
@@ -365,9 +325,9 @@ export const Buzon = () => {
                   ) :
                   (
                     <>
-                      <View style={styles.SinNotificacionesContainerBuzon} >
-                        <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones!</Text>
-                      </View>
+                     <View style={styles.SinNotificacionesContainerBuzon} >
+                        <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones</Text>
+                      </View> 
 
                       <View style={styles.imageContainer}>
 
@@ -495,21 +455,8 @@ export const Buzon = () => {
               </Modal>
             </>
           </ScrollView>
-
-          {/* <View style={styles.ContainerOrdenConsultaTitle} >
-            <Text style={styles.titleOrdenConsulta} >Ordenes de Consulta:</Text>
-          </View>
-          <View style={styles.SinNotificacionesContainerBuzon} >
-            <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones!</Text>
-          </View> */}
-
         </View>
-
-
-         <BuzonOrdenesC/> 
-
-      </View >
-    </View >
+        </>
   );
 };
 
@@ -524,6 +471,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: '30%',
     minWidth: '30%',
+   
   },
   innerContainer: {
     marginBottom: 15,
@@ -584,7 +532,7 @@ const styles = StyleSheet.create({
   errorContainerBuzon: {
     marginTop: 20,
     padding: 10,
- /*    backgroundColor: 'violet', */
+/*     backgroundColor: 'violet', */
     borderRadius: 5,
     marginHorizontal:35,
   },
@@ -592,17 +540,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom:5,
     padding: 5,
-    backgroundColor: '#db9a79'/* '#d7e5f8' */,
+    backgroundColor: '#9dcaf1'/* '#d7e5f8' */,
     borderRadius: 5,
     marginHorizontal:35,
-  },
-  ContainerOrdenConsultaTitle: {
-    marginTop: 10,
-    marginBottom:5,
-    padding: 5,
-    backgroundColor: '#97b7f1'/* '#d7e5f8' */,
-    borderRadius: 5,
-    marginHorizontal:20,
   },
   titleErrorBuzon: {
     marginBottom: 5,
@@ -612,12 +552,6 @@ const styles = StyleSheet.create({
     marginHorizontal:20,
   },
   titleEstudiosMedicos: {
-    marginBottom: 5,
-    fontSize: 20,
-    fontFamily: 'Quicksand-Light',
-    textAlign: 'center',
-  },
-  titleOrdenConsulta: {
     marginBottom: 5,
     fontSize: 20,
     fontFamily: 'Quicksand-Light',
