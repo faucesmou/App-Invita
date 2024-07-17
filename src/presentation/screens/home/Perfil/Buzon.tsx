@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { View, Text, ScrollView, StyleSheet, Image, Pressable, Modal } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, Pressable, Modal, } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { xml2js } from 'xml-js';
@@ -23,6 +23,20 @@ interface Notificacion {
   fecFinalizacion: string;
   comentarioRechazo: string;
 }
+interface Rechazo {
+  idOrden: string,
+  estado: string;
+  comentarioRechazo: string;
+}
+interface AutorizadasData {
+  palabraClaveENC: string,
+  fecVencimientoENC: string;
+  nombreConvenio: string;
+  domRenglon1: string,
+  domRenglon2: string;
+  coseguroENC: string;
+  prestacionDET: string;
+}
 
 export const Buzon = () => {
   const { idAfiliado } = useAuthStore();
@@ -31,9 +45,12 @@ export const Buzon = () => {
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
- const [modalVisible, setModalVisible] = useState(false); 
-/* const [modalVisible, setModalVisible] = useState([]); */
-  const [modalData, setModalData] = useState<[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
+
+  const [modalData, setModalData] = useState<AutorizadasData[]>([]);
+  const [rechazoData, setRechazoData] = useState<Rechazo[]>([]);
 
 
   useEffect(() => {
@@ -51,15 +68,18 @@ export const Buzon = () => {
 
         /*    console.log('Datos JSON convertidos:', result); */
 
+        // @ts-ignore
         const notificacionesData = result.Resultado?.tablaDatos;
 
         if (notificacionesData === undefined) {
-          console.log('notificacionesData es undefined: No hay notificaciones para este usuario.');
+          console.log('En ProductsRequest notificacionesData es undefined: No hay notificaciones para este usuario.');
           setIsConsulting(false);
+         
           return;
         }
         if (!notificacionesData) {
           setError('El formato de los datos recibidos no es el esperado.');
+          console.log('En ProductsRequest el formato de los datos recibidos no es el esperado.');
         }
 
         // Mapear los datos 
@@ -73,7 +93,7 @@ export const Buzon = () => {
         })) : [];
 
         setNotificaciones(mappedNotificaciones);
-       /*  console.log('Mapped notificaciones:', mappedNotificaciones); */
+        /*  console.log('Mapped notificaciones:', mappedNotificaciones); */
         /*   console.log('Notificaciones:', notificaciones); */
         setIsConsulting(false);
 
@@ -88,58 +108,86 @@ export const Buzon = () => {
 
   }, [idAfiliado]);
 
-  const PracticaResueltaRequest = async (idOrden: string) => {
+  const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo: string) => {
+    
     console.log('Ingresando en  PRACTICA RESUELTA REQUEST-->>>>>>>idOrden:', idOrden);
+   
+    if (estado === 'RECHAZOPRACTICA' ) {
+      console.log('En PracticaResueltaRequest estado === RECHAZOPRACTICA ');
+      setIsConsulting(false);
+      const rechazoInfo = [{
+        idOrden: idOrden,
+        estado: 'Esta práctica fue rechazada',
+        comentarioRechazo: comentarioRechazo,
+      }];
+      setRechazoData(rechazoInfo)
+      setModalVisible3(true);
+      return;
+    }
+
+
+   
     try {
       const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPDatosPracticaResuelta?IMEI=&idOrdenAPP=${idOrden}`)
       const xmlData = response.data;
 
       // Convertir XML a JSON
       const result = xml2js(xmlData, { compact: true });
-     /*  const practicaResueltaData = result.root?.tablaEncabezado; */
+      /*  const practicaResueltaData = result.root?.tablaEncabezado; */
 
       const practicaResueltaData = {
+        // @ts-ignore
         tablaEncabezado: result?.root?.tablaEncabezado,
+        // @ts-ignore
         tablaDetalle: result?.root?.tablaDetalle,
       };
       console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
       console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData);
 
+      if (practicaResueltaData.tablaEncabezado === undefined || practicaResueltaData.tablaDetalle === undefined ) {
+        console.log('En PracticaResueltaRequest practicaResueltaData tabla encabezado o tabla detalle es undefined: No hay notificaciones para este usuario.');
+        setIsConsulting(false);
+        setModalVisible2(true);
+        return;
+      }
+      if (!practicaResueltaData) {
+        setError('El formato de los datos recibidos no es el esperado.');
+        console.log('En PracticaResueltaRequest el formato de los datos recibidos no es el esperado.');
+      }
 
       // Verificar si practicaResueltaData y sus atributos necesarios están definidos
-if (practicaResueltaData && practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) {
+      if (practicaResueltaData && practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) {
 
 
-  const combinedData = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
-    idOrden: item._text,
-    idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
-    nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
-    coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
-    palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
-    fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
-    fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
-    domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text,
-    domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text,
-    idOrdenDET: practicaResueltaData.tablaDetalle.idOrdenDET[index]._text,
-    idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
-    idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
-    cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
-    prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
-    coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text,
-}));
+        const combinedData = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
+          idOrden: item._text,
+          idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
+          nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
+          coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
+          palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
+          fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
+          fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
+          domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text,
+          domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text,
+          idOrdenDET: practicaResueltaData.tablaDetalle.idOrdenDET[index]._text,
+          idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
+          idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
+          cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
+          prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
+          coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text,
+        }));
 
-setModalData(combinedData);
+        setModalData(combinedData);
 
-
-  console.log('combinedData -->>>>>>>>:', combinedData);
-
-      setModalVisible(true);
-    } else {
+        setModalVisible(true);
+      } else {
         console.error('practicaResueltaData or idOrdenENC is undefined');
+        setModalVisible2(true);
       }
 
     } catch (error) {
       console.error('Error al obtener las notificaciones:', error);
+      setModalVisible2(true);
 
     }
   }
@@ -161,12 +209,52 @@ setModalData(combinedData);
   //este es el original :
   const closeModal = () => {
     setModalVisible(false);
-    setModalData([]); 
-  }; 
+    setModalVisible2(false);
+    setModalVisible3(false);
+    setModalData([]);
+  };
+
+ const exampleModalData = [
+    {
+      palabraClaveENC: "DG9-M93VFUA5",
+      fecVencimientoENC: "31/07/2024 16:29:54",
+      nombreConvenio: "TERRAZAS ALTA MEDICINA SA",
+      domRenglon1: "Calle: PATRICIAS MENDOCINAS, Nº: 873, ",
+      domRenglon2: "MENDOZA - MENDOZA (C.P.:5500)",
+      coseguroENC: "0.00",
+      prestacionDET: "(Cod: 420169) CONSULTA GINECOLOGICA VESTIDA"
+    },
+    {
+      palabraClaveENC: "FZY-57B64TF9",
+      fecVencimientoENC: "31/07/2024 16:29:54",
+      nombreConvenio: "A MANO",
+      domRenglon1: "Calle: BELTRAN , Nº: 95, ",
+      domRenglon2: "MENDOZA - GODOY CRUZ (C.P.:5501)",
+      coseguroENC: "0.00",
+      prestacionDET: "(Cod: 420101) CONSULTA EN CONSULTORIO"
+    },
+    {
+      palabraClaveENC: "FZY-57B64TF9",
+      fecVencimientoENC: "31/07/2024 16:29:54",
+      nombreConvenio: "A MANO",
+      domRenglon1: "Calle: BELTRAN , Nº: 95, ",
+      domRenglon2: "MENDOZA - GODOY CRUZ (C.P.:5501)",
+      coseguroENC: "0.00",
+      prestacionDET: "(Cod: 420101) CONSULTA EN CONSULTORIO"
+    }
+    ,
+    {
+      palabraClaveENC: "FZY-57B64TF9",
+      fecVencimientoENC: "31/07/2024 16:29:54",
+      nombreConvenio: "A MANO",
+      domRenglon1: "Calle: BELTRAN , Nº: 95, ",
+      domRenglon2: "MENDOZA - GODOY CRUZ (C.P.:5501)",
+      coseguroENC: "0.00",
+      prestacionDET: "(Cod: 420101) CONSULTA EN CONSULTORIO"
+    }
+  ];
 
 
-
-  
   const color = globalColors.gray;
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   /*  console.log('estas son las notificaciones:', notificaciones); */
@@ -230,7 +318,7 @@ setModalData(combinedData);
                       <Pressable
                         onPress={() => {
                           console.log('se toco en la notificacion')
-                          PracticaResueltaRequest(notificacion.idOrden)
+                          PracticaResueltaRequest(notificacion.idOrden, notificacion.estado, notificacion.comentarioRechazo)
                         }}
 
                       >
@@ -287,75 +375,117 @@ setModalData(combinedData);
                   )
             }
             <>
-            {modalVisible && (
-        <View style={styles.overlay} />
-      )}
+              {modalVisible && (
+                <View style={styles.overlay} />
+              )}
 
-            <Modal
-         /*    key={index} */
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={closeModal} 
-            >
-             <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-            {modalData.map((data, index) => (
-              <>
-              <View style={{marginTop:10}}>
-                <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text>
-                <Text style={styles.textStyle}>Fec. Vencimiento:      {data.fecVencimientoENC}</Text>
-                <Text style={styles.textStyle}>Prestador: {data.nombreConvenio}</Text>
-                <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
-                <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
-                <Text style={styles.textStylePractica}>Práctica: {data.prestacionDET}</Text>
-              </View>
-              
-              <Divider/>
-              </>
-
-              ))}
-
-              <Pressable
-                style={styles.button}
-                onPress={closeModal}
+              <Modal
+                /*    key={index} */
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={closeModal}
               >
-                <Text style={styles.textCloseStyle}>Cerrar</Text>
-              </Pressable>
-            </View>
-            </View>
-          </Modal>
+              
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <Text style={styles.textStyletTitle}>Órdenes autorizadas: </Text>
+                  <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                      {modalData.map((data, index) => (
+                        <>
+                          <View style={{ marginTop: 10 }}>
+                            <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text>
+                            <Text style={styles.textStyle}>Fec. Vencimiento:      {data.fecVencimientoENC}</Text>
+                            <Text style={styles.textStyle}>Prestador: {data.nombreConvenio}</Text>
+                            <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
+                            <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
+                            <Text style={styles.textStylePractica}>Práctica: {data.prestacionDET}</Text>
+                          </View>
+
+                          <Divider />
+                        </>
+                      ))}
+                    </ScrollView>
+                    <Pressable
+                      style={styles.button}
+                      onPress={closeModal}
+                    >
+                      <Text style={styles.textCloseStyle}>Cerrar</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </Modal>
+            </>
+            <>
+              {modalVisible3 && (
+                <View style={styles.overlay} />
+              )}
+
+              <Modal
+                /*    key={index} */
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible3}
+                onRequestClose={closeModal}
+              >
+              
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <Text style={styles.textStyletTitle}>Órden rechazada: </Text>
+                  <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                      {rechazoData.map((data, index) => (
+                        <>
+                          <View style={{ marginTop: 10, marginBottom: 20 }}>
+
+                            <Text style={styles.textStyleOrdenRechazada}>idOrden: {data.idOrden}</Text>
+                            <Text style={styles.textStyleOrdenRechazada}>Estado: {data.estado}</Text>
+                            <Text style={styles.textStyleOrdenRechazada}>Detalle: {data.comentarioRechazo}</Text>
+                          
+                          </View>
+
+                          <Divider />
+                        </>
+                      ))}
+                    </ScrollView>
+                    <Pressable
+                      style={styles.button}
+                      onPress={closeModal}
+                    >
+                      <Text style={styles.textCloseStyle}>Cerrar</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </Modal>
+            </>
+            <>
+              {modalVisible2 && (
+                <View style={styles.overlay} />
+              )}
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible2}
+                onRequestClose={closeModal}
+              >
+              
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <Text style={styles.textStyletTitlePracticaNoEncontrada}>No se encontró la solicitud de práctica indicada</Text>
+                    <Text style={styles.textStyletTitlePracticaNoEncontrada}>Por favor intente nuevamente más tarde</Text>
+                    <Pressable
+                      style={styles.button}
+                      onPress={closeModal}
+                    >
+                      <Text style={styles.textCloseStyle}>Cerrar</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </Modal>
             </>
           </ScrollView>
-
-
-
         </View>
-
-
-
       </View >
-
-      <View style={styles.imageContainer}>
-
-        <View
-          style={styles.innerContainer}
-        >
-          <Text style={{
-            fontSize: 25,
-            textAlign: 'center',
-          }} >
-            Andes Salud
-          </Text>
-
-          <Image source={require('../../../assets/images/logogris.png')}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        </View>
-
-      </View>
-
     </View >
   );
 };
@@ -469,6 +599,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     zIndex: 2, // Asegúrate de que el modal esté por encima del overlay
+    width: '80%', // Ajusta el ancho según sea necesario
+    maxHeight: '60%', // Ajusta la altura según sea necesario
+  },
+  // altura del scrollView: 
+   scrollViewContent: {
+    flexGrow: 0,
   },
   button: {
     borderRadius: 20,
@@ -479,31 +615,51 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'normal',
     textAlign: 'justify',
-    marginTop:7,
-  /*   lineHeight: 10, */
+    marginTop: 7,
+  },
+  textStyleOrdenRechazada: {
+    color: 'black',
+    fontWeight: 'normal',
+/*     textAlign: 'justify', */
+    marginTop: 7,
+  },
+  textStyletTitle: {
+    color: 'black',
+    fontWeight: 'normal',
+    textAlign: 'justify',
+    marginTop: 4,
+    fontSize: 19,
+  },
+  textStyletTitlePracticaNoEncontrada: {
+    color: 'black',
+    fontWeight: 'normal',
+    textAlign: 'center',
+    marginTop: 4,
+    fontSize: 18,
+    marginBottom:5,
   },
   textStylePractica: {
     color: 'black',
     fontWeight: 'bold',
-   /*  textAlign: 'justify', */
-    marginTop:7,
-    marginBottom:15,
-    fontSize:12,
-  /*   lineHeight: 10, */
+    /*  textAlign: 'justify', */
+    marginTop: 7,
+    marginBottom: 15,
+    fontSize: 12,
+    /*   lineHeight: 10, */
   },
   textStyleCoseguro: {
     color: 'red',
     fontWeight: 'normal',
     textAlign: 'justify',
-    marginTop:7,
-  /*   lineHeight: 10, */
+    marginTop: 7,
+    /*   lineHeight: 10, */
   },
   textCloseStyle: {
     color: 'black',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize:18,
-    marginTop:10,
+    fontSize: 18,
+    marginTop: 10,
   },
   //estilos para lograr un background borroso cuando esta el modal:
   overlay: {
