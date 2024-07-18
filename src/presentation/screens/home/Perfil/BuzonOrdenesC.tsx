@@ -53,6 +53,8 @@ export const BuzonOrdenesC = () => {
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [listadoEstMedicosVisible, setListadoEstMedicosVisible] = useState(false);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
@@ -128,7 +130,7 @@ export const BuzonOrdenesC = () => {
 
     ProductsRequest();
 
-  }, [idAfiliado]);
+  }, [idAfiliado, listadoEstMedicosVisible]);
 
   const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo: string) => {
     
@@ -235,22 +237,47 @@ export const BuzonOrdenesC = () => {
     setModalVisible3(false);
     setModalData([]);
   };
+  const modifyEstMedicVisible = () => {
+    setListadoEstMedicosVisible(prevState => !prevState);
+  };
 
   const color = globalColors.gray;
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   /*  console.log('estas son las notificaciones:', notificaciones); */
   return (
     <>
-        <View style={{ marginBottom: 30, marginTop: 10, /*  backgroundColor: 'blue', */  maxHeight:'50%',minHeight:'40%', width: '100%', marginHorizontal: 30,}}>
+     <View style={styles.ContainerEstudiosMedicosTitleAfuera} >
+        <Pressable
+          onPress={() => {
+            console.log('se toco el titulo Ordenes de Consulta');
+            modifyEstMedicVisible()
+          }
+          }
+        >
+          <Text style={styles.titleEstudiosMedicosAfuera} >Ordenes de Consulta:</Text>
+        </Pressable>
+      </View>
+      {listadoEstMedicosVisible ?
+        (
+          <View style={{ marginBottom: 40, marginTop: 5, /* backgroundColor: 'blue', */ maxHeight: '50%', minHeight: '40%', width: '100%', marginHorizontal: 30, }}>
 
-          <View style={styles.ContainerEstudiosMedicosTitle} >
+          {/* <View style={styles.ContainerEstudiosMedicosTitle} >
+          <Pressable
+          onPress={()=>{
+            console.log('se toco el titulo ordenes de consulta');
+            modifyEstMedicVisible()
+          }
+          }
+          >
             <Text style={styles.titleEstudiosMedicos} >Ordenes de Consulta:</Text>
-          </View>
-          <ScrollView>
+          </Pressable>
+          </View> */}
 
+          <ScrollView>
+            
             {isConsulting ?
               (
-                <View style={styles.TertiaryButton}>
+                <View style={styles.LoaderContainer}>
                   <FullScreenLoader />
                 </View>
               )
@@ -344,6 +371,7 @@ export const BuzonOrdenesC = () => {
                     </>
                   )
             }
+       
             
             <>
               {modalVisible && (
@@ -453,13 +481,25 @@ export const BuzonOrdenesC = () => {
                   </View>
                 </View>
               </Modal>
-            </>
-          </ScrollView>
-        </View>
-        </>
+              </>
+            </ScrollView>
+
+      </View>
+          ) :
+          (
+            <></>
+         
+          )
+        }
+    </>
   );
 };
-
+ {/* <Pressable
+            style={styles.button}
+           
+          >
+            <Text style={styles.textCloseStyle}>hola</Text>
+          </Pressable> */}
 
 const styles = StyleSheet.create({
   imageContainer: {
@@ -487,7 +527,24 @@ const styles = StyleSheet.create({
     height: '100%',
     margin: 10,
   },
-
+  LoaderContainer: {
+    backgroundColor: 'white',
+    minWidth: '80%',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    padding: 10,
+    margin: 5,
+    marginBottom: 10,
+    marginTop: 90,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   //ESTILOS PARA LAS NOTIFICACIONES (COPIADOS DE TERTIARY BUTTON):
   TertiaryButton: {
     backgroundColor: 'white',
@@ -535,6 +592,23 @@ const styles = StyleSheet.create({
 /*     backgroundColor: 'violet', */
     borderRadius: 5,
     marginHorizontal:35,
+  },
+  ContainerEstudiosMedicosTitleAfuera: {
+    marginTop: 10,
+    marginBottom:5,
+    padding: 5,
+    backgroundColor: '#9dcaf1'/* '#d7e5f8' */,
+    borderRadius: 5,
+    marginHorizontal:10,
+    minWidth:'80%',
+    maxWidth:'80%',
+  },
+  titleEstudiosMedicosAfuera: {
+    marginBottom: 5,
+    fontSize: 20,
+    fontFamily: 'Quicksand-Light',
+    textAlign: 'center',
+    minWidth:'100%',
   },
   ContainerEstudiosMedicosTitle: {
     marginTop: 10,
