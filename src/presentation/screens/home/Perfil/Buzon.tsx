@@ -274,7 +274,7 @@ export const Buzon = () => {
         marginBottom: 0,
       }}
     >
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.gray3} />
 
       <BackButton />
 
@@ -287,6 +287,14 @@ export const Buzon = () => {
              minHeight:'80%',
              marginHorizontal:20
         }}>
+          
+        <View style={styles.ContainerMainTitle} >
+         
+           {/*  <Text style={styles.MainTitle} >Notificaciones</Text> */}
+            <Text style={styles.MainTitle} >Selecciona el tipo de solicitud</Text>
+        
+        </View>
+
         <View style={styles.ContainerEstudiosMedicosTitleAfuera} >
           <Pressable
             onPress={() => {
@@ -302,7 +310,7 @@ export const Buzon = () => {
 
 
         { listadoEstMedicosVisible? (
-        <View style={{ /* marginBottom: 30,  */marginTop: 10,   /* backgroundColor: 'green', */ maxHeight:'50%',minHeight:'40%', width: '100%'}}>
+        <View style={{ /* marginBottom: 30,  */marginTop: 10,   /* backgroundColor: 'green', */ maxHeight:'90%',minHeight:'40%', width: '100%'}}>
 
          {/*  <View style={styles.ContainerEstudiosMedicosTitle} >
           <Pressable
@@ -631,11 +639,21 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal:35,
   },
-  ContainerEstudiosMedicosTitleAfuera: {
+  ContainerMainTitle: {
     marginTop: 0,
+    marginBottom:10,
+    padding: 5,
+    backgroundColor: 'white'/* '#d7e5f8' */,
+    borderRadius: 5,
+    marginHorizontal:20,
+    minWidth:'100%',
+    maxWidth:'100%',
+  },
+  ContainerEstudiosMedicosTitleAfuera: {
+    marginTop: 5,
     marginBottom:5,
     padding: 5,
-    backgroundColor: '#db9a79'/* '#d7e5f8' */,
+    backgroundColor: '#97e3b0'/* '#d7e5f8' */,
     borderRadius: 5,
     marginHorizontal:10,
     minWidth:'80%',
@@ -670,6 +688,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
+  },
+  MainTitle: {
+    marginBottom: 5,
+    fontSize: 20,
+    fontFamily: 'Quicksand-Light',
+    textAlign: 'center',
+ /*    backgroundColor:'blue', */
+    minWidth:'100%',
   },
   titleEstudiosMedicosAfuera: {
     marginBottom: 5,

@@ -32,15 +32,49 @@ interface Rechazo {
   idOrden: string,
   estado: string;
   comentarioRechazo: string;
+  nombrePrestacion:string;
 }
 interface AutorizadasData {
-  palabraClaveENC: string,
-  fecVencimientoENC: string;
-  nombreConvenio: string;
-  domRenglon1: string,
-  domRenglon2: string;
-  coseguroENC: string;
-  prestacionDET: string;
+
+  idOrden: string;
+  estado: string;
+  codAutorizacion: string;
+  nombrePrestacion: string;
+  comentarioRechazo: string;
+  fecVencimiento: string;
+  prestador: string;
+  dom1Prestador: string;
+  dom2Prestador: string;
+  afiliado: string;
+  coseguro: string;
+
+
+  /*  idOrden: idOrden,
+        estado: estado,
+        nombrePrestacion: nombrePrestacion,
+        comentarioRechazo: '',
+        fecVencimiento: fecVencimiento,
+        prestador: prestador, 
+        dom1Prestador: dom1Prestador,
+        dom2Prestador: dom2Prestador,
+        coseguro: coseguro, */
+}
+
+
+interface NotificacionData {
+  idOrden: string;
+  prestador: string;
+  dom1Prestador: string;
+  dom2Prestador: string;
+  codAutorizacion: string;
+  fecSolicitud: string;
+  fecVencimiento: string;
+  afiliado: string;
+  codEstado: string;
+  coseguro: string;
+  nombrePrestacion: string;
+  cantidad: string;
+  coseguroPrestacion: string;
 }
 
 export const BuzonOrdenesC = () => {
@@ -50,6 +84,9 @@ export const BuzonOrdenesC = () => {
   const { idAfiliado } = useAuthStore();
   const { top } = useSafeAreaInsets();
   const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]);
+/*   const [notificaciones2, setNotificaciones2] = useState([]); */
+  const [notificacionesOrdenConsulta, setNotificacionesOrdenConsulta] = useState<NotificacionData[]>([]);
+
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,27 +102,104 @@ export const BuzonOrdenesC = () => {
 
   useEffect(() => {
     setIsConsulting(true);
+
+    const CombinedData2 = async () => {
+      console.log('Ingresando en ProductsRequest de BuzonOrdenesC -->>>>>>>');
+      try {
+        setIsConsulting(true);
+        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENAMB?idAfiliado=${idAfiliado}&IMEI=`);
+        console.log('Convirtiendo el response xmlData a result de BuzonOrdenesC -->>>>>>>>>>>>>>>');
+    
+        const xmlData = response.data;
+        const result = xml2js(xmlData, { compact: true });
+    
+        // Extraer datos de tablaDatos y tablaDetalle
+        const tablaDatos = result.Resultado?.tablaDatos;
+        const tablaDetalle = result.Resultado?.tablaDetalle;
+    
+        if (!tablaDatos || !tablaDetalle) {
+          console.log('En CombinedData tablaDatos o tablaDetalle es undefined: No hay datos disponibles.');
+          setIsConsulting(false);
+          setModalVisible2(true);
+          return;
+        }
+    
+        // Definir y verificar los datos extraídos
+        const idOrden = tablaDatos.idOrden ? tablaDatos.idOrden.map((item: any) => (item._text || '').trim()) : [];
+        const prestador = tablaDatos.prestador ? tablaDatos.prestador.map((item: any) => (item._text || '').trim()) : [];
+        const dom1Prestador = tablaDatos.dom1Prestador ? tablaDatos.dom1Prestador.map((item: any) => (item._text || '').trim()) : [];
+        const dom2Prestador = tablaDatos.dom2Prestador ? tablaDatos.dom2Prestador.map((item: any) => (item._text || '').trim()) : [];
+        const codAutorizacion = tablaDatos.codAutorizacion ? tablaDatos.codAutorizacion.map((item: any) => (item._text || '').trim()) : [];
+        const fecSolicitud = tablaDatos.fecSolicitud ? tablaDatos.fecSolicitud.map((item: any) => (item._text || '').trim()) : [];
+        const fecVencimiento = tablaDatos.fecVencimiento ? tablaDatos.fecVencimiento.map((item: any) => (item._text || '').trim()) : [];
+        const afiliado = tablaDatos.afiliado ? tablaDatos.afiliado.map((item: any) => (item._text || '').trim()) : [];
+        const codEstado = tablaDatos.codEstado ? tablaDatos.codEstado.map((item: any) => (item._text || '').trim()) : [];
+        const coseguro = tablaDatos.coseguro ? tablaDatos.coseguro.map((item: any) => (item._text || '').trim()) : [];
+    
+        const idOrdenDetalle = tablaDetalle.idOrdenDetalle ? tablaDetalle.idOrdenDetalle.map((item: any) => (item._text || '').trim()) : [];
+        const nombrePrestacion = tablaDetalle.nombrePrestacion ? tablaDetalle.nombrePrestacion.map((item: any) => (item._text || '').trim()) : [];
+        const descripcionPrestacion = tablaDetalle.descripcionPrestacion ? tablaDetalle.descripcionPrestacion.map((item: any) => (item._text || '').trim()) : [];
+        const montoPrestacion = tablaDetalle.montoPrestacion ? tablaDetalle.montoPrestacion.map((item: any) => (item._text || '').trim()) : [];
+        const codPrestacion = tablaDetalle.codPrestacion ? tablaDetalle.codPrestacion.map((item: any) => (item._text || '').trim()) : [];
+    
+        // Crear un array combinado
+        const combinedData = idOrden.map((id, index) => ({
+          idOrden: id,
+          prestador: prestador[index] || '',
+          dom1Prestador: dom1Prestador[index] || '',
+          dom2Prestador: dom2Prestador[index] || '',
+          codAutorizacion: codAutorizacion[index] || '',
+          fecSolicitud: fecSolicitud[index] || '',
+          fecVencimiento: fecVencimiento[index] || '',
+          afiliado: afiliado[index] || '',
+          codEstado: codEstado[index] || '',
+          coseguro: coseguro[index] || '',
+          // Agregar datos de tablaDetalle
+          idOrdenDetalle: idOrdenDetalle[index] || '',
+          nombrePrestacion: nombrePrestacion[index] || '',
+          descripcionPrestacion: descripcionPrestacion[index] || '',
+          montoPrestacion: montoPrestacion[index] || '',
+          codPrestacion: codPrestacion[index] || ''
+        }));
+    
+       /*  console.log('Datos combinados:', combinedData); */
+    
+        setNotificacionesOrdenConsulta(combinedData);
+     
+        setIsConsulting(false);
+    
+      } catch (error) {
+        console.error('Error al obtener combinar y guardar los datos de ordenes de consulta:', error);
+        setIsConsulting(false);
+        setModalVisible2(true);
+      }
+    };
+    
+    /* 
+; */
+
     const ProductsRequest = async () => {
-      let camote = '301936D8-6482-4625-82DD-38A932A4FC5A'
+   
       console.log('Ingresando en ProductsRequest de BuzonOrdenesC -->>>>>>>', );
       try {
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENAMB?idAfiliado=${idAfiliado}&IMEI=` );
-        /*   console.log('EL RESPONSE DEL BUZON ES : ---------x-x-x-x-x-x->', response); */
-        /* console.log('Este es el response de BuzonOrdenesC -->>>>>>>', response ); */
+      
 
         console.log('Convirtiendo el response xmlData a result de BuzonOrdenesC -->>>>>>>>>>>>>>>');
 
         const xmlData = response.data;
 
+/* console.log('Datos xmlData-------->>>>>>:', xmlData); */
         // Convertir XML a JSON
         const result = xml2js(xmlData, { compact: true });
 
-        /*    console.log('Datos JSON convertidos:', result); */
+          /*  console.log('Datos JSON convertidos y guardados. result es lo siguiente:', JSON.stringify(result)); */
 
         // @ts-ignore
         const notificacionesData = result.Resultado?.tablaDatos;
-     /*    console.log('Este es el notificacionesData de BuzonOrdenesC -->>>>>>>', notificacionesData ); */
+        console.log('Datos JSON convertidos y guardados. notificacionesData es lo siguiente:', notificacionesData);
 
+/* -------LO SIGUIENTE ES ORIGINAL COMO ESTABA----------------------------------------------------------------------------- */
         if (notificacionesData === undefined) {
           console.log('En ProductsRequest notificacionesData es undefined: No hay notificaciones para este usuario.');
           setIsConsulting(false);
@@ -109,16 +223,13 @@ export const BuzonOrdenesC = () => {
           afiliado: notificacionesData.afiliado[index]._text,
           codEstado: notificacionesData.codEstado[index]._text,
           coseguro: notificacionesData.coseguro[index]._text,
-        /*   afiliado: notificacionesData.afiliado[index]._text,
-          fecSolicitud: notificacionesData.fecSolicitud[index]._text,
-          estado: notificacionesData.estado[index]._text,
-          fecFinalizacion: notificacionesData.fecFinalizacion[index]._text,
-          comentarioRechazo: notificacionesData.comentarioRechazo[index]._text, */
+   
         })) : [];
 
         setNotificaciones(mappedNotificaciones);
-        /*  console.log('Mapped notificaciones:', mappedNotificaciones); */
-        /*   console.log('Notificaciones:', notificaciones); */
+   /*      console.log('las mappedNotificaciones de Ordenes de consulta son: ----------------------->', mappedNotificaciones); */
+        
+
         setIsConsulting(false);
 
       } catch (error) {
@@ -128,92 +239,59 @@ export const BuzonOrdenesC = () => {
       }
     };
 
-    ProductsRequest();
+ /*    ProductsRequest(); */
+ CombinedData2()
 
   }, [idAfiliado, listadoEstMedicosVisible]);
 
-  const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo: string) => {
+  const PracticaResueltaRequest = async (
+    afiliado: string,
+    idOrden: string,
+    estado: string,
+    codAutorizacion:string,
+    fecVencimiento: string,
+    nombrePrestacion: string,
+    prestador: string,
+    dom1Prestador: string,
+    dom2Prestador: string,
+    coseguro: string,
+    ) => {
     
-    console.log('Ingresando en  PRACTICA RESUELTA REQUEST-->>>>>>>idOrden:', idOrden);
-   
+    console.log('Ingresando en  PRACTICA RESUELTA REQUEST de Ordenes de Consulta Seleccionada-->>>>>>>idOrden:', idOrden);
+   try {
     if (estado === 'RECHAZOPRACTICA' ) {
-      console.log('En PracticaResueltaRequest estado === RECHAZOPRACTICA ');
+      console.log('En PracticaResueltaRequest de orden de consulta el estado === RECHAZOPRACTICA ');
       setIsConsulting(false);
       const rechazoInfo = [{
         idOrden: idOrden,
-        estado: 'Esta práctica fue rechazada',
-        comentarioRechazo: comentarioRechazo,
+        estado: 'Esta practica fue rechazada',
+        nombrePrestacion: nombrePrestacion,
+        comentarioRechazo: '',
       }];
       setRechazoData(rechazoInfo)
       setModalVisible3(true);
       return;
     }
-
-
+    const ordenInfo = [{
+      afiliado: afiliado,
+      idOrden: idOrden,
+      estado: estado,
+      codAutorizacion: codAutorizacion,
+      fecVencimiento: fecVencimiento,
+      nombrePrestacion: nombrePrestacion,
+      comentarioRechazo: '',
+      prestador: prestador,
+      dom1Prestador: dom1Prestador,
+      dom2Prestador: dom2Prestador,
+      coseguro: coseguro,
+    }];
    
-    try {
-      const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPDatosPracticaResuelta?IMEI=&idOrdenAPP=${idOrden}`)
-      const xmlData = response.data;
-
-      // Convertir XML a JSON
-      const result = xml2js(xmlData, { compact: true });
-      /*  const practicaResueltaData = result.root?.tablaEncabezado; */
-
-      const practicaResueltaData = {
-        // @ts-ignore
-        tablaEncabezado: result?.root?.tablaEncabezado,
-        // @ts-ignore
-        tablaDetalle: result?.root?.tablaDetalle,
-      };
-   /*    console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
-      console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData); */
-
-      if (practicaResueltaData.tablaEncabezado === undefined || practicaResueltaData.tablaDetalle === undefined ) {
-        console.log('En PracticaResueltaRequest practicaResueltaData tabla encabezado o tabla detalle es undefined: No hay notificaciones para este usuario.');
-        setIsConsulting(false);
-        setModalVisible2(true);
-        return;
-      }
-      if (!practicaResueltaData) {
-        setError('El formato de los datos recibidos no es el esperado.');
-        console.log('En PracticaResueltaRequest el formato de los datos recibidos no es el esperado.');
-      }
-
-      // Verificar si practicaResueltaData y sus atributos necesarios están definidos
-      if (practicaResueltaData && practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) {
-
-
-        const combinedData = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
-          idOrden: item._text,
-          idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
-          nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
-          coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
-          palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
-          fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
-          fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
-          domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text,
-          domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text,
-          idOrdenDET: practicaResueltaData.tablaDetalle.idOrdenDET[index]._text,
-          idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
-          idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
-          cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
-          prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
-          coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text,
-        }));
-
-        setModalData(combinedData);
-
-        setModalVisible(true);
-      } else {
-        console.error('practicaResueltaData or idOrdenENC is undefined');
-        setModalVisible2(true);
-      }
-
-    } catch (error) {
-      console.error('Error al obtener las notificaciones:', error);
-      setModalVisible2(true);
-
-    }
+    setModalData(ordenInfo);
+    setModalVisible(true);
+  } catch(error){
+    console.error('Error al obtener las notificaciones:', error);
+    setModalVisible2(true);
+  }
   }
 
 
@@ -259,19 +337,7 @@ export const BuzonOrdenesC = () => {
       </View>
       {listadoEstMedicosVisible ?
         (
-          <View style={{ marginBottom: 40, marginTop: 5, /* backgroundColor: 'blue', */ maxHeight: '50%', minHeight: '40%', width: '100%', marginHorizontal: 30, }}>
-
-          {/* <View style={styles.ContainerEstudiosMedicosTitle} >
-          <Pressable
-          onPress={()=>{
-            console.log('se toco el titulo ordenes de consulta');
-            modifyEstMedicVisible()
-          }
-          }
-          >
-            <Text style={styles.titleEstudiosMedicos} >Ordenes de Consulta:</Text>
-          </Pressable>
-          </View> */}
+          <View style={{ marginBottom: 40, marginTop: 5, /* backgroundColor: 'blue', */ maxHeight: '90%', minHeight: '40%', width: '100%', marginHorizontal: 30, }}>
 
           <ScrollView>
             
@@ -304,16 +370,27 @@ export const BuzonOrdenesC = () => {
 
                 </>
               ) :
-                notificaciones.length > 0 ?
+              notificacionesOrdenConsulta.length > 0 ?
                   (
                     <>
                      
 
-                      {notificaciones.map((notificacion, index) => (
+                      {notificacionesOrdenConsulta.map((notificacion, index) => (
                       <Pressable
                         onPress={() => {
-                          console.log('se toco en la notificacion')
-                        /*   PracticaResueltaRequest(notificacion.idOrden, notificacion.estado, notificacion.comentarioRechazo) */
+                          console.log('se toco en la notificacion');
+                         PracticaResueltaRequest(
+                          notificacion.afiliado,
+                          notificacion.idOrden, 
+                          notificacion.codEstado,
+                          notificacion.codAutorizacion, 
+                          notificacion.fecVencimiento,
+                          notificacion.nombrePrestacion,
+                          notificacion.prestador,
+                          notificacion.dom1Prestador,
+                           notificacion.dom2Prestador,
+                          notificacion.coseguro,
+                           ) 
                         }}
 
                       >
@@ -390,15 +467,24 @@ export const BuzonOrdenesC = () => {
                   <View style={styles.modalView}>
                     <Text style={styles.textStyletTitle}>Órdenes autorizadas: </Text>
                   <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                  
                       {modalData.map((data, index) => (
                         <>
                           <View style={{ marginTop: 10 }}>
-                            <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text>
-                            <Text style={styles.textStyle}>Fec. Vencimiento:      {data.fecVencimientoENC}</Text>
-                            <Text style={styles.textStyle}>Prestador: {data.nombreConvenio}</Text>
-                            <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
-                            <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
-                            <Text style={styles.textStylePractica}>Práctica: {data.prestacionDET}</Text>
+                            <Text style={styles.textStyleOrdenConsulta}>idOrden: {data.idOrden}</Text>
+                            <Text style={styles.textStyle}>afiliado: {data.afiliado}</Text>
+                            <Text style={styles.textStyle}>
+                              <Text style={styles.textStyle}>Codigo Autorización: </Text>
+                              <Text style={styles.valueCodAutorizado}>{data.codAutorizacion}</Text>
+                            </Text>         
+                            <Text style={styles.textStyle}>Fec. Vencimiento: {data.fecVencimiento}</Text>
+                            <Text style={styles.textStyle}>Prestador: {data.prestador}</Text>
+                            <Text style={styles.textStyle}>Dirección:{data.dom1Prestador}{data.dom2Prestador}</Text>
+                            <Text style={styles.textStyle}>
+                              <Text style={styles.textStyle}>Coseguro: </Text>
+                              <Text style={styles.valueCoseguro}>${data.coseguro}</Text>
+                            </Text> 
+                            <Text style={styles.textStylePractica}>Práctica: {data.nombrePrestacion}</Text>
                           </View>
 
                           <Divider />
@@ -438,7 +524,7 @@ export const BuzonOrdenesC = () => {
 
                             <Text style={styles.textStyleOrdenRechazada}>idOrden: {data.idOrden}</Text>
                             <Text style={styles.textStyleOrdenRechazada}>Estado: {data.estado}</Text>
-                            <Text style={styles.textStyleOrdenRechazada}>Detalle: {data.comentarioRechazo}</Text>
+                            {/* <Text style={styles.textStyleOrdenRechazada}>Detalle: {data.comentarioRechazo}</Text> */}
                           
                           </View>
 
@@ -674,7 +760,23 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'black',
     fontWeight: 'normal',
-    textAlign: 'justify',
+   /*  textAlign: 'justify', */
+    marginTop: 7,
+  },
+  valueCodAutorizado: {
+    color: 'green',
+    fontWeight: 'bold',
+    marginTop: 7,
+  },
+  valueCoseguro: {
+    color: 'red',
+    fontWeight: 'bold',
+    marginTop: 7,
+  },
+  textStyleOrdenConsulta: {
+    color: 'black',
+    fontWeight: 'normal',
+ /*    textAlign: 'justify', */
     marginTop: 7,
   },
   textStyleOrdenRechazada: {
