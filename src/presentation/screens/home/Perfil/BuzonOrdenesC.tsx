@@ -83,8 +83,7 @@ export const BuzonOrdenesC = () => {
 
   const { idAfiliado } = useAuthStore();
   const { top } = useSafeAreaInsets();
-  const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]);
-/*   const [notificaciones2, setNotificaciones2] = useState([]); */
+
   const [notificacionesOrdenConsulta, setNotificacionesOrdenConsulta] = useState<NotificacionData[]>([]);
 
   const [isConsulting, setIsConsulting] = useState(false);
@@ -120,7 +119,7 @@ export const BuzonOrdenesC = () => {
         if (!tablaDatos || !tablaDetalle) {
           console.log('En CombinedData tablaDatos o tablaDetalle es undefined: No hay datos disponibles.');
           setIsConsulting(false);
-          setModalVisible2(true);
+        /*   setModalVisible2(true); */
           return;
         }
     
@@ -165,81 +164,15 @@ export const BuzonOrdenesC = () => {
        /*  console.log('Datos combinados:', combinedData); */
     
         setNotificacionesOrdenConsulta(combinedData);
-     
         setIsConsulting(false);
     
       } catch (error) {
         console.error('Error al obtener combinar y guardar los datos de ordenes de consulta:', error);
         setIsConsulting(false);
-        setModalVisible2(true);
+       /*  setModalVisible2(true); */
       }
     };
     
-    /* 
-; */
-
-    const ProductsRequest = async () => {
-   
-      console.log('Ingresando en ProductsRequest de BuzonOrdenesC -->>>>>>>', );
-      try {
-        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENAMB?idAfiliado=${idAfiliado}&IMEI=` );
-      
-
-        console.log('Convirtiendo el response xmlData a result de BuzonOrdenesC -->>>>>>>>>>>>>>>');
-
-        const xmlData = response.data;
-
-/* console.log('Datos xmlData-------->>>>>>:', xmlData); */
-        // Convertir XML a JSON
-        const result = xml2js(xmlData, { compact: true });
-
-          /*  console.log('Datos JSON convertidos y guardados. result es lo siguiente:', JSON.stringify(result)); */
-
-        // @ts-ignore
-        const notificacionesData = result.Resultado?.tablaDatos;
-        console.log('Datos JSON convertidos y guardados. notificacionesData es lo siguiente:', notificacionesData);
-
-/* -------LO SIGUIENTE ES ORIGINAL COMO ESTABA----------------------------------------------------------------------------- */
-        if (notificacionesData === undefined) {
-          console.log('En ProductsRequest notificacionesData es undefined: No hay notificaciones para este usuario.');
-          setIsConsulting(false);
-         
-          return;
-        }
-        if (!notificacionesData) {
-          setError('El formato de los datos recibidos no es el esperado.');
-          console.log('En ProductsRequest el formato de los datos recibidos no es el esperado.');
-        }
-
-        // Mapear los datos 
-        const mappedNotificaciones = Array.isArray(notificacionesData.idOrden) ? notificacionesData.idOrden.map((_: any, index: number) => ({
-          idOrden: notificacionesData.idOrden[index]._text,
-          prestador: notificacionesData.prestador[index]._text,
-          dom1Prestador: notificacionesData.dom1Prestador[index]._text,
-          dom2Prestador: notificacionesData.dom2Prestador[index]._text,
-          codAutorizacion: notificacionesData.codAutorizacion[index]._text,
-          fecSolicitud: notificacionesData.fecSolicitud[index]._text,
-          fecVencimiento: notificacionesData.fecVencimiento[index]._text,
-          afiliado: notificacionesData.afiliado[index]._text,
-          codEstado: notificacionesData.codEstado[index]._text,
-          coseguro: notificacionesData.coseguro[index]._text,
-   
-        })) : [];
-
-        setNotificaciones(mappedNotificaciones);
-   /*      console.log('las mappedNotificaciones de Ordenes de consulta son: ----------------------->', mappedNotificaciones); */
-        
-
-        setIsConsulting(false);
-
-      } catch (error) {
-        console.error('Error al obtener las notificaciones de ordenes de consulta:', error);
-        setError('Error al obtener las notificaciones de ordenes de consulta');
-        setIsConsulting(false)
-      }
-    };
-
- /*    ProductsRequest(); */
  CombinedData2()
 
   }, [idAfiliado, listadoEstMedicosVisible]);
@@ -294,7 +227,6 @@ export const BuzonOrdenesC = () => {
   }
   }
 
-
   const getButtonText = (notificacion: string) => {
     if (notificacion === 'AUT') {
       return 'Autorizada';
@@ -318,10 +250,7 @@ export const BuzonOrdenesC = () => {
   const modifyEstMedicVisible = () => {
     setListadoEstMedicosVisible(prevState => !prevState);
   };
-
-  const color = globalColors.gray;
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
-  /*  console.log('estas son las notificaciones:', notificaciones); */
   return (
     <>
      <View style={styles.ContainerEstudiosMedicosTitleAfuera} >
@@ -337,7 +266,7 @@ export const BuzonOrdenesC = () => {
       </View>
       {listadoEstMedicosVisible ?
         (
-          <View style={{ marginBottom: 40, marginTop: 5, /* backgroundColor: 'blue', */ maxHeight: '90%', minHeight: '40%', width: '100%', marginHorizontal: 30, }}>
+          <View style={{ marginBottom: 40, marginTop: 5, /* backgroundColor: 'blue', */ maxHeight: '80%', minHeight: '40%', width: '100%', marginHorizontal: 30, }}>
 
           <ScrollView>
             
@@ -351,7 +280,7 @@ export const BuzonOrdenesC = () => {
               error ? (
                 <>
                   <View style={styles.errorContainerBuzon} >
-                     <Text style={styles.titleErrorBuzon} >Sin notificaciones</Text>  
+                      <Text style={styles.titleErrorBuzon} >Sin notificaciones</Text>  
 
                   <View style={styles.imageContainer}>
 
@@ -366,7 +295,6 @@ export const BuzonOrdenesC = () => {
 
                   </View>
                   </View>
-
 
                 </>
               ) :
@@ -429,23 +357,24 @@ export const BuzonOrdenesC = () => {
                   ) :
                   (
                     <>
-                     <View style={styles.SinNotificacionesContainerBuzon} >
-                        <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones</Text>
-                      </View> 
-
-                      <View style={styles.imageContainer}>
-
-                        <View
-                          style={styles.innerContainer}
-                        >
-                          <Image source={require('../../../assets/images/logogris.png')}
-                            style={styles.image}
-                            resizeMode="contain"
-                          />
-                        </View>
-
+                    <View style={styles.errorContainerBuzon} >
+                        <Text style={styles.titleErrorBuzon} >Sin notificaciones</Text>  
+  
+                    <View style={styles.imageContainer}>
+  
+                      <View
+                        style={styles.innerContainer}
+                      >
+                        <Image source={require('../../../assets/images/logogris.png')}
+                          style={styles.image}
+                          resizeMode="contain"
+                        />
                       </View>
-                    </>
+  
+                    </View>
+                    </View>
+  
+                  </>
                   )
             }
        

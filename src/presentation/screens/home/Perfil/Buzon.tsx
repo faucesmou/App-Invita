@@ -310,7 +310,7 @@ export const Buzon = () => {
 
 
         { listadoEstMedicosVisible? (
-        <View style={{ /* marginBottom: 30,  */marginTop: 10,   /* backgroundColor: 'green', */ maxHeight:'90%',minHeight:'40%', width: '100%'}}>
+        <View style={{ /* marginBottom: 30,  */marginTop: 10,   /* backgroundColor: 'green', */ maxHeight:'80%',minHeight:'40%', width: '100%'}}>
 
          {/*  <View style={styles.ContainerEstudiosMedicosTitle} >
           <Pressable
@@ -402,23 +402,24 @@ export const Buzon = () => {
                   ) :
                   (
                     <>
-                      <View style={styles.SinNotificacionesContainerBuzon} >
-                        <Text style={styles.SinNotificacionesTitleBuzon} >No tienes notificaciones!</Text>
+                    <View style={styles.errorContainerBuzon} >
+                        <Text style={styles.titleErrorBuzon} >Sin notificaciones</Text>  
+  
+                    <View style={styles.imageContainer}>
+  
+                      <View
+                        style={styles.innerContainer}
+                      >
+                        <Image source={require('../../../assets/images/logogris.png')}
+                          style={styles.image}
+                          resizeMode="contain"
+                        />
                       </View>
-
-                      <View style={styles.imageContainer}>
-
-                        <View
-                          style={styles.innerContainer}
-                        >
-                          <Image source={require('../../../assets/images/logogris.png')}
-                            style={styles.image}
-                            resizeMode="contain"
-                          />
-                        </View>
-
-                      </View>
-                    </>
+  
+                    </View>
+                    </View>
+  
+                  </>
                   )
             }
             
