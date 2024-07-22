@@ -24,7 +24,7 @@ export const CartillaScreen = () => {
    
       <HamburgerMenu />
 
-      <View style={[styles.headerContainer, { height: adjustedHeaderHeight }]}>
+      <View style={[styles.headerContainer, { height: adjustedHeaderHeight, backgroundColor: 'black'  }]}>
 
         <View style={{ width: '80%', marginBottom: 10 }}>
 
@@ -37,7 +37,7 @@ export const CartillaScreen = () => {
             Mi Salud
           </Text>
         </View>
-        <CustomHeader color={globalColors.gray3} />
+       {/*  <CustomHeader color={globalColors.gray3} /> */}
         <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
           <HamburgerMenu />
         </View>

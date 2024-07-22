@@ -85,9 +85,19 @@ export const EstudiosMedicosEnv = () => {
           fecSolicitud: fila.fecSolicitud._text,
           idEstado: fila.idEstado._text,
         });
+/*         console.log('resultado del envio de datos: result:', JSON.stringify(result));
+        console.log('resultado del envio de datos: result.mensaje:', JSON.stringify(result.mensaje));
+        console.log('resultado del envio de datos: result.idOrden:', JSON.stringify(result.idOrden));
+        console.log('resultado del envio de datos: result.fecSolicitud', JSON.stringify(result.fecSolicitud));
+        console.log('resultado del envio de datos: result.idEstado:', JSON.stringify(result.idEstado)); */
+
+            
+        
         // Verificar si el valor devuelto es "00"
         if (fila.valorDevuelto._text === "00") {
           setShowSuccessMessage(true);// Mostrar el mensaje de éxito
+         
+          
           setShowSuccessModal(true); // Mostrar el modal de éxito
           setError(null);
         } else {

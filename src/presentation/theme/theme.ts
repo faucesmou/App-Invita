@@ -276,7 +276,7 @@ export const globalStyles = StyleSheet.create({
     padding: 5,
     margin: 10,
     marginTop: 15,
-    marginBottom: 15,
+    marginBottom: 20,
     marginHorizontal: 60,
     paddingHorizontal: 10,
     alignItems: 'center',

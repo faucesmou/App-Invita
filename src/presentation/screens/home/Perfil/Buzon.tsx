@@ -136,7 +136,6 @@ export const Buzon = () => {
 
       // Convertir XML a JSON
       const result = xml2js(xmlData, { compact: true });
-      /*  const practicaResueltaData = result.root?.tablaEncabezado; */
 
       const practicaResueltaData = {
         // @ts-ignore
@@ -144,8 +143,8 @@ export const Buzon = () => {
         // @ts-ignore
         tablaDetalle: result?.root?.tablaDetalle,
       };
-      console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', result);
-      console.log('practicaResueltaData -->>>>>>>>:', practicaResueltaData);
+      console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', JSON.stringify(result));
+      console.log('practicaResueltaData -->>>>>>>>:', JSON.stringify(practicaResueltaData));
 
       if (practicaResueltaData.tablaEncabezado === undefined || practicaResueltaData.tablaDetalle === undefined ) {
         console.log('En PracticaResueltaRequest practicaResueltaData tabla encabezado o tabla detalle es undefined: No hay notificaciones para este usuario.');
@@ -181,6 +180,7 @@ export const Buzon = () => {
         }));
 
         setModalData(combinedData);
+        console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData));
 
         setModalVisible(true);
       } else {
@@ -274,7 +274,7 @@ export const Buzon = () => {
         marginBottom: 0,
       }}
     >
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 

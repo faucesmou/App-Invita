@@ -286,7 +286,16 @@ export const Facturas = () => {
           if (urlFactura) {
             handlePress(urlFactura);
           }
-          setMensajeFacturas(prev => [...prev.filter(item => item.id !== id), { id, mensaje: mensajeFacturaGenerada }]);
+          else if(mensajeFacturaGenerada === 'Factura no creada SALDO IGUAL 0' ) {
+            console.log('entrando en else if facutra no creada..--->');
+            
+            let mensajeSaldoCero = 'No se pueden generar facturas con saldo $0'
+            setMensajeFacturas(prev => [...prev.filter(item => item.id !== id), { id, mensaje: mensajeSaldoCero }]);
+          
+          } else {
+
+            setMensajeFacturas(prev => [...prev.filter(item => item.id !== id), { id, mensaje: mensajeFacturaGenerada }]);
+          }
         } else {
           setMensajeFacturas(prev => [...prev.filter(item => item.id !== id), { id, mensaje: 'Reintentar más tarde.' }]);
         }
@@ -382,30 +391,7 @@ export const Facturas = () => {
                           :
                           (
                             <>
-
-                            {/*   <Text style={{
-                                color: 'black',
-                                fontSize: 18,
-                                textAlign: 'center',
-                                marginBottom: 0
-                              }}>
-                                No disponible
-                              </Text> */}
-
-                              {/* <TouchableOpacity
-                                style={globalStyles.paidButton}
-                                onPress={async () => {
-                                  let existeFactura = factura.facturas;
-                                  let idUnico = factura.idUnico;
-                                  let periodo2 = String(factura.periodo);
-                                  console.log('el periodo es de tipo:', typeof (periodo2));
-                                  await GenerarFactura(existeFactura, idUnico, periodo2)
-                                }}
-                              > 
-                                <Text style={globalStyles.buttonText}>
-                                {getButtonText()}
-                                </Text>
-                              </TouchableOpacity>  */}  
+                             
                               <TouchableOpacity
                           style={globalStyles.paidButton}
                           onPress={async () => {
@@ -449,8 +435,9 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
     borderRadius: 15,
+  
   },
   card: {
     width: 350,

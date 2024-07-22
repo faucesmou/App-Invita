@@ -1,7 +1,7 @@
 //import { globalStyles } from '../../theme/theme'
 import { type NavigationProp, useNavigation, DrawerActions } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, Image, Linking, } from 'react-native'
+import { StyleSheet, View, Text, Image, Linking, Pressable, } from 'react-native'
 import { RootStackParams } from '../../routes/StackNavigator';
 import { useProfileStore } from '../../store/profile-store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,6 +12,8 @@ import Credencial from '../../components/shared/Credencial';
 import { SecondaryButton } from '../../components/shared/SecondaryButton';
 import { globalColors } from '../../theme/theme';
 import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
+import { BackButton } from '../../components/shared/BackButton';
+import { IonIcon } from '../../components/shared/IonIcon';
 
 
 
@@ -38,14 +40,14 @@ const handleOpenURL = () => {
     const openURL = async () =>{
       if(ordenConsulta){
         try{
-        await Linking.openURL(ordenConsulta)
-    }catch(err){
-      console.log('error al intentar ingresar a whatsapp:', err); 
-    }finally {
-      // Restablecer el estado después de intentar abrir la URL
-      setOrdenConsulta('');
-    }
-    }
+          await Linking.openURL(ordenConsulta)
+        } catch (err) {
+          console.log('error al intentar ingresar a whatsapp:', err);
+        } finally {
+          // Restablecer el estado después de intentar abrir la URL
+          setOrdenConsulta('');
+        }
+      }
     }
     openURL();
   }, [ordenConsulta]);
@@ -54,22 +56,48 @@ const handleOpenURL = () => {
     <View style={styles.screenContainer}
     >
 
-            <View style={[styles.headerContainer, { height: adjustedHeaderHeight }]}>
+      <View style={
+        [styles.headerContainer, 
+          {
+            height: adjustedHeaderHeight,
+            backgroundColor: 'black',
+            display: 'flex',
+            flexDirection: 'row'
+          }]}>
 
-                  <View style={{ width: '80%' }}>
+        <View style={{ width: '80%', marginBottom: 10  }}>
 
-                      <Text style={{
-                      fontSize: 35,
-                      textAlign: 'center',
-                      color: 'white'
-                    }} >
-                      Home
-                      </Text>
-                  </View>
-              <CustomHeader color={globalColors.gray} />
-              <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
-
+          <Text style={{
+            fontSize: 35,
+            textAlign: 'center',
+            color: 'white',
+         
+          }} >
+            Home
+          </Text>
         </View>
+        <View /* style={{ width: '80%' }} */ 
+        >
+
+        <Pressable onPress={() => {
+          console.log('presiono el boton ');
+          navigation.navigate('Buzon')
+        }}
+          style={{ marginLeft: 0, marginBottom: 0 }}
+        >
+         {/*  <IonIcon name='notifications-circle-outline' color={'white'} size={35} /> */}
+         <IonIcon name='notifications-outline' color={'white'} size={35} /> 
+        </Pressable>
+        
+        </View>
+
+
+
+        {/*   <BackButton /> */}
+        {/*  <CustomHeader color={'white'} /> */}
+      {/*   <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
+
+        </View> */}
       </View>
 
       <View style={styles.cardContainer} >
