@@ -71,7 +71,7 @@ export const Afiliados = () => {
 
       }}
     >
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
       <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center', }}>Afiliados a Cargo</Text>
@@ -93,12 +93,16 @@ export const Afiliados = () => {
 
 
         <FlatList
-          style={{  /* backgroundColor: 'orange', */ marginBottom: 0, padding: 15 }}
+          style={{  /* backgroundColor: 'orange', */ marginBottom: 0, padding: 10 }}
           data={products}
-          renderItem={({ item }) => (
+          renderItem={({ item }) => ( 
             <TertiaryButton
+
               onPress={() => navigation.navigate('Credenciales', { id: item.apellidoYNombre, nroAfiliado: item.nroAfiliado, idAfiliado: item.idAfiliado })}
               label={item.apellidoYNombre}
+              textSize={18}
+              textAlign={'center'}
+/*               label={<Text style={{ fontSize: 18, textAlign:'center' }}>{item.apellidoYNombre}</Text>}  */
               color={color}
             />
           )}

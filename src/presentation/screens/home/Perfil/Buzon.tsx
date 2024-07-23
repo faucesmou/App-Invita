@@ -558,6 +558,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: '30%',
     minWidth: '30%',
+   
   },
   innerContainer: {
     marginBottom: 15,
@@ -654,8 +655,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom:5,
     padding: 5,
-    backgroundColor: '#97e3b0'/* '#d7e5f8' */,
+    backgroundColor: globalColors.brown2/* 'brown' *//* '#97e3b0' *//* '#d7e5f8' */,
     borderRadius: 5,
+    borderWidth:1,
+    borderColor: globalColors.brown3,
     marginHorizontal:10,
     minWidth:'80%',
     maxWidth:'80%',

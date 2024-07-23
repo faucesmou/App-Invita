@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { globalColors, globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
@@ -12,6 +12,7 @@ import { TertiaryButton } from '../../components/shared/TertiaryButton'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SecondaryButton } from '../../components/shared/SecondaryButton'
+import { IonIcon } from '../../components/shared/IonIcon'
 
 export const TramitesScreen = () => {
   console.log('Entrando a TramitesScreen (Mi Gestion)')
@@ -27,7 +28,11 @@ export const TramitesScreen = () => {
     <View style={styles.screenContainer}
     >
 
-      <View style={[styles.headerContainer, { height: adjustedHeaderHeight }]}>
+      <View style={[styles.headerContainer, 
+        { height: adjustedHeaderHeight,
+          display: 'flex',
+          flexDirection: 'row' }
+        ]}>
 
         <View style={{ width: '80%', marginBottom: 10  }}>
 
@@ -39,10 +44,19 @@ export const TramitesScreen = () => {
             Mi Gestión
           </Text>
         </View>
-        <CustomHeader color={globalColors.gray} />
-       {/*  <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
-          <HamburgerMenu />
-        </View> */}
+        <View>
+
+          <Pressable onPress={() => {
+            console.log('presiono el boton ');
+            navigation.navigate('Buzon')
+          }}
+            style={{ marginLeft: 0, marginBottom: 0 }}
+          >
+
+            <IonIcon name='notifications-outline' color={'white'} size={35} />
+          </Pressable>
+
+        </View>
       </View>
 
 
@@ -120,21 +134,21 @@ const styles = StyleSheet.create({
   headerContainer: {
     zIndex: 0.25, 
     width: '100%',
-    backgroundColor: globalColors.gray3,
+    backgroundColor: globalColors.gray2,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 15,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   cardContainer: {
     position: 'absolute',
-    top: 110, 
+    top: 120, 
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1,
     paddingHorizontal: 0,
     marginBottom: 10,
-    /*     backgroundColor:'violet', */
     borderRadius: 20,
   },
   bigContentContainer: {

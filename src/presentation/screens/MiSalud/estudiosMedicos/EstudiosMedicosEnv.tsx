@@ -85,6 +85,8 @@ export const EstudiosMedicosEnv = () => {
           fecSolicitud: fila.fecSolicitud._text,
           idEstado: fila.idEstado._text,
         });
+        
+        
 /*         console.log('resultado del envio de datos: result:', JSON.stringify(result));
         console.log('resultado del envio de datos: result.mensaje:', JSON.stringify(result.mensaje));
         console.log('resultado del envio de datos: result.idOrden:', JSON.stringify(result.idOrden));
@@ -117,7 +119,7 @@ export const EstudiosMedicosEnv = () => {
     }
 
     EstudiosMedicosRequest()
-
+    console.log('el idOrden es el siguiente: ', result.idOrden);
   }, []);
 
   return (
@@ -172,6 +174,8 @@ export const EstudiosMedicosEnv = () => {
             
                 <Text style={globalStyles.resultText}>{result.mensaje}</Text>
                 <Text style={globalStyles.resultText}>ID Orden: {result.idOrden}</Text>
+               
+                
                 {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
                 <Text style={globalStyles.resultText}>Fecha de Solicitud: {result.fecSolicitud}</Text>
                 {verificacionMensaje && <Text>{verificacionMensaje}</Text>}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, Pressable } from 'react-native';
 
 import axios from 'axios';
 
@@ -76,11 +76,11 @@ export const CartillaMedicaScreen = () => {
       style={globalStyles.container}
 
     >
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
-      <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Especialidades</Text>
+      <Text style={{ marginBottom: 5, marginTop: 0, fontSize: 28, textAlign: 'center', }}>Especialidades</Text>
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 30, marginTop: 15 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
@@ -90,17 +90,36 @@ export const CartillaMedicaScreen = () => {
             key={index} 
             style={{ marginBottom: 10 }} 
             >
-              <Text 
+            {/*   <Text 
               onPress={ ()=> {
                 console.log('Valor de idCartilla ACA ACA ACAA:', cartilla.idCartilla);
               let idCartilla = cartilla.idCartilla;
                 GuardarIdCartillaSeleccionada(idCartilla); 
                 navigation.navigate('Prestadores', { idCartilla: cartilla.idCartilla })}
               }
-              style={{ fontSize: 16, textAlign: 'center', }}>{cartilla.nombre}</Text>
-            {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}
+                style={{ fontSize: 16, textAlign: 'center', }}>{cartilla.nombre}</Text> */}
 
-        
+                          {/* mejora del estilo:  */}
+              <Pressable
+                onPress={ ()=> {
+                  console.log('Valor de idCartilla ACA ACA ACAA:', cartilla.idCartilla);
+                let idCartilla = cartilla.idCartilla;
+                  GuardarIdCartillaSeleccionada(idCartilla); 
+                  navigation.navigate('Prestadores', { idCartilla: cartilla.idCartilla })}
+                }
+                >
+                    <View key={index} style={styles.TertiaryButton}>
+                    <View style={styles.contentWrapper2}>
+                            <View style={styles.textWrapper}>
+                    <Text style={styles.descriptionText}>
+                                  {cartilla.nombre}
+                                </Text>
+                                              {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}
+                    </View>
+                    </View>
+                    </View>
+                      </Pressable>
+
             </View>
           ))}
 
@@ -111,6 +130,41 @@ export const CartillaMedicaScreen = () => {
 
   )
 }
+
+const styles = StyleSheet.create ({
+  TertiaryButton: {
+    backgroundColor: 'white',
+    minWidth: '80%',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    padding: 5,
+    margin: 5,
+    marginBottom: 5,
+    marginHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  descriptionText: {
+    color: 'black',
+    fontSize: 18,
+    textAlign: 'center'
+  },
+  contentWrapper2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
+  },
+  textWrapper: {
+    flex: 1,
+    paddingRight: 5,
+  },
+})
 /* <FlatList
         data={products}
         renderItem={({ item }) => (

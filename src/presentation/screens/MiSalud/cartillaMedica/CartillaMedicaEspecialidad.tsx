@@ -79,11 +79,11 @@ export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
       style={globalStyles.container}
 
     >
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
-      <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Cartilla Médica Especialidad- Prestadores</Text>
+{/*       <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Prestadores</Text> */}
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 30, marginTop: 15 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>

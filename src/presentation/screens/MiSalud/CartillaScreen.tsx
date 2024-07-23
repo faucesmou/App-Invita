@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { globalColors } from '../../theme/theme'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { RootStackParams } from '../../routes/StackNavigator';
 import CustomHeader from '../../components/CustomHeader';
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 import { TertiaryButton } from '../../components/shared/TertiaryButton';
+import { IonIcon } from '../../components/shared/IonIcon';
 
 export const CartillaScreen = () => {
   console.log('Entrando a Cartilla Screen--------->');
@@ -22,25 +23,42 @@ export const CartillaScreen = () => {
       style={styles.screenContainer}
     >
    
-      <HamburgerMenu />
 
-      <View style={[styles.headerContainer, { height: adjustedHeaderHeight, backgroundColor: 'black'  }]}>
+      <View style={[styles.headerContainer, 
+        {
+          height: adjustedHeaderHeight,
+          display: 'flex',
+          flexDirection: 'row'
+        }
+      ]}>
 
-        <View style={{ width: '80%', marginBottom: 10 }}>
+        <View style={{ width: '80%', marginBottom: 10, }}>
 
           <Text style={{
             fontSize: 35,
             textAlign: 'center',
+            marginLeft: '7%',
             color: 'white',
+          /*   backgroundColor: 'yellow' */
           
           }} >
             Mi Salud
           </Text>
         </View>
-       {/*  <CustomHeader color={globalColors.gray3} /> */}
-        <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
-          <HamburgerMenu />
+
+        <View>
+
+        <Pressable onPress={() => {
+          console.log('presiono el boton ');
+          navigation.navigate('Buzon')
+        }}
+          style={{ marginLeft: 0, marginBottom: 0 }}
+        >
+         <IonIcon name='notifications-outline' color={'white'} size={35} /> 
+        </Pressable>
+        
         </View>
+     
       </View>
 
       <View style={styles.cardContainer} >
@@ -100,14 +118,15 @@ const styles = StyleSheet.create({
   headerContainer: {
     zIndex: 0.25,
     width: '100%',
-    backgroundColor: globalColors.gray3,
+    backgroundColor: globalColors.gray2,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 15,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   cardContainer: {
     position: 'absolute',
-    top: 110, 
+    top: 120, 
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -130,7 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 15 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 15,
     elevation: 5,
   },
@@ -155,7 +174,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 20,
   },
   emergencySubitle: {

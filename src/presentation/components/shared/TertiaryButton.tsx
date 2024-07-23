@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'; //supuestamente esto generaba anidacion( revisar )
 import React from 'react'
-import { Pressable, StyleSheet, Text, View  } from 'react-native';
+import { Pressable, StyleSheet, Text, View, TextStyle  } from 'react-native';
 import { globalColors, globalStyles } from '../../theme/theme';
 import { IonIcon } from './IonIcon';
 
@@ -12,10 +12,12 @@ interface Props {
     disabled?: boolean;
     iconName?: string;
     description?: string;
+    textSize?:number;
+    textAlign?: TextStyle['textAlign']
 }
 
 
-export const TertiaryButton = ( { onPress, label, color, disabled, iconName, description }: Props) => {
+export const TertiaryButton = ( { onPress, label, color, disabled, iconName, description, textSize, textAlign }: Props) => {
   const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
   console.log('backColor', backColor)  
   const navigation = useNavigation();
@@ -34,7 +36,9 @@ export const TertiaryButton = ( { onPress, label, color, disabled, iconName, des
       <View style={styles.contentWrapper2}>
         <View style={styles.textWrapper}>
           {label && (
-            <Text style={styles.buttonText}>
+            <Text /* style={[styles.buttonText, { fontSize: textSize ? textSize : 20, textAlign: textAlign ? textAlign : 'left'  }] } */
+            style={StyleSheet.flatten([styles.buttonText, { fontSize: textSize || 20, textAlign: textAlign || 'left' }])}
+            >
               {label}
             </Text>
           )}
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 20,
     padding: 10,
     margin: 5,

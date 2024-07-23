@@ -71,13 +71,13 @@ const handleOpenURL = () => {
             fontSize: 35,
             textAlign: 'center',
             color: 'white',
+            marginLeft: '7%',
          
           }} >
             Home
           </Text>
         </View>
-        <View /* style={{ width: '80%' }} */ 
-        >
+        <View >
 
         <Pressable onPress={() => {
           console.log('presiono el boton ');
@@ -85,19 +85,11 @@ const handleOpenURL = () => {
         }}
           style={{ marginLeft: 0, marginBottom: 0 }}
         >
-         {/*  <IonIcon name='notifications-circle-outline' color={'white'} size={35} /> */}
          <IonIcon name='notifications-outline' color={'white'} size={35} /> 
         </Pressable>
         
         </View>
 
-
-
-        {/*   <BackButton /> */}
-        {/*  <CustomHeader color={'white'} /> */}
-      {/*   <View style={{ position: 'absolute', zIndex: 2, left: 0, width: '100%' }}>
-
-        </View> */}
       </View>
 
       <View style={styles.cardContainer} >
