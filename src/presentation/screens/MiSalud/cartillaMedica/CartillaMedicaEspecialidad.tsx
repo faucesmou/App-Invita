@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, StyleSheet } from 'react-native';
 
 import axios from 'axios';
 
@@ -37,34 +37,52 @@ export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
 
     const CartillaRequest = async () => {
 
+      if (idCartillaSeleccionada === undefined) {
+        let sinCartilas = [{
+          nombre: 'No se encontraron prestadores para esta especialidad',
+          idConvenio: 'sin convenio'
+        }]
+        setCartillas(sinCartilas);
+        return
+      }
       try {
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscarPrestadoresCartilla?IMEI=&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA&idCartilla=${idCartillaSeleccionada}`)
         const xmlData = response.data;
 
-         // Convertir XML a JSON
-         const result = xml2js(xmlData, { compact: true });
-         console.log('CartillaMedicaEspecialidad---->', idAfiliadoTitular);
-         console.log('Datos JSON convertidos:', result);
- 
-         const cartillasData = result.Resultado.fila.tablaPrestadores;
-         console.log('cartillasData:', cartillasData);
-         
+        // Convertir XML a JSON
+        const result = xml2js(xmlData, { compact: true });
+        console.log('CartillaMedicaEspecialidad---->', idAfiliadoTitular);
+        console.log('Datos JSON convertidos:', result);
+
+        const cartillasData = result.Resultado.fila.tablaPrestadores;
+        console.log('cartillasData:', cartillasData);
+
         // Mapear los datos correctamente
         const mappedCartillas = cartillasData.nombre.map((_: any, index: number) => ({
           nombre: cartillasData.nombre[index]._text,
           idConvenio: cartillasData.idConvenio[index]._text,
           // descripcion: cartillasData.descartar[index]._text || 'No hay descripción', // Si decides usar la descripción
         }));
-         
-         setCartillas(mappedCartillas);
-         console.log('Mapped Cartillas:', mappedCartillas);
-       } catch (error) {
-         console.error('Error al obtener los formularios:', error);
-         if (axios.isAxiosError(error)) {
-           console.error('Detalles del error:', JSON.stringify(error, null, 2));
-         }
-       }
-       console.log('Entrando a CartillaMedicaEspecialidad--------------------->-ESTE es el idCartilla--->', idCartilla);
+
+        setCartillas(mappedCartillas);
+        console.log('Mapped Cartillas:', mappedCartillas);
+      } catch (error) {
+        console.error('Error al obtener los formularios:', error);
+        let sinCartilas = [{
+          nombre: 'No se encontraron prestadores para esta especialidad',
+          idConvenio: 'sin convenio'
+        }]
+        setCartillas(sinCartilas);
+        if (axios.isAxiosError(error)) {
+          console.error('Detalles del error:', JSON.stringify(error, null, 2));
+          let sinCartilas = [{
+            nombre: 'No se encontraron prestadores para esta especialidad',
+            idConvenio: 'sin convenio'
+          }]
+          setCartillas(sinCartilas);
+        }
+      }
+      console.log('Entrando a CartillaMedicaEspecialidad--------------------->-ESTE es el idCartilla--->', idCartilla);
     };
     CartillaRequest()
 
@@ -83,16 +101,23 @@ export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
 
       <BackButton />
 
-{/*       <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Prestadores</Text> */}
+      {/*       <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Prestadores</Text> */}
 
-      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 30, marginTop: 15 }}>
+      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop:0 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
           {cartillas.map((cartilla, index) => (
 
-            <View key={index} style={{ marginBottom: 10 }}>
-              <Text style={{ fontSize: 16, textAlign: 'center', /* backgroundColor: 'yellow',  */}}>{cartilla.nombre}</Text>
-              {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text> */}
+            <View key={index} style={styles.TertiaryButton}>
+              <View style={styles.contentWrapper2}>
+                <View style={styles.textWrapper}>
+                  <Text style={styles.descriptionText}>
+                    {cartilla.nombre}
+                  </Text>
+
+                </View>
+              </View>
             </View>
+
           ))}
         </ScrollView>
       </View>
@@ -101,6 +126,57 @@ export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
 
   )
 }
+
+/*  
+
+       <View key={index} style={{ marginBottom: 10 }}>
+              <Text style={{ fontSize: 16, textAlign: 'center',  backgroundColor: 'yellow', }}>{cartilla.nombre}</Text>
+                 <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text> 
+              </View>
+
+
+*/
+
+
+
+
+
+const styles = StyleSheet.create({
+  TertiaryButton: {
+    backgroundColor: 'white',
+    minWidth: '80%',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    padding: 5,
+    margin: 5,
+    marginBottom: 5,
+    marginHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  descriptionText: {
+    color: 'black',
+    fontSize: 18,
+    textAlign: 'center'
+  },
+  contentWrapper2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
+  },
+  textWrapper: {
+    flex: 1,
+    paddingRight: 5,
+  },
+})
+
+
 /* <FlatList
         data={products}
         renderItem={({ item }) => (

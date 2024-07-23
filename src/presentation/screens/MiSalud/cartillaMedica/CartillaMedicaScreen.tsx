@@ -80,15 +80,15 @@ export const CartillaMedicaScreen = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 5, marginTop: 0, fontSize: 28, textAlign: 'center', }}>Especialidades</Text>
+      <Text style={{ marginBottom: 0, marginTop: 0, fontSize: 28, textAlign: 'center', }}>Especialidades</Text>
 
-      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 30, marginTop: 15 }}>
+      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 15 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
           {cartillas.map((cartilla, index) => (
 
             <View 
             key={index} 
-            style={{ marginBottom: 10 }} 
+            style={{ marginBottom: 5 }} 
             >
             {/*   <Text 
               onPress={ ()=> {
@@ -99,26 +99,27 @@ export const CartillaMedicaScreen = () => {
               }
                 style={{ fontSize: 16, textAlign: 'center', }}>{cartilla.nombre}</Text> */}
 
-                          {/* mejora del estilo:  */}
+              {/* mejora del estilo:  */}
               <Pressable
-                onPress={ ()=> {
+                onPress={() => {
                   console.log('Valor de idCartilla ACA ACA ACAA:', cartilla.idCartilla);
-                let idCartilla = cartilla.idCartilla;
-                  GuardarIdCartillaSeleccionada(idCartilla); 
-                  navigation.navigate('Prestadores', { idCartilla: cartilla.idCartilla })}
+                  let idCartilla = cartilla.idCartilla;
+                  GuardarIdCartillaSeleccionada(idCartilla);
+                  navigation.navigate('Prestadores', { idCartilla: cartilla.idCartilla })
                 }
-                >
-                    <View key={index} style={styles.TertiaryButton}>
-                    <View style={styles.contentWrapper2}>
-                            <View style={styles.textWrapper}>
-                    <Text style={styles.descriptionText}>
-                                  {cartilla.nombre}
-                                </Text>
-                                              {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}
+                }
+              >
+                <View key={index} style={styles.TertiaryButton}>
+                  <View style={styles.contentWrapper2}>
+                    <View style={styles.textWrapper}>
+                      <Text style={styles.descriptionText}>
+                        {cartilla.nombre}
+                      </Text>
+                      {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}
                     </View>
-                    </View>
-                    </View>
-                      </Pressable>
+                  </View>
+                </View>
+              </Pressable>
 
             </View>
           ))}

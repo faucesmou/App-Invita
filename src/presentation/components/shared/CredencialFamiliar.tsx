@@ -101,14 +101,14 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
         <View  style={{
         margin: 15, alignItems: 'center', /*  backgroundColor: 'blue',  */  marginBottom:3, marginRight:45, marginLeft: 45 }} >
           <LinearGradient colors={planColors} style={{...globalStylesCredentials.frenteCardHome, marginBottom: 0,}}>
-            <ImageBackground source={require('../../screens/credential/CredentialsData/images/logogris4.png')} 
+            <ImageBackground source={require('../../screens/credential/CredentialsData/images/BackgroundLogoGray3.png')} 
             imageStyle={{
              /*  resizeMode: "cover", */
               flex: 1,
               justifyContent: 'flex-start',
-              width: '80%',
+              width: '100%',
               height: '80%',
-              transform: [{ translateX: 210 }, { translateY: -50 }],
+              transform: [{ translateX: 190 }, { translateY: -35 }],
             }} 
             
             >

@@ -71,9 +71,9 @@ const Credencial = () => {
           numAfiliado,
           fecVencimiento,
         });
-         /*    setDatosCredencial(prevState => ({
+   /*     setDatosCredencial(prevState => ({
                ...prevState,
-               plan: 'titanium'
+               plan: 'platinum'
              }));  */ 
         /* titanium platinum black gold green*/
       } catch (error) {
@@ -94,14 +94,14 @@ const Credencial = () => {
       ) : (
         <View >
           <LinearGradient colors={planColors} style={globalStylesCredentials.frenteCardHome}>
-            <ImageBackground source={require('../../screens/credential/CredentialsData/images/logogris4.png')} 
+            <ImageBackground source={require('../../screens/credential/CredentialsData/images/BackgroundLogoGray3.png')} 
             imageStyle={{
-              resizeMode: "contain",/* cover o contain */
+              resizeMode: "cover",/* cover o contain */
               flex: 1,
               justifyContent: 'flex-start',
-              width: '80%',
+              width: '100%',
               height: '80%',
-              transform: [{ translateX: 210 }, { translateY: -50 }],
+              transform: [{ translateX: 190 }, { translateY: -40 }],
             }} 
             
             >

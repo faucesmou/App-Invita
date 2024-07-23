@@ -39,7 +39,8 @@ export const TramitesScreen = () => {
           <Text style={{
             fontSize: 35,
             textAlign: 'center',
-            color: 'white'
+            color: 'white',
+            marginLeft: '7%',
           }} >
             Mi Gestión
           </Text>

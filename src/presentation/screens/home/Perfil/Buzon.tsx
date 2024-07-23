@@ -443,8 +443,12 @@ export const Buzon = () => {
                       {modalData.map((data, index) => (
                         <>
                           <View style={{ marginTop: 10 }}>
-                            <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text>
-                            <Text style={styles.textStyle}>Fec. Vencimiento:      {data.fecVencimientoENC}</Text>
+                          <Text style={styles.textStyleContenedor}>    
+                          <Text style={styles.textStyleMensajeCodigo}>Compartile este código a tu prestador o clínica para que lo pueda autorizar:</Text>
+                            </Text> 
+                              <Text style={styles.valueCoseguro}>{data.palabraClaveENC}</Text>
+                           {/*  <Text style={styles.textStyle}>Codigo Autorización: {data.palabraClaveENC}</Text> */}
+                            <Text style={styles.textStyle}>Fec. Vencimiento: {data.fecVencimientoENC}</Text>
                             <Text style={styles.textStyle}>Prestador: {data.nombreConvenio}</Text>
                             <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
                             <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
@@ -758,7 +762,24 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'black',
     fontWeight: 'normal',
-    textAlign: 'justify',
+   /*  textAlign: 'justify', */
+    marginTop: 7,
+  },
+  textStyleContenedor: {
+    color: 'black',
+    fontWeight: 'normal',
+    marginTop: 7,
+  },
+  textStyleMensajeCodigo: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 7,
+  },
+  valueCoseguro: {
+    color: 'green',
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginTop: 7,
   },
   textStyleOrdenRechazada: {
@@ -772,7 +793,7 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     textAlign: 'justify',
     marginTop: 4,
-    fontSize: 19,
+    fontSize: 20,
   },
   textStyletTitlePracticaNoEncontrada: {
     color: 'black',

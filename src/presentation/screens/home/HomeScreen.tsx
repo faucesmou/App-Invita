@@ -190,7 +190,8 @@ const styles = StyleSheet.create({
     backgroundColor: globalColors.gray3,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 15,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   cardContainer: {
     position: 'absolute',
