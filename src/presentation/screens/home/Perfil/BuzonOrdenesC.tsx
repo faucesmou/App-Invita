@@ -618,7 +618,7 @@ const styles = StyleSheet.create({
     marginBottom:5,
     padding: 5,
     backgroundColor: globalColors.yellow3/*  '#9dcaf1' *//* '#d7e5f8' */,
-    borderRadius: 5,
+    borderRadius: 15,
     borderWidth:2,
     borderColor: globalColors.yellow3,
     marginHorizontal:10,

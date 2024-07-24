@@ -119,7 +119,7 @@ export const EstudiosMedicosEnv = () => {
     }
 
     EstudiosMedicosRequest()
-    console.log('el idOrden es el siguiente: ', result.idOrden);
+
   }, []);
 
   return (

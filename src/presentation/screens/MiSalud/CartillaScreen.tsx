@@ -87,13 +87,7 @@ export const CartillaScreen = () => {
         </View>
 
         <View style={{ marginTop: 20, }}>
-          <TertiaryButton
-            onPress={() => navigation.navigate('Estudios Médicos')}
-            label="Estudios Médicos"
-            color={globalColors.profile2}
-            iconName='medkit-outline'
-            description='Gestioná la orden de tus estudios'
-          />
+         
           <TertiaryButton
             onPress={() => navigation.navigate('Cartillas')}
             label="Cartilla Médica"

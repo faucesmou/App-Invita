@@ -27,7 +27,7 @@ const colorNaranja = globalColors.orange
 /*       backgroundColor: 'green' */
     }}
     >
-      <CustomHeader  color={globalColors.gray3}  />
+      <CustomHeader  color={globalColors.black}  />
        <BackButton /> 
      {/*    <Text style={{marginBottom: 10}}> Settings Screen</Text> */}
 
@@ -41,13 +41,6 @@ const colorNaranja = globalColors.orange
           iconName='mail-unread-outline'
       /*     description='Gestioná la orden de tus estudios' */
         />
-         <TertiaryButton
-           onPress={()=> navigator.goBack() }
-          label="Regresar"
-          color={globalColors.profile2}
-          iconName='medkit-outline'
-      /*     description='Gestioná la orden de tus estudios' */
-        />
 
          <TertiaryButton
           onPress={logout}
@@ -59,6 +52,13 @@ const colorNaranja = globalColors.orange
       /*     description='Gestioná la orden de tus estudios' */
         />
 
+      <TertiaryButton
+        onPress={() => navigator.goBack()}
+        label="Regresar"
+        color={globalColors.profile2}
+        iconName='medkit-outline'
+      /*     description='Gestioná la orden de tus estudios' */
+      />
     </View>
   )
 }

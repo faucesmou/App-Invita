@@ -661,7 +661,7 @@ const styles = StyleSheet.create({
     marginBottom:5,
     padding: 5,
     backgroundColor: globalColors.brown2/* 'brown' *//* '#97e3b0' *//* '#d7e5f8' */,
-    borderRadius: 5,
+    borderRadius: 15,
     borderWidth:1,
     borderColor: globalColors.brown3,
     marginHorizontal:10,

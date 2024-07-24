@@ -80,6 +80,18 @@ export const TramitesScreen = () => {
             iconName='people-outline'
             description='Gestioná la orden de tus estudios'
           />{/* <ion-icon name="people-outline"></ion-icon> */}
+
+
+          <TertiaryButton
+            onPress={() => navigation.navigate('Estudios Médicos')}
+            label="Estudios Médicos"
+            color={globalColors.profile2}
+            iconName='medkit-outline'
+            description='Gestioná la orden de tus estudios'
+          />
+
+
+
           <TertiaryButton
             onPress={() => navigation.navigate('Formularios')}
             label="Obtener Formularios Especiales"
@@ -88,13 +100,6 @@ export const TramitesScreen = () => {
             description='Descargá tus formularios'
           />
 
-          <TertiaryButton
-            onPress={() => navigation.navigate('Pagos')}
-            label="Mis Pagos"
-            color={globalColors.profile2}
-            iconName='file-tray-full-outline'
-            description='Accedé al estado de tus pagos'
-          />
             
         </View>
       
