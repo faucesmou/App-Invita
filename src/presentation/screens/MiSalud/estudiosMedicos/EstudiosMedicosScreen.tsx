@@ -222,7 +222,7 @@ export const EstudiosMedicosScreen = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.gray2} titleSize={33} />
+      <CustomHeader color={globalColors.black} titleSize={33} />
 
       <BackButton />
 
@@ -314,14 +314,14 @@ export const EstudiosMedicosScreen = () => {
               paddingHorizontal: 10, 
               paddingVertical: 5,
               marginHorizontal: 40,
-              backgroundColor: SelectedPrestadorNombre ? globalColors.gray3 : 'white' 
+              backgroundColor: SelectedPrestadorNombre ? globalColors.gray3 :'white' 
             }}
             >
           <Text style={{ 
             fontSize: 15, 
             textAlign: 'center', 
-            marginBottom: 5, 
-            marginTop: 5, 
+            marginBottom: 0, 
+            marginTop: 0, 
             
              }}
              >{SelectedPrestadorNombre} </Text>

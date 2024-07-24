@@ -274,7 +274,7 @@ export const Buzon = () => {
         marginBottom: 0,
       }}
     >
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.black} />
 
       <BackButton />
 
@@ -490,9 +490,10 @@ export const Buzon = () => {
                         <>
                           <View style={{ marginTop: 10, marginBottom: 20 }}>
 
-                            <Text style={styles.textStyleOrdenRechazada}>idOrden: {data.idOrden}</Text>
                             <Text style={styles.textStyleOrdenRechazada}>Estado: {data.estado}</Text>
-                            <Text style={styles.textStyleOrdenRechazada}>Detalle: {data.comentarioRechazo}</Text>
+                           {/*  <Text style={styles.textStyleOrdenRechazada}>Detalle:</Text>   */}
+                            <Text style={styles.textStyleMensajeCodigo}>Detalle: {data.comentarioRechazo}</Text>
+                            <Text style={styles.textStyleOrdenRechazada}>idOrden: {data.idOrden}</Text>
                           
                           </View>
 
@@ -736,7 +737,7 @@ const styles = StyleSheet.create({
     marginTop: '20%',
     backgroundColor: 'white'/* globalColors.gray3 */,
     borderRadius: 20,
-    padding: 35,
+    padding: 30,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -773,8 +774,9 @@ const styles = StyleSheet.create({
   textStyleMensajeCodigo: {
     color: 'black',
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'justify',
     marginTop: 7,
+    fontSize:14,
   },
   valueCoseguro: {
     color: 'green',
@@ -806,11 +808,9 @@ const styles = StyleSheet.create({
   textStylePractica: {
     color: 'black',
     fontWeight: 'bold',
-    /*  textAlign: 'justify', */
     marginTop: 7,
     marginBottom: 15,
-    fontSize: 12,
-    /*   lineHeight: 10, */
+    fontSize: 13,
   },
   textStyleCoseguro: {
     color: 'red',

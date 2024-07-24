@@ -289,7 +289,7 @@ export const Facturas = () => {
           else if(mensajeFacturaGenerada === 'Factura no creada SALDO IGUAL 0' ) {
             console.log('entrando en else if facutra no creada..--->');
             
-            let mensajeSaldoCero = 'No se pueden generar facturas con saldo $0'
+            let mensajeSaldoCero = 'Factura con saldo $0'
             setMensajeFacturas(prev => [...prev.filter(item => item.id !== id), { id, mensaje: mensajeSaldoCero }]);
           
           } else {
@@ -328,7 +328,7 @@ export const Facturas = () => {
 
       style={globalStyles.container}
     >
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.black} />
 
       <BackButton />
 

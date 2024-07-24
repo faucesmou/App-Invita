@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Text, View } from 'react-native'
 
 import { Picker } from '@react-native-picker/picker';
-import { globalStyles } from '../../theme/theme'
+import { globalColors, globalStyles } from '../../theme/theme'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
@@ -47,7 +47,7 @@ const [selectedIndex, setSelectedIndex] = React.useState<IndexPath>(new IndexPat
 
 const displayValue = data[selectedIndex.row];
 
-const renderOption = (title): React.ReactElement => (
+const renderOption = (title:any): React.ReactElement => (
   <SelectItem title={title} />
 );
 
@@ -161,7 +161,7 @@ const renderOptionGonzalo = (title): React.ReactElement => (
   return (
     <View style={[globalStyles.container, { marginTop: top }]}>
 
-      <CustomHeader />
+   {/*    <CustomHeader color={globalColors.black} /> */}
 
       <BackButton />
 

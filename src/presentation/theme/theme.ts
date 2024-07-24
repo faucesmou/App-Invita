@@ -18,12 +18,14 @@ export const globalColors = {
   orange2: '#d83414',
   brown: '#362521',
   yellow: '#d25e1b',
+  yello3: '#e3d14b',
   brown2: '#ea9991',
   brown3: '#eb7e74',
   yellow2: '#f2ecbc',
   yellow3: '#ecdb5f',
   gray:'#505050',
   gray2:'#878383',
+  black:'#1c1919',
 /*   gray3:'#c1b9bb',  */
 /*   gray3:'#c1c1c1', */
 gray3:'#DCDCDC', 
@@ -42,6 +44,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: globalColors.gray3/* 'yellow' */ /* 'gray' */ /* globalColors.background */,
     textAlign: 'center',
     justifyContent: 'center',
+    marginBottom:30,
   },
   inputIOS: {
     padding: 0,

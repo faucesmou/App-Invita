@@ -174,7 +174,7 @@ const UploadImage: React.FC = () => {
       justifyContent: 'center',
       alignItems: 'center',
   /*   backgroundColor:'green',  */
-    maxHeight: '40%',
+    maxHeight: '30%',
     },
     title: {
       fontSize: 20,

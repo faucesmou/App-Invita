@@ -129,7 +129,7 @@ export const PagosScreen = () => {
 
       style={globalStyles.container}
     >
-      <CustomHeader color={globalColors.gray3} />
+      <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 12,
   },
   card: {
     width: 350,
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 7,
     borderRadius: 15,
   },
 });

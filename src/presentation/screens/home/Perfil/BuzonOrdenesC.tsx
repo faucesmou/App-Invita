@@ -78,7 +78,7 @@ interface NotificacionData {
 }
 
 export const BuzonOrdenesC = () => {
-  console.log('Ingresando en  BuzonOrdenesC -->>>>>>>', );
+/*   console.log('Ingresando en  BuzonOrdenesC -->>>>>>>', ); */
 
 
   const { idAfiliado } = useAuthStore();
@@ -400,12 +400,17 @@ export const BuzonOrdenesC = () => {
                       {modalData.map((data, index) => (
                         <>
                           <View style={{ marginTop: 10 }}>
-                            <Text style={styles.textStyleOrdenConsulta}>idOrden: {data.idOrden}</Text>
-                            <Text style={styles.textStyle}>afiliado: {data.afiliado}</Text>
-                            <Text style={styles.textStyle}>
+          {/*                   <Text style={styles.textStyleOrdenConsulta}>idOrden: {data.idOrden}</Text> */}
+                            <Text style={styles.textContenedorMensajeCod}>
+                              <Text style={styles.textStyleMensajeCodigo}>Compartile este código a tu prestador para que lo pueda autorizar: </Text>
+                              {'\n'}
+                              <Text style={styles.valueCodAutorizado}>{data.codAutorizacion}</Text>
+                            </Text> 
+                            <Text style={styles.textStyle}>{data.afiliado}</Text>
+                           {/*  <Text style={styles.textStyle}>
                               <Text style={styles.textStyle}>Codigo Autorización: </Text>
                               <Text style={styles.valueCodAutorizado}>{data.codAutorizacion}</Text>
-                            </Text>         
+                            </Text>  */}        
                             <Text style={styles.textStyle}>Fec. Vencimiento: {data.fecVencimiento}</Text>
                             <Text style={styles.textStyle}>Prestador: {data.prestador}</Text>
                             <Text style={styles.textStyle}>Dirección:{data.dom1Prestador}{data.dom2Prestador}</Text>
@@ -612,7 +617,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom:5,
     padding: 5,
-    backgroundColor: globalColors.yellow2/*  '#9dcaf1' *//* '#d7e5f8' */,
+    backgroundColor: globalColors.yellow3/*  '#9dcaf1' *//* '#d7e5f8' */,
     borderRadius: 5,
     borderWidth:2,
     borderColor: globalColors.yellow3,
@@ -665,7 +670,7 @@ const styles = StyleSheet.create({
     marginTop: '20%',
     backgroundColor: 'white'/* globalColors.gray3 */,
     borderRadius: 20,
-    padding: 35,
+    padding: 30,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -693,11 +698,28 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
    /*  textAlign: 'justify', */
     marginTop: 7,
+/*     lineHeight: 18, */
+  },
+  textContenedorMensajeCod: {
+    color: 'black',
+    fontWeight: 'normal',
+    marginTop: 7,
+    lineHeight: 20,
+  },
+  textStyleMensajeCodigo: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 7,
+    marginBottom: 5,
+    fontSize:15,
   },
   valueCodAutorizado: {
     color: 'green',
     fontWeight: 'bold',
-    marginTop: 7,
+    marginTop: 10,
+    textAlign: 'center',
+   
   },
   valueCoseguro: {
     color: 'red',
@@ -737,7 +759,7 @@ const styles = StyleSheet.create({
     /*  textAlign: 'justify', */
     marginTop: 7,
     marginBottom: 15,
-    fontSize: 12,
+    fontSize: 13,
     /*   lineHeight: 10, */
   },
   textStyleCoseguro: {

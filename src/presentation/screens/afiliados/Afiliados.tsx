@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import axios from 'axios';
 import { globalColors, globalStyles } from '../../theme/theme';
@@ -78,7 +78,7 @@ export const Afiliados = () => {
 
       <View
         style={{
-          marginBottom: 10, marginTop: 0, /* backgroundColor: 'yellow', */
+          marginBottom: 0, marginTop: 0, /* backgroundColor: 'yellow', */
           alignItems: 'center',
         }}>
         <Text
@@ -91,7 +91,7 @@ export const Afiliados = () => {
           }}
         >Selecciona un familiar para ver su credencial</Text>
 
-
+    <ScrollView style={{ marginBottom: 0, maxHeight:'80%', /* backgroundColor:'green' */ }}>
         <FlatList
           style={{  /* backgroundColor: 'orange', */ marginBottom: 0, padding: 10 }}
           data={products}
@@ -102,26 +102,16 @@ export const Afiliados = () => {
               label={item.apellidoYNombre}
               textSize={18}
               textAlign={'center'}
-/*               label={<Text style={{ fontSize: 18, textAlign:'center' }}>{item.apellidoYNombre}</Text>}  */
+              /*               label={<Text style={{ fontSize: 18, textAlign:'center' }}>{item.apellidoYNombre}</Text>}  */
               color={color}
             />
           )}
         />
-
-
+        </ScrollView>
 
       </View>
 
-      {/*  <View style={{ marginTop: 0, }}>
-        <TertiaryButton
-          onPress={() => navigation.navigate('EstudiosMedicos')}
-          label="TertiaryButton Example"
-          color={globalColors.profile2}
-          iconName='medkit-outline'
-          description='Gestioná la orden de tus estudios'
-        />
 
-      </View> */}
       <View style={styles.imageContainer}>
 
         <View
@@ -170,7 +160,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginBottom: 30,
     marginHorizontal:35,
-    marginTop: 40,
+    marginTop: 0,
     zIndex: 1.5,
     alignItems: 'center',
      justifyContent: 'center', 
@@ -192,3 +182,14 @@ const styles = StyleSheet.create({
     margin: 10,
   }
 });
+
+      {/*  <View style={{ marginTop: 0, }}>
+        <TertiaryButton
+          onPress={() => navigation.navigate('EstudiosMedicos')}
+          label="TertiaryButton Example"
+          color={globalColors.profile2}
+          iconName='medkit-outline'
+          description='Gestioná la orden de tus estudios'
+        />
+
+      </View> */}
