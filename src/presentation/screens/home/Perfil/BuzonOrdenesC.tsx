@@ -78,7 +78,7 @@ interface NotificacionData {
 }
 
 export const BuzonOrdenesC = () => {
-/*   console.log('Ingresando en  BuzonOrdenesC -->>>>>>>', ); */
+
 
 
   const { idAfiliado } = useAuthStore();
@@ -107,22 +107,28 @@ export const BuzonOrdenesC = () => {
       try {
         setIsConsulting(true);
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENAMB?idAfiliado=${idAfiliado}&IMEI=`);
+        
+        
+
         console.log('Convirtiendo el response xmlData a result de BuzonOrdenesC -->>>>>>>>>>>>>>>');
-    
+
         const xmlData = response.data;
         const result = xml2js(xmlData, { compact: true });
-    
+        console.log('result after xml2js-->>>>>>>>>>>>>>>', result);
         // Extraer datos de tablaDatos y tablaDetalle
+        //@ts-ignore
         const tablaDatos = result.Resultado?.tablaDatos;
+         //@ts-ignore
         const tablaDetalle = result.Resultado?.tablaDetalle;
-    
+        
+
         if (!tablaDatos || !tablaDetalle) {
           console.log('En CombinedData tablaDatos o tablaDetalle es undefined: No hay datos disponibles.');
           setIsConsulting(false);
-        /*   setModalVisible2(true); */
+          /*   setModalVisible2(true); */
           return;
         }
-    
+
         // Definir y verificar los datos extraídos
         const idOrden = tablaDatos.idOrden ? tablaDatos.idOrden.map((item: any) => (item._text || '').trim()) : [];
         const prestador = tablaDatos.prestador ? tablaDatos.prestador.map((item: any) => (item._text || '').trim()) : [];
@@ -134,13 +140,13 @@ export const BuzonOrdenesC = () => {
         const afiliado = tablaDatos.afiliado ? tablaDatos.afiliado.map((item: any) => (item._text || '').trim()) : [];
         const codEstado = tablaDatos.codEstado ? tablaDatos.codEstado.map((item: any) => (item._text || '').trim()) : [];
         const coseguro = tablaDatos.coseguro ? tablaDatos.coseguro.map((item: any) => (item._text || '').trim()) : [];
-    
+
         const idOrdenDetalle = tablaDetalle.idOrdenDetalle ? tablaDetalle.idOrdenDetalle.map((item: any) => (item._text || '').trim()) : [];
         const nombrePrestacion = tablaDetalle.nombrePrestacion ? tablaDetalle.nombrePrestacion.map((item: any) => (item._text || '').trim()) : [];
         const descripcionPrestacion = tablaDetalle.descripcionPrestacion ? tablaDetalle.descripcionPrestacion.map((item: any) => (item._text || '').trim()) : [];
         const montoPrestacion = tablaDetalle.montoPrestacion ? tablaDetalle.montoPrestacion.map((item: any) => (item._text || '').trim()) : [];
         const codPrestacion = tablaDetalle.codPrestacion ? tablaDetalle.codPrestacion.map((item: any) => (item._text || '').trim()) : [];
-    
+
         // Crear un array combinado
         const combinedData = idOrden.map((id, index) => ({
           idOrden: id,
@@ -160,10 +166,52 @@ export const BuzonOrdenesC = () => {
           montoPrestacion: montoPrestacion[index] || '',
           codPrestacion: codPrestacion[index] || ''
         }));
-    
-       /*  console.log('Datos combinados:', combinedData); */
-    
-        setNotificacionesOrdenConsulta(combinedData);
+
+     /*    console.log('Datos combinados----------------------------->>>:', combinedData);  */
+
+        // Primero, definimos una función para convertir las fechas a objetos Date
+        const parseDate = (dateString: string) => {
+          // Asumimos que la fecha está en formato "DD/MM/YYYY HH:mm:ss"
+          const [datePart, timePart] = dateString.split(' ');
+          const [day, month, year] = datePart.split('/').map(Number);
+          const [hours, minutes, seconds] = timePart.split(':').map(Number);
+
+          // Creamos un objeto Date con los componentes de la fecha
+          return new Date(year, month - 1, day, hours, minutes, seconds);
+        };
+        // Obtenemos la fecha actual
+        const now = new Date();
+        /* now2 es para hacer pruebas con la fecha: */
+        const now2 = new Date(2024, 7, 15, 12, 0, 0); // Año, Mes (0-based), Día, Hora, Minuto, Segundo
+
+        // Calcular la fecha de hace 2 semanas desde 'now'
+        const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+   /*      console.log('Fecha de hace 2 semanas:', twoWeeksAgo); */
+        // Calcular la fecha de hace 1 semana desde 'now'
+        const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+/*         console.log('Fecha de hace 1 semana:', oneWeekAgo); */
+
+        // Filtramos las notificaciones basándonos en la fecha de vencimiento
+        const filteredNotificaciones = combinedData.filter((notificacion: Notificacion) => {
+          const fecFinalizacionDate = parseDate(notificacion.fecVencimiento);
+       /*    console.log('fecFinalizacionDate: ', fecFinalizacionDate); */
+          return fecFinalizacionDate >= twoWeeksAgo;
+          /*  Retenemos solo las notificaciones cuya fecha de vencimiento es igual o posterior a la fecha actual ( return fecFinalizacionDate >= twoWeeksAgo; )
+          o a la fecha dos semanas posterior al vencimiento:  return fecFinalizacionDate >= twoWeeksAgo; */
+        });
+
+        /* Se ordenan de la mas reciente a la mas antigua: */
+        const notificacionesOrdenadas = filteredNotificaciones.sort((a:any, b:any) => {
+          const dateA = parseDate(a.fecSolicitud);
+          const dateB = parseDate(b.fecSolicitud);
+          return dateB.getTime() - dateA.getTime();
+        })
+
+        setNotificacionesOrdenConsulta(notificacionesOrdenadas);
+
+    /*     setNotificacionesOrdenConsulta(combinedData); */
+/*       console.log('notificaciones OrdenConsulta:------------> ', notificacionesOrdenConsulta) */
+        
         setIsConsulting(false);
     
       } catch (error) {
@@ -218,7 +266,8 @@ export const BuzonOrdenesC = () => {
       dom2Prestador: dom2Prestador,
       coseguro: coseguro,
     }];
-   
+/*     console.log('ordenInfo----------->>>----->>>--->>>', ordenInfo); */
+    
     setModalData(ordenInfo);
     setModalVisible(true);
   } catch(error){

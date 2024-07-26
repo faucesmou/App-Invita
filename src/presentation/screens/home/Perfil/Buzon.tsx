@@ -21,8 +21,9 @@ interface Notificacion {
   afiliado: string;
   fecSolicitud: string;
   estado: string;
+  domicilio?: string;
   fecFinalizacion: string;
-  comentarioRechazo: string;
+  comentarioRechazo?: string;
 }
 interface Rechazo {
   idOrden: string,
@@ -56,6 +57,7 @@ export const Buzon = () => {
   const [rechazoData, setRechazoData] = useState<Rechazo[]>([]);
 
 
+
   useEffect(() => {
     setIsConsulting(true);
     const ProductsRequest = async () => {
@@ -86,7 +88,7 @@ export const Buzon = () => {
         }
 
         // Mapear los datos 
-        const mappedNotificaciones = Array.isArray(notificacionesData.idOrden) ? notificacionesData.idOrden.map((_: any, index: number) => ({
+        const mappedNotificaciones:Notificacion[] = Array.isArray(notificacionesData.idOrden) ? notificacionesData.idOrden.map((_: any, index: number) => ({
           idOrden: notificacionesData.idOrden[index]._text,
           afiliado: notificacionesData.afiliado[index]._text,
           fecSolicitud: notificacionesData.fecSolicitud[index]._text,
@@ -95,9 +97,47 @@ export const Buzon = () => {
           comentarioRechazo: notificacionesData.comentarioRechazo[index]._text,
         })) : [];
 
-        setNotificaciones(mappedNotificaciones);
+        // Primero, definimos una función para convertir las fechas a objetos Date
+        const parseDate = (dateString: string) => {
+          // Asumimos que la fecha está en formato "DD/MM/YYYY HH:mm:ss"
+          const [datePart, timePart] = dateString.split(' ');
+          const [day, month, year] = datePart.split('/').map(Number);
+          const [hours, minutes, seconds] = timePart.split(':').map(Number);
+
+          // Creamos un objeto Date con los componentes de la fecha
+          return new Date(year, month - 1, day, hours, minutes, seconds);
+        };
+        // Obtenemos la fecha actual
+        const now = new Date();
+        /* now2 es para hacer pruebas con la fecha: */
+        const now2 = new Date(2024, 6, 23, 12, 0, 0); // Año, Mes (0-based), Día, Hora, Minuto, Segundo
+
+        // Calcular la fecha de hace 2 semanas desde 'now'
+        const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+        console.log('Fecha de hace 2 semanas:', twoWeeksAgo);
+        // Calcular la fecha de hace 1 semana desde 'now'
+        const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        console.log('Fecha de hace 1 semana:', oneWeekAgo);
+
+        // Filtramos las notificaciones basándonos en la fecha de vencimiento
+        const filteredNotificaciones = mappedNotificaciones.filter((notificacion: Notificacion) => {
+          const fecFinalizacionDate = parseDate(notificacion.fecFinalizacion);
+         /*  console.log('fecFinalizacionDate: ', fecFinalizacionDate); */
+          return fecFinalizacionDate >= oneWeekAgo; 
+          /*  Retenemos solo las notificaciones cuya fecha de vencimiento es igual o posterior a la fecha actual ( return fecFinalizacionDate >= twoWeeksAgo; )
+          o a la fecha dos semanas posterior al vencimiento:  return fecFinalizacionDate >= twoWeeksAgo; */ 
+        });
+
+        /* Se ordenan de la mas reciente a la mas antigua: */
+        const notificacionesOrdenadas = filteredNotificaciones.reverse();
+
+        // Asignamos las notificaciones filtradas al estado
+      setNotificaciones(notificacionesOrdenadas);
+    /*   console.log('notificaciones Notificaciones:------------> ', notificaciones) */
+    /*     setNotificaciones(mappedNotificaciones); */
+
         /*  console.log('Mapped notificaciones:', mappedNotificaciones); */
-        /*   console.log('Notificaciones:', notificaciones); */
+    
         setIsConsulting(false);
 
       } catch (error) {
@@ -180,7 +220,7 @@ export const Buzon = () => {
         }));
 
         setModalData(combinedData);
-        console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData));
+    /*     console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData)); */
 
         setModalVisible(true);
       } else {
