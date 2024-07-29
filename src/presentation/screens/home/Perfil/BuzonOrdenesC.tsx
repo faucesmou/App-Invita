@@ -114,7 +114,7 @@ export const BuzonOrdenesC = () => {
 
         const xmlData = response.data;
         const result = xml2js(xmlData, { compact: true });
-        console.log('result after xml2js-->>>>>>>>>>>>>>>', result);
+  
         // Extraer datos de tablaDatos y tablaDetalle
         //@ts-ignore
         const tablaDatos = result.Resultado?.tablaDatos;

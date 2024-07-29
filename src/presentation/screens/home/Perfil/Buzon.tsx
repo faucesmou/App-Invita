@@ -171,6 +171,7 @@ export const Buzon = () => {
 
    
     try {
+      /* APPDatosPracticaResuelta */
       const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPDatosPracticaResuelta?IMEI=&idOrdenAPP=${idOrden}`)
       const xmlData = response.data;
 

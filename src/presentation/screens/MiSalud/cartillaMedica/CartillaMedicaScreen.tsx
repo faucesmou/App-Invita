@@ -55,7 +55,7 @@ export const CartillaMedicaScreen = () => {
           }];
         setCartillas(mappedCartillas);
 
-        console.log('este es el mappedCartillas DE CARTILLA MEDICA---x--x-x--x->:', mappedCartillas);
+      /*   console.log('este es el mappedCartillas DE CARTILLA MEDICA---x--x-x--x->:', mappedCartillas); */
         /*  console.log('este es el cartillas useState:', cartillas); */
 
       }
