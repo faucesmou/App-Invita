@@ -38,6 +38,7 @@ export interface AuthState {
   idPrestador?: string;
   idAfiliadoSeleccionado?:string;
   idCartillaSeleccionada?:string;
+  nombreEspecialidadSeleccionada?: string;
   cadena: string;
   imagen1: string | undefined;
   imagenes: (string | null)[];
@@ -55,7 +56,7 @@ export interface AuthState {
   checkStatus: () => Promise<void>;
   logout: () => Promise<void>;
   registerUser: (email: string, password: string, fullName: string) => Promise<void>;
-  GuardarIdCartillaSeleccionada:(idCartilla: string)=> Promise<any[]>;
+  GuardarIdCartillaSeleccionada:(idCartilla: string, nombreEspecialidadSeleccionada: string)=> Promise<any[]>;
 
 }
 
@@ -78,6 +79,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   imagen1: '',
   imagenes: [null, null, null, null, null],
   idPrestador:'',
+
   loginGonzaMejorado: async (email: string, password: string, dni: string) => {
     try {
 
@@ -323,13 +325,13 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
      return [];
     }
   },
-  GuardarIdCartillaSeleccionada: async ( idCartilla: string): Promise<string[]> => {
+  GuardarIdCartillaSeleccionada: async ( idCartilla: string, nombreEspecialidadSeleccionada:string): Promise<string[]> => {
     try {
-      set({ idCartillaSeleccionada: idCartilla })
+      set({ idCartillaSeleccionada: idCartilla, nombreEspecialidadSeleccionada: nombreEspecialidadSeleccionada })
  
     return []; 
   } catch (error) {
-      console.log('ha ocurrido un error al guardar idCartilla en el useAuthStore');
+      console.log('ha ocurrido un error al guardar idCartilla o el nombreEspecialidad en el useAuthStore');
      return [];
     }
   },

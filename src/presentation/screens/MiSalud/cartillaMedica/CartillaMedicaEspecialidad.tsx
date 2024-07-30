@@ -20,7 +20,7 @@ import { RootStackParams } from '../../../routes/StackNavigator';
 
 interface Props {
   idCartilla?: string;
-  nombreEspecialidad: string;
+  nombreEspecialidad44?: string;
 }
 
 interface Prestador {
@@ -35,7 +35,7 @@ interface Prestador {
 }
 
 
-export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad }: Props) => {
+export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }: Props) => {
 
 
   const [isConsulting, setIsConsulting] = useState(false);
@@ -44,7 +44,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad }: P
 
 
   console.log('Entrando a CartillaMedicaEspecialidad--------------------->-ESTE es el idCartilla--->', idCartilla);
-  const { idAfiliadoTitular, idAfiliado, idCartillaSeleccionada } = useAuthStore();
+  const { idAfiliadoTitular, idAfiliado, idCartillaSeleccionada, nombreEspecialidadSeleccionada } = useAuthStore();
   console.log('idCartillaSeleccionada desde CartillaMedicaEspecialidad---->', idCartillaSeleccionada);
 
 
@@ -108,7 +108,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad }: P
     descartar: prestadores.descartar[index]
 })) : [];
 
-console.log('luego de useEffect CartillaMedicaEspecialidad--------------------->-ESTE es el nombreEspecialidad--->', JSON.stringify(nombreEspecialidad));
+/* console.log('luego de useEffect CartillaMedicaEspecialidad--------------------->-ESTE es el nombreEspecialidad--->', JSON.stringify(nombreEspecialidad)); */
 
 const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? domicilios.idConvenioDom.map((_, index) => ({
     idConvenioDom: domicilios.idConvenioDom[index],
@@ -219,7 +219,7 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
     };
     CartillaRequest()
 
-  }, [idAfiliadoTitular, idCartillaSeleccionada])
+  }, [idAfiliadoTitular, idCartillaSeleccionada ])
 
 
   const handlePhonePress2 = (phoneNumber: any) => {
@@ -279,11 +279,17 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
 
       <BackButton />
 
-           <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 20, textAlign: 'center', color: 'black' }}>{nombreEspecialidad}</Text> 
+         <Text style={{ marginBottom: 5,
+        marginTop: 5,
+        fontSize: 30,
+        textAlign: 'center',
+        color: globalColors.gray2,
+        fontWeight: 'bold' 
+             }}>{nombreEspecialidadSeleccionada}</Text>  
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop:0 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
-        <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 15, textAlign: 'center', color: 'green' }}>{nombreEspecialidad}</Text> 
+
           {prestadores.map((prestador) => (
         /*   {cartillas.map((cartilla, index) => ( */
 

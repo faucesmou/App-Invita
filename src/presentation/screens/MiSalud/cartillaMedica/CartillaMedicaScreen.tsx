@@ -106,14 +106,14 @@ export const CartillaMedicaScreen = () => {
                 onPress={() => {
                  
                   let idCartilla = cartilla.idCartilla;
-                  GuardarIdCartillaSeleccionada(idCartilla);
+                  let nombre88 = cartilla.nombre;
+                  GuardarIdCartillaSeleccionada(idCartilla, nombre88);
                   console.log('nombre es----->>>',cartilla.nombre );
                   console.log('cartilla es----->>>',cartilla.nombre );
-                  let nombre88 = cartilla.nombre;
                   console.log('nombre88----->>>',nombre88 );
                   navigation.navigate('Prestadores', { 
                     idCartilla: cartilla.idCartilla,
-                    nombreEspecialidad: cartilla.nombre })
+                })
                 }
                 }
               >
