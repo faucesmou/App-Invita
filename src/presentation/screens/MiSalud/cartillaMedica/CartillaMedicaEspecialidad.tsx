@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Linking, Alert } from 'react-native';
 
 import axios from 'axios';
 
@@ -20,43 +20,7 @@ import { RootStackParams } from '../../../routes/StackNavigator';
 
 interface Props {
   idCartilla?: string;
-}
-
-interface AutorizadasData {
-  palabraClaveENC: string,
-  fecVencimientoENC: string;
-  nombreConvenio: string;
-  domRenglon1: string,
-  domRenglon2: string;
-  coseguroENC: string;
-  prestacionDET: string;
-}
-
-interface CartillaTablaData {
-  tablaPrestadores: {
-    idConvenio: { _text: string }[];
-    ordenAccion: { _text: string }[];
-    idOrdenParcialENC: { _text: string }[];
-    ordenAccionInt: { _text: string }[];
-    descartar: { _text: string }[];
-    // Agrega aquí cualquier otro campo que exista en tablaPrestadores
-  }[];
-  tablaDomicilios: {
-    idConvenioDom: { _text: string }[];
-    idDomicilioDom: { _text: string }[];
-    domicilio: { _text: string }[];
-    localidad: { _text: string }[];
-    provincia: { _text: string }[];
-    lat: { _text: string }[];
-    long: { _text: string }[];
-    paraOrden: { _text: string }[];
-   
-  }[];
-  tablaTelefonos: {
-    idDomicilioTel: { _text: string }[];
-    telefono: { _text: string }[];
- 
-  }[];
+  nombreEspecialidad: string;
 }
 
 interface Prestador {
@@ -71,7 +35,7 @@ interface Prestador {
 }
 
 
-export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
+export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad }: Props) => {
 
 
   const [isConsulting, setIsConsulting] = useState(false);
@@ -126,7 +90,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
         const result = xml2js(xmlData, { compact: true });
         const result2 = xml2js(xmlData, { compact: true }) as ElementCompact;
 
-        console.log('Resultado:-->>>>>>>>:-->>>>>>>>:-->>>>>>>>', result2.Resultado);
+     /*    console.log('Resultado:-->>>>>>>>:-->>>>>>>>:-->>>>>>>>', result2.Resultado); */
      
         try {
 
@@ -143,6 +107,8 @@ export const CartillaMedicaEspecialidad = ({ idCartilla }: Props) => {
     ordenAccionInt: prestadores.ordenAccionInt[index],
     descartar: prestadores.descartar[index]
 })) : [];
+
+console.log('luego de useEffect CartillaMedicaEspecialidad--------------------->-ESTE es el nombreEspecialidad--->', JSON.stringify(nombreEspecialidad));
 
 const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? domicilios.idConvenioDom.map((_, index) => ({
     idConvenioDom: domicilios.idConvenioDom[index],
@@ -168,25 +134,51 @@ prestadoresList.forEach((prestador: any) => {
     // Buscar el domicilio correspondiente
     const domicilio = domiciliosList.find((d: any) => d.idConvenioDom._text === idConvenio._text);
 
+    if (!domicilio) {
+      // Si no se encuentra el domicilio, puedes devolver un objeto vacío o manejar el error
+      return {
+          idConvenio: idConvenio,
+          nombre: nombre,
+          domicilio: 'Desconocido',
+          localidad: 'Desconocido',
+          provincia: 'Desconocido',
+          lat: 'Desconocido',
+          long: 'Desconocido',
+          telefonos: []
+      };
+  }
+
+
     // Buscar los teléfonos correspondientes
     const telefonoList = telefonosList
         .filter((t: any) => t.idDomicilioTel._text === domicilio.idDomicilioDom._text)
         .map((t: any) => t.telefono._text);
 
+        // Si no hay teléfonos disponibles, establecer un valor predeterminado
+        const telefonos = telefonoList.length > 0 ? telefonoList : ['No disponible'];
+
+        function capitalizeText(text: string): string {
+          return text
+              .toLowerCase() // Convierte todo el texto a minúsculas primero
+              .split(' ') // Divide el texto en palabras
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
+              .join(' '); // Une las palabras con un espacio
+      }
+
     arrayPrestadores.push({
         idConvenio: idConvenio._text,
-        nombre: nombre._text,
-        domicilio: domicilio.domicilio._text,
+        nombre: capitalizeText(nombre._text),
+        domicilio: domicilio.domicilio._text.toLowerCase(),
         localidad: domicilio.localidad._text,
         provincia: domicilio.provincia._text,
         lat: domicilio.lat._text,
         long: domicilio.long._text,
-        telefonos: telefonoList
+        telefonos: telefonos
     });
 });
   setPrestadores(arrayPrestadores)
 
-console.log('arrayPrestadores:', arrayPrestadores);
+console.log('arrayPrestadores----->:', arrayPrestadores);
    
 
       } catch(err){
@@ -230,7 +222,52 @@ console.log('arrayPrestadores:', arrayPrestadores);
   }, [idAfiliadoTitular, idCartillaSeleccionada])
 
 
-  const color = globalColors.orange
+  const handlePhonePress2 = (phoneNumber: any) => {
+    Alert.alert(
+      'Abrir Contacto',
+      `¿Deseas abrir WhatsApp o llamar al número ${phoneNumber}?`,
+      [
+        {
+          text: 'WhatsApp',
+          onPress: () => {
+            // Aquí mostrarías un mensaje indicando que la acción se realizaría en un dispositivo físico
+            console.log('Abrir WhatsApp:', phoneNumber);
+            const whatsappUrl = `whatsapp://send?phone=${phoneNumber}`;
+            Linking.openURL(whatsappUrl)
+            .then(() => {
+              console.log('WhatsApp abierto correctamente');
+            })
+            .catch((err) => {
+              Alert.alert('Error', 'No se pudo abrir WhatsApp. Por favor, verifica tu conexión a internet o si la aplicación de WhatsApp está instalada.');
+            console.log('el error es el siguiente:', err);
+            
+            });
+          },
+        },
+        {
+          text: 'Llamar',
+          onPress: () => {
+            // Aquí mostrarías un mensaje indicando que la acción se realizaría en un dispositivo físico
+            console.log('Llamar:', phoneNumber);
+            Linking.openURL(`tel:${phoneNumber}`)
+            .then(()=> {
+              console.log('llamada iniciada correctamente');
+              
+            })
+            .catch((err)=>{
+              Alert.alert('Error', 'No se pudo llamar al número indicado, por favor verifica que sea válido');
+              console.log('el error es el siguiente:', err);
+            })
+          },
+        },
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+      ]
+    );
+  };
+  
 
   return (
     <View
@@ -242,30 +279,42 @@ console.log('arrayPrestadores:', arrayPrestadores);
 
       <BackButton />
 
-      {/*       <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Prestadores</Text> */}
+           <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 20, textAlign: 'center', color: 'black' }}>{nombreEspecialidad}</Text> 
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop:0 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
+        <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 15, textAlign: 'center', color: 'green' }}>{nombreEspecialidad}</Text> 
           {prestadores.map((prestador) => (
         /*   {cartillas.map((cartilla, index) => ( */
 
             <View key={prestador.idConvenio} style={styles.TertiaryButton}>
               <View style={styles.contentWrapper2}>
                 <View style={styles.textWrapper}>
-                  <Text style={styles.descriptionText}>
+                  <Text style={styles.descriptionTextNombre}>
                     {prestador.nombre}
                   </Text>
                   <Text style={styles.descriptionText}>
-                    direccion:{prestador.domicilio}
+                    Direccion:{prestador.domicilio}
                   </Text>
-                   <Text style={styles.descriptionTexttelefono}>
-                    telefono:{prestador.telefonos}
-                  </Text> 
-              {/*    <Text style={styles.descriptionTexttelefono} >
-                        {prestador.telefonos.map((telefono, index) => (
-                            <li key={index}  >{telefono}</li>
-                        ))}
-                    </Text>  */}
+                  {/*    <Text style={styles.descriptionTexttelefono}>
+                    Teléfono:{prestador.telefonos.length > 0 ? prestador.telefonos.join(' - ') : 'No disponible'}
+                  </Text>  */}
+                  <View style={styles.telefonosContainer} >
+                    <Text style={styles.descriptionText}>
+                      Teléfonos:
+                    </Text>
+                    {prestador.telefonos.length > 0 && prestador.telefonos[0] !== 'No disponible' ? (
+                      prestador.telefonos.map((telefono) => (
+                        <TouchableOpacity style={styles.telefonoTouchable} key={telefono} onPress={() => handlePhonePress2(telefono)}>
+                          <Text style={styles.descriptionTexttelefono}>{telefono}</Text>
+                        </TouchableOpacity>
+                      ))
+                    ) : (
+                      <Text style={styles.descriptionText}>No disponible</Text>
+                    )}
+                 
+                  </View>
+
 
                 </View>
               </View>
@@ -315,7 +364,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.1,
-    shadowRadius: 10,
+    shadowRadius: 5,
     padding: 5,
     margin: 5,
     marginBottom: 5,
@@ -328,10 +377,26 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center'
   },
-  descriptionTexttelefono: {
+  telefonosContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+   justifyContent: 'center',
+  flexWrap:'wrap',
+
+  },
+  descriptionTextNombre: {
     color: 'black',
-    fontSize: 15,
+    fontSize: 18,
     textAlign: 'center'
+  },
+  telefonoTouchable: {
+ marginLeft:5,
+  },
+  descriptionTexttelefono: {
+    color: 'blue',
+    fontSize: 15,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
   },
   contentWrapper2: {
     flexDirection: 'row',
@@ -342,6 +407,7 @@ const styles = StyleSheet.create({
   textWrapper: {
     flex: 1,
     paddingRight: 5,
+    marginHorizontal: 3,
   },
 })
 

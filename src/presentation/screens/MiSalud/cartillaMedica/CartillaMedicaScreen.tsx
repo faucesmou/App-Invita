@@ -54,6 +54,8 @@ export const CartillaMedicaScreen = () => {
             idCartilla: cartillasData.idCartilla._text,
           }];
         setCartillas(mappedCartillas);
+        console.log('mappedCartillas es lo siguienteñ-------->', mappedCartillas);
+        
 
       /*   console.log('este es el mappedCartillas DE CARTILLA MEDICA---x--x-x--x->:', mappedCartillas); */
         /*  console.log('este es el cartillas useState:', cartillas); */
@@ -102,10 +104,16 @@ export const CartillaMedicaScreen = () => {
               {/* mejora del estilo:  */}
               <Pressable
                 onPress={() => {
-                  console.log('Valor de idCartilla ACA ACA ACAA:', cartilla.idCartilla);
+                 
                   let idCartilla = cartilla.idCartilla;
                   GuardarIdCartillaSeleccionada(idCartilla);
-                  navigation.navigate('Prestadores', { idCartilla: cartilla.idCartilla })
+                  console.log('nombre es----->>>',cartilla.nombre );
+                  console.log('cartilla es----->>>',cartilla.nombre );
+                  let nombre88 = cartilla.nombre;
+                  console.log('nombre88----->>>',nombre88 );
+                  navigation.navigate('Prestadores', { 
+                    idCartilla: cartilla.idCartilla,
+                    nombreEspecialidad: cartilla.nombre })
                 }
                 }
               >
@@ -113,7 +121,7 @@ export const CartillaMedicaScreen = () => {
                   <View style={styles.contentWrapper2}>
                     <View style={styles.textWrapper}>
                       <Text style={styles.descriptionText}>
-                        {cartilla.nombre}
+                      {cartilla.nombre}
                       </Text>
                       {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}
                     </View>

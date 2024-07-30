@@ -41,7 +41,7 @@ export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: globalColors.gray3/* 'yellow' */ /* 'gray' */ /* globalColors.background */,
+    backgroundColor: 'white',/* globalColors.gray3 *//* 'yellow' */ /* 'gray' */ /* globalColors.background */
     textAlign: 'center',
     justifyContent: 'center',
     marginBottom:30,
