@@ -142,9 +142,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 15 },
+    shadowOffset: { width: 0, height: 7 },
     shadowOpacity: 0.1,
-    shadowRadius: 15,
+    shadowRadius: 10,
     elevation: 5,
   },
   cardTitle: {

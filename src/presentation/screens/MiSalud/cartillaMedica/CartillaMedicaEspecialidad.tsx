@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Linking, Alert } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Linking, Alert, Platform } from 'react-native';
 
 import axios from 'axios';
 
@@ -238,7 +238,7 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
               console.log('WhatsApp abierto correctamente');
             })
             .catch((err) => {
-              Alert.alert('Error', 'No se pudo abrir WhatsApp. Por favor, verifica tu conexión a internet o si la aplicación de WhatsApp está instalada.');
+              Alert.alert('Error', 'No se pudo abrir WhatsApp. Por favor, verifica tu conexión a internet.');
             console.log('el error es el siguiente:', err);
             
             });
@@ -268,23 +268,52 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
     );
   };
   
+  const handleShowLocation = (latitude: string, longitude: string) => {
+    Alert.alert(
+      'Ver en Google Maps',
+      '¿Deseas ver esta ubicación en Google Maps?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Ver',
+          onPress: () => {
+           try{
+             const url = `maps:0?q=${latitude},${longitude}`;
+             console.log('la url es: ----->', url);
+             
+             Linking.openURL(url)
+           }catch(err){
+            console.error('ocurrio un error al intentar abrir el mapa:', err)
+           }
+          
+          /*   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+            Linking.openURL(mapUrl); */
+          },
+        },
+      ]
+    );
+  };
 
   return (
     <View
 
-      style={globalStyles.container}
+      style={{...globalStyles.container, marginBottom:0, }}
 
     >
       <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
-         <Text style={{ marginBottom: 5,
-        marginTop: 5,
+         <Text style={{ marginBottom: 10,
+        marginTop: 0,
         fontSize: 30,
         textAlign: 'center',
         color: globalColors.gray2,
-        fontWeight: 'bold' 
+        fontWeight: 'bold', 
+       
              }}>{nombreEspecialidadSeleccionada}</Text>  
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop:0 }}>
@@ -299,12 +328,35 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
                   <Text style={styles.descriptionTextNombre}>
                     {prestador.nombre}
                   </Text>
-                  <Text style={styles.descriptionText}>
+                {/*  <Text style={styles.descriptionText}>
                     Direccion:{prestador.domicilio}
-                  </Text>
-                  {/*    <Text style={styles.descriptionTexttelefono}>
-                    Teléfono:{prestador.telefonos.length > 0 ? prestador.telefonos.join(' - ') : 'No disponible'}
                   </Text>  */}
+                  <View style={styles.direccionContainer} >
+                  {prestador.lat != "" && prestador.long != "" ?
+                    (
+                      <>
+                      
+                      <Text style={styles.descriptionText}>
+                      Direccion: {prestador.domicilio}
+                    </Text>
+
+                      <TouchableOpacity
+                        style={styles.telefonoTouchable}
+                        onPress={() => handleShowLocation(prestador.lat, prestador.long)}
+                      >
+                        <Text style={styles.descriptionTexttelefono}>Ver Mapa</Text>
+                      </TouchableOpacity>
+                      
+                      </>
+                    )
+                    : (
+                      <Text style={styles.descriptionText}>
+                        Direccion:{prestador.domicilio}
+                      </Text>
+                    )
+                  }
+                  </View>
+
                   <View style={styles.telefonosContainer} >
                     <Text style={styles.descriptionText}>
                       Teléfonos:
@@ -383,17 +435,28 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center'
   },
+  direccionContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+   justifyContent: 'center',
+/*   marginTop:5, */
+/*   backgroundColor: 'yellow'  */
+  },
   telefonosContainer: {
     display: 'flex',
     flexDirection: 'row',
    justifyContent: 'center',
   flexWrap:'wrap',
+  marginTop:5,
+/*   backgroundColor: 'yellow'  */
 
   },
   descriptionTextNombre: {
     color: 'black',
     fontSize: 18,
-    textAlign: 'center'
+    textAlign: 'center',
+    
   },
   telefonoTouchable: {
  marginLeft:5,

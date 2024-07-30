@@ -75,14 +75,21 @@ export const CartillaMedicaScreen = () => {
   return (
     <View
 
-      style={globalStyles.container}
+      style={{...globalStyles.container, marginBottom:0, }}
 
     >
       <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
-      <Text style={{ marginBottom: 0, marginTop: 0, fontSize: 28, textAlign: 'center', }}>Especialidades</Text>
+      <Text style={{
+        marginBottom: 0,
+        marginTop: 0,
+        fontSize: 30,
+        textAlign: 'center',
+        color: globalColors.gray2,
+        fontWeight: 'bold'
+      }}>Especialidades</Text>
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 15 }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
