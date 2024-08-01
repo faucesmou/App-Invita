@@ -98,7 +98,7 @@ export const globalStylesCredentials = StyleSheet.create({
     flexDirection: 'column',
     overflow: 'hidden', 
     marginVertical: 20,
-    width: 390,
+    width: '100%'/* 390 */,//En el 15maxpro estaba en 390.
     height: 230,
     paddingHorizontal: 0,
     color: 'white',
@@ -171,6 +171,7 @@ export const globalStylesCredentials = StyleSheet.create({
   fuente: {
     top:'auto',
     bottom:'80%',
+/*     backgroundColor:'green',  */
   },
   tituloAndes: {
     color:'white',

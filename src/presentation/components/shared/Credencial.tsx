@@ -30,8 +30,29 @@ const Credencial = () => {
     plan: '',
     nombreAfiliado: '',
     numAfiliado: '',
-    fecVencimiento: ''
+    fecVencimiento: '',
+    nombreExtendido: '',
   });
+
+  const contarPalabras = (texto:string) => {
+    // Dividimos el texto por espacios y filtramos para eliminar espacios en blanco
+    const palabras = texto.split(' ').filter(palabra => palabra !== '');
+    return palabras.length;
+  };
+  const dividirNombre = (nombreCompleto:string) => {
+    const palabras = nombreCompleto.split(' ');
+    if (palabras.length > 3) {
+      return {
+        nombreAfiliado: palabras.slice(0, 2).join(' '),
+        nombreExtendido: palabras.slice(2).join(' '),
+      };
+    } else {
+      return {
+        nombreAfiliado: nombreCompleto,
+        nombreExtendido: '',
+      };
+    }
+  };
 
   const { idAfiliado } = useAuthStore();
 
@@ -65,12 +86,13 @@ const Credencial = () => {
         const tipoTarjeta = parseado.Resultado.fila.tablaEncabezado.tipoTarjeta._text.substring(parseado.Resultado.fila.tablaEncabezado.tipoTarjeta._text.lastIndexOf(' ') + 1).toLowerCase();
 
         setIsConsulting(false);
-        setDatosCredencial({
+         setDatosCredencial({
           plan: tipoTarjeta,
           nombreAfiliado,
           numAfiliado,
           fecVencimiento,
-        });
+          nombreExtendido: ''
+        }); 
    /*     setDatosCredencial(prevState => ({
                ...prevState,
                plan: 'platinum'
@@ -85,8 +107,11 @@ const Credencial = () => {
     consultaDatosCredencial(idAfiliado);
   }, [idAfiliado]);
 
+  const cantidadPalabras = contarPalabras(datosCredencial.nombreAfiliado);
+
+
   return (
-    <View style={{ flex: 1, marginBottom:0,  }}>
+    <View style={{ flex: 1, marginBottom:0 }}>
       {isConsulting ? (
       /*   <FullScreenLoader /> */
       <>
@@ -115,8 +140,12 @@ const Credencial = () => {
                 </View>
                 <View style={[globalStylesCredentials.frenteCardHome2, { alignItems: 'flex-end', justifyContent: 'flex-end' }]}>
                   <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
-                  <View style={globalStylesCredentials.fuente}>
-                    <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
+                  <View /* style={globalStylesCredentials.fuente} */
+                  style={[globalStylesCredentials.fuente,
+                   cantidadPalabras >= 3 && { width: '60%' },
+                   cantidadPalabras === 2 && { width: '50%' },
+                  ]} >
+                      <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
                     <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
                     <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>
                   </View>

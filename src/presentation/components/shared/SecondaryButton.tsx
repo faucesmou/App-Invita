@@ -3,6 +3,8 @@ import React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { globalColors, globalStyles } from '../../theme/theme';
 import { IonIcon } from './IonIcon';
+import { useWindowDimensions } from 'react-native'; 
+/* import { scale } from 'react-native-size-matters'; INVESTIGAR */
 
 interface Props {
   onPress: () => void;
@@ -16,12 +18,15 @@ interface Props {
 
 
 export const SecondaryButton = ({ onPress, label, color, disabled, iconName, description }: Props) => {
+  const { width, height } = useWindowDimensions();
+  
   const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
   console.log('backColor', backColor)
   const navigation = useNavigation();
   /*  const backColor = color? color : globalColors.profile2; */
 
   return (
+    <View style={[styles.contentWrapper, { width: width, height: height /6 }]}>{/* prueba temporal del responsive */}
 
     <Pressable
       /*  onPress={ () => onPress() }
@@ -37,16 +42,18 @@ export const SecondaryButton = ({ onPress, label, color, disabled, iconName, des
     >
       {/* Icono y texto */}
       <View style={styles.contentWrapper}>
-        <IonIcon name={iconName} size={35} color="#505050" style={styles.icon} />
+        <IonIcon name={iconName} size={30} color="#505050" style={styles.icon} />
         <Text style={styles.buttonText}>{label}</Text>
         <Text style={styles.descriptionText}>{description}</Text>
       </View>
 
     </Pressable>
+    </View>
   )
 }
 const styles = StyleSheet.create({
   secondaryButton: {
+    flex:1, //agregado prueba
     /*     backgroundColor: 'orange', */
     minWidth: '30%',   // Esto asegura que los botones ocupen al menos la mitad del ancho disponible
     maxHeight: '90%',
@@ -59,10 +66,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 20,
     margin: 5,
-    marginTop: 5,
+    marginTop: 0,
     padding: 15,
     alignItems: 'flex-start',
     textAlign: 'center',
+  },
+  contentWrapper2: {
+    flex: 1, // Ocupa todo el espacio disponible en el botón
+    flexDirection: 'column',
+    alignItems: 'center', // Centra los elementos horizontalmente
+    justifyContent: 'space-between', // Distribuye verticalmente
+    padding: 10, // Espacio interno
   },
   contentWrapper: {
     flexDirection: 'column',
@@ -72,15 +86,16 @@ const styles = StyleSheet.create({
     maxWidth: '50%',
     minWidth: '100%',
     minHeight: '80%',
-    /*     backgroundColor: 'green', */
+/*     backgroundColor: 'yellow', */
+/*        backgroundColor: 'green', */
   },
   buttonText: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'normal',
     marginBottom: 5, // Espacio entre el texto y la descripción
     marginTop: 5,
-    /*  backgroundColor: 'yellow', */
+   /*   backgroundColor: 'yellow', */
     justifyContent: 'flex-start',
   },
   icon: {
@@ -90,9 +105,8 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: '#505050',
-    fontSize: 19,
+    fontSize: 18,
     flexWrap: 'wrap',
-    /*    backgroundColor: 'blue',  */
     minWidth: '100%',
     maxHeight: '50%',
     overflow: 'hidden',

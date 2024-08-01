@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet } from 'react-native'
+import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet,Platform, NativeModules  } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 
@@ -37,8 +37,29 @@ export const EstudiosMedicosEnv = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false); // Nuevo estado
 
   useEffect(() => {
-
+    const getIMEI = async () => {
+      try {
+        if (Platform.OS === 'ios') {
+          const { getDeviceIdentifier } = NativeModules;
+          const imei = await getDeviceIdentifier();
+          console.log('El IMEI ES---->', imei);
+          return imei;
+        } else {
+          console.log('El dispositivo no es iOS');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error al obtener el IMEI:', error);
+        console.log('Error al obtener el IMEI:', error);
+        return null;
+      }
+    };
     const EstudiosMedicosRequest = async () => {
+      console.log('ingresando a Estudios MEDICOS rEQUEST ---> ');
+      
+     /*  const imei = await getIMEI(); */
+     const imei = '358973323343919'
+      console.log('ingresando a Estudios MEDICOS rEQUEST y LAIMEI ES:  ---> ', imei);
       try {
         setIsConsulting(true);
 
@@ -52,10 +73,10 @@ export const EstudiosMedicosEnv = () => {
           imagen3: imagenes[2] || '',
           imagen4: imagenes[3] || '',
           imagen5: imagenes[4] || '',
-          IMEI: '',
+          IMEI: imei || '',
           idConvenio: idPrestador || '',
         });
-
+        console.log('LOS PARAMS SON:  ---> ', JSON.stringify(params));
         const response = await axios.post(
           'https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPSolicitarPractica',
           params.toString(),
@@ -70,13 +91,14 @@ export const EstudiosMedicosEnv = () => {
         const result = xml2js(response.data, { compact: true });
 
         // Verificación de la estructura del resultado
+        //@ts-ignore
         if (!result || !result.Resultado || !result.Resultado.fila) {
           console.log('La respuesta XML no contiene los datos esperados');
           setError('La respuesta no contiene los datos esperados');
           return;
         }
 
-
+        //@ts-ignore
         const fila = result.Resultado.fila;
         setResult({
           valorDevuelto: fila.valorDevuelto._text,

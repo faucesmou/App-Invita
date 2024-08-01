@@ -187,6 +187,7 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
       }
 
         /* ---------------------------------------------------------------- */
+        //@ts-ignore
         const cartillasData = result.Resultado.fila.tablaPrestadores;
        /*  console.log('cartillasData:', cartillasData); */
 
@@ -281,12 +282,18 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
           text: 'Ver',
           onPress: () => {
            try{
-             const url = `maps:0?q=${latitude},${longitude}`;
+            console.log(`la latitude es: ${latitude} y la longitude es: ${longitude}` );
+            
+          const url = `maps:0?q=${latitude},${longitude}`; 
+          
              console.log('la url es: ----->', url);
              
              Linking.openURL(url)
            }catch(err){
             console.error('ocurrio un error al intentar abrir el mapa:', err)
+              /*  const url = `comgooglemaps://?center=${latitude},${longitude}&zoom=14`; */
+            /* const url = `comgooglemaps://?center=<span class="math-inline">\{latitude\.trim\(\)\},</span>{longitude.trim()}&zoom=14`; */
+            /* const url = `comgooglemaps://?center=${encodeURIComponent(latitude.trim())},${encodeURIComponent(longitude.trim())}`; */
            }
           
           /*   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
@@ -465,7 +472,7 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: 15,
     textAlign: 'center',
-    textDecorationLine: 'underline',
+ /*    textDecorationLine: 'underline', */
   },
   contentWrapper2: {
     flexDirection: 'row',

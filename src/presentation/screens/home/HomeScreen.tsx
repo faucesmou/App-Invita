@@ -44,7 +44,7 @@ const handleOpenURL = () => {
         } catch (err) {
           console.log('error al intentar ingresar a whatsapp:', err);
         } finally {
-          // Restablecer el estado después de intentar abrir la URL
+        
           setOrdenConsulta('');
         }
       }
@@ -108,7 +108,7 @@ const handleOpenURL = () => {
 
           <Image source={require('../../assets/images/logogris.png')}
             style={styles.image}
-            resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
+            resizeMode="contain" 
           />
         </View>
       </View>
@@ -119,7 +119,7 @@ const handleOpenURL = () => {
               iconName='cloud-download-outline'
               iconName2='mail-outline'
               description='Accedé a todas tus facturas'
-              /* color={color} */ 
+        
             />
         
       <View
@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: '20%',
     marginLeft:0,
+   /*  backgroundColor:'green' */
   },
   rowContainer: {
     flexDirection: 'row',
@@ -227,6 +228,7 @@ const styles = StyleSheet.create({
     maxWidth:'50%', 
     maxHeight:'70%',
     marginTop: 5,
+  /*   backgroundColor:'yellow' */
   },
  card: {
   width: '90%',
@@ -267,10 +269,11 @@ innerContainer: {
   flex: 1,
   alignItems: 'center',
   justifyContent: 'center',
-  width: '80%',
+  width: '100%',
   flexDirection:'row',
-  height: '40%',
-  marginHorizontal:40,
+  height: '50%',
+  marginHorizontal:20,//En el 15maxpro estaba en 40.
+/*   backgroundColor:'green' */
 },
 image: {
   flex: 0.2,
@@ -288,7 +291,7 @@ text: {
 },
 
 });
-
+ 
 
     
   /* usando el State del Profile Store:  */
@@ -312,3 +315,182 @@ text: {
   //const navigation = useNavigation();
 
   //const { logout } = useAuthStore()
+
+  /* import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, Image, Linking, Pressable, ScrollView } from 'react-native';
+import { RootStackParams } from '../../routes/StackNavigator';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { IonIcon } from '../../components/shared/IonIcon';
+import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
+import { SecondaryButton } from '../../components/shared/SecondaryButton';
+import { globalColors } from '../../theme/theme';
+import Credencial from '../../components/shared/Credencial';
+
+export const HomeScreen = () => {
+  const [ordenConsulta, setOrdenConsulta] = useState("");
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
+  const { top } = useSafeAreaInsets();
+  const headerHeight = 120 + top;
+
+  const Url = `https://api.whatsapp.com/send?phone=542613300622&text=%C2%A1Hola%2C%20Pixi!%20Vengo%20de%20la%20APP%20y%20tengo%20algunas%20consultas.%20%F0%9F%91%8D`;
+
+  const handleOpenURL = () => {
+    setOrdenConsulta(Url);
+  };
+
+  useEffect(() => {
+    const openURL = async () => {
+      if (ordenConsulta) {
+        try {
+          await Linking.openURL(ordenConsulta);
+        } catch (err) {
+          console.log('error al intentar ingresar a whatsapp:', err);
+        } finally {
+          setOrdenConsulta('');
+        }
+      }
+    };
+    openURL();
+  }, [ordenConsulta]);
+
+  return (
+    <ScrollView contentContainerStyle={styles.screenContainer}>
+      <View style={[styles.headerContainer, { height: headerHeight }]}>
+        <View style={{ width: '80%', marginBottom: 10 }}>
+          <Text style={styles.headerText}>Home</Text>
+        </View>
+        <Pressable onPress={() => navigation.navigate('Buzon')} style={{ marginLeft: 0, marginBottom: 0 }}>
+          <IonIcon name='notifications-outline' color={'white'} size={35} />
+        </Pressable>
+      </View>
+
+      <View style={styles.cardContainer}>
+        <Credencial />
+      </View>
+
+      <View style={styles.imageContainer}>
+        <View style={styles.innerContainer}>
+          <Text style={styles.text}>Bienvenido a Andes Salud</Text>
+          <Image source={require('../../assets/images/logogris.png')} style={styles.image} resizeMode="contain" />
+        </View>
+      </View>
+
+      <QuaternaryButton
+        onPress={() => navigation.navigate('Facturas')}
+        label={'Descargá tus Facturas'}
+        iconName='cloud-download-outline'
+        iconName2='mail-outline'
+        description='Accedé a todas tus facturas'
+      />
+
+      <View style={styles.bigContentContainer}>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.rowContainer}>
+            <SecondaryButton
+              onPress={() => navigation.navigate('Afiliados')}
+              label="Mi Grupo Familiar"
+              iconName='people-circle-outline'
+              description='Tu Grupo Familiar y credenciales'
+            />
+            <SecondaryButton
+              onPress={() => navigation.navigate('Perfil')}
+              label="Mi Perfil"
+              iconName='person-circle-outline'
+              description='Tu cuenta personalizada'
+            />
+          </View>
+
+          <View style={styles.rowContainer}>
+            <SecondaryButton
+              onPress={() => navigation.navigate('Pagos')}
+              label="Mis Pagos"
+              iconName='file-tray-full-outline'
+              description='Accedé al estado de tus pagos'
+            />
+            <SecondaryButton
+              onPress={handleOpenURL}
+              label="Asistencia"
+              iconName='chatbubbles-outline'
+              description='Chateá con nuestro soporte'
+            />
+          </View>
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    paddingHorizontal: 0,
+    marginTop: 0,
+    backgroundColor: globalColors.white2,
+    alignItems: 'center',
+  },
+  headerContainer: {
+    width: '100%',
+    backgroundColor: globalColors.gray3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    flexDirection: 'row',
+    zIndex: 9, 
+  },
+  headerText: {
+    fontSize: 35,
+    textAlign: 'center',
+    color: 'white',
+    marginLeft: '7%',
+  },
+  cardContainer: {
+    marginTop: -40,
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    backgroundColor: globalColors.white2,
+    zIndex: 7, // Manteniendo el valor zIndex
+  },
+  bigContentContainer: {
+    flex: 1,
+    marginTop: -35,
+    borderRadius: 15,
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  buttonsContainer: {
+    flex: 1,
+    marginBottom: '10%',
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  imageContainer: {
+    marginBottom: 20,
+    marginTop: 50,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    zIndex: 5, 
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    marginLeft: 10,
+  },
+  text: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+});
+ */

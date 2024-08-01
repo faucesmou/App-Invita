@@ -18,4 +18,7 @@
     MOSTRAR ESPECIALIDADES */
     
      /*    "start:ios": "npm run ios -- --simulator='iPhone 15 Pro Max'" */
+
+// HABILITAR ESTA FUNCION EN ESTUDIOS-MEDICOS-ENV.TSX: debe ser probada en celulares fisicos: 
+          /*  const imei = await getIMEI(); */
     
