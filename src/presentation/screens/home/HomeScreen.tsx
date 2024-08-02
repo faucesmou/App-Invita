@@ -14,6 +14,8 @@ import { globalColors } from '../../theme/theme';
 import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
 import { BackButton } from '../../components/shared/BackButton';
 import { IonIcon } from '../../components/shared/IonIcon';
+import NotificationBell from '../../components/shared/Notification-messages';
+import NotificationComponent from '../../components/shared/NotificationComponent';
 
 
 
@@ -77,17 +79,18 @@ const handleOpenURL = () => {
             Home
           </Text>
         </View>
-        <View >
+        <View>
+          <Pressable
+            onPress={() => {
+              console.log('presiono el boton');
+              navigation.navigate('Buzon');
+            }}
+            style={{ marginLeft: 0, marginBottom: 0 }}
+          >
+            <NotificationBell />
+          </Pressable>
 
-        <Pressable onPress={() => {
-          console.log('presiono el boton ');
-          navigation.navigate('Buzon')
-        }}
-          style={{ marginLeft: 0, marginBottom: 0 }}
-        >
-         <IonIcon name='notifications-outline' color={'white'} size={35} /> 
-        </Pressable>
-        
+          <NotificationComponent /> 
         </View>
 
       </View>

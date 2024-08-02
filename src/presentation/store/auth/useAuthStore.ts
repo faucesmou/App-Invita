@@ -8,6 +8,7 @@ import axios from "axios";
 import { xml2js } from 'xml-js';
 
 //Este es el Store que creamos con zustand para tener un Context de los datos y acceder a los mismos desde cualquier parte de la aplicacion.
+//@ts-ignore
 import { USUARIO, PASSWORD, ADMINISTRADORA, STAGE } from '@env';
 
 type ResultadoXML = {

@@ -13,6 +13,7 @@ import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
 import { IonIcon } from '../../../components/shared/IonIcon';
 import Divider from '../../../components/shared/Divider';
 import { BuzonOrdenesC } from './BuzonOrdenesC';
+import { useNotificationStore } from '../../../store/notification-store';
 
 
 
@@ -28,7 +29,7 @@ interface Notificacion {
 interface Rechazo {
   idOrden: string,
   estado: string;
-  comentarioRechazo: string;
+  comentarioRechazo?: string;
 }
 interface AutorizadasData {
   palabraClaveENC: string,
@@ -42,6 +43,9 @@ interface AutorizadasData {
 
 export const Buzon = () => {
   const { idAfiliado } = useAuthStore();
+  console.log('idAfiliado es---------------------->:', idAfiliado);
+  
+
   const { top } = useSafeAreaInsets();
   const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]);
   const [isConsulting, setIsConsulting] = useState(false);
@@ -56,8 +60,8 @@ export const Buzon = () => {
   const [modalData, setModalData] = useState<AutorizadasData[]>([]);
   const [rechazoData, setRechazoData] = useState<Rechazo[]>([]);
 
-
-
+  const notifications = useNotificationStore((state) => state.notifications);
+  const setNotifications = useNotificationStore((state) => state.setNotifications);
   useEffect(() => {
     setIsConsulting(true);
     const ProductsRequest = async () => {
@@ -151,7 +155,7 @@ export const Buzon = () => {
 
   }, [idAfiliado, listadoEstMedicosVisible]);
 
-  const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo: string) => {
+  const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo?: string) => {
     
     console.log('Ingresando en  PRACTICA RESUELTA REQUEST-->>>>>>>idOrden:', idOrden);
    
@@ -165,6 +169,15 @@ export const Buzon = () => {
       }];
       setRechazoData(rechazoInfo)
       setModalVisible3(true);
+
+      //Actualizamos el contexto para avisar que la notificacion fue vista
+      //esto modifica a todas en VISTO falta adaptar para que modifique solo la que abre el usuario:
+      const updatedNotifications = notifications.map(notification => ({
+        ...notification,
+        visto: 'visto'
+      }));
+      setNotifications(updatedNotifications);/* este es el context */
+
       return;
     }
 
