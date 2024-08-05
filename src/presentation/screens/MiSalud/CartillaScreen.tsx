@@ -8,6 +8,8 @@ import CustomHeader from '../../components/CustomHeader';
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
 import { TertiaryButton } from '../../components/shared/TertiaryButton';
 import { IonIcon } from '../../components/shared/IonIcon';
+import NotiMensajes from '../../components/shared/Noti-mensajes';
+import NotiComponent3 from '../../components/shared/NotiComponent3';
 
 export const CartillaScreen = () => {
   console.log('Entrando a Cartilla Screen--------->');
@@ -39,8 +41,8 @@ export const CartillaScreen = () => {
             textAlign: 'center',
             marginLeft: '7%',
             color: 'white',
-          /*   backgroundColor: 'yellow' */
-          
+            /*   backgroundColor: 'yellow' */
+
           }} >
             Mi Salud
           </Text>
@@ -48,17 +50,19 @@ export const CartillaScreen = () => {
 
         <View>
 
-        <Pressable onPress={() => {
-          console.log('presiono el boton ');
-          navigation.navigate('Buzon')
-        }}
-          style={{ marginLeft: 0, marginBottom: 0 }}
-        >
-         <IonIcon name='notifications-outline' color={'white'} size={35} /> 
-        </Pressable>
-        
+          <Pressable onPress={() => {
+            console.log('presiono el boton ');
+            navigation.navigate('Buzon')
+          }}
+            style={{ marginLeft: 0, marginBottom: 5 }}
+          >
+            {/*  <IonIcon name='notifications-outline' color={'white'} size={35} />  */}
+            <NotiMensajes />
+          </Pressable>
+          <NotiComponent3 />
+
         </View>
-     
+
       </View>
 
       <View style={styles.cardContainer} >

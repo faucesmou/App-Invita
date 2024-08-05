@@ -14,8 +14,10 @@ import { globalColors } from '../../theme/theme';
 import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
 import { BackButton } from '../../components/shared/BackButton';
 import { IonIcon } from '../../components/shared/IonIcon';
-import NotificationBell from '../../components/shared/Notification-messages';
+
 import NotificationComponent from '../../components/shared/NotificationComponent';
+import NotiComponent3 from '../../components/shared/NotiComponent3';
+import NotiMensajes from '../../components/shared/Noti-mensajes';
 
 
 
@@ -85,12 +87,13 @@ const handleOpenURL = () => {
               console.log('presiono el boton');
               navigation.navigate('Buzon');
             }}
-            style={{ marginLeft: 0, marginBottom: 0 }}
+            style={{ marginLeft: 0, marginBottom: 5 }}
           >
-            <NotificationBell />
+       
+            <NotiMensajes />
           </Pressable>
 
-          <NotificationComponent /> 
+          <NotiComponent3/> 
         </View>
 
       </View>

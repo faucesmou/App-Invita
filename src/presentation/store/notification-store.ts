@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type Notification = {
+/* type Notification = {
   idOrden: string;
   afiliado: string;
   fecSolicitud: string;
@@ -8,14 +8,48 @@ type Notification = {
   fecFinalizacion: string;
   comentarioRechazo?: string;
   visto: string;
-};
+}; */
+    type Notification = {
+      idOrden: string;
+      visto: string;
+    };
 
-type Store = {
-  notifications: Notification[];
-  setNotifications: (notifications: Notification[]) => void;
-};
-
-export const useNotificationStore = create<Store>((set) => ({
-  notifications: [],
-  setNotifications: (notifications) => set({ notifications }),
-}));
+  /*   type Store = {
+      notifications: Notification[];
+      setNotifications: (notifications: Notification[]) => void;
+      orderNotifications: Notification[];
+      setOrderNotifications: (notifications: Notification[]) => void;
+    }; */
+    type Store = {
+      medicalNotifications: Notification[];
+      setMedicalNotifications: (notifications: Notification[]) => void;
+      orderNotifications: Notification[];
+      setOrderNotifications: (notifications: Notification[]) => void;
+      combinedNotifications: Notification[];
+      setCombinedNotifications: () => void;
+    };
+    
+    export const useNotificationStore = create<Store>((set, get) => ({
+      medicalNotifications: [],
+      setMedicalNotifications: (notifications) => {
+        set({ medicalNotifications: notifications });
+        get().setCombinedNotifications();
+      },
+      orderNotifications: [],
+      setOrderNotifications: (notifications) => {
+        set({ orderNotifications: notifications });
+        get().setCombinedNotifications();
+      },
+      combinedNotifications: [],
+      setCombinedNotifications: () => {
+        const combined = [...get().medicalNotifications, ...get().orderNotifications];
+        set({ combinedNotifications: combined });
+      },
+    }));
+    
+  /*   export const useNotificationStore = create<Store>((set) => ({
+      notifications: [],
+      setNotifications: (notifications) => set({ notifications }),
+      orderNotifications: [],
+      setOrderNotifications: (notifications) => set({ notifications }),
+    })); */

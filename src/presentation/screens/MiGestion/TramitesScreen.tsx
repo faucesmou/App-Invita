@@ -13,6 +13,8 @@ import { TertiaryButton } from '../../components/shared/TertiaryButton'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SecondaryButton } from '../../components/shared/SecondaryButton'
 import { IonIcon } from '../../components/shared/IonIcon'
+import NotiMensajes from '../../components/shared/Noti-mensajes'
+import NotiComponent3 from '../../components/shared/NotiComponent3'
 
 export const TramitesScreen = () => {
   console.log('Entrando a TramitesScreen (Mi Gestion)')
@@ -51,12 +53,15 @@ export const TramitesScreen = () => {
             console.log('presiono el boton ');
             navigation.navigate('Buzon')
           }}
-            style={{ marginLeft: 0, marginBottom: 0 }}
+            style={{ marginLeft: 0, marginBottom: 5 }}
           >
+{/* 
+            <IonIcon name='notifications-outline' color={'white'} size={35} /> */}
 
-            <IonIcon name='notifications-outline' color={'white'} size={35} />
+            <NotiMensajes />
           </Pressable>
-
+          
+          <NotiComponent3/> 
         </View>
       </View>
 

@@ -60,8 +60,12 @@ export const Buzon = () => {
   const [modalData, setModalData] = useState<AutorizadasData[]>([]);
   const [rechazoData, setRechazoData] = useState<Rechazo[]>([]);
 
-  const notifications = useNotificationStore((state) => state.notifications);
-  const setNotifications = useNotificationStore((state) => state.setNotifications);
+  // Obtener las notificaciones y la función para actualizarlas del store
+  const medicalNotifications = useNotificationStore.getState().medicalNotifications;
+  const setMedicalNotifications = useNotificationStore((state) => state.setMedicalNotifications);
+/*   const notifications = useNotificationStore((state) => state.notifications);
+  const setNotifications = useNotificationStore((state) => state.setNotifications); */
+
   useEffect(() => {
     setIsConsulting(true);
     const ProductsRequest = async () => {
@@ -170,13 +174,26 @@ export const Buzon = () => {
       setRechazoData(rechazoInfo)
       setModalVisible3(true);
 
+      // Actualizamos el contexto para avisar que la notificación fue vista
+      const updatedMedicalNotifications = medicalNotifications.map(notification =>
+        notification.idOrden === idOrden
+          ? { ...notification, visto: 'visto' }
+          : notification
+      );
+
+      // Actualizar el estado global de las notificaciones de estudios médicos
+      setMedicalNotifications(updatedMedicalNotifications);
+
       //Actualizamos el contexto para avisar que la notificacion fue vista
       //esto modifica a todas en VISTO falta adaptar para que modifique solo la que abre el usuario:
-      const updatedNotifications = notifications.map(notification => ({
-        ...notification,
-        visto: 'visto'
-      }));
-      setNotifications(updatedNotifications);/* este es el context */
+    /*   const updatedNotifications = notifications.map(notification =>
+        notification.idOrden === idOrden 
+        ? { ...notification, visto:'visto'}
+        :
+        notification
+      )
+      
+      setNotifications(updatedNotifications); */ /* este es el context */
 
       return;
     }
@@ -237,6 +254,17 @@ export const Buzon = () => {
     /*     console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData)); */
 
         setModalVisible(true);
+
+ // Actualizamos el contexto para avisar que la notificación fue vista
+ const updatedMedicalNotifications = medicalNotifications.map(notification =>
+  notification.idOrden === idOrden
+    ? { ...notification, visto: 'visto' }
+    : notification
+);
+
+// Actualizar el estado global de las notificaciones de estudios médicos
+setMedicalNotifications(updatedMedicalNotifications); /* este es el context donde guardamos el cambio*/
+
       } else {
         console.error('practicaResueltaData or idOrdenENC is undefined');
         setModalVisible2(true);
@@ -366,19 +394,7 @@ export const Buzon = () => {
         { listadoEstMedicosVisible? (
         <View style={{ /* marginBottom: 30,  */marginTop: 10,   /* backgroundColor: 'green', */ maxHeight:'80%',minHeight:'40%', width: '100%'}}>
 
-         {/*  <View style={styles.ContainerEstudiosMedicosTitle} >
-          <Pressable
-          onPress={()=>{
-            console.log('se toco el titulo estudios medicos');
-            modifyEstMedicVisible()
-          }
-          }
-          >
-            <Text style={styles.titleEstudiosMedicos} >Estudios Medicos:</Text>
-          </Pressable>
-          </View> */}
-
-         
+                 
             <ScrollView>
 
             {isConsulting ?

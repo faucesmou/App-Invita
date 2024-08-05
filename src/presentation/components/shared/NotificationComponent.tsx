@@ -16,13 +16,16 @@ interface Notificacion {
 }
 
 const NotificationComponent = () => {
+
   const { idAfiliado } = useAuthStore();
   const setNotifications = useNotificationStore((state) => state.setNotifications);
   const notifications = useNotificationStore((state) => state.notifications);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
-      console.log('Comprobando si hay notificaciones nuevas---------->');
+
+      console.log('Comprobando si hay notificaciones de estudios medicos nuevas---------->');
+      const ProductsRequest =  async () => {
       try {
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENPRAC?idAfiliado=${idAfiliado}&IMEI=`);
 
@@ -92,6 +95,8 @@ const NotificationComponent = () => {
             comentarioRechazo: '',
             visto: 'no visto'
           },
+         
+       
         ];
 
         const combinedNotificaciones = [...simulatedNotificaciones, ...notificacionesOrdenadas];
@@ -111,7 +116,10 @@ console.log('combinedNotificaciones----', combinedNotificaciones);
       } catch (error) {
         console.error('Error al obtener las notificaciones:', error);
       }
-    }, 5000000); // Intervalo de 5 segundos
+    }
+ProductsRequest();
+
+    }, 50000); // Intervalo de 5 segundos
 
     return () => clearInterval(intervalId);
   }, [idAfiliado, notifications, setNotifications]);
