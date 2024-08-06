@@ -179,14 +179,14 @@ export const ConsultaScreenFinal = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: 10, marginTop: 20, fontSize: 25, textAlign: 'center', }}>Solicitar orden de consulta</Text> 
+      <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', }}>Solicitar orden de consulta</Text> 
 
       <View
-        style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 20 }}>
+        style={{  /* backgroundColor: 'green',  */ flex: 1, marginBottom: '7%', marginTop: '2%' }}>
 
         {/* -----------------FAMILIAR---------------- */}
 
-        <View style={{ /*  backgroundColor: 'yellow', */ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center' }}>
+        <View style={{  /* backgroundColor: 'yellow', */  borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginTop: 5  }}>
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper2}>
           <View style={{  marginTop: 10, marginLeft:10 }}>

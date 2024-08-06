@@ -134,37 +134,38 @@ const UploadImage: React.FC = () => {
       }
     };
 
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Carga las imágenes de tus Estudios</Text>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Carga las imágenes de tus Estudios</Text>
 
-        <Button title="Seleccionar Imágenes" onPress={handleImagePicker} />
-        <ScrollView>
- 
-      {fileNames.map((fileName, index ) => (
-        fileName && (
-          <View key={index}>
-            <Text style={styles.title}>Imagen {index + 1}:</Text>
-            <Text style={styles.subitle}>{fileName}</Text>
-     
-      {/*       {selectedImages && (
+      <Button title="Seleccionar Imágenes" onPress={handleImagePicker} />
+      <ScrollView style={{ width: '100%', /* backgroundColor:'green'  */ }} >
+
+        {fileNames.map((fileName, index) => (
+          fileName && (
+            <View key={index} style={ styles.containerTitle } >
+              <View key={index} style={{ justifyContent: 'center', display: 'flex', flexDirection:'column', /* backgroundColor:'violet', */ width:'100%', flexWrap:'nowrap'}} >
+              <Text style={styles.title}>Imagen {index + 1}:</Text>
+              <Text style={styles.subitle}>{fileName}</Text>
+              </View>
+              {/*       {selectedImages && (
         <Image source={{ uri: selectedImages }} style={styles.image} />
       )} */}
-      
-            <TouchableOpacity
-              style={styles.removeButton}
-              onPress={() => handleRemoveImage(index)}
-            >
-              <Text style={styles.removeButtonText}>Quitar Imagen</Text>
-            </TouchableOpacity>
-          </View>
-        )
-      ))}
- </ScrollView>
 
-      </View>
-    );
-  };
+              <TouchableOpacity
+                style={styles.removeButton}
+                onPress={() => handleRemoveImage(index)}
+              >
+                <Text style={styles.removeButtonText}>Quitar Imagen</Text>
+              </TouchableOpacity>
+            </View>
+          )
+        ))}
+      </ScrollView>
+
+    </View>
+  );
+};
 
   const styles = StyleSheet.create({
     container: {
@@ -176,8 +177,12 @@ const UploadImage: React.FC = () => {
   /*   backgroundColor:'green',  */
     maxHeight: '30%',
     },
+    containerTitle: {
+      marginBottom: 0,
+      width: '100%',
+    },
     title: {
-      fontSize: 20,
+      fontSize: 17,
       marginBottom: 10,
       fontFamily: 'Quicksand-Regular',
     },
@@ -185,6 +190,7 @@ const UploadImage: React.FC = () => {
       fontSize: 15,
       marginBottom: 5,
       fontFamily: 'Quicksand-Regular',
+      width: '100%',
     },
     image: {
       width: 200,
@@ -206,7 +212,9 @@ const UploadImage: React.FC = () => {
       backgroundColor: '#ee5a3d',
       padding: 5,
       borderRadius: 5,
-      marginHorizontal:120,
+      marginHorizontal:10,
+      maxWidth:'70%',
+      alignSelf:'center',
       marginTop:5,
     },
     removeButtonText: {

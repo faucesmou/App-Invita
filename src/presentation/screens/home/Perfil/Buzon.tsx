@@ -351,8 +351,8 @@ setMedicalNotifications(updatedMedicalNotifications); /* este es el context dond
       style={{
         flex: 1,
         paddingHorizontal: 10,
-        marginTop: 20,
-        /*      backgroundColor: 'green',  */
+        marginTop: 0,
+            backgroundColor: 'white',  
         marginBottom: 0,
       }}
     >
@@ -362,7 +362,7 @@ setMedicalNotifications(updatedMedicalNotifications); /* este es el context dond
 
       <View
         style={{
-          marginBottom: 30, marginTop: 0,
+          marginBottom: 30, marginTop: 10,
           alignItems: 'center',
           /*     backgroundColor: 'orange', */
              maxHeight:'80%',

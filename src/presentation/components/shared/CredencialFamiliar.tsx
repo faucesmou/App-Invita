@@ -37,6 +37,12 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
     fecVencimiento: ''
   });
 
+  const contarPalabras = (texto:string) => {
+    // Dividimos el texto por espacios y filtramos para eliminar espacios en blanco
+    const palabras = texto.split(' ').filter(palabra => palabra !== '');
+    return palabras.length;
+  };
+
   /*   const { idAfiliado } = useAuthStore(); */
   const idAfiliado2 = idAfiliado;
   console.log('ESTE ES EL idAfiliado desde ZARATUSTRA: ---->--->', idAfiliado2);
@@ -91,15 +97,18 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
     consultaDatosCredencial(idAfiliado);
   }, [idAfiliado]);
 
+  const cantidadPalabras = contarPalabras(datosCredencial.nombreAfiliado);
+
   return (
-    <View style={{ /* flex: 1, */ marginBottom: 40,   /* backgroundColor: 'green', */ /* marginRight:45, marginLeft: 45  */ }}>
+    <View style={{ /* flex: 1, */ marginBottom: '20%', /* marginHorizontal: '20%'  */ /* backgroundColor: 'green', */ /* marginRight:45, marginLeft: 45  */ }}>
       {isConsulting ? (
-        /*   <FullScreenLoader /> resolvere esto luego */
+     
         <> 
+        <FullScreenLoader />
         </>
       ) : (
         <View  style={{
-        margin: 15, alignItems: 'center', /*  backgroundColor: 'blue',  */  marginBottom:3, marginRight:45, marginLeft: 45 }} >
+        margin: 15, alignItems: 'center',   /* backgroundColor: 'blue',  */  marginBottom:3, marginRight:45, marginLeft: 45 }} >
           <LinearGradient colors={planColors} style={{...globalStylesCredentials.frenteCardHome, marginBottom: 0,}}>
             <ImageBackground source={require('../../screens/credential/CredentialsData/images/BackgroundLogoGray3.png')} 
             imageStyle={{
@@ -120,9 +129,15 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
                     <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
                   </View>
                 </View>
-                <View style={[globalStylesCredentials.frenteCardHome2, { alignItems: 'flex-end', justifyContent: 'flex-end' }]}>
-                  <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
-                  <View style={globalStylesCredentials.fuente}>
+                  <View style={[globalStylesCredentials.frenteCardHome2, { alignItems: 'flex-end', justifyContent: 'flex-end' }]}>
+                    <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
+                    <View /* style={globalStylesCredentials.fuente} */
+                      style={[globalStylesCredentials.fuente,
+                      cantidadPalabras >= 3 && { width: '60%' },
+                      cantidadPalabras === 2 && { width: '50%' },
+                      ]}
+
+                    >
                     <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
                     <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
                     <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>

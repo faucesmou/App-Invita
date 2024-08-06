@@ -136,22 +136,22 @@ const Credencial = () => {
                   <View style={globalStylesCredentials.contenedorTituloAndes}>
                     <Text style={globalStylesCredentials.tituloAndes}>andes</Text>
                     <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
+                    </View>
                   </View>
-                </View>
-                <View style={[globalStylesCredentials.frenteCardHome2, { alignItems: 'flex-end', justifyContent: 'flex-end' }]}>
-                  <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
-                  <View /* style={globalStylesCredentials.fuente} */
-                  style={[globalStylesCredentials.fuente,
-                   cantidadPalabras >= 3 && { width: '60%' },
-                   cantidadPalabras === 2 && { width: '50%' },
-                  ]} >
+                  <View style={[globalStylesCredentials.frenteCardHome2, { alignItems: 'flex-end', justifyContent: 'flex-end' }]}>
+                    <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
+                    <View /* style={globalStylesCredentials.fuente} */
+                      style={[globalStylesCredentials.fuente,
+                      cantidadPalabras >= 3 && { width: '60%' },
+                      cantidadPalabras === 2 && { width: '50%' },
+                      ]} >
                       <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
-                    <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
-                    <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>
+                      <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
+                      <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </ImageBackground>
+              </ImageBackground>
           </LinearGradient>
         </View>
       )}

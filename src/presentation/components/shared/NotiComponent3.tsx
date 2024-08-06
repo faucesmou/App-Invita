@@ -87,7 +87,7 @@ const NotiComponent3 = () => {
     await CombinedData2();
 
   }
-  const intervalId = setInterval(fetchNotifications, 500000); // Intervalo de 50 segundos
+  const intervalId = setInterval(fetchNotifications, 50000); // Intervalo de 50 segundos
 
   return () => clearInterval(intervalId);
 }, [idAfiliado, setMedicalNotifications, setOrderNotifications]);

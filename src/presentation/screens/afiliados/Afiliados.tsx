@@ -64,7 +64,7 @@ export const Afiliados = () => {
     <View
       style={{
         flex: 1,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         marginTop: 20,
         /* backgroundColor: 'green', */
         marginBottom: 0,
@@ -91,9 +91,9 @@ export const Afiliados = () => {
           }}
         >Selecciona un familiar para ver su credencial</Text>
 
-    <ScrollView style={{ marginBottom: 0, maxHeight:'80%', /* backgroundColor:'green' */ }}>
+    <ScrollView style={{ marginBottom: 0, maxHeight:'80%' /* , backgroundColor:'green' */  }}>
         <FlatList
-          style={{  /* backgroundColor: 'orange', */ marginBottom: 0, padding: 10 }}
+          style={{  /* backgroundColor: 'orange', */  marginBottom: 0, padding: 5, width: '100%'  }}
           data={products}
           renderItem={({ item }) => ( 
             <TertiaryButton

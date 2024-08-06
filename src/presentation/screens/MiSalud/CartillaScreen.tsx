@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '90%',
-    padding: 20,
+    padding: '3%',
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   emergencyContainer: {
     backgroundColor: 'white',
-    marginTop: 80,
+    marginTop: '20%',
     marginHorizontal: 30,
     padding: 10,
     borderWidth: 0.3,

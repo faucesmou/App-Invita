@@ -229,12 +229,13 @@ export const EstudiosMedicosScreen = () => {
   {/*     <Text style={{ marginBottom: 5, marginTop: 10, fontSize: 25, textAlign: 'center'}}>Solicitar Estudio Médico</Text> */}
 
       <View
-        style={{   /* backgroundColor: 'green', */ flex: 1, marginBottom: 60, marginTop: 10 }}>
+        style={{  /* backgroundColor: 'green', */  flex: 1, marginBottom: '15%', marginTop: '0%' }}>
         {/*   <ScrollView> */}
 
         {/* -----------------FAMILIAR---------------- */}
 
-        <View style={{  /*  backgroundColor: 'orange', */  borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 10 }}>
+        <View style={{   /*  backgroundColor: 'orange', */   borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 10 }}>
+          
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper2}>
           <View style={{  marginTop: 10 }}>

@@ -154,7 +154,7 @@ export const EstudiosMedicosEnv = () => {
       }}
     >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray3} titleSize={32}/>
+      <CustomHeader color={globalColors.gray2} titleSize={32}/>
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (

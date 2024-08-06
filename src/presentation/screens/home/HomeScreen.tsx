@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: '20%',
     marginLeft:0,
-   /*  backgroundColor:'green' */
+/*    backgroundColor:'green'  */
   },
   rowContainer: {
     flexDirection: 'row',
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     maxWidth:'50%', 
     maxHeight:'70%',
     marginTop: 5,
-  /*   backgroundColor:'yellow' */
+ /*   backgroundColor:'yellow'  */
   },
  card: {
   width: '90%',
@@ -271,7 +271,7 @@ imageContainer: {
 },
 innerContainer: {
   marginBottom: 0,
-  marginTop: 5,
+  marginTop: '6%',
   flex: 1,
   alignItems: 'center',
   justifyContent: 'center',

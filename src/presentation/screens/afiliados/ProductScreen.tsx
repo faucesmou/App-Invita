@@ -63,10 +63,12 @@ navigation.setOptions({
         > Credencial</Text> */}
 
         <Text style={{
-          fontSize:25,
+          fontSize:20,
           textAlign: 'center',
           marginTop: 0,
-          padding: 15,
+          padding: 10,
+       /*    backgroundColor: 'orange', */ 
+          width:'100%'
         }}>
           { params.id }  
         </Text>
@@ -83,8 +85,8 @@ navigation.setOptions({
 
       <View
         style={{
-          /* marginBottom: 350, marginTop: 0, */   /* backgroundColor: 'yellow',  */    flex: 1,  justifyContent: 'top',
-          alignItems: 'center', marginHorizontal:60, marginTop: -15,
+          /* marginBottom: 350, marginTop: 0, */   /*  backgroundColor: 'yellow', */ flex: 1,  justifyContent: 'top',
+          alignItems: 'center', marginHorizontal:'10%', marginTop: -15,
         }}
       >
 

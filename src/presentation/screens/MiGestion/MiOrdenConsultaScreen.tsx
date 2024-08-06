@@ -59,7 +59,7 @@ export const MiOrdenConsultaScreen = () => {
       style={{
         flex: 1,
         paddingHorizontal: 20,
-        marginTop: top,
+        marginTop: 0,
          backgroundColor: 'white' 
       }}
       >
@@ -90,7 +90,7 @@ export const MiOrdenConsultaScreen = () => {
             <Text style={{ marginBottom: 5, fontSize: 20, }}>Ingrese al siguiente link para su descarga:</Text>
             <TouchableOpacity onPress={handleOpenURL}>
               <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15, color: 'blue' }}>
-                Orden Link: {ordenConsulta}
+                {ordenConsulta}
               </Text>
             </TouchableOpacity>
 

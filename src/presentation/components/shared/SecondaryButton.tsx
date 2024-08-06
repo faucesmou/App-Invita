@@ -26,28 +26,28 @@ export const SecondaryButton = ({ onPress, label, color, disabled, iconName, des
   /*  const backColor = color? color : globalColors.profile2; */
 
   return (
-    <View style={[styles.contentWrapper, { width: width, height: height /6 }]}>{/* prueba temporal del responsive */}
+    <View style={[styles.contentWrapper22, { width: width, height: height / 6 }]}>{/* prueba temporal del responsive */}
 
-    <Pressable
-      /*  onPress={ () => onPress() }
-       style={ {...globalStyles.primaryButton, backgroundColor: backColor} }> */
-      onPress={disabled ? undefined : onPress}
-      style={({ pressed }) => [
-        {
-          backgroundColor: pressed && !disabled ? 'lightgray' : backColor,
-          opacity: disabled ? 0.5 : 1, // Cambia la opacidad si está deshabilitado
-        },
-        styles.secondaryButton
-      ]}
-    >
-      {/* Icono y texto */}
-      <View style={styles.contentWrapper}>
-        <IonIcon name={iconName} size={30} color="#505050" style={styles.icon} />
-        <Text style={styles.buttonText}>{label}</Text>
-        <Text style={styles.descriptionText}>{description}</Text>
-      </View>
+      <Pressable
+        /*  onPress={ () => onPress() }
+         style={ {...globalStyles.primaryButton, backgroundColor: backColor} }> */
+        onPress={disabled ? undefined : onPress}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed && !disabled ? 'lightgray' : backColor,
+            opacity: disabled ? 0.5 : 1, // Cambia la opacidad si está deshabilitado
+          },
+          styles.secondaryButton
+        ]}
+      >
+        {/* Icono y texto */}
+        <View style={styles.contentWrapper}>
+          <IonIcon name={iconName} size={30} color="#505050" style={styles.icon} />
+          <Text style={styles.buttonText}>{label}</Text>
+          <Text style={styles.descriptionText}>{description}</Text>
+        </View>
 
-    </Pressable>
+      </Pressable>
     </View>
   )
 }
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     margin: 5,
     marginTop: 0,
-    padding: 15,
+    padding: 10,
     alignItems: 'flex-start',
     textAlign: 'center',
   },
@@ -84,10 +84,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     /*  justifyContent: 'space-between', */
     maxWidth: '50%',
+    maxHeight:'95%',
     minWidth: '100%',
     minHeight: '80%',
+    marginTop: '0%',
+    padding: 0,
+ /*   backgroundColor: 'blue',   */
+  },
+  contentWrapper22: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    /*  justifyContent: 'space-between', */
+    maxWidth: '50%',
+    minWidth: '100%',
+    minHeight: '80%',
+    marginTop: '2%',
 /*     backgroundColor: 'yellow', */
-/*        backgroundColor: 'green', */
+   /*     backgroundColor: 'blue',  */
   },
   buttonText: {
     color: 'black',

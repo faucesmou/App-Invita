@@ -16,6 +16,7 @@ import { globalColors, globalStyles } from '../../../theme/theme';
 import CustomHeader from '../../../components/CustomHeader';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../../routes/StackNavigator';
+import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
 
 
 interface Props {
@@ -73,6 +74,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
         return
       }
       try {
+        setIsConsulting(true);
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscarPrestadoresCartilla?IMEI=&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA&idCartilla=${idCartillaSeleccionada}`)
         const xmlData = response.data;
 
@@ -90,8 +92,8 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
         const result = xml2js(xmlData, { compact: true });
         const result2 = xml2js(xmlData, { compact: true }) as ElementCompact;
 
-     /*    console.log('Resultado:-->>>>>>>>:-->>>>>>>>:-->>>>>>>>', result2.Resultado); */
-     
+        /*    console.log('Resultado:-->>>>>>>>:-->>>>>>>>:-->>>>>>>>', result2.Resultado); */
+
         try {
 
 
@@ -99,97 +101,99 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
           const domicilios = result2.Resultado.fila.tablaDomicilios;
           const telefonos = result2.Resultado.fila.tablaTelefonos;
 
-   // Asegúrate de que estamos tratando con arreglos
-   const prestadoresList = Array.isArray(prestadores.idConvenio) ? prestadores.idConvenio.map((_, index) => ({
-    idConvenio: prestadores.idConvenio[index],
-    nombre: prestadores.nombre[index],
-    ordenAccion: prestadores.ordenAccion[index],
-    ordenAccionInt: prestadores.ordenAccionInt[index],
-    descartar: prestadores.descartar[index]
-})) : [];
+          // Asegúrate de que estamos tratando con arreglos
+          const prestadoresList = Array.isArray(prestadores.idConvenio) ? prestadores.idConvenio.map((_, index) => ({
+            idConvenio: prestadores.idConvenio[index],
+            nombre: prestadores.nombre[index],
+            ordenAccion: prestadores.ordenAccion[index],
+            ordenAccionInt: prestadores.ordenAccionInt[index],
+            descartar: prestadores.descartar[index]
+          })) : [];
 
-/* console.log('luego de useEffect CartillaMedicaEspecialidad--------------------->-ESTE es el nombreEspecialidad--->', JSON.stringify(nombreEspecialidad)); */
+          /* console.log('luego de useEffect CartillaMedicaEspecialidad--------------------->-ESTE es el nombreEspecialidad--->', JSON.stringify(nombreEspecialidad)); */
 
-const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? domicilios.idConvenioDom.map((_, index) => ({
-    idConvenioDom: domicilios.idConvenioDom[index],
-    idDomicilioDom: domicilios.idDomicilioDom[index],
-    domicilio: domicilios.domicilio[index],
-    localidad: domicilios.localidad[index],
-    provincia: domicilios.provincia[index],
-    lat: domicilios.lat[index],
-    long: domicilios.long[index],
-    paraOrden: domicilios.paraOrden[index]
-})) : [];
+          const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? domicilios.idConvenioDom.map((_, index) => ({
+            idConvenioDom: domicilios.idConvenioDom[index],
+            idDomicilioDom: domicilios.idDomicilioDom[index],
+            domicilio: domicilios.domicilio[index],
+            localidad: domicilios.localidad[index],
+            provincia: domicilios.provincia[index],
+            lat: domicilios.lat[index],
+            long: domicilios.long[index],
+            paraOrden: domicilios.paraOrden[index]
+          })) : [];
 
-const telefonosList = Array.isArray(telefonos.idDomicilioTel) ? telefonos.idDomicilioTel.map((_, index) => ({
-    idDomicilioTel: telefonos.idDomicilioTel[index],
-    telefono: telefonos.telefono[index]
-})) : [];
+          const telefonosList = Array.isArray(telefonos.idDomicilioTel) ? telefonos.idDomicilioTel.map((_, index) => ({
+            idDomicilioTel: telefonos.idDomicilioTel[index],
+            telefono: telefonos.telefono[index]
+          })) : [];
 
-const arrayPrestadores: any[] = [];
+          const arrayPrestadores: any[] = [];
 
-prestadoresList.forEach((prestador: any) => {
-    const { idConvenio, nombre } = prestador;
+          prestadoresList.forEach((prestador: any) => {
+            const { idConvenio, nombre } = prestador;
 
-    // Buscar el domicilio correspondiente
-    const domicilio = domiciliosList.find((d: any) => d.idConvenioDom._text === idConvenio._text);
+            // Buscar el domicilio correspondiente
+            const domicilio = domiciliosList.find((d: any) => d.idConvenioDom._text === idConvenio._text);
 
-    if (!domicilio) {
-      // Si no se encuentra el domicilio, puedes devolver un objeto vacío o manejar el error
-      return {
-          idConvenio: idConvenio,
-          nombre: nombre,
-          domicilio: 'Desconocido',
-          localidad: 'Desconocido',
-          provincia: 'Desconocido',
-          lat: 'Desconocido',
-          long: 'Desconocido',
-          telefonos: []
-      };
-  }
+            if (!domicilio) {
+              // Si no se encuentra el domicilio, puedes devolver un objeto vacío o manejar el error
+              return {
+                idConvenio: idConvenio,
+                nombre: nombre,
+                domicilio: 'Desconocido',
+                localidad: 'Desconocido',
+                provincia: 'Desconocido',
+                lat: 'Desconocido',
+                long: 'Desconocido',
+                telefonos: []
+              };
+            }
 
 
-    // Buscar los teléfonos correspondientes
-    const telefonoList = telefonosList
-        .filter((t: any) => t.idDomicilioTel._text === domicilio.idDomicilioDom._text)
-        .map((t: any) => t.telefono._text);
+            // Buscar los teléfonos correspondientes
+            const telefonoList = telefonosList
+              .filter((t: any) => t.idDomicilioTel._text === domicilio.idDomicilioDom._text)
+              .map((t: any) => t.telefono._text);
 
-        // Si no hay teléfonos disponibles, establecer un valor predeterminado
-        const telefonos = telefonoList.length > 0 ? telefonoList : ['No disponible'];
+            // Si no hay teléfonos disponibles, establecer un valor predeterminado
+            const telefonos = telefonoList.length > 0 ? telefonoList : ['No disponible'];
 
-        function capitalizeText(text: string): string {
-          return text
-              .toLowerCase() // Convierte todo el texto a minúsculas primero
-              .split(' ') // Divide el texto en palabras
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
-              .join(' '); // Une las palabras con un espacio
-      }
+            function capitalizeText(text: string): string {
+              return text
+                .toLowerCase() // Convierte todo el texto a minúsculas primero
+                .split(' ') // Divide el texto en palabras
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitaliza la primera letra de cada palabra
+                .join(' '); // Une las palabras con un espacio
+            }
 
-    arrayPrestadores.push({
-        idConvenio: idConvenio._text,
-        nombre: capitalizeText(nombre._text),
-        domicilio: domicilio.domicilio._text.toLowerCase(),
-        localidad: domicilio.localidad._text,
-        provincia: domicilio.provincia._text,
-        lat: domicilio.lat._text,
-        long: domicilio.long._text,
-        telefonos: telefonos
-    });
-});
-  setPrestadores(arrayPrestadores)
+            arrayPrestadores.push({
+              idConvenio: idConvenio._text,
+              nombre: capitalizeText(nombre._text),
+              domicilio: domicilio.domicilio._text.toLowerCase(),
+              localidad: domicilio.localidad._text,
+              provincia: domicilio.provincia._text,
+              lat: domicilio.lat._text,
+              long: domicilio.long._text,
+              telefonos: telefonos
+            });
+          });
+          setPrestadores(arrayPrestadores)
 
-console.log('arrayPrestadores----->:', arrayPrestadores);
-   
 
-      } catch(err){
-        console.log('tuvimos un problemita dog pero vamo arriba:---------------------------------------------------------->>>>', err);
-        
-      }
+          console.log('arrayPrestadores----->:', arrayPrestadores);
+
+
+        } catch (err) {
+          console.log('tuvimos un problemita dog pero vamo arriba:---------------------------------------------------------->>>>', err);
+          setIsConsulting(false);
+        }
 
         /* ---------------------------------------------------------------- */
+
         //@ts-ignore
         const cartillasData = result.Resultado.fila.tablaPrestadores;
-       /*  console.log('cartillasData:', cartillasData); */
+
 
         // Mapear los datos correctamente
         const mappedCartillas = cartillasData.nombre.map((_: any, index: number) => ({
@@ -199,7 +203,7 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
         }));
 
         setCartillas(mappedCartillas);
-       /*  console.log('Mapped Cartillas:', mappedCartillas); */
+
       } catch (error) {
         console.error('Error al obtener los formularios:', error);
         let sinCartilas = [{
@@ -216,6 +220,7 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
           setCartillas(sinCartilas);
         }
       }
+      setIsConsulting(false);
       console.log('Entrando a CartillaMedicaEspecialidad--------------------->-ESTE es el idCartilla--->', idCartilla);
     };
     CartillaRequest()
@@ -307,27 +312,36 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
   return (
     <View
 
-      style={{...globalStyles.container, marginBottom:0, }}
+      style={{ ...globalStyles.container, marginBottom: 0, }}
 
     >
       <CustomHeader color={globalColors.gray2} />
 
       <BackButton />
 
-         <Text style={{ marginBottom: 10,
+      <Text style={{
+        marginBottom: 10,
         marginTop: 0,
         fontSize: 30,
         textAlign: 'center',
         color: globalColors.gray2,
-        fontWeight: 'bold', 
-       
-             }}>{nombreEspecialidadSeleccionada}</Text>  
+        fontWeight: 'bold',
 
-      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop:0 }}>
+      }}>{nombreEspecialidadSeleccionada}</Text>
+
+      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 0 }}>
+
+      {isConsulting ? (
+     
+        <> 
+   
+          <FullScreenLoader /> 
+        </>
+      ) : (
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
 
           {prestadores.map((prestador) => (
-        /*   {cartillas.map((cartilla, index) => ( */
+            /*   {cartillas.map((cartilla, index) => ( */
 
             <View key={prestador.idConvenio} style={styles.TertiaryButton}>
               <View style={styles.contentWrapper2}>
@@ -335,33 +349,33 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
                   <Text style={styles.descriptionTextNombre}>
                     {prestador.nombre}
                   </Text>
-                {/*  <Text style={styles.descriptionText}>
+                  {/*  <Text style={styles.descriptionText}>
                     Direccion:{prestador.domicilio}
                   </Text>  */}
                   <View style={styles.direccionContainer} >
-                  {prestador.lat != "" && prestador.long != "" ?
-                    (
-                      <>
-                      
-                      <Text style={styles.descriptionText}>
-                      Direccion: {prestador.domicilio}
-                    </Text>
+                    {prestador.lat != "" && prestador.long != "" ?
+                      (
+                        <>
 
-                      <TouchableOpacity
-                        style={styles.telefonoTouchable}
-                        onPress={() => handleShowLocation(prestador.lat, prestador.long)}
-                      >
-                        <Text style={styles.descriptionTexttelefono}>Ver Mapa</Text>
-                      </TouchableOpacity>
-                      
-                      </>
-                    )
-                    : (
-                      <Text style={styles.descriptionText}>
-                        Direccion:{prestador.domicilio}
-                      </Text>
-                    )
-                  }
+                          <Text style={styles.descriptionText}>
+                            Direccion: {prestador.domicilio}
+                          </Text>
+
+                          <TouchableOpacity
+                            style={styles.telefonoTouchable}
+                            onPress={() => handleShowLocation(prestador.lat, prestador.long)}
+                          >
+                            <Text style={styles.descriptionTextMapa}>Ver Mapa</Text>
+                          </TouchableOpacity>
+
+                        </>
+                      )
+                      : (
+                        <Text style={styles.descriptionText}>
+                          Direccion:{prestador.domicilio}
+                        </Text>
+                      )
+                    }
                   </View>
 
                   <View style={styles.telefonosContainer} >
@@ -377,7 +391,7 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
                     ) : (
                       <Text style={styles.descriptionText}>No disponible</Text>
                     )}
-                 
+
                   </View>
 
 
@@ -385,19 +399,21 @@ console.log('arrayPrestadores----->:', arrayPrestadores);
               </View>
             </View>
 
-           /*  <View key={index} style={styles.TertiaryButton}>
-              <View style={styles.contentWrapper2}>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.descriptionText}>
-                    {cartilla.nombre}
-                  </Text>
-
-                </View>
-              </View>
-            </View> */
+            /*  <View key={index} style={styles.TertiaryButton}>
+               <View style={styles.contentWrapper2}>
+                 <View style={styles.textWrapper}>
+                   <Text style={styles.descriptionText}>
+                     {cartilla.nombre}
+                   </Text>
+ 
+                 </View>
+               </View>
+             </View> */
 
           ))}
         </ScrollView>
+      )
+      }
       </View>
 
     </View>
@@ -472,6 +488,13 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: 15,
     textAlign: 'center',
+ /*    textDecorationLine: 'underline', */
+  },
+  descriptionTextMapa: {
+    color: 'black',
+    fontSize: 15,
+    textAlign: 'center',
+    fontWeight: 'bold',
  /*    textDecorationLine: 'underline', */
   },
   contentWrapper2: {
