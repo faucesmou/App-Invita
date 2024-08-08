@@ -371,6 +371,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
 
   logout: async () => {
     await StorageAdapter.removeItem('token')
+
     set({ status: 'unauthenticated', token: undefined, user: undefined })
    
     console.log('se cerró la sesion gonzalito');

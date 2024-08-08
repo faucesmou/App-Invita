@@ -15,14 +15,22 @@ import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
 import { BackButton } from '../../components/shared/BackButton';
 import { IonIcon } from '../../components/shared/IonIcon';
 
-import NotificationComponent from '../../components/shared/NotificationComponent';
+/* import NotificationComponent from '../../components/shared/NotificationComponent'; */
 import NotiComponent3 from '../../components/shared/NotiComponent3';
 import NotiMensajes from '../../components/shared/Noti-mensajes';
+import { useNotificationStore } from '../../store/notification-store';
 
 
 
 export const HomeScreen = () => {
   console.log('Entrando al homeScreen---->')
+
+/* contexto para avisar que se carga por primera vez al notificador */
+const { initialLoadComplete, setInitialLoadComplete } = useNotificationStore();
+const setMedicalNotifications = useNotificationStore((state) => state.setMedicalNotifications);
+const setOrderNotifications = useNotificationStore((state) => state.setOrderNotifications);
+
+
 
 const [ordenConsulta, setOrdenConsulta] = useState("");
 let Url = `https://api.whatsapp.com/send?phone=542613300622&text=%C2%A1Hola%2C%20Pixi!%20Vengo%20de%20la%20APP%20y%20tengo%20algunas%20consultas.%20%F0%9F%91%8D`
@@ -55,6 +63,9 @@ const handleOpenURL = () => {
     }
     openURL();
   }, [ordenConsulta]);
+/* useEffect para avisar al notificador que ya se cargo por primera vez esta vista:  */
+
+
 
   return (
     <View style={styles.screenContainer}
@@ -75,10 +86,10 @@ const handleOpenURL = () => {
             fontSize: 35,
             textAlign: 'center',
             color: 'white',
-            marginLeft: '7%',
+            marginLeft: '12%',
          
           }} >
-            Home
+            Inicio
           </Text>
         </View>
         <View>
@@ -134,7 +145,7 @@ const handleOpenURL = () => {
               <View
               style={styles.buttonsContainer}
               >
-                  <View  style={styles.rowContainer} >
+                  <View  style={styles.rowContainer1} >
                     <SecondaryButton
                       onPress={() => {
                         console.log('presiono el boton ');
@@ -157,7 +168,7 @@ const handleOpenURL = () => {
                   </View>
 
                     <View
-                      style={styles.rowContainer} 
+                      style={styles.rowContainer2} 
                     >
 
                       <SecondaryButton
@@ -228,12 +239,20 @@ const styles = StyleSheet.create({
     marginLeft:0,
 /*    backgroundColor:'green'  */
   },
-  rowContainer: {
+  rowContainer1: {
     flexDirection: 'row',
     marginBottom: -10,
     maxWidth:'50%', 
     maxHeight:'70%',
-    marginTop: 5,
+    marginTop: '0%',
+ /*   backgroundColor:'yellow'  */
+  },
+  rowContainer2: {
+    flexDirection: 'row',
+    marginBottom: -10,
+    maxWidth:'50%', 
+    maxHeight:'70%',
+    marginTop: '3%',
  /*   backgroundColor:'yellow'  */
   },
  card: {

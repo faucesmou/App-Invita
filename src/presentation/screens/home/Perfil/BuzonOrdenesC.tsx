@@ -61,6 +61,10 @@ interface AutorizadasData {
         coseguro: coseguro, */
 }
 
+type Notification = {
+  idOrden: string;
+  visto: string;
+};
 
 interface NotificacionData {
   idOrden: string;
@@ -101,8 +105,9 @@ export const BuzonOrdenesC = () => {
 
 
   // Obtener las notificaciones y la función para actualizarlas del store
-  const orderNotifications = useNotificationStore.getState().orderNotifications;
-  const setOrderNotifications = useNotificationStore((state) => state.setOrderNotifications);
+ /*  const orderNotifications = useNotificationStore.getState().orderNotifications; */
+/*   const setOrderNotifications = useNotificationStore((state) => state.setOrderNotifications); */
+const { orderNotifications, setOrderNotifications } = useNotificationStore.getState();
 /*   const notifications = useNotificationStore((state) => state.notifications);
   const setNotifications = useNotificationStore((state) => state.setNotifications); */
 
@@ -241,7 +246,7 @@ export const BuzonOrdenesC = () => {
     dom2Prestador: string,
     coseguro: string,
     ) => {
-    
+      const { orderNotifications, setOrderNotifications } = useNotificationStore.getState();
     console.log('Ingresando en  PRACTICA RESUELTA REQUEST de Ordenes de Consulta Seleccionada-->>>>>>>idOrden:', idOrden);
    try {
     if (estado === 'RECHAZOPRACTICA' ) {
@@ -256,18 +261,15 @@ export const BuzonOrdenesC = () => {
       setRechazoData(rechazoInfo)
       setModalVisible3(true);
 
+ // Mapeamos las notificaciones y actualizamos solo la que corresponde a idOrden
+ const updatedNotifications = orderNotifications.map(notification =>
+  notification.idOrden === idOrden
+    ? { ...notification, visto: 'visto' }
+    : notification
+);
 
-      //Actualizamos el contexto para avisar que la notificacion fue vista
-      // consultamos el context para que modifique solo la que abre el usuario:
-      const updatedNotifications = orderNotifications.map(notification =>
-        notification.idOrden === idOrden 
-        ? { ...notification, visto:'visto'}
-        :
-        notification
-      )
-      
       setOrderNotifications(updatedNotifications); /* este es el context */
-   
+      console.log('SE ACTUALIZAO EL SET ORDER NOTIFICATIONS ---');
       return;
     }
     const ordenInfo = [{
@@ -284,16 +286,20 @@ export const BuzonOrdenesC = () => {
       coseguro: coseguro,
     }];
   
+
+     // Actualizamos el contexto para avisar que la notificación fue vista
+  
+     const updatedNotifications = orderNotifications.map(notification =>
+       notification.idOrden === idOrden
+         ? { ...notification, visto: 'visto' }
+         : notification
+     );
+ 
+     setOrderNotifications(updatedNotifications); // Actualizar el estado global
+     console.log('SE ACTUALIZO EL SET ORDER NOTIFICATIONS --->>>>');
       //Actualizamos el contexto para avisar que la notificacion fue vista
       // consultamos el context para que modifique solo la que abre el usuario:
-      const updatedNotifications = orderNotifications.map(notification =>
-        notification.idOrden === idOrden 
-        ? { ...notification, visto:'visto'}
-        :
-        notification
-      )
       
-      setOrderNotifications(updatedNotifications); /* este es el context */
 
     setModalData(ordenInfo);
     setModalVisible(true);

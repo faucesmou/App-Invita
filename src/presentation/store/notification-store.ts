@@ -46,10 +46,3 @@ import { create } from 'zustand';
         set({ combinedNotifications: combined });
       },
     }));
-    
-  /*   export const useNotificationStore = create<Store>((set) => ({
-      notifications: [],
-      setNotifications: (notifications) => set({ notifications }),
-      orderNotifications: [],
-      setOrderNotifications: (notifications) => set({ notifications }),
-    })); */

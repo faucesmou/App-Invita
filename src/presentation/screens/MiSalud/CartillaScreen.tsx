@@ -39,7 +39,7 @@ export const CartillaScreen = () => {
           <Text style={{
             fontSize: 35,
             textAlign: 'center',
-            marginLeft: '7%',
+            marginLeft: '12%',
             color: 'white',
             /*   backgroundColor: 'yellow' */
 

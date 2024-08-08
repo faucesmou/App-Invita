@@ -9,11 +9,19 @@ import CustomHeader from '../../../components/CustomHeader'
 import { BackButton } from '../../../components/shared/BackButton'
 import { MisDatosScreen } from '../../profile/MisDatosScreen'
 import { TertiaryButton } from '../../../components/shared/TertiaryButton'
+import { useNotificationStore } from '../../../store/notification-store'
 
+/* interface OnPressHandler {
+  logout: () => Promise<void>;
+  setOrderNotifications: (notifications: Notification[]) => void;
+  setMedicalNotifications: (notifications: Notification[]) => void;
+} */
 
 export const SettingsScreen = () => {
   const { logout } = useAuthStore()
   const { top } = useSafeAreaInsets()
+  const setMedicalNotifications = useNotificationStore((state) => state.setMedicalNotifications);
+  const setOrderNotifications = useNotificationStore((state) => state.setOrderNotifications);
 
  const navigator =useNavigation(); 
 const navigation = useNavigation<NavigationProp<RootStackParams>>()
@@ -43,7 +51,9 @@ const colorNaranja = globalColors.orange
         />
 
          <TertiaryButton
-          onPress={logout}
+          onPress={
+            logout
+             }
           label="Cerrar Sesión"
           color={globalColors.profile2}
           iconName='power-outline' 
