@@ -54,7 +54,7 @@ export const CartillaMedicaScreen = () => {
             idCartilla: cartillasData.idCartilla._text,
           }];
         setCartillas(mappedCartillas);
-        console.log('mappedCartillas es lo siguienteñ-------->', mappedCartillas);
+      
         
 
       /*   console.log('este es el mappedCartillas DE CARTILLA MEDICA---x--x-x--x->:', mappedCartillas); */

@@ -4,8 +4,6 @@ import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Linking, Alert, P
 
 import axios from 'axios';
 
-/* import { FlatList } from 'react-native-gesture-handler'; */
-/* import { ScrollView } from 'react-native-gesture-handler'; */
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { xml2js, ElementCompact } from 'xml-js';
@@ -44,9 +42,9 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
   const [modalData, setModalData] = useState([]);
 
 
-  console.log('Entrando a CartillaMedicaEspecialidad--------------------->-ESTE es el idCartilla--->', idCartilla);
+  console.log('Entrando a CartillaMedicaEspecialidad--------------------->');
   const { idAfiliadoTitular, idAfiliado, idCartillaSeleccionada, nombreEspecialidadSeleccionada } = useAuthStore();
-  console.log('idCartillaSeleccionada desde CartillaMedicaEspecialidad---->', idCartillaSeleccionada);
+  console.log('id de la Cartilla Seleccionada:', idCartillaSeleccionada);
 
 
   const { top } = useSafeAreaInsets();
@@ -181,11 +179,9 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
           setPrestadores(arrayPrestadores)
 
 
-          console.log('arrayPrestadores----->:', arrayPrestadores);
-
 
         } catch (err) {
-          console.log('tuvimos un problemita dog pero vamo arriba:---------------------------------------------------------->>>>', err);
+          console.log('Tuvimos un problemita en CartillaRequest (CartillaMedicaEspecialidad). Err:', err);
           setIsConsulting(false);
         }
 
@@ -221,7 +217,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
         }
       }
       setIsConsulting(false);
-      console.log('Entrando a CartillaMedicaEspecialidad--------------------->-ESTE es el idCartilla--->', idCartilla);
+
     };
     CartillaRequest()
 
@@ -399,16 +395,6 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
               </View>
             </View>
 
-            /*  <View key={index} style={styles.TertiaryButton}>
-               <View style={styles.contentWrapper2}>
-                 <View style={styles.textWrapper}>
-                   <Text style={styles.descriptionText}>
-                     {cartilla.nombre}
-                   </Text>
- 
-                 </View>
-               </View>
-             </View> */
 
           ))}
         </ScrollView>
@@ -421,15 +407,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
   )
 }
 
-/*  
 
-       <View key={index} style={{ marginBottom: 10 }}>
-              <Text style={{ fontSize: 16, textAlign: 'center',  backgroundColor: 'yellow', }}>{cartilla.nombre}</Text>
-                 <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text> 
-              </View>
-
-
-*/
 
 
 
@@ -511,163 +489,3 @@ const styles = StyleSheet.create({
 })
 
 
-/* <FlatList
-        data={products}
-        renderItem={({ item }) => (
-          <PrimaryButton
-            onPress={() => navigation.navigate('Product', { id:item.apellidoYNombre, nroAfiliado: item.nroAfiliado })}
-            label={item.apellidoYNombre} 
-            color={color} 
-          />
-        )}
-      /> */
-
-               /*  setModalData(cartillaTablasDataCombinadas); */
-      /*       console.log('modalData -->>>------>---------->---------->>>>>>:', JSON.stringify(modalData));  */
-
-       /*  }else {
-          console.error('cartillaTablasData es undefined');
-       
-        } */
-
-        /*      console.log('Primeros 3 elementos de result:', result?.Resultado?.fila?.tablaPrestadores?.slice(0, 3));  */
- 
-    /*     console.log('Primeros 3 elementos de cartillaTablasData.tablaPrestadores:', cartillaTablasData.tablaPrestadores?.slice(0, 3)); */
-
-/*         function combinarDatos(cartillaTablasData: CartillaTablaData) {
-          const { tablaPrestadores, tablaDomicilios, tablaTelefonos } = cartillaTablasData;
-        
-          const minLength = Math.min(
-            tablaPrestadores.length,
-            tablaDomicilios.length,
-            tablaTelefonos.length
-          );
-        
-          if (minLength === 0) {
-            console.log('No hay datos disponibles para combinar');
-            return [];
-          }
-        
-          return tablaPrestadores.slice(0, minLength).map((prestador, index) => {
-            
-
-            const domicilio = tablaDomicilios[index];
-            const telefono = tablaTelefonos[index];
-        
-            return {
-              idOrden: prestador.idConvenio?._text || '',
-              ordenAccion: prestador.ordenAccion?._text || '',
-              idOrdenParcialENC: prestador.idOrdenParcialENC?._text || '',
-              ordenAccionInt: prestador.ordenAccionInt?._text || '',
-              descartar: prestador.descartar?._text || '',
-            
-              idConvenioDom: domicilio.idConvenioDom?._text || '',
-              idDomicilioDom: domicilio.idDomicilioDom?._text || '',
-              domicilio: domicilio.domicilio?._text || '',
-              localidad: domicilio.localidad?._text || '',
-              provincia: domicilio.provincia?._text || '',
-              lat: domicilio.lat?._text || '',
-              long: domicilio.long?._text || '',
-              paraOrden: domicilio.paraOrden?._text || '',
-            
-              idDomicilioTel: telefono.idDomicilioTel?._text || '',
-              telefono: telefono.telefono?._text || '',
-            
-              email: prestador.email?._text || '',
-            };
-          });
-        }
-        combinarDatos(cartillaTablasData) */
-   /*    console.log('cartillaTablasData es: -->>>>>>>>:-->>>>>>>>:-->>>>>>>>:', JSON.stringify(cartillaTablasData)); */
-   /*     if (!cartillaTablasData.tablaPrestadores === undefined || !cartillaTablasData.tablaDomicilios === undefined || !cartillaTablasData.tablaTelefonos === undefined ) {
-          console.log('En PracticaResueltaRequest cartillaTablasData tabla Prestadores, domicilios o telefonos. hay alguno undefined ');
-          setIsConsulting(false);
-         
-          return;
-        }
-
-          const prestadoresLength = cartillaTablasData.tablaPrestadores.idConvenio?.length || 0;
-          const domiciliosLength = cartillaTablasData.tablaDomicilios.idConvenioDom?.length || 0;
-          const telefonosLength = cartillaTablasData.tablaTelefonos.idDomicilioTel?.length || 0;
-
-          const maxLength = Math.min(prestadoresLength, domiciliosLength, telefonosLength);
-
-          if (maxLength === 0) {
-            console.log('No hay datos disponibles para combinar');
-            setIsConsulting(false);
-            return;
-          } */
-
-          /* 
-       /*  if (!cartillaTablasData) {
-          setError('El formato de los datos recibidos no es el esperado.');
-          console.log('En PracticaResueltaRequest el formato de los datos recibidos no es el esperado.');
-        } */
-    /*     if ( cartillaTablasData && cartillaTablasData.tablaPrestadores && cartillaTablasData.tablaDomicilios && cartillaTablasData.tablaTelefonos ) { */
-
-         /*  const cartillaTablasDataCombinadas = cartillaTablasData.tablaPrestadores.idConvenio.slice(0, maxLength).map((item: any, index: number) => ({
-
-            idOrden: item._text || '',
-            ordenAccion: cartillaTablasData.tablaPrestadores.ordenAccion[index]?._text || '',
-            idConvenio: cartillaTablasData.tablaPrestadores.idConvenio[index]?._text || '',
-            nombre: cartillaTablasData.tablaPrestadores.idOrdenParcialENC[index]?._text || '',
-            ordenAccionInt: cartillaTablasData.tablaPrestadores.ordenAccionInt[index]?._text || '',
-            descartar: cartillaTablasData.tablaPrestadores.descartar[index]?._text || '',
-            
-            idConvenioDom: cartillaTablasData.tablaDomicilios.idConvenioDom[index]?._text || '',
-            idDomicilioDom: cartillaTablasData.tablaDomicilios.idDomicilioDom[index]?._text || '',
-            domicilio: cartillaTablasData.tablaDomicilios.domicilio[index]?._text || '',
-            localidad: cartillaTablasData.tablaDomicilios.localidad[index]?._text || '',
-            
-            provincia: cartillaTablasData.tablaDomicilios.provincia[index]?._text || '',
-            lat: cartillaTablasData.tablaDomicilios.lat[index]?._text || '',
-            long: cartillaTablasData.tablaDomicilios.long[index]?._text || '',
-            paraOrden: cartillaTablasData.tablaDomicilios.paraOrden[index]?._text || '',
-            
-            idDomicilioTel: cartillaTablasData.tablaTelefonos.idDomicilioTel[index]?._text || '',
-            telefono: cartillaTablasData.tablaTelefonos.telefono[index]?._text || '',
-          })); */
-       /*    console.log('cartillaTablasDataCombinadas-->>>------>---------->---------->>>>>>:', cartillaTablasDataCombinadas); */ 
-       /*         const cartillaTablasData = {
-          // @ts-ignore
-          tablaPrestadores: result?.Resultado?.fila?.tablaPrestadores,
-          // @ts-ignore
-          tablaDomicilios: result?.Resultado?.fila?.tablaDomicilios,
-          // @ts-ignore
-          tablaTelefonos: result?.Resultado?.fila?.tablaTelefonos,
-        }; */
-
-        /*             // Convertir XML a JSON
-          
-          // Extraer las tablas
-          const prestadores = result.Resultado.fila.tablaPrestadores;
-        /*   const prestadores = prestadoresPrevio.ordenAccion; */
-          
-        /*    const domicilios = domiciliosPrevio.idConvenioDom; */
-        /*
-        
-        const telefonos = result.Resultado.fila.tablaTelefonos;
-        
-        const domicilios = result.Resultado.fila.tablaDomicilios;
-
-
-        console.log('domicilios: -->>>>>>>>:-->>>>>>>>:-->>>>>>>>:', domicilios); 
-
-  
-      const domiciliosPorIdConvenio = domicilios.reduce((map: any, domicilio:any) => {
-
-      const { idConvenioDom, idDomicilioDom, domicilio: direccion, localidad, provincia, lat, long } = domicilio;
-
-  const domicilioData = {
-    idConvenio: idConvenioDom._text,
-    idDomicilio: idDomicilioDom._text,
-    direccion: direccion._text,
-    localidad: localidad._text,
-    provincia: provincia._text,
-    lat: lat._text,
-    long: long._text,
-  };
-    
-
-  map[domicilioData.idConvenio] = map[domicilioData.idConvenio] || [];
-  map[domicilioData.idConvenio].push(domicilioData); */
