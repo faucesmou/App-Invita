@@ -138,6 +138,10 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
           return;
         }
 
+   /*      function extractData(data: any[]): string[] {
+          return data ? data.map((item: any) => (item._text || '').trim()) : [];
+        } */
+
         // Definir y verificar los datos extraídos
         const idOrden = tablaDatos.idOrden ? tablaDatos.idOrden.map((item: any) => (item._text || '').trim()) : [];
         const prestador = tablaDatos.prestador ? tablaDatos.prestador.map((item: any) => (item._text || '').trim()) : [];

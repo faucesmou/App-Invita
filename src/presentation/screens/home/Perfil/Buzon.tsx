@@ -99,12 +99,18 @@ export const Buzon = () => {
 
         // Mapear los datos 
         const mappedNotificaciones:Notificacion[] = Array.isArray(notificacionesData.idOrden) ? notificacionesData.idOrden.map((_: any, index: number) => ({
-          idOrden: notificacionesData.idOrden[index]._text,
+          idOrden: notificacionesData.idOrden[index]?._text || 'pendiente',
+          afiliado: notificacionesData.afiliado[index]?._text || 'pendiente',
+          fecSolicitud: notificacionesData.fecSolicitud[index]?._text || 'pendiente',
+          estado: notificacionesData.estado[index]?._text || 'pendiente',
+          fecFinalizacion: notificacionesData.fecFinalizacion[index]?._text || 'pendiente',
+          comentarioRechazo: notificacionesData.comentarioRechazo[index]?._text || 'pendiente',
+          /*   idOrden: notificacionesData.idOrden[index]._text,
           afiliado: notificacionesData.afiliado[index]._text,
           fecSolicitud: notificacionesData.fecSolicitud[index]._text,
           estado: notificacionesData.estado[index]._text,
           fecFinalizacion: notificacionesData.fecFinalizacion[index]._text,
-          comentarioRechazo: notificacionesData.comentarioRechazo[index]._text,
+          comentarioRechazo: notificacionesData.comentarioRechazo[index]._text, */
         })) : [];
 
         // Primero, definimos una función para convertir las fechas a objetos Date
@@ -131,7 +137,36 @@ export const Buzon = () => {
 
         // Filtramos las notificaciones basándonos en la fecha de vencimiento
         const filteredNotificaciones = mappedNotificaciones.filter((notificacion: Notificacion) => {
-          const fecFinalizacionDate = parseDate(notificacion.fecFinalizacion);
+          const { fecFinalizacion, idOrden } = notificacion;
+
+           // Aseguramos que el campo de fecha sea válido antes de intentar convertirlo
+  if (!fecFinalizacion || typeof fecFinalizacion !== 'string') {
+    console.log(`Fecha de finalización no válida para idOrden ${idOrden}. Valor recibido:`, fecFinalizacion);
+    return false; // Excluir notificaciones con fechas no válidas
+  }
+
+   // Intentamos dividir la fecha en partes
+   const fecFinalizacionParts = fecFinalizacion.split(' ');
+
+   if (fecFinalizacionParts.length < 2) {
+     console.log(`Fecha de finalización no se pudo parsear correctamente para idOrden ${idOrden}. Fecha recibida:`, fecFinalizacion);
+     return false; // Excluir notificaciones con fechas no parseables
+   }
+         // Aseguramos que el campo de fecha sea válido antes de intentar convertirlo
+  /*   if (!notificacion.fecFinalizacion || typeof notificacion.fecFinalizacion !== 'string') {
+      console.log(`Fecha de finalización no válida para idOrden ${notificacion.idOrden}. Valor recibido:`, notificacion.fecFinalizacion);
+      return false; 
+  } */
+
+
+      /*  este es el que estaba:  const fecFinalizacionDate = parseDate(notificacion.fecFinalizacion); */
+          const fecFinalizacionDate = parseDate(fecFinalizacion); 
+
+          // Validar que la fecha sea un objeto Date válido
+          if (isNaN(fecFinalizacionDate.getTime())) {
+            console.warn(`Fecha de finalización no se pudo parsear correctamente para idOrden ${notificacion.idOrden}. Fecha recibida:`, notificacion.fecFinalizacion);
+            return false; // Excluir notificaciones con fechas no parseables
+          }
          /*  console.log('fecFinalizacionDate: ', fecFinalizacionDate); */
           return fecFinalizacionDate >= oneWeekAgo; 
           /*  Retenemos solo las notificaciones cuya fecha de vencimiento es igual o posterior a la fecha actual ( return fecFinalizacionDate >= twoWeeksAgo; )
@@ -148,7 +183,7 @@ export const Buzon = () => {
         setIsConsulting(false);
 
       } catch (error) {
-        console.error('Error al obtener las notificaciones:', error);
+        console.error('Error al obtener las notificaciones (ProductsRequest):', error);
         setError('Error al obtener las notificaciones');
         setIsConsulting(false)
       }
@@ -240,28 +275,28 @@ export const Buzon = () => {
         }));
 
         setModalData(combinedData);
-    /*     console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData)); */
+        /*     console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData)); */
 
         setModalVisible(true);
 
- // Actualizamos el contexto para avisar que la notificación fue vista
- const updatedMedicalNotifications = medicalNotifications.map(notification =>
-  notification.idOrden === idOrden
-    ? { ...notification, visto: 'visto' }
-    : notification
-);
-console.error('se actualizo la notificacion a visto ');
+        // Actualizamos el contexto para avisar que la notificación fue vista
+        const updatedMedicalNotifications = medicalNotifications.map(notification =>
+          notification.idOrden === idOrden
+            ? { ...notification, visto: 'visto' }
+            : notification
+        );
+        console.error('se actualizo la notificacion a visto ');
 
-// Actualizar el estado global de las notificaciones de estudios médicos
-setMedicalNotifications(updatedMedicalNotifications); /* este es el context donde guardamos el cambio*/
-console.log('SE ACTUALIZAO EL SET MEDICAL NOTIFICATIONS ---');
+        // Actualizar el estado global de las notificaciones de estudios médicos
+        setMedicalNotifications(updatedMedicalNotifications); /* este es el context donde guardamos el cambio*/
+        console.log('SE ACTUALIZAO EL SET MEDICAL NOTIFICATIONS ---');
       } else {
         console.error('practicaResueltaData or idOrdenENC is undefined');
         setModalVisible2(true);
       }
 
     } catch (error) {
-      console.error('Error al obtener las notificaciones:', error);
+      console.error('Error al obtener las notificaciones(PracticaResueltaRequest):', error);
       setModalVisible2(true);
 
     }
