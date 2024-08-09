@@ -1,5 +1,5 @@
 import { Layout, Text, Input, Button } from "@ui-kitten/components"
-import { Alert,useWindowDimensions } from "react-native"
+import { Alert,StyleSheet,useWindowDimensions } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import { MyIcon } from "../../components/ui/MyIcon";
 
@@ -30,8 +30,10 @@ export const RegisterScreen = ( { navigation }: Props ) => {
     } */
     setIsRegistering(true);
     try {
-     await registerUser(form.email, form.password, form.fullName);
-     setIsRegistering(false);
+      /* Logica para crear nuevos usuarios */
+
+    /*  await registerUser(form.email, form.password, form.fullName);
+     setIsRegistering(false); */
      Alert.alert('Éxito', 'Cuenta creada exitosamente');
   } catch (error) {
     Alert.alert('Error', 'Usuario, contraseña o fullName incorrectos');
@@ -87,6 +89,7 @@ export const RegisterScreen = ( { navigation }: Props ) => {
 
         <Layout style={{ marginTop: 20 }}>
           <Button
+           style={styles.customButton}
           accessoryRight={ <MyIcon name="arrow-forward-outline" white /> }
             onPress={onRegister}
           >
@@ -106,7 +109,9 @@ export const RegisterScreen = ( { navigation }: Props ) => {
           <Text>
             ¿ya tienes una cuenta?
           </Text>
-          <Text status="primary"
+          <Text 
+           style={styles.customText}
+          status="primary"
            category="s1"
            onPress={()=> navigation.goBack()}
            >
@@ -121,3 +126,14 @@ export const RegisterScreen = ( { navigation }: Props ) => {
   )
 
 }
+const styles = StyleSheet.create({
+  customButton: {
+    backgroundColor: '#4285F4', 
+    borderRadius: 10,
+    margin: 10, 
+    padding: 15,
+  },
+  customText: {
+    color: '#4285F4', 
+  },
+});

@@ -26,6 +26,24 @@ export const SettingsScreen = () => {
  const navigator =useNavigation(); 
 const navigation = useNavigation<NavigationProp<RootStackParams>>()
 const colorNaranja = globalColors.orange
+
+
+/* const handleReset = () => {
+  navigation.reset({
+    index: 0,
+    routes: [{ name: 'LoginScreen' }],
+  });
+}; */
+/* const handleReset = async () => {
+  await logout(); 
+  navigation.reset({
+    index: 0,
+    routes: [{ name: 'LoginScreen' }],
+  });
+}; */
+
+
+
   return (
     <View 
     style={ {
@@ -53,7 +71,7 @@ const colorNaranja = globalColors.orange
          <TertiaryButton
           onPress={
             logout
-             }
+             } 
           label="Cerrar Sesión"
           color={globalColors.profile2}
           iconName='power-outline' 

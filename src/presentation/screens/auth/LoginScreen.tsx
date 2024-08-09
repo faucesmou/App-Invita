@@ -1,5 +1,5 @@
 import { Layout, Text, Input, Button } from "@ui-kitten/components"
-import { Alert, useWindowDimensions } from "react-native"
+import { Alert, StyleSheet, useWindowDimensions } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 
 import { StackScreenProps } from "@react-navigation/stack";
@@ -35,8 +35,8 @@ export const LoginScreen = ({ navigation }: Props) => {
   const onLoginGonza = async () => {
 
    
-    if (/* form.email.length === 0 || form.password.length === 0 || */ form.dni.length === 0) {
-      Alert.alert('Error', 'Dni es campo obligatorio');
+    if (/* form.email.length === 0 ||*/  form.password.length === 0 || form.dni.length === 0) {
+      Alert.alert('Dni y contraseña son obligatorios');
       return;
     }
     setIsPosting(true); 
@@ -59,11 +59,11 @@ export const LoginScreen = ({ navigation }: Props) => {
         <Layout style={{ paddingTop: height * 0.20 }}>
           <Text category="h1"
             style={{ marginBottom: 20 }}
-          >Bienvenido a Andes Salud </Text>
+          >Bienvenido a Andes Salud</Text>
           <Text category="h1"
             style={{ marginBottom: 20, fontSize: 20 }}
           > Ingresar </Text>
-          <Text category="p2"> Por favor, ingrese su DNI para continuar</Text>
+          <Text category="p2"> Por favor, ingrese su DNI y contraseña para continuar</Text>
         </Layout>
 
         {/* Inputs */}
@@ -95,6 +95,15 @@ export const LoginScreen = ({ navigation }: Props) => {
             accessoryLeft={<MyIcon name="arrowhead-right-outline" />}
             style={{ marginBottom: 10 }}
           />
+           <Input
+            placeholder="contraseña"
+            autoCapitalize="none"
+            secureTextEntry
+            value={form.password}
+            onChangeText={(password) => setForm({ ...form, password })}
+            accessoryLeft={<MyIcon name="lock-outline" />}
+            style={{ marginBottom: 10 }}
+          />
         </Layout>
 
         {/*   <Text>{ JSON.stringify(form, null, 2)} </Text> */}
@@ -107,6 +116,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
         <Layout style={{ marginTop: 20 }}>
           <Button
+          style={styles.customButton}
             disabled={isPosting}
             accessoryRight={<MyIcon name="arrow-forward-outline" white />}
             onPress={onLoginGonza}
@@ -128,7 +138,9 @@ export const LoginScreen = ({ navigation }: Props) => {
           <Text>
             ¿no tienes cuenta?
           </Text>
-          <Text status="primary"
+          <Text 
+           style={styles.customText}
+          status="primary"
             category="s1"
             onPress={() => navigation.navigate('RegisterScreen')}
           /*   onPress={() => { }} */
@@ -144,4 +156,15 @@ export const LoginScreen = ({ navigation }: Props) => {
   )
 
 }
+const styles = StyleSheet.create({
+  customButton: {
+    backgroundColor: '#4285F4', 
+    borderRadius: 10,
+    margin: 10, 
+    padding: 15,
+  },
+  customText: {
+    color: '#4285F4', 
+  }
+});
 

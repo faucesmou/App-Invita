@@ -384,6 +384,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
 
                       {notificacionesOrdenConsulta.map((notificacion, index) => (
                       <Pressable
+                      key={index} 
                         onPress={() => {
                          PracticaResueltaRequest(
                           notificacion.afiliado,
@@ -462,56 +463,58 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
                 <View style={styles.overlay} />
               )}
 
-              <Modal
-                /*    key={index} */
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={closeModal}
-              >
-              
-                <View style={styles.centeredView}>
-                  <View style={styles.modalView}>
-                    <Text style={styles.textStyletTitle}>Órdenes autorizadas: </Text>
-                  <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                  
-                      {modalData.map((data, index) => (
-                        <>
-                          <View style={{ marginTop: 10 }}>
-          {/*                   <Text style={styles.textStyleOrdenConsulta}>idOrden: {data.idOrden}</Text> */}
-                            <Text style={styles.textContenedorMensajeCod}>
-                              <Text style={styles.textStyleMensajeCodigo}>Compartile este código a tu prestador para que lo pueda autorizar: </Text>
-                              {'\n'}
-                              <Text style={styles.valueCodAutorizado}>{data.codAutorizacion}</Text>
-                            </Text> 
-                            <Text style={styles.textStyle}>{data.afiliado}</Text>
-                           {/*  <Text style={styles.textStyle}>
+                <Modal
+                  /*    key={index} */
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={closeModal}
+                >
+
+                  <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                      <Text style={styles.textStyletTitle}>Órdenes autorizadas: </Text>
+                      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+
+                        {modalData.map((data, index) => (
+                          <>
+                            <View
+                              key={index}
+                              style={{ marginTop: 10 }}>
+                              {/*                   <Text style={styles.textStyleOrdenConsulta}>idOrden: {data.idOrden}</Text> */}
+                              <Text style={styles.textContenedorMensajeCod}>
+                                <Text style={styles.textStyleMensajeCodigo}>Compartile este código a tu prestador para que lo pueda autorizar: </Text>
+                                {'\n'}
+                                <Text style={styles.valueCodAutorizado}>{data.codAutorizacion}</Text>
+                              </Text>
+                              <Text style={styles.textStyle}>{data.afiliado}</Text>
+                              {/*  <Text style={styles.textStyle}>
                               <Text style={styles.textStyle}>Codigo Autorización: </Text>
                               <Text style={styles.valueCodAutorizado}>{data.codAutorizacion}</Text>
-                            </Text>  */}        
-                            <Text style={styles.textStyle}>Fec. Vencimiento: {data.fecVencimiento}</Text>
-                            <Text style={styles.textStyle}>Prestador: {data.prestador}</Text>
-                            <Text style={styles.textStyle}>Dirección:{data.dom1Prestador}{data.dom2Prestador}</Text>
-                            <Text style={styles.textStyle}>
-                              <Text style={styles.textStyle}>Coseguro: </Text>
-                              <Text style={styles.valueCoseguro}>${data.coseguro}</Text>
-                            </Text> 
-                            <Text style={styles.textStylePractica}>Práctica: {data.nombrePrestacion}</Text>
-                          </View>
+                            </Text>  */}
+                              <Text style={styles.textStyle}>Fec. Vencimiento: {data.fecVencimiento}</Text>
+                              <Text style={styles.textStyle}>Prestador: {data.prestador}</Text>
+                              <Text style={styles.textStyle}>Dirección:{data.dom1Prestador}{data.dom2Prestador}</Text>
+                              <Text style={styles.textStyle}>
+                                <Text style={styles.textStyle}>Coseguro: </Text>
+                                <Text style={styles.valueCoseguro}>${data.coseguro}</Text>
+                              </Text>
+                              <Text style={styles.textStylePractica}>Práctica: {data.nombrePrestacion}</Text>
+                            </View>
 
-                          <Divider />
-                        </>
-                      ))}
-                    </ScrollView>
-                    <Pressable
-                      style={styles.button}
-                      onPress={closeModal}
-                    >
-                      <Text style={styles.textCloseStyle}>Cerrar</Text>
-                    </Pressable>
+                            <Divider />
+                          </>
+                        ))}
+                      </ScrollView>
+                      <Pressable
+                        style={styles.button}
+                        onPress={closeModal}
+                      >
+                        <Text style={styles.textCloseStyle}>Cerrar</Text>
+                      </Pressable>
+                    </View>
                   </View>
-                </View>
-              </Modal>
+                </Modal>
             </>
             <>
               {modalVisible3 && (
