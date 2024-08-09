@@ -37,7 +37,7 @@ export const SideMenuNavigator = () => {
   if (status !== 'authenticated'/* cambiar esto a authenticated */) {
 /*    navigation.removeListener  */
 
-    console.log('no estas autenticado te tengo que cerrar todo primo');
+    console.log('No estas autenticado.Cierre de la App');
 
     return (
       <Drawer.Navigator

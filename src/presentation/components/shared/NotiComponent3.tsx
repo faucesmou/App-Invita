@@ -11,8 +11,8 @@ interface Notificacion {
 }
 
 const NotiComponent3 = () => {
-  console.log('entrando a noti component3--->', );
-  console.log('ENTRANDO A NOTI COMPONENT---------------->--->', );
+
+  console.log('Inicializando componente de notificaciones (NotiComponent3)->', );
   
   const { idAfiliado } = useAuthStore();
   const setMedicalNotifications = useNotificationStore((state) => state.setMedicalNotifications);
@@ -23,7 +23,7 @@ const NotiComponent3 = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
   const ProductsRequest = async () => {
-    console.log('Ingresando en ProductsRequest-->>>>>>>');
+    console.log('Ingresando en ProductsRequest (Consulta de Estudios Medicos)');
     try {
    
       const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENPRAC?idAfiliado=${idAfiliado}&IMEI=`);
@@ -65,8 +65,7 @@ const NotiComponent3 = () => {
 
           // Si existe, mantener la propiedad 'visto' que ya tiene
           if (existingNotification) {
-            console.log('existingNotification es:->', existingNotification);
-            
+       
             return  existingNotification/* { ...existingNotification, idOrden }; */
           }
 
@@ -76,16 +75,16 @@ const NotiComponent3 = () => {
         : [];
 
             setMedicalNotifications(mappedNotificaciones);  
-            console.log('notificaciones Notificaciones Medicasssss:-pero las que son para mostrar el numer-----------> ', medicalNotifications )
+           
 
 
     } catch (error) {
-      console.error('Error en ProductsRequest de NOTI COMPONENT Estudios Medicos notificacion error:', error);
+      console.error('Error en ProductsRequest de NOTI COMPONENT3 (notificaciones de Estudios Medicos) error:', error);
     }
   };
 
   const CombinedData2 = async () => {
-    console.log('Ingresando en CombinedData2 de NOTI COMPONENT3 notificaciones de orden de consulta -->>>>>>>');
+    
     try {
    
       const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENAMB?idAfiliado=${idAfiliado}&IMEI=`);
@@ -149,7 +148,7 @@ const NotiComponent3 = () => {
         });
       });
       
-      console.log('AHORA EL COMBINED DATA ES ESTE------------------>:',combinedData );
+
       
 
       setOrderNotifications(combinedData); 
@@ -162,14 +161,14 @@ const NotiComponent3 = () => {
 
     await ProductsRequest();
     await CombinedData2();
-    console.log('idAfiliado--->', idAfiliado);
-    console.log('se actualizaron las notificaciones--->', );
+ 
+    console.log('se actualizaron las notificaciones-', );
   }
-  /* 30C95C73-24B5-4743-BE71-E3D281A6CF2D */
+
   fetchNotifications()
 
 
-  const intervalId = setInterval(fetchNotifications, 50000); // Intervalo de x segundos
+  const intervalId = setInterval(fetchNotifications, 500000); // Intervalo de x segundos
 
   return () => clearInterval(intervalId);
 }, [idAfiliado,  setMedicalNotifications, setOrderNotifications ]);
@@ -177,6 +176,6 @@ const NotiComponent3 = () => {
 
 return null; 
 }
-/* const unseenCount = combinedNotifications.filter((notification) => notification.visto === 'no visto').length; */
+
 
 export default NotiComponent3;

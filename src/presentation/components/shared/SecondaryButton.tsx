@@ -21,7 +21,6 @@ export const SecondaryButton = ({ onPress, label, color, disabled, iconName, des
   const { width, height } = useWindowDimensions();
   
   const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
-  console.log('backColor', backColor)
   const navigation = useNavigation();
   /*  const backColor = color? color : globalColors.profile2; */
 

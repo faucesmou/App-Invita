@@ -18,7 +18,7 @@ interface Props {
 
 export const QuaternaryButton = ( { onPress, label, color, disabled, iconName,iconName2, description }: Props) => {
   const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
-  console.log('backColor', backColor)  
+
   const navigation = useNavigation();
 
   return (
