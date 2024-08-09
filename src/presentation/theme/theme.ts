@@ -290,6 +290,19 @@ export const globalStyles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center'
   },
+  paidSign: {
+    backgroundColor: '#39b536',/* globalColors.profile2 */
+    borderRadius: 0,
+    padding: 5,
+    margin: 10,
+    marginTop: 15,
+    marginBottom: 20,
+    marginHorizontal: 60,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
   notAvailableButton: {
     backgroundColor:  globalColors.gray3,
     borderRadius: 5,

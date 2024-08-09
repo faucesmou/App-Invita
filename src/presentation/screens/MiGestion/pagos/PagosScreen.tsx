@@ -17,22 +17,27 @@ import { ScrollView } from 'react-native-gesture-handler';
 import datos from './datosPrueba.json';
 
 
-
-// Define los tipos
-interface Padron {
-  nombre: string;
-  cuil: number;
-  edad: string;
-  plan: string;
-}
-
 interface Saldo {
+  id: number;
+  titular: number;
+  valor: number;
+  categoriaTitular: string;
+  saldoBase: number;
+  valorPlanContrato: number;
+  AporteContrato: number;
+  descuentos: string; 
+  descuentosMonto: number;
+  adicionales: string; 
+  adicionalesMonto: number;
   periodo: number;
-  tipoSaldo: string;
-  medioPago: string;
   linkDePago: string;
   pagado: boolean;
-  padrones: Padron[];
+  gf: number; 
+  medioPago: string;
+  planDePago: number;
+  tipoSaldo: string;
+  revision: number;
+  contratoId: number;
 }
 
 // Estado inicial vacío
@@ -55,48 +60,57 @@ const shadowOpt = {
 export const PagosScreen = () => {
 
   const { idAfiliadoTitular, cuilTitular } = useAuthStore();
-  /*   console.log('idAfiliadoTitular desde el FACTURA SCREEN---->', idAfiliadoTitular); */
+
   console.log('cuilTitular desde el FACTURA SCREEN---->', cuilTitular);
 
 
   const { top } = useSafeAreaInsets();
 
   const [formularios, setFormularios] = useState<{ nombre: string; descripcion: string; nombreArchivo: string }[]>([]);
-  /*   const [Saldos, setSaldos] = useState<Saldo[]>(initialSaldo); */
+
+  const [Saldos, setSaldos] = useState<Saldo[]>(initialSaldo);
   const [showAfiliados, setShowAfiliados] = useState(false);
   const [errores, setErrores] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
-  //MOMENTANEAMENTE DEJO ESTO CON JSON: REVISAR LA CONSULTA PARA QUE NO SEA TAN PESADA. 
-  const Saldos = datos.data;
+
+/*   const Saldos = datos.data; */
   useEffect(() => {
 
-    const PagosRequest = async () => {
-      try {
-        const response = await axios.post(`https://fiscalizacion.createch.com.ar/contratos/paginador/cuenta?afiliado=${cuilTitular}&offset=1`);
 
-        console.log('la respuesta de cristian es: response.data.data--------->>>>', response.data.data);
-        /*  console.log('la respuesta de cristian es: response--------->>>>', response); */
-        console.log('la respuesta response.status es--------->>>>', response.status);
+    const PagosPeticion = async () => {
+      console.log('entrando a PagosPeticion--------->>>>');
+      try {
+        const response = await axios.post(`https://fiscalizacion.createch.com.ar/contratos/paginador/aplicacion?afiliado=${cuilTitular}`);
+
 
         if (response.status === 200) {
           // Procesa la respuesta de la API
           const data = await response.data.data;
           if (Array.isArray(data)) {
             const extractedData = response.data.data.map((item: any) => ({
+              id: item.id,
+              cuilTitular: item.titular,
+              debePagar: item.valor,
+              categoriaTitular: item.categoriaTitular,
+              saldoBase: item.saldoBase,
+              valorPlanContrato: item.valorPlanContrato,
+              AporteContrato: item.AporteContrato,
+              descuentos: item.descuentos,
+              descuentosMonto: item.descuentosMonto,
+              adicionales: item.adicionales,
+              adicionalesMonto: item.adicionalesMonto,
               periodo: item.periodo,
-              tipoSaldo: item.tipoSaldo,
-              medioPago: item.medioPago,
               linkDePago: item.linkDePago,
               pagado: item.pagado,
-              padrones: item.padrones.map((padron: any) => ({
-                nombre: padron.nombre,
-                cuil: padron.cuil,
-                edad: padron.edad,
-                plan: padron.plan
-              }))
+              gf: item.gf,
+              medioPago: item.medioPago,
+              planDePago: item.planDePago,
+              tipoSaldo: item.tipoSaldo,
+              revision: item.revision,
+              contratoId: item.contratoId,
+              
             }));
-
             setSaldos(extractedData);
           
           }
@@ -115,8 +129,9 @@ export const PagosScreen = () => {
         setError("Error con los datos");
       }
     };
-    /*  PagosRequest() */
-    console.log('la respuesta de cristian Saldos es--------->>>>', Saldos);
+
+    PagosPeticion()
+  
   }, [])
 
   const handlePress = (url: string) => {
@@ -134,7 +149,7 @@ export const PagosScreen = () => {
       <BackButton />
 
       <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Estado de Pagos</Text>
-      <ScrollView>
+      <ScrollView >
 
         <View style={globalStyles.containerEstudiosMedicosEnv2}>
           {error ? (
@@ -144,60 +159,41 @@ export const PagosScreen = () => {
             </View>
           ) : (
             Saldos.map((saldo, index) => (
-              <View style={styles.cardWrapper}/*  key={index} style={{ alignItems:'center', backgroundColor: 'yellow', marginBottom: 10, paddingTop:10, paddingHorizontal: 40 }}  */>
+              <View key={saldo.id} style={[
+                styles.cardWrapper,
+                { marginBottom: saldo.pagado ? '4%' : '7%' },
+              ]}
+              >
                 <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 105 }} 
                   >
 
                   <View style={styles.card}>
-                    {/*   <Text style={globalStyles.titleEstudiosMedicosEnv}>Información del saldo</Text> */}
-                    {/*  <Text style={globalStyles.resultText2}>Periodo: {saldo.periodo}</Text> */}
+
+                      
                     <Text style={globalStyles.resultText3}>{saldo.tipoSaldo}</Text>
-{/*                     <Text style={globalStyles.resultText2}>Estado del pago: {saldo.pagado ? 'Pagado' : 'Pendiente'}</Text> */}
+
                     <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text> 
 
                     { saldo.pagado === false ? 
                       (
-
-                        <TouchableOpacity style={globalStyles.primaryButton2} onPress={() => handlePress(saldo.linkDePago)}>
+                          <>
+                          <Text style={globalStyles.resultText2}>Saldo: ${saldo.debePagar}</Text>
+                        <TouchableOpacity style={styles.primaryButton45} onPress={() => handlePress(saldo.linkDePago)}>
                           <Text style={globalStyles.buttonText}>
                             Link de Pago
                           </Text>
                         </TouchableOpacity>
+                          </>
 
                       ) : (
 
-
-                    <TouchableOpacity style={globalStyles.paidButton} >
+                    <View style={globalStyles.paidSign} >
                       <Text style={globalStyles.buttonText}>
                         Pagado
                       </Text>
-                    </TouchableOpacity>
-
-
+                    </View>
                       )
                     }
-
-
-                    {/*   <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 18, textAlign: 'center', }}>Afiliados:</Text> */}
-
-                    {/* Detalles del afiliado: */}
-                    
-                   {/*  {showAfiliados && saldo.padrones.map((padron: any, padronIndex: number) => (
-                      <View key={padronIndex} >
-                        <Text style={globalStyles.resultText2}>{padron.nombre}</Text>
-                      </View>
-                    ))} */}
-
-                    {/* boton mostrar Afiliados:  */}
-
-                    {/* <TouchableOpacity
-                      onPress={() => setShowAfiliados(!showAfiliados)}
-                      style={globalStyles.primaryButton3}
-                    >
-                      <Text style={{ fontSize: 16 }}>
-                        {showAfiliados ? 'Ocultar Afiliados' : 'Mostrar Afiliados'}
-                      </Text>
-                    </TouchableOpacity> */}
 
                   </View>
                 </BoxShadow>
@@ -223,7 +219,7 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: '5%',
   },
   card: {
     width: 350,
@@ -235,15 +231,20 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 15,
   },
+  primaryButton45: {
+    backgroundColor: '#b74a4a',
+    borderRadius: 5,
+    padding: 5,
+    margin: 10,
+    marginTop: 10,
+    marginBottom: 15,
+    marginHorizontal: 60,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center'
+
+  },
 });
 
 
-{/*  {saldo.padrones.map((padron: any, padronIndex: number) => (
-                  <View key={padronIndex}>
-                    <Text style={globalStyles.resultText2}>Nombre: {padron.nombre}</Text>
-                    <Text style={globalStyles.resultText2}>Plan: {padron.plan}</Text>
-                  </View>
-                ))} */}
-
-{/*  <Text style={globalStyles.resultText2}>CUIL: {padron.cuil}</Text>
-                    <Text style={globalStyles.resultText2}>Edad: {padron.edad}</Text> */}
