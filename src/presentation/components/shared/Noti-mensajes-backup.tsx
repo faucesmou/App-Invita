@@ -5,7 +5,7 @@ import { IonIcon } from './IonIcon';
 
 
 
-const NotificationBadge = ( {counter }) => {
+const NotificationBadge = ( {counter}) => {
   return (
     <View style={styles.badge}>
       <Text style={styles.badgeText}>{counter}</Text>
@@ -14,7 +14,7 @@ const NotificationBadge = ( {counter }) => {
 };
 
 
-const NotiMensajes = () => {
+const NotiMensajesBackup = () => {
   /* const combinedNotifications = useNotificationStore((state) => state.combinedNotifications);
   const setCombinedNotifications = useNotificationStore((state) => state.setCombinedNotifications);
    */
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotiMensajes;
+export default NotiMensajesBackup;
 
 
     {/*  {unseenNotificationsCount > 0 ? (

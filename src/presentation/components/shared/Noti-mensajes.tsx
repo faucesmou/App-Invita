@@ -18,7 +18,7 @@ const NotiMensajes = () => {
  const combinedNotifications = useNotificationStore((state) => state.combinedNotifications); 
 // Calcular el número de notificaciones no vistas
 const unseenNotificationsCount = combinedNotifications.filter(notification => notification.visto === 'no visto').length;
-console.log(' los mensajes no vistos son.--->',unseenNotificationsCount );
+console.log(' Los mensajes no vistos son.--->',unseenNotificationsCount );
 
 
   

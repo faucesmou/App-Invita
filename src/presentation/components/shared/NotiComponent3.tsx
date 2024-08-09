@@ -173,7 +173,7 @@ const NotiComponent3 = () => {
   return () => clearInterval(intervalId);
 }, [idAfiliado,  setMedicalNotifications, setOrderNotifications ]);
 
-
+console.log('Finalizacion de lectura de componente de notificaciones (NotiComponent3)->', );
 return null; 
 }
 

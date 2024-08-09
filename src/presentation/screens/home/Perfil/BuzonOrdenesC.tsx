@@ -112,17 +112,14 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
   const setNotifications = useNotificationStore((state) => state.setNotifications); */
 
   useEffect(() => {
+    console.log('Se ha activado el useEffect de BuzonOrdenesC');
     setIsConsulting(true);
 
     const CombinedData2 = async () => {
-      console.log('Ingresando en ProductsRequest de BuzonOrdenesC -->>>>>>>');
+      
       try {
         setIsConsulting(true);
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENAMB?idAfiliado=${idAfiliado}&IMEI=`);
-        
-        
-
-        console.log('Convirtiendo el response xmlData a result de BuzonOrdenesC -->>>>>>>>>>>>>>>');
 
         const xmlData = response.data;
         const result = xml2js(xmlData, { compact: true });
@@ -247,7 +244,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
     coseguro: string,
     ) => {
       const { orderNotifications, setOrderNotifications } = useNotificationStore.getState();
-    console.log('Ingresando en  PRACTICA RESUELTA REQUEST de Ordenes de Consulta Seleccionada-->>>>>>>idOrden:', idOrden);
+    console.log('Se activo PracticaResueltaRequest de BuzonOrdenesC. Id de la Consulta Seleccionada->:', idOrden);
    try {
     if (estado === 'RECHAZOPRACTICA' ) {
       console.log('En PracticaResueltaRequest de orden de consulta el estado === RECHAZOPRACTICA ');
@@ -269,7 +266,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
 );
 
       setOrderNotifications(updatedNotifications); /* este es el context */
-      console.log('SE ACTUALIZAO EL SET ORDER NOTIFICATIONS ---');
+     
       return;
     }
     const ordenInfo = [{
@@ -296,7 +293,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
      );
  
      setOrderNotifications(updatedNotifications); // Actualizar el estado global
-     console.log('SE ACTUALIZO EL SET ORDER NOTIFICATIONS --->>>>');
+
       //Actualizamos el contexto para avisar que la notificacion fue vista
       // consultamos el context para que modifique solo la que abre el usuario:
       
@@ -304,7 +301,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
     setModalData(ordenInfo);
     setModalVisible(true);
   } catch(error){
-    console.error('Error al obtener las notificaciones:', error);
+    console.error('Error al obtener las notificaciones de ordenes de consulta (BuzonOrdenesC):', error);
     setModalVisible2(true);
   }
   }
@@ -338,7 +335,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
      <View style={styles.ContainerEstudiosMedicosTitleAfuera} >
         <Pressable
           onPress={() => {
-            console.log('se toco el titulo Ordenes de Consulta');
+           
             modifyEstMedicVisible()
           }
           }
@@ -388,7 +385,6 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
                       {notificacionesOrdenConsulta.map((notificacion, index) => (
                       <Pressable
                         onPress={() => {
-                          console.log('se toco en la notificacion');
                          PracticaResueltaRequest(
                           notificacion.afiliado,
                           notificacion.idOrden, 

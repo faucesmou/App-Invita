@@ -70,19 +70,18 @@ export const Buzon = () => {
   const setNotifications = useNotificationStore((state) => state.setNotifications); */
 
   useEffect(() => {
+    console.log('Se ha activado el useEffect de Buzon');
     setIsConsulting(true);
     const ProductsRequest = async () => {
-      let camote = '301936D8-6482-4625-82DD-38A932A4FC5A'
+      /* let camote = '301936D8-6482-4625-82DD-38A932A4FC5A' */
       try {
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuzonActualizarORDENPRAC?idAfiliado=${idAfiliado}&IMEI=`);
-        /*   console.log('EL RESPONSE DEL BUZON ES : ---------x-x-x-x-x-x->', response); */
+        
 
         const xmlData = response.data;
 
         // Convertir XML a JSON
         const result = xml2js(xmlData, { compact: true });
-
-        /*    console.log('Datos JSON convertidos:', result); */
 
         // @ts-ignore
         const notificacionesData = result.Resultado?.tablaDatos;
@@ -144,10 +143,7 @@ export const Buzon = () => {
 
         // Asignamos las notificaciones filtradas al estado
       setNotificaciones(notificacionesOrdenadas);
-      console.log('notificaciones Notificaciones Medicasssss:------------> ', notificaciones)
-    /*     setNotificaciones(mappedNotificaciones); */
 
-        /*  console.log('Mapped notificaciones:', mappedNotificaciones); */
     
         setIsConsulting(false);
 
@@ -163,10 +159,11 @@ export const Buzon = () => {
   }, [idAfiliado, listadoEstMedicosVisible]);
 
   const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo?: string) => {
-    
-    const { medicalNotifications, setMedicalNotifications } = useNotificationStore.getState();
-    console.log('Ingresando en  PRACTICA RESUELTA REQUEST-->>>>>>>idOrden:', idOrden);
+    console.log('Se activo PracticaResueltaRequest de Buzon. Id de la Consulta Seleccionada->:', idOrden);
    
+    //importante : no tocar las siguientes constantes llamadas del contexto: son necesarias para contar con la informacion actualizada del contexto: 
+    const { medicalNotifications, setMedicalNotifications } = useNotificationStore.getState();
+       
     if (estado === 'RECHAZOPRACTICA' ) {
       console.log('En PracticaResueltaRequest estado === RECHAZOPRACTICA ');
       setIsConsulting(false);
@@ -179,7 +176,6 @@ export const Buzon = () => {
       setModalVisible3(true);
 
       // Actualizamos el contexto para avisar que la notificación fue vista
-      console.log('LAS MEDICAL  NOTIFICATIONS SON LAS SIGUIENTES --->', medicalNotifications);
       const updatedMedicalNotifications = medicalNotifications.map(notification =>
         notification.idOrden === idOrden
           ? { ...notification, visto: 'visto' }
@@ -188,9 +184,6 @@ export const Buzon = () => {
 
       // Actualizar el estado global de las notificaciones de estudios médicos
       setMedicalNotifications(updatedMedicalNotifications);
-      console.log('SE ACTUALIZAO EL SET MEDICAL NOTIFICATIONS ---');
-
-    
 
       return;
     }
@@ -211,8 +204,7 @@ export const Buzon = () => {
         // @ts-ignore
         tablaDetalle: result?.root?.tablaDetalle,
       };
-      console.log('Datos JSON convertidos desde el PRACTICA RESUELTA REQUEST-->>>>>>>:', JSON.stringify(result));
-      console.log('practicaResueltaData -->>>>>>>>:', JSON.stringify(practicaResueltaData));
+      
 
       if (practicaResueltaData.tablaEncabezado === undefined || practicaResueltaData.tablaDetalle === undefined ) {
         console.log('En PracticaResueltaRequest practicaResueltaData tabla encabezado o tabla detalle es undefined: No hay notificaciones para este usuario.');

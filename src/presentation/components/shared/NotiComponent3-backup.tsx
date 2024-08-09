@@ -10,7 +10,7 @@ interface Notificacion {
   visto: string;
 }
 
-const NotiComponent3 = () => {
+const NotiComponent3backup = () => {
   console.log('entrando a noti component3--->', );
  
   
@@ -154,4 +154,4 @@ return null;
 }
 /* const unseenCount = combinedNotifications.filter((notification) => notification.visto === 'no visto').length; */
 
-export default NotiComponent3;
+export default NotiComponent3backup;
