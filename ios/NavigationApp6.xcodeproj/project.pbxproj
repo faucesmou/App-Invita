@@ -480,6 +480,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q8S7SUFR9C;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NavigationApp6/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Andes Salud";
@@ -493,7 +494,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gonzalomorresi.andessaludapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gonzalomorresi.andessalud;
 				PRODUCT_NAME = NavigationApp6;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -508,6 +509,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q8S7SUFR9C;
 				INFOPLIST_FILE = NavigationApp6/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Andes Salud";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -520,7 +522,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gonzalomorresi.andessaludapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gonzalomorresi.andessalud;
 				PRODUCT_NAME = NavigationApp6;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -194,12 +194,12 @@ export const Buzon = () => {
   }, [idAfiliado, listadoEstMedicosVisible]);
 
   const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo?: string) => {
-    console.log('Se activo PracticaResueltaRequest de Buzon. Id de la Consulta Seleccionada->:', idOrden);
-   
-    //importante : no tocar las siguientes constantes llamadas del contexto: son necesarias para contar con la informacion actualizada del contexto: 
+    console.log('Se activó PracticaResueltaRequest de Buzon. Id de la Consulta Seleccionada->:', idOrden);
+  
+    // Importante: no tocar las siguientes constantes llamadas del contexto, son necesarias para contar con la información actualizada del contexto
     const { medicalNotifications, setMedicalNotifications } = useNotificationStore.getState();
-       
-    if (estado === 'RECHAZOPRACTICA' ) {
+  
+    if (estado === 'RECHAZOPRACTICA') {
       console.log('En PracticaResueltaRequest estado === RECHAZOPRACTICA ');
       setIsConsulting(false);
       const rechazoInfo = [{
@@ -207,100 +207,111 @@ export const Buzon = () => {
         estado: 'Esta práctica fue rechazada',
         comentarioRechazo: comentarioRechazo,
       }];
-      setRechazoData(rechazoInfo)
+      setRechazoData(rechazoInfo);
       setModalVisible3(true);
-
+  
       // Actualizamos el contexto para avisar que la notificación fue vista
       const updatedMedicalNotifications = medicalNotifications.map(notification =>
         notification.idOrden === idOrden
           ? { ...notification, visto: 'visto' }
           : notification
       );
-
+  
       // Actualizar el estado global de las notificaciones de estudios médicos
       setMedicalNotifications(updatedMedicalNotifications);
-
+  
       return;
     }
-
-
-   
+  
     try {
       /* APPDatosPracticaResuelta */
-      const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPDatosPracticaResuelta?IMEI=&idOrdenAPP=${idOrden}`)
+      const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPDatosPracticaResuelta?IMEI=&idOrdenAPP=${idOrden}`);
       const xmlData = response.data;
-
+  
       // Convertir XML a JSON
       const result = xml2js(xmlData, { compact: true });
-
+  
       const practicaResueltaData = {
         // @ts-ignore
         tablaEncabezado: result?.root?.tablaEncabezado,
         // @ts-ignore
         tablaDetalle: result?.root?.tablaDetalle,
       };
-      
-
-      if (practicaResueltaData.tablaEncabezado === undefined || practicaResueltaData.tablaDetalle === undefined ) {
+  
+      if (practicaResueltaData.tablaEncabezado === undefined || practicaResueltaData.tablaDetalle === undefined) {
         console.log('En PracticaResueltaRequest practicaResueltaData tabla encabezado o tabla detalle es undefined: No hay notificaciones para este usuario.');
         setIsConsulting(false);
         setModalVisible2(true);
         return;
       }
+  
       if (!practicaResueltaData) {
         setError('El formato de los datos recibidos no es el esperado.');
         console.log('En PracticaResueltaRequest el formato de los datos recibidos no es el esperado.');
+        return;
       }
-
+  
+      console.log('En PracticaResueltaRequest tiene practicaResueltaData------> ', practicaResueltaData);
+  
       // Verificar si practicaResueltaData y sus atributos necesarios están definidos
-      if (practicaResueltaData && practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) {
-
-
-        const combinedData = practicaResueltaData.tablaEncabezado.idOrdenENC.map((item: any, index: number) => ({
+      if (practicaResueltaData && practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaEncabezado.idOrdenENC) {
+        // Aquí comprobamos si idOrdenENC es un array o un objeto
+        const idOrdenENCArray = Array.isArray(practicaResueltaData.tablaEncabezado.idOrdenENC)
+          ? practicaResueltaData.tablaEncabezado.idOrdenENC
+          : [practicaResueltaData.tablaEncabezado.idOrdenENC]; // Si no es array, lo convertimos en uno
+  
+        const combinedData = idOrdenENCArray.map((item: any) => ({
           idOrden: item._text,
-          idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
-          nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
-          coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
-          palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
-          fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
-          fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
-          domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text,
-          domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text,
-          idOrdenDET: practicaResueltaData.tablaDetalle.idOrdenDET[index]._text,
-          idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
-          idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
-          cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
-          prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
-          coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text,
+          idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC._text || '', // Usamos _text directamente ya que no es un array
+          nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC._text || '',
+          coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC._text || '',
+          palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC._text || '',
+          fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC._text || '',
+          fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC._text || '',
+          domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1._text || '',
+          domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2._text || '',
+  
+          idOrdenDET: practicaResueltaData.tablaDetalle.idOrdenDET._text || '',
+          idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET._text || '',
+          idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET._text || '',
+          cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET._text || '',
+          prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET._text || '',
+          coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET._text || '',
         }));
-
-        setModalData(combinedData);
-        /*     console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData)); */
-
+        if (combinedData && combinedData.length > 0) {
+          setModalData(combinedData);
+        } else {
+          console.log('combinedData está vacío o no tiene la estructura esperada.');
+        }
+       /*  setModalData([combinedData]); */
+       console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData)); 
+       console.log('ModalData -->>>>>>>>:', modalData); 
+  
         setModalVisible(true);
-
+  
         // Actualizamos el contexto para avisar que la notificación fue vista
         const updatedMedicalNotifications = medicalNotifications.map(notification =>
           notification.idOrden === idOrden
             ? { ...notification, visto: 'visto' }
             : notification
         );
-        console.error('se actualizo la notificacion a visto ');
-
+        console.log('Se actualizó la notificación a visto');
+  
         // Actualizar el estado global de las notificaciones de estudios médicos
         setMedicalNotifications(updatedMedicalNotifications); /* este es el context donde guardamos el cambio*/
-        console.log('SE ACTUALIZAO EL SET MEDICAL NOTIFICATIONS ---');
+        console.log('SE ACTUALIZÓ EL SET MEDICAL NOTIFICATIONS ---');
       } else {
-        console.error('practicaResueltaData or idOrdenENC is undefined');
+        console.error('practicaResueltaData o idOrdenENC es undefined');
         setModalVisible2(true);
       }
-
     } catch (error) {
-      console.error('Error al obtener las notificaciones(PracticaResueltaRequest):', error);
+      console.error('Error al obtener las notificaciones (PracticaResueltaRequest):', error);
       setModalVisible2(true);
-
     }
-  }
+  };
+  
+
+   
 
 
   const getButtonText = (notificacion: string) => {
@@ -535,9 +546,12 @@ export const Buzon = () => {
                   <View style={styles.modalView}>
                     <Text style={styles.textStyletTitle}>Órdenes autorizadas: </Text>
                   <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                      {modalData.map((data, index) => (
+                     {/*  {modalData.map((data, index) => ( */}
+                     {modalData && modalData.map((data, index) => (
                         <>
-                          <View style={{ marginTop: 10 }}>
+                          <View 
+                          key={index}
+                          style={{ marginTop: 10 }}>
                           <Text style={styles.textStyleContenedor}>    
                           <Text style={styles.textStyleMensajeCodigo}>Compartile este código a tu prestador o clínica para que lo pueda autorizar:</Text>
                             </Text> 
@@ -949,3 +963,22 @@ const styles = StyleSheet.create({
       )
       
       setNotifications(updatedNotifications); */ /* este es el context */
+
+
+       /*  idOrdenParcial: practicaResueltaData.tablaEncabezado.idOrdenParcialENC[index]._text,
+          nombreConvenio: practicaResueltaData.tablaEncabezado.nombreConvenioENC[index]._text,
+          coseguroENC: practicaResueltaData.tablaEncabezado.coseguroENC[index]._text,
+          palabraClaveENC: practicaResueltaData.tablaEncabezado.palabraClaveENC[index]._text,
+          fecFinENC: practicaResueltaData.tablaEncabezado.fecFinENC[index]._text,
+          fecVencimientoENC: practicaResueltaData.tablaEncabezado.fecVencimientoENC[index]._text,
+          domRenglon1: practicaResueltaData.tablaEncabezado.domRenglon1[index]._text  || '',
+          domRenglon2: practicaResueltaData.tablaEncabezado.domRenglon2[index]._text || '',
+
+          idOrdenDET: practicaResueltaData.tablaDetalle.idOrdenDET[index]._text,
+          idOrdenDetalleDET: practicaResueltaData.tablaDetalle.idOrdenDetalleDET[index]._text,
+          idOrdenParcialDET: practicaResueltaData.tablaDetalle.idOrdenParcialDET[index]._text,
+          cantidadDET: practicaResueltaData.tablaDetalle.cantidadDET[index]._text,
+          prestacionDET: practicaResueltaData.tablaDetalle.prestacionDET[index]._text,
+          coseguroDET: practicaResueltaData.tablaDetalle.coseguroDET[index]._text, */
+
+             /*  if (practicaResueltaData &&   practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) */ 
