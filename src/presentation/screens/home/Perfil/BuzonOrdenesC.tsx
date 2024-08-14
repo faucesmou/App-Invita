@@ -344,7 +344,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
           }
           }
         >
-          <Text style={styles.titleEstudiosMedicosAfuera} >Ordenes de Consulta:</Text>
+          <Text style={styles.titleEstudiosMedicosAfuera} >Órdenes de Consulta:</Text>
         </Pressable>
       </View>
       {listadoEstMedicosVisible ?
@@ -405,7 +405,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
                         }}
 
                       >
-                        <View key={index} style={styles.TertiaryButton}>
+                        <View style={styles.TertiaryButton}>
                           {/*  <Text style={{ fontSize: 16, textAlign: 'center' }}>{notificacion.afiliado}</Text> */}
                           <View style={styles.contentWrapper2}>
                             <View style={styles.textWrapper}>
@@ -702,10 +702,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom:5,
     padding: 5,
-    backgroundColor: globalColors.yellow3/*  '#9dcaf1' *//* '#d7e5f8' */,
+    backgroundColor: globalColors.white22 /* yellow3 *//*  '#9dcaf1' *//* '#d7e5f8' */,
     borderRadius: 15,
-    borderWidth:2,
-    borderColor: globalColors.yellow3,
+    borderWidth:0,
+    borderColor: globalColors.white22,
     marginHorizontal:10,
     minWidth:'80%',
     maxWidth:'80%',

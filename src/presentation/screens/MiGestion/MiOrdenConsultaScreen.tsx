@@ -64,7 +64,7 @@ export const MiOrdenConsultaScreen = () => {
       }}
       >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.gray2}  titleSize={28} />
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (

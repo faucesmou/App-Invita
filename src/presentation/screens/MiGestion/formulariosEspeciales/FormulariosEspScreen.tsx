@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { Text, View, Linking } from 'react-native';
 
 import axios from 'axios';
 
@@ -85,12 +85,17 @@ export const FormulariosEspScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
-  const handleDescargarFormulario = (nombreArchivo: string) => {
-    // Construye la URL de descarga del formulario
+ /*  const handleDescargarFormulario = (nombreArchivo: string) => {
     const url = `https://www.prestacional.saludnuevocuyo.com.ar/ClientBin/DocumentosDownload/${nombreArchivo}`;
-    
-    // Navega a la vista FormularioElegido pasando la URL como parámetro
+    console.log('formulario nombre elegido: ---->', nombreArchivo);
     navigation.navigate('Formulario', { url });
+  }; */
+  const handleDescargarFormulario = (nombreArchivo: string) => {
+    const url = `https://www.prestacional.saludnuevocuyo.com.ar/ClientBin/DocumentosDownload/${nombreArchivo}`;
+
+    console.log('URL DE formularios Esp Screen: -->', url);
+    Linking.openURL(url)
+      .catch(err => console.error('Error al abrir URL: ', err));
   };
 
   const color = globalColors.orange
@@ -101,13 +106,13 @@ export const FormulariosEspScreen = () => {
       style={globalStyles.container}
   
     >
-      <CustomHeader color={globalColors.gray3} /* color={color} */ />
+      <CustomHeader color={globalColors.black} /* color={color} */ />
 
       <BackButton />
 
       <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Formularios Especiales</Text>
 
-      <View style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: 30, marginTop: 15 }}>
+      <View style={{ /* backgroundColor: 'green', */  flex: 1, marginBottom: 30, marginTop: 15 }}>
         {formularios.map((formulario, index) => (
           <View key={index} style={{ marginBottom: 10 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{formulario.nombre}</Text>

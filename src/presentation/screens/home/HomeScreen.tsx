@@ -26,7 +26,7 @@ export const HomeScreen = () => {
   console.log('Entrando al homeScreen---->')
 
 /* contexto para avisar que se carga por primera vez al notificador */
-const { initialLoadComplete, setInitialLoadComplete } = useNotificationStore();
+/* const { initialLoadComplete, setInitialLoadComplete } = useNotificationStore(); */
 const setMedicalNotifications = useNotificationStore((state) => state.setMedicalNotifications);
 const setOrderNotifications = useNotificationStore((state) => state.setOrderNotifications);
 
@@ -96,7 +96,7 @@ const handleOpenURL = () => {
           <Pressable
             onPress={() => {
               console.log('presiono el boton');
-              navigation.navigate('Buzon');
+              navigation.navigate('Buzón');
             }}
             style={{ marginLeft: 0, marginBottom: 5 }}
           >

@@ -31,9 +31,13 @@ export const globalColors = {
 gray3:'#DCDCDC', 
   white1:'##d8d8cf',
   white2:'#ffffff',
-
-
   background: '#fff',
+/* ------- */
+babyPowder: '#FDFDF8ff',
+earthYellow: '#E0A058ff',
+earthYellow2: '#E4B576ff',
+whiteColor: '#FFFFFFff',
+white22: '#F7C552',
 
 }
 export const globalStyles = StyleSheet.create({

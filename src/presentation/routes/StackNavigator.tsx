@@ -49,7 +49,7 @@ export type RootStackParams = {
   Credenciales: { id: number, name: string },
   Products: undefined,
   Afiliados: undefined,
-  Buzon: undefined,
+  "Buzón": undefined,
   Buzon1: undefined,
   Perfil: undefined,
   MiGestión: undefined,
@@ -74,6 +74,7 @@ export type RootStackParams = {
   Prestadores: { idCartilla: string };
   EstudiosMedicos: undefined, 
   "Estudios Médicos": undefined,
+  "Estudios": undefined,
   "Estudios enviados": undefined,
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
@@ -150,7 +151,7 @@ export const StackNavigator = () => {
 
                           {/* Settings: */}
       <Stack.Screen name="Perfil" component={SettingsScreen} options={{ headerShown: true }} />
-    <Stack.Screen name="Buzon" component={Buzon} options={{ headerShown: true }} /> 
+    <Stack.Screen name="Buzón" component={Buzon} options={{ headerShown: true }} /> 
 
 {/* MI SALUD (CartillaScreen): */}
 
@@ -158,7 +159,7 @@ export const StackNavigator = () => {
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="Prestadores" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
-      <Stack.Screen name="Estudios Médicos" component={EstudiosMedicosScreen} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} />
+      <Stack.Screen name="Estudios" component={EstudiosMedicosScreen} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} />
       
 {/* MI GESTIÓN (TramitesScreen): */}
 

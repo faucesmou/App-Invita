@@ -51,7 +51,7 @@ export const TramitesScreen = () => {
 
           <Pressable onPress={() => {
             console.log('presiono el boton ');
-            navigation.navigate('Buzon')
+            navigation.navigate('Buzón')
           }}
             style={{ marginLeft: 0, marginBottom: 5 }}
           >
@@ -68,8 +68,8 @@ export const TramitesScreen = () => {
 
       <View style={styles.cardContainer} >
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Turnos en agenda</Text>
-          <Text style={styles.cardSubtitle}>Contactá con nuestros asesores</Text>
+          <Text style={styles.cardTitle}>Autorizaciones</Text>
+          <Text style={styles.cardSubtitle}>Gestioná todas tus solicitudes</Text>
         </View>
       </View>
       <View style={styles.bigContentContainer} >
@@ -83,12 +83,12 @@ export const TramitesScreen = () => {
             label="Solicitar orden de consulta"
             color={globalColors.profile2}
             iconName='people-outline'
-            description='Gestioná la orden de tus estudios'
+            description='Gestioná la orden de tu consulta'
           />{/* <ion-icon name="people-outline"></ion-icon> */}
 
 
           <TertiaryButton
-            onPress={() => navigation.navigate('Estudios Médicos')}
+            onPress={() => navigation.navigate('Estudios')}
             label="Estudios Médicos"
             color={globalColors.profile2}
             iconName='medkit-outline'

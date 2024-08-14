@@ -480,10 +480,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q8S7SUFR9C;
+				DEVELOPMENT_TEAM = AVBJWRXJF6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NavigationApp6/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Andes Salud";
+				INFOPLIST_KEY_CFBundleDisplayName = AndesSaludApp;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -509,9 +510,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q8S7SUFR9C;
+				DEVELOPMENT_TEAM = AVBJWRXJF6;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = NavigationApp6/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Andes Salud";
+				INFOPLIST_KEY_CFBundleDisplayName = AndesSaludApp;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

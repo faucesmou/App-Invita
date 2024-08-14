@@ -91,26 +91,27 @@ export const Afiliados = () => {
           }}
         >Selecciona un familiar para ver su credencial</Text>
 
-    <ScrollView style={{ marginBottom: 0, maxHeight:'80%' /* , backgroundColor:'green' */  }}>
-        <FlatList
-          style={{  /* backgroundColor: 'orange', */  marginBottom: 0, padding: 5, width: '100%'  }}
-          data={products}
-          renderItem={({ item }) => ( 
-            <TertiaryButton
+        
+          <FlatList
+            style={{  /*  backgroundColor: 'orange', */  marginBottom: 0, padding: 5, width: '100%',  maxHeight: '80%'  }}
+            data={products}
+            renderItem={({ item }) => (
+              <TertiaryButton
 
-              onPress={() => navigation.navigate('Credenciales', { id: item.apellidoYNombre, nroAfiliado: item.nroAfiliado, idAfiliado: item.idAfiliado })}
-              label={item.apellidoYNombre}
-              textSize={18}
-              textAlign={'center'}
-              /*               label={<Text style={{ fontSize: 18, textAlign:'center' }}>{item.apellidoYNombre}</Text>}  */
-              color={color}
-            />
-          )}
-        />
-        </ScrollView>
+                onPress={() => navigation.navigate('Credenciales', { id: item.apellidoYNombre, nroAfiliado: item.nroAfiliado, idAfiliado: item.idAfiliado })}
+                label={item.apellidoYNombre}
+                textSize={18}
+                textAlign={'center'}
+                /*               label={<Text style={{ fontSize: 18, textAlign:'center' }}>{item.apellidoYNombre}</Text>}  */
+                color={color}
+              />
+            )}
+          />
+  
 
       </View>
 
+   
 
       <View style={styles.imageContainer}>
 
@@ -130,28 +131,7 @@ export const Afiliados = () => {
           />
         </View>
       </View>
-     {/*  <View
-        style={{
-          marginBottom: 100, marginTop: 50, justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text
-          style={{
-            fontSize: 20,
-            marginBottom: 10
-          }}
-        > Texto / imagen </Text>
-      </View> */}
-      {/*  <View
-        style={{
-          marginBottom: 350, marginTop: 0, backgroundColor: 'yellow', flex: 1, justifyContent: 'top',
-          alignItems: 'center',
-        }}
-      >
-
-        <Credencial />
-
-      </View> */}
+   
     </View>
   )
 }
@@ -191,5 +171,28 @@ const styles = StyleSheet.create({
           iconName='medkit-outline'
           description='Gestioná la orden de tus estudios'
         />
+
+      </View> */}
+
+        {/*  <View
+        style={{
+          marginBottom: 100, marginTop: 50, justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={{
+            fontSize: 20,
+            marginBottom: 10
+          }}
+        > Texto / imagen </Text>
+      </View> */}
+      {/*  <View
+        style={{
+          marginBottom: 350, marginTop: 0, backgroundColor: 'yellow', flex: 1, justifyContent: 'top',
+          alignItems: 'center',
+        }}
+      >
+
+        <Credencial />
 
       </View> */}

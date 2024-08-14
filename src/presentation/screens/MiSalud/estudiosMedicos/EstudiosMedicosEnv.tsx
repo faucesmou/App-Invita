@@ -54,6 +54,17 @@ export const EstudiosMedicosEnv = () => {
         return null;
       }
     };
+
+
+    const EnvioIdAfiliadoSeleccionado = async () => {
+      try {
+        await axios.get(`https://andessalud.createch.com.ar/api/estudiosMedicos?idAfiliado=${idAfiliadoSeleccionado}`);
+        console.log('idAfiliado seleccionado enviado correctamente');
+      } catch (error) {
+        console.log('no se pudo enviar el idAfiliado Seleccionado a cristian. Error: ', error);
+      }
+    }
+
     const EstudiosMedicosRequest = async () => {
       console.log('ingresando a Estudios MEDICOS rEQUEST ---> ');
       
@@ -141,7 +152,7 @@ export const EstudiosMedicosEnv = () => {
     }
 
     EstudiosMedicosRequest()
-
+  /*   EnvioIdAfiliadoSeleccionado() */
   }, []);
 
   return (

@@ -109,7 +109,7 @@ export const ConsultaScreenFinal = () => {
           /*      console.log('familiares obtenidos objeto datos--->', FamiliaresObtenidosObjeto); */
 
           setFamiliaresObtenidosObjeto(FamiliaresObtenidosObjeto);
-          const mensajePredeterminado = 'Desliza hacia abajo';
+          const mensajePredeterminado = 'Desliza hacia arriba';
           const nombresFamiliares = [mensajePredeterminado, ...FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre)];
           /* const nombresFamiliares = FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre); */
           setNombresDeFamiliares(nombresFamiliares)
@@ -128,7 +128,7 @@ export const ConsultaScreenFinal = () => {
         if (idAfiliado !== undefined && idAfiliadoTitular !== undefined) {
           const especialidadesObtenidas = await ObtenerEspecialidades(idAfiliado, idAfiliadoTitular);
           setEspecialidadesObtenidasObjeto(especialidadesObtenidas);
-          const mensajePredeterminado = 'Desliza hacia abajo';
+          const mensajePredeterminado = 'Desliza hacia arriba';
           const nombresEspecialidades = [mensajePredeterminado, ...especialidadesObtenidas.map((especialidad) => especialidad.nombreParaAfiliado)];
           setNombresDeEspecialidades(nombresEspecialidades)
           return especialidadesObtenidas
@@ -179,7 +179,7 @@ export const ConsultaScreenFinal = () => {
 
       <BackButton />
 
-      <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', }}>Solicitar orden de consulta</Text> 
+      <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', }}>Solicitar Orden de Consulta</Text> 
 
       <View
         style={{  /* backgroundColor: 'green',  */ flex: 1, marginBottom: '7%', marginTop: '2%' }}>
@@ -190,7 +190,7 @@ export const ConsultaScreenFinal = () => {
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper2}>
           <View style={{  marginTop: 10, marginLeft:10 }}>
-          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+          <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
             </View>
             <Picker
               style={globalStyles.inputIOS}
@@ -216,7 +216,7 @@ export const ConsultaScreenFinal = () => {
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Selecciona una Especialidad</Text>
           <View style={globalStyles.pickerWrapper2}>
           <View style={{  marginTop: 10, marginLeft:10 }}>
-          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+          <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
             </View>
             <Picker
               style={globalStyles.inputIOS}
@@ -242,7 +242,7 @@ export const ConsultaScreenFinal = () => {
               paddingHorizontal: 10, 
               paddingVertical: 5,
               marginHorizontal: 40,
-              backgroundColor: SelectedEspecialidadNombre ? globalColors.gray3  : 'white' 
+              backgroundColor: SelectedEspecialidadNombre ? globalColors.earthYellow2  : 'white' 
             }}
             >
           <Text style={{ 
@@ -264,7 +264,7 @@ export const ConsultaScreenFinal = () => {
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un Prestador</Text>
           <View style={globalStyles.pickerWrapper2}>
             <View style={{  marginTop: 10, marginLeft:10 }}>
-          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+          <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
             </View>
             <Picker
               style={globalStyles.inputIOS}
@@ -290,7 +290,7 @@ export const ConsultaScreenFinal = () => {
               paddingHorizontal: 10, 
               paddingVertical: 5,
               marginHorizontal: 40,
-              backgroundColor: SelectedPrestadorNombre ? globalColors.gray3 : 'white' 
+              backgroundColor: SelectedPrestadorNombre ? globalColors.earthYellow2 : 'white' 
             }}
             >
           <Text style={{ 

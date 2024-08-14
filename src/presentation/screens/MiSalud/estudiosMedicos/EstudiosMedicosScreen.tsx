@@ -195,7 +195,7 @@ export const EstudiosMedicosScreen = () => {
           const FamiliaresObtenidosObjeto = await ObtenerFamiliares(idAfiliado);
        
           setFamiliaresObtenidosObjeto(FamiliaresObtenidosObjeto);
-          const mensajePredeterminado = 'Desliza hacia abajo';
+          const mensajePredeterminado = 'Desliza hacia arriba';
           const nombresFamiliares = [mensajePredeterminado, ...FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre)];
           /* const nombresFamiliares = FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre); */
           setNombresDeFamiliares(nombresFamiliares)
@@ -222,14 +222,14 @@ export const EstudiosMedicosScreen = () => {
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.black} titleSize={33} />
+    <CustomHeader color={globalColors.black} /* titleSize={27} */ /> 
 
       <BackButton />
 
   {/*     <Text style={{ marginBottom: 5, marginTop: 10, fontSize: 25, textAlign: 'center'}}>Solicitar Estudio Médico</Text> */}
 
       <View
-        style={{  /* backgroundColor: 'green', */  flex: 1, marginBottom: '15%', marginTop: '0%' }}>
+        style={{   /* backgroundColor: 'green', */  flex: 1, marginBottom: '15%', marginTop: '0%' }}>
         {/*   <ScrollView> */}
 
         {/* -----------------FAMILIAR---------------- */}
@@ -239,7 +239,8 @@ export const EstudiosMedicosScreen = () => {
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper2}>
           <View style={{  marginTop: 10 }}>
-          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+          <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+            {/* <ion-icon name="chevron-forward-outline"></ion-icon> */}
             </View>
             <Picker
               style={globalStyles.inputIOS}
@@ -289,7 +290,7 @@ export const EstudiosMedicosScreen = () => {
             resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
             /> */}
              <View style={{  marginTop: 10 }}>
-          <IonIcon name='chevron-down-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+          <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
             </View>
             <Picker
               style={globalStyles.inputIOS}
@@ -313,9 +314,9 @@ export const EstudiosMedicosScreen = () => {
         <View
             style={{ borderRadius: 15,
               paddingHorizontal: 10, 
-              paddingVertical: 5,
+              paddingVertical: 10,
               marginHorizontal: 40,
-              backgroundColor: SelectedPrestadorNombre ? globalColors.gray3 :'white' 
+              backgroundColor: SelectedPrestadorNombre ? globalColors.earthYellow2 :'white' 
             }}
             >
           <Text style={{ 

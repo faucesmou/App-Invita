@@ -44,7 +44,7 @@ navigation.setOptions({
     <View 
     style={{...globalStyles.productScreen, marginTop: 0 }}
     >
-      <CustomHeader color={globalColors.gray2}   />
+      <CustomHeader color={globalColors.black}   />
       
       <BackButton /> 
 

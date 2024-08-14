@@ -421,7 +421,7 @@ export const Buzon = () => {
             }
             }
           >
-            <Text style={styles.titleEstudiosMedicosAfuera} >Estudios Medicos:</Text>
+            <Text style={styles.titleEstudiosMedicosAfuera} >Estudios Médicos:</Text>
           </Pressable>
         </View>
 
@@ -468,13 +468,14 @@ export const Buzon = () => {
 
                       {notificaciones.map((notificacion, index) => (
                       <Pressable
+                      key={index} 
                         onPress={() => {
                           console.log('se toco en la notificacion')
                           PracticaResueltaRequest(notificacion.idOrden, notificacion.estado, notificacion.comentarioRechazo)
                         }}
 
                       >
-                        <View key={index} style={styles.TertiaryButton}>
+                        <View style={styles.TertiaryButton}>
                           {/*  <Text style={{ fontSize: 16, textAlign: 'center' }}>{notificacion.afiliado}</Text> */}
                           <View style={styles.contentWrapper2}>
                             <View style={styles.textWrapper}>
@@ -769,10 +770,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom:5,
     padding: 5,
-    backgroundColor: globalColors.brown2/* 'brown' *//* '#97e3b0' *//* '#d7e5f8' */,
+    backgroundColor: globalColors.earthYellow2 /* brown2 *//* 'brown' *//* '#97e3b0' *//* '#d7e5f8' */,
     borderRadius: 15,
-    borderWidth:1,
-    borderColor: globalColors.brown3,
+    borderWidth:0,
+    borderColor: globalColors.earthYellow2,
     marginHorizontal:10,
     minWidth:'80%',
     maxWidth:'80%',

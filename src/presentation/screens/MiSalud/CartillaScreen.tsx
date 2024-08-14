@@ -52,7 +52,7 @@ export const CartillaScreen = () => {
 
           <Pressable onPress={() => {
             console.log('presiono el boton ');
-            navigation.navigate('Buzon')
+            navigation.navigate('Buzón')
           }}
             style={{ marginLeft: 0, marginBottom: 5 }}
           >
@@ -67,7 +67,7 @@ export const CartillaScreen = () => {
 
       <View style={styles.cardContainer} >
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Turnos en agenda</Text>
+          <Text style={styles.cardTitle}>Tu Prepaga Digital</Text>
           <Text style={styles.cardSubtitle}>Accedé a todos los centros de atención</Text>
         </View>
       </View>
