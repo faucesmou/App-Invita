@@ -131,8 +131,7 @@ export const EstudiosMedicosEnv = () => {
         // Verificar si el valor devuelto es "00"
         if (fila.valorDevuelto._text === "00") {
           setShowSuccessMessage(true);// Mostrar el mensaje de éxito
-         
-          
+          setShowErrorMessage(false); 
           setShowSuccessModal(true); // Mostrar el modal de éxito
           setError(null);
         } else {
@@ -144,6 +143,7 @@ export const EstudiosMedicosEnv = () => {
         console.error('Error al realizar la solicitud desde el useEffect--->', error);
         const errorMessage = error.response?.data || 'Hubo un problema al realizar la solicitud';
         setError(errorMessage);
+        setShowErrorMessage(true); 
         setIsConsulting(errorMessage);
       } finally {
         setIsConsulting(false);
@@ -161,11 +161,11 @@ export const EstudiosMedicosEnv = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-        /*   backgroundColor: 'green' */
+          backgroundColor: 'white' 
       }}
     >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray2} titleSize={32}/>
+      <CustomHeader color={globalColors.gray2} titleSize={28}/>
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (
@@ -175,7 +175,10 @@ export const EstudiosMedicosEnv = () => {
               marginTop: top - 10,
             }}
           >
-            <FullScreenLoader />
+            <FullScreenLoader 
+            spinnerSize="giant" 
+            />
+         
           </View>
         )
           :
@@ -184,8 +187,10 @@ export const EstudiosMedicosEnv = () => {
             {/* View para mostrar éxito */}
             {showSuccessMessage && (
               <View style={styles.successContainer}>
-                <Text style={styles.successMessage}>Datos enviados con éxito!</Text>
-                <Image source={require('../../../assets/images/MailSent-rafiki.png')} style={styles.successImage} />
+                <Text style={styles.successMessage}>Datos Enviados con Éxito!</Text>
+                <Image source={require('../../../assets/images/logoAndesSaludRedondo4.png')} style={styles.successImage} />
+               {/*  <Image source={require('../../../assets/images/MailSent-rafiki.png')} style={styles.successImage} /> */}
+               <Text style={styles.epigrafeMessage}>Estar bien es más fácil</Text>
               </View>
             )}
 
@@ -193,7 +198,7 @@ export const EstudiosMedicosEnv = () => {
             {showErrorMessage && (
               <View style={styles.successContainer}>
                 <Text style={styles.successMessage}>Problemas al enviar los datos</Text>
-                <Image source={require('../../../assets/images/400ErrorBadRequest-bro.png')} style={styles.successImage} />
+                <Image source={require('../../../assets/images/400ErrorBadRequest-bro.png')} style={styles.errorImage} />
               </View>
             )}
 
@@ -201,17 +206,25 @@ export const EstudiosMedicosEnv = () => {
 
 
               <View>
-                <Text style={globalStyles.titleEstudiosMedicosEnv}>Información de la solicitud</Text>
-             
-                {/* <Text style={globalStyles.resultText}>Valor Devuelto: {result.valorDevuelto}</Text> */}
-            
+                 <View style={styles.informationContainer}>
+                 <View  /* style={{ alignItems: 'center'}}  */>
+                 <Text style={globalStyles.infoEstudiosMedicosEnv}>Información de tu solicitud</Text>
+                 </View>
+                 
+                 <Text style={globalStyles.resultText}>{result.mensaje}</Text>
+                <Text style={globalStyles.resultFecha}>ID Orden: {result.idOrden}</Text>
+                <Text style={globalStyles.resultFecha}>Fecha de Solicitud: {result.fecSolicitud}</Text>
+                {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
+                {verificacionMensaje && <Text style={globalStyles.resultText} >{verificacionMensaje}</Text>}
+
+              </View>
+
+             {/*    <Text style={globalStyles.titleEstudiosMedicosEnv}>Información de tu solicitud</Text>            
                 <Text style={globalStyles.resultText}>{result.mensaje}</Text>
                 <Text style={globalStyles.resultText}>ID Orden: {result.idOrden}</Text>
-               
-                
-                {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
                 <Text style={globalStyles.resultText}>Fecha de Solicitud: {result.fecSolicitud}</Text>
-                {verificacionMensaje && <Text>{verificacionMensaje}</Text>}
+                {verificacionMensaje && <Text>{verificacionMensaje}</Text>} */}
+
               </View>
             )}
             {showErrorMessage && (
@@ -236,25 +249,48 @@ const styles = StyleSheet.create({
   successContainer: {
     marginTop: 20,
     marginBottom: 20,
-   
     /*     padding: 20, */
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
-    shadowColor: '#000',
+  shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5, 
+  },
+  informationContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+  shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5, 
+   
   },
   successMessage: {
     fontSize: 25,
     marginTop:10,
-    marginBottom: 10,
+    marginBottom:5,
+  },
+  epigrafeMessage: {
+    fontSize: 20,
+    marginTop:5,
+    marginBottom:5,
   },
   successImage: {
+    width: 150,
+    height: 150,
+    marginBottom:5,
+  },
+  errorImage: {
     width: 220,
     height: 220,
+    marginBottom:5,
   },
   modalContainer: {
     flex: 1,

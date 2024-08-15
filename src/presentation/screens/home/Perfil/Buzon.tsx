@@ -598,7 +598,7 @@ export const Buzon = () => {
                   <ScrollView contentContainerStyle={styles.scrollViewContent}>
                       {rechazoData.map((data, index) => (
                         <>
-                          <View style={{ marginTop: 10, marginBottom: 20 }}>
+                          <View key={index}  style={{ marginTop: 10, marginBottom: 20 }}>
 
                             <Text style={styles.textStyleOrdenRechazada}>Estado: {data.estado}</Text>
                            {/*  <Text style={styles.textStyleOrdenRechazada}>Detalle:</Text>   */}

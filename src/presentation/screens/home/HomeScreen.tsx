@@ -45,7 +45,7 @@ const handleOpenURL = () => {
 
   const { top, bottom } = useSafeAreaInsets();
   const headerHeight = 120; // Altura inicial del encabezado
-  const adjustedHeaderHeight = headerHeight + top // Ajusta la altura para tener en cuenta los márgenes seguros
+  const adjustedHeaderHeight = headerHeight + top //  altura para tener en cuenta los márgenes seguros
 
   useEffect(() => {
     

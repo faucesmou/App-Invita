@@ -209,8 +209,7 @@ export const globalStyles = StyleSheet.create({
     /*  flex: 0.5, */
     paddingHorizontal: 30,
     marginTop: 20,
-
-    /*  backgroundColor: 'yellow', */
+    /*   backgroundColor: 'yellow',  */
     marginBottom: 10,
 
   },
@@ -220,12 +219,28 @@ export const globalStyles = StyleSheet.create({
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
   },
+  infoEstudiosMedicosEnv: {
+    marginBottom: 5,
+    marginTop:10,
+    fontSize: 21,
+    fontFamily: 'Quicksand-Light',
+    textAlign: 'center',
+  },
   resultText: {
     fontSize: 18,
     fontFamily: 'Quicksand-Light',
     margin: 10,
     marginTop: 10,
+    alignItems: 'flex-start',
   },
+  resultFecha: {
+    fontSize: 17,
+    fontFamily: 'Quicksand-Light',
+    margin: 10,
+    marginTop: 0,
+    alignItems: 'flex-start',
+  },
+
   errorContainerEstudios: {
     marginTop: 20,
     padding: 10,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, Text, TouchableOpacity, View } from 'react-native'
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { globalColors, globalStyles } from '../../theme/theme'
@@ -28,7 +28,7 @@ export const MiOrdenConsultaScreen = () => {
   const [ordenConsulta, setOrdenConsulta] = useState(null);
   const [isConsulting, setIsConsulting] = useState(false);
   useEffect(() => {
-
+    setIsConsulting(true);
     const OrdenConsultaRequest = async () => {
       try {
         setIsConsulting(true);
@@ -68,14 +68,29 @@ export const MiOrdenConsultaScreen = () => {
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (
+          <>
+         
           <View
-          style={{
-            flex: 0.5,
-            marginTop: top - 10,
-          }}
+          
+          style={styles.waitingContainer }
           >
-            <FullScreenLoader />       
-          </View>
+            <View style={styles.containerMessage}>
+           
+              <Text style={styles.epigrafeMessage}>Aguardá un momento </Text>
+              <Text style={styles.epigrafeMessage}>Estamos procesando tu orden</Text>
+
+                <Text style={styles.epigrafeMessage} >Esto puede tomar algunos unos segundos</Text>
+
+              </View>
+
+            </View>
+            <FullScreenLoader
+              layoutStyle={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: 35 }} 
+              spinnerSize="giant" 
+              spinnerStatus="info" 
+            
+            />
+          </>
         )
           :
           <View 
@@ -105,3 +120,77 @@ export const MiOrdenConsultaScreen = () => {
           </View>
   )
 }
+
+const styles = StyleSheet.create({
+  waitingContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+    /*     padding: 20, */
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+  shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5, 
+  },
+  informationContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+  shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5, 
+   
+  },
+  containerMessage: {
+    marginTop: 15, 
+    marginBottom:20, 
+    marginHorizontal: 5,
+  }, 
+  containerLoader: {
+    marginTop: 0, 
+    marginBottom:35,  
+    marginHorizontal: 5,
+    backgroundColor:'green'
+  }, 
+  successMessage: {
+    fontSize: 25,
+    marginTop:10,
+    marginBottom:5,
+  },
+  epigrafeMessage: {
+    fontSize: 20,
+    marginTop:5,
+    marginBottom:5,
+    alignSelf: 'center'
+  },
+  successImage: {
+    width: 150,
+    height: 150,
+    marginBottom:5,
+  },
+  errorImage: {
+    width: 220,
+    height: 220,
+    marginBottom:5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+})
