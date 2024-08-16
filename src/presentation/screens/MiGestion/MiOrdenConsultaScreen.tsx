@@ -79,7 +79,7 @@ export const MiOrdenConsultaScreen = () => {
               <Text style={styles.epigrafeMessage}>Aguardá un momento </Text>
               <Text style={styles.epigrafeMessage}>Estamos procesando tu orden</Text>
 
-                <Text style={styles.epigrafeMessage} >Esto puede tomar algunos unos segundos</Text>
+                <Text style={styles.epigrafeMessage} >Esto puede tomar algunos unos minutos</Text>
 
               </View>
 

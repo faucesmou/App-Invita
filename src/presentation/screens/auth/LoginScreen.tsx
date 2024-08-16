@@ -27,6 +27,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   const [isPosting, setIsPosting] = useState(false)
   const [form, setForm] = useState({
+    usuario: '',
     email: '',
     password: '',
     dni: '',
@@ -35,13 +36,13 @@ export const LoginScreen = ({ navigation }: Props) => {
   const onLoginGonza = async () => {
 
    
-    if (/* form.email.length === 0 ||*/  form.password.length === 0 || form.dni.length === 0) {
-      Alert.alert('Dni y contraseña son obligatorios');
+    if (/* form.email.length === 0 ||*/  form.password.length === 0 || form.usuario.length === 0) {
+      Alert.alert('Usuario y contraseña son obligatorios');
       return;
     }
     setIsPosting(true); 
   
-    const salioBien = await loginGonzaMejorado(form.email, form.password, form.dni)
+    const salioBien = await loginGonzaMejorado( form.usuario, form.password, form.dni)
     setIsPosting(false);
 
     if (salioBien) return;
@@ -63,7 +64,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           <Text category="h1"
             style={{ marginBottom: 20, fontSize: 20 }}
           > Ingresar </Text>
-          <Text category="p2"> Por favor, ingrese su DNI y contraseña para continuar</Text>
+          <Text category="p2"> Por favor, ingrese su Usuario y contraseña para continuar</Text>
         </Layout>
 
         {/* Inputs */}
@@ -88,10 +89,10 @@ export const LoginScreen = ({ navigation }: Props) => {
             style={{ marginBottom: 10 }}
           /> */}
           <Input
-            placeholder="DNI"
+            placeholder="Usuario"
             autoCapitalize="none"
-            value={form.dni}
-            onChangeText={(dni) => setForm({ ...form, dni })}
+            value={form.usuario}
+            onChangeText={(usuario) => setForm({ ...form, usuario })}
             accessoryLeft={<MyIcon name="arrowhead-right-outline" />}
             style={{ marginBottom: 10 }}
           />

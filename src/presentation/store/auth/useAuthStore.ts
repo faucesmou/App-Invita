@@ -44,7 +44,7 @@ export interface AuthState {
   imagen1: string | undefined;
   imagenes: (string | null)[];
   
-  loginGonzaMejorado: (email: string, password: string, dni: string) => Promise<boolean>;
+  loginGonzaMejorado: (usuario: string, /* email: string,  */password: string, dni: string) => Promise<boolean>;
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
   ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
@@ -81,18 +81,19 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   imagenes: [null, null, null, null, null],
   idPrestador:'',
 
-  loginGonzaMejorado: async (email: string, password: string, dni: string) => {
+  loginGonzaMejorado: async (usuario: string, /* email: string, */ password: string, dni: string) => {
     try {
 
       let data = {
-        email: email,
+        usuario: usuario,
+       /*  email: email, */
         pass: password,
         dni: dni,
       }
-      console.log('email y password recibido en loginGonza:', email, password);
+    /*   console.log('email y password recibido en loginGonza:', email, password); */
       console.log('usuario, password y administradora: en loginGonzaMejorado:', USUARIO, PASSWORD, ADMINISTRADORA);
 
-      const respuestaFrancoMejorada = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=${USUARIO}&password=${PASSWORD}&administradora=${ADMINISTRADORA}&datosAfiliado=${dni}`);
+      const respuestaFrancoMejorada = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=${USUARIO}&password=${PASSWORD}&administradora=${ADMINISTRADORA}&datosAfiliado=${usuario}`);
       
       console.log('esta es la respuesta de FRANCO--->-->->->->->_>->_>_>->->->->: ', respuestaFrancoMejorada);
 
@@ -101,16 +102,20 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
           const idAfiliadoTitular = respuestaFrancoMejorada.data[0].idAfiliadoTitular;
           const cuilTitular = respuestaFrancoMejorada.data[0].cuilTitular;
           const dniAfiliado = respuestaFrancoMejorada.data[0].nroDocumento;
+          const usuarioAfiliado = respuestaFrancoMejorada.data[0].usuAPP;
+          const passAfiliado = respuestaFrancoMejorada.data[0].passAPP;
          
         console.log('idAfiliado', idAfiliado);
         console.log('idAfiliadoTitular', idAfiliadoTitular);
         console.log('cuilTitular', cuilTitular);
         console.log('dniAfiliado', dniAfiliado);
+        console.log('usuarioAfiliado', usuarioAfiliado);
+        console.log('passAfiliado', passAfiliado);
 
         /* Logica para establecer usuario y contraseña:  */
 
         
-        if( dni === dniAfiliado && password === cuilTitular ) {
+        if( usuario === usuarioAfiliado && password === passAfiliado ) {
 
           console.log('Ingreso aprobado');
           set({ status: 'authenticated', idAfiliado: idAfiliado, idAfiliadoTitular: idAfiliadoTitular, cuilTitular: cuilTitular });
