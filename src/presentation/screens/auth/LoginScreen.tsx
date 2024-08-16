@@ -64,7 +64,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           <Text category="h1"
             style={{ marginBottom: 20, fontSize: 20 }}
           > Ingresar </Text>
-          <Text category="p2"> Por favor, ingrese su Usuario y contraseña para continuar</Text>
+          <Text category="p2">Por favor, ingrese su Usuario y Contraseña para continuar</Text>
         </Layout>
 
         {/* Inputs */}
@@ -97,7 +97,7 @@ export const LoginScreen = ({ navigation }: Props) => {
             style={{ marginBottom: 10 }}
           />
            <Input
-            placeholder="contraseña"
+            placeholder="Contraseña"
             autoCapitalize="none"
             secureTextEntry
             value={form.password}
@@ -132,22 +132,24 @@ export const LoginScreen = ({ navigation }: Props) => {
         <Layout style={{ height: 50 }} />
 
         <Layout style={{
-          alignItems: 'flex-end',
-          flexDirection: 'row',
+          alignItems: 'center',
+          flexDirection: 'column',
           justifyContent: 'center'
         }}>
           <Text>
-            ¿no tienes cuenta?
+            ¿No recuerdas tu Usuario/Contraseña?
+            {' '}
           </Text>
           <Text 
            style={styles.customText}
           status="primary"
             category="s1"
-            onPress={() => navigation.navigate('RegisterScreen')}
+            onPress={() => navigation.navigate('RecoverData')}
+          /*   onPress={() => navigation.navigate('RegisterScreen')} */
           /*   onPress={() => { }} */
           >
             {' '}
-            Crear cuenta{' '}
+            Recuperar Datos{' '}
           </Text>
         </Layout>
 
@@ -166,6 +168,7 @@ const styles = StyleSheet.create({
   },
   customText: {
     color: '#4285F4', 
+    marginTop:10,
   }
 });
 

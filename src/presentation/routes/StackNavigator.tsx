@@ -38,6 +38,7 @@ import { Buzon1 } from '../screens/home/Perfil/Buzon1';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { Facturas } from '../screens/home/Facturas/Facturas';
 import { LoginScreen2 } from '../screens/auth/LoginScreen2';
+import { RecoverData } from '../screens/auth/RecoverData';
 
 
 
@@ -61,6 +62,7 @@ export type RootStackParams = {
   LoginScreen2: undefined,
   LoginGonzalo: undefined,
   RegisterScreen: undefined,
+  RecoverData: undefined,
   LoadingScreen: undefined,
   SideMenuNavigator: undefined,
   CredencialScreenPrueba:undefined,
@@ -118,7 +120,10 @@ export const StackNavigator = () => {
 {/* ------------VISTAS INICIO SESIÓN: -------------->*/}
     <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false }} /> 
       {/* <Stack.Screen name='LoginGonzalo' component={LoginScreen2} options={{ headerShown: false }} /> */}
+      
       <Stack.Screen name='RegisterScreen' component={RegisterScreen} options={{ headerShown: false }} />
+      <Stack.Screen name='RecoverData' component={RecoverData} options={{ headerShown: false }} />
+     
       <Stack.Screen name='LoadingScreen' component={LoadingScreen} options={{ headerShown: true }} />
 
 

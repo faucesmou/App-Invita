@@ -12,7 +12,7 @@ import { RootStackParams } from "../../routes/StackNavigator";
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'>{}
 
 
-export const RegisterScreen = ( { navigation }: Props ) => {
+export const RecoverData = ( { navigation }: Props ) => {
 
   const { registerUser } = useAuthStore();
 
@@ -47,8 +47,9 @@ export const RegisterScreen = ( { navigation }: Props ) => {
         <Layout style={{ paddingTop: height * 0.20 }}>
           <Text category="h1"
           style={{ marginBottom: 20 }}
-          > Crear Cuenta </Text>
-          <Text category="p2"> Por favor, crea una cuenta para continuar</Text>
+          > Recuperar Datos</Text>
+          <Text category="p1">Por favor, completa los siguientes campos para continuar</Text>
+
         </Layout>
 
         {/* Inputs */}
