@@ -195,3 +195,21 @@ const styles = StyleSheet.create({
   },
  
 });
+
+
+  {/*   <TouchableOpacity
+          onPress={() => {
+            Clipboard.setString(currentUser);
+            Alert.alert('Copiado en el portapapeles.');
+          }}
+        >
+          <Text style={{ marginTop: 20 }}  > Usuario: {currentUser ? currentUser : 'No hay usuario'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            Clipboard.setString(currentPass);
+            Alert.alert('Copiado en el portapapeles.');
+          }}
+        >
+          <Text style={{ marginTop: 20 }}  > Contraseña: {currentPass ? currentPass : 'No hay contraseña'}</Text>
+        </TouchableOpacity> */}

@@ -10,7 +10,7 @@
     "test": "jest",
     "start:ios15ProMax": "npx react-native run-ios --udid DA117F3A-AF7F-4A88-B202-9DCCCEFE1133",
     "start:ios14": "npx react-native run-ios --udid 20CB557F-2352-4645-9187-573316FD6B7C",
-    "start:14Pro": "npx react-native run-ios --udid DA522C2D-B8A5-47ED-A363-C1D123E7C3D8",
+    "start:ios14Pro": "npx react-native run-ios --udid DA522C2D-B8A5-47ED-A363-C1D123E7C3D8",
     "start:ios14ProMax": "npx react-native run-ios --udid F091BE3C-882E-48F7-9657-652D4EF764FF"
   },
   "dependencies": {

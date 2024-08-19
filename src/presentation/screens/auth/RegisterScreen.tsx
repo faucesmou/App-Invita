@@ -12,7 +12,7 @@ import { RootStackParams } from "../../routes/StackNavigator";
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'>{}
 
 
-export const RegisterScreen = ( { navigation }: Props ) => {
+export const RegisterScreen = ({ navigation }: Props) => {
 
   const { registerUser } = useAuthStore();
 
@@ -20,24 +20,25 @@ export const RegisterScreen = ( { navigation }: Props ) => {
   const [form, setForm] = useState({
     email: '',
     password: '',
-    fullName:'',
+    fullName: '',
   })
 
   const onRegister = async () => {
 
-   /*  if (form.email.length === 0 || form.password.length === 0 || form.fullName.length === 0) {
-      return;
-    } */
+    /*  if (form.email.length === 0 || form.password.length === 0 || form.fullName.length === 0) {
+       return;
+     } */
     setIsRegistering(true);
     try {
       /* Logica para crear nuevos usuarios */
 
-    /*  await registerUser(form.email, form.password, form.fullName);
-     setIsRegistering(false); */
-     Alert.alert('Éxito', 'Cuenta creada exitosamente');
-  } catch (error) {
-    Alert.alert('Error', 'Usuario, contraseña o fullName incorrectos');
-}}
+      /*  await registerUser(form.email, form.password, form.fullName);
+       setIsRegistering(false); */
+      Alert.alert('Éxito', 'Cuenta creada exitosamente');
+    } catch (error) {
+      Alert.alert('Error', 'Usuario, contraseña o fullName incorrectos');
+    }
+  }
 
   const { height } = useWindowDimensions();
 
@@ -46,7 +47,7 @@ export const RegisterScreen = ( { navigation }: Props ) => {
       <ScrollView style={{ marginHorizontal: 40 }}>
         <Layout style={{ paddingTop: height * 0.20 }}>
           <Text category="h1"
-          style={{ marginBottom: 20 }}
+            style={{ marginBottom: 20 }}
           > Crear Cuenta </Text>
           <Text category="p2"> Por favor, crea una cuenta para continuar</Text>
         </Layout>
@@ -58,7 +59,7 @@ export const RegisterScreen = ( { navigation }: Props ) => {
             placeholder="Nombre completo"
             value={form.fullName}
             onChangeText={(fullName) => setForm({ ...form, fullName })}
-            accessoryLeft={ <MyIcon name="person-outline" />}
+            accessoryLeft={<MyIcon name="person-outline" />}
             style={{ marginBottom: 10 }}
           />
           <Input
@@ -67,16 +68,16 @@ export const RegisterScreen = ( { navigation }: Props ) => {
             autoCapitalize="none"
             value={form.email}
             onChangeText={(email) => setForm({ ...form, email })}
-            accessoryLeft={ <MyIcon name="email-outline" />}
+            accessoryLeft={<MyIcon name="email-outline" />}
             style={{ marginBottom: 10 }}
           />
-           <Input
+          <Input
             placeholder="contraseña"
             autoCapitalize="none"
             value={form.password}
             onChangeText={(password) => setForm({ ...form, password })}
             secureTextEntry
-            accessoryLeft={ <MyIcon name="lock-outline" />}
+            accessoryLeft={<MyIcon name="lock-outline" />}
             style={{ marginBottom: 10 }}
           />
         </Layout>
@@ -89,8 +90,8 @@ export const RegisterScreen = ( { navigation }: Props ) => {
 
         <Layout style={{ marginTop: 20 }}>
           <Button
-           style={styles.customButton}
-          accessoryRight={ <MyIcon name="arrow-forward-outline" white /> }
+            style={styles.customButton}
+            accessoryRight={<MyIcon name="arrow-forward-outline" white />}
             onPress={onRegister}
           >
             Recuperar Datos
@@ -103,18 +104,18 @@ export const RegisterScreen = ( { navigation }: Props ) => {
 
         <Layout style={{
           alignItems: 'flex-end',
-          flexDirection:'row',
-          justifyContent:'center'
+          flexDirection: 'row',
+          justifyContent: 'center'
         }}>
           <Text>
             ¿ya tienes una cuenta?
           </Text>
-          <Text 
-           style={styles.customText}
-          status="primary"
-           category="s1"
-           onPress={()=> navigation.goBack()}
-           >
+          <Text
+            style={styles.customText}
+            status="primary"
+            category="s1"
+            onPress={() => navigation.goBack()}
+          >
             {' '}
             Ingresar{' '}
           </Text>

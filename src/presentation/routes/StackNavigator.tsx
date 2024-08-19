@@ -39,6 +39,9 @@ import { HomeScreen } from '../screens/home/HomeScreen';
 import { Facturas } from '../screens/home/Facturas/Facturas';
 import { LoginScreen2 } from '../screens/auth/LoginScreen2';
 import { RecoverData } from '../screens/auth/RecoverData';
+import { UserData } from '../screens/auth/UserData';
+
+/* import { UserData } from '../screens/auth/userData'; */
 
 
 
@@ -81,6 +84,7 @@ export type RootStackParams = {
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
   Facturas:undefined,
+  "UserData": undefined,
 
 }
 
@@ -123,6 +127,7 @@ export const StackNavigator = () => {
       
       <Stack.Screen name='RegisterScreen' component={RegisterScreen} options={{ headerShown: false }} />
       <Stack.Screen name='RecoverData' component={RecoverData} options={{ headerShown: false }} />
+      <Stack.Screen name='UserData' component={UserData} options={{ headerShown: false }} />
      
       <Stack.Screen name='LoadingScreen' component={LoadingScreen} options={{ headerShown: true }} />
 

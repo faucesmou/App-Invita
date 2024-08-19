@@ -25,10 +25,16 @@ type ResultadoXML = {
   };
 }; /* esto no pareciera funcionar para eliminar el error de Resultado */
 
+interface RecoverData {
+  usuarioAfiliado: string;
+  passAfiliado: string;
+}
+
+
 export interface AuthState {
   status: AuthStatus;
   token?: string;
-  user?: User;
+/*   user?: User; */
   queryIdAfiliado?: string;
   idAfiliado?: string;
   idAfiliadoTitular?: string;
@@ -43,8 +49,16 @@ export interface AuthState {
   cadena: string;
   imagen1: string | undefined;
   imagenes: (string | null)[];
-  
+  User: string | null;
+  setUser: (user: string) => void;
+  pass: string | null;
+  setPass: (pass: string) => void;
+  getUser: () => string | null;
+  getPass: () => string | null;
+
   loginGonzaMejorado: (usuario: string, /* email: string,  */password: string, dni: string) => Promise<boolean>;
+  recuperarDatos: ( numeroAfiliado: string, dni: string) => Promise<RecoverData| undefined >;
+  
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
   ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
@@ -80,6 +94,12 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   imagen1: '',
   imagenes: [null, null, null, null, null],
   idPrestador:'',
+  User: null,
+  setUser: (User) => set({ User }),
+  pass: null,
+  setPass: (pass) => set({ pass }),
+  getUser: () => get().User,
+  getPass: () => get().pass,
 
   loginGonzaMejorado: async (usuario: string, /* email: string, */ password: string, dni: string) => {
     try {
@@ -136,6 +156,66 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
       return false; 
     }
   },
+  recuperarDatos: async (numeroAfiliado: string, dni: string) => {
+    try {
+
+      let data = {
+        idAfiliado: numeroAfiliado,
+        dni: dni,
+      }
+      console.log('usuario, password y administradora: en recuperar datos:', USUARIO, PASSWORD, ADMINISTRADORA);
+
+      const respuestaFrancoMejorada = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/consultarAfiliadoJson?usuario=${USUARIO}&password=${PASSWORD}&administradora=${ADMINISTRADORA}&datosAfiliado=${dni}`);
+      
+      if (respuestaFrancoMejorada && respuestaFrancoMejorada.data && respuestaFrancoMejorada.data.length > 0) {
+          const idAfiliadoApi = respuestaFrancoMejorada.data[0].idAfiliado;
+          const idAfiliadoTitular = respuestaFrancoMejorada.data[0].idAfiliadoTitular;
+          const cuilTitular = respuestaFrancoMejorada.data[0].cuilTitular;
+          const dniAfiliado = respuestaFrancoMejorada.data[0].nroDocumento;
+          const usuarioAfiliado = respuestaFrancoMejorada.data[0].usuAPP;
+          const passAfiliado = respuestaFrancoMejorada.data[0].passAPP;
+          const numeroAfiliadoApi = respuestaFrancoMejorada.data[0].nroAfiliado;
+         
+        console.log('numeroAfiliadoApi CONSULTA', numeroAfiliadoApi);
+        console.log('idAfiliadoTitular', idAfiliadoTitular);
+        console.log('cuilTitular', cuilTitular);
+        console.log('dniAfiliado', dniAfiliado);
+        console.log('usuarioAfiliado', usuarioAfiliado);
+        console.log('passAfiliado', passAfiliado);
+
+        /* Logica para establecer usuario y contraseña:  */
+
+        
+        if( numeroAfiliado === numeroAfiliadoApi && dni === dniAfiliado ) {
+
+       /*    const { setUser, setPass } = useAuthStore();
+
+          setUser(usuarioAfiliado);
+          setPass(passAfiliado); */
+          
+          console.log('Recuperación aprobada');
+          return {
+            usuarioAfiliado,
+            passAfiliado
+          };
+
+        }
+        else {
+          console.log('dni o idAfiliado incorrectos');
+          return 
+        }
+      } else {
+        console.log('El servidor respondió con un estado diferente a 200');
+        set({ status: 'unauthenticated' })
+        return 
+      }
+    } catch (error) {
+      console.error('Error al intentar recuperar los datos:', error);
+      return 
+    }
+  },
+
+
   ObtenerFamiliares: async (idAfiliado: string): Promise<any[]> => {
     //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
     const obtenerFamiliaresObjeto = (respuestaApi:string) =>{
