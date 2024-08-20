@@ -14,19 +14,26 @@ interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
 
 export const UserData = ( ) => {
 
+  function capitalizeWords(string:string) {
+    return string.replace(/\b\w+/g, function(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    });
+  }
+
   const [showPassword, setShowPassword] = useState(false);
   const [showUser, setShowUser] = useState(false);
 
 
-/*   const [currentUserHide, setCurrentUserHide] = useState('tu_usuario');
-  const [currentPassHide, setCurrentPassHide] = useState('tu_contraseña'); */
-
-  const { getUser, getPass } = useAuthStore();
+  const { getUser, getPass, getUserName, getUserLastName} = useAuthStore();
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const currentUser = getUser();
   const currentPass = getPass();
+  const currentUserName = capitalizeWords(getUserName());
+  const currentUserLastName = capitalizeWords(getUserLastName());
   console.log('el currentUser en user data  es: ', currentUser);
   console.log('el currentPass en user data es: ', currentPass);
+ console.log('el currentUserName en user data  es: ', currentUserName);
+  console.log('el currentUserLastName en user data es: ', currentUserLastName)
 
   useEffect(() => {
     // Siempre que user o pass cambien, se re-renderiza el componente
@@ -45,17 +52,24 @@ export const UserData = ( ) => {
 
   return (
     <Layout style={{ flex: 1 }}>
-      <ScrollView style={{ marginHorizontal: 30}}>
-        <Layout style={{ paddingTop: height * 0.20, alignItems:'center'  }}>
+      <ScrollView style={{ marginHorizontal: 50}}>
+        <Layout style={{ paddingTop: height * 0.20, /* alignItems:'center'  */ }}>
           
           <Text category="h1"
             style={styles.title}
           > Tus Datos </Text>
+          <Text 
+            style={styles.text}
+          >Hola {currentUserName}{' '}{currentUserLastName}! </Text>
+          <Text 
+            style={styles.text2}
+          >A continuacion puedes acceder a tus datos de Usuario:</Text>
   
-    
+    <View style={{ alignItems:'center' }} >
+
           <View style={styles.userContainer}>
             <Text style={styles.passwordText}>
-              Usuario:{' '}
+              Usuario:{' '} 
               {showUser ? currentUser : '******'}
             </Text>
             <Icon
@@ -77,6 +91,9 @@ export const UserData = ( ) => {
               onPress={togglePasswordVisibility}
             />
           </View>
+
+
+    </View>
       
         </Layout>
 
@@ -128,17 +145,17 @@ export const UserData = ( ) => {
     userContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: 0
+      marginBottom: 0,
+      
     },
     passwordContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: 0
+      /* backgroundColor: 'green' */
     },
     passwordText: {
-
     fontSize: 17, 
-     flex: 0.7 // Ocupa todo el espacio disponible menos el icono
+     flex: 0.8 // Ocupa todo el espacio disponible menos el icono
     },
     passwordIcon: {
       width: '35%', 
@@ -147,6 +164,13 @@ export const UserData = ( ) => {
     },
     text: {
       fontSize: 16,
+      marginTop:15,
+      textAlign: 'left'
+    },
+    text2: {
+      fontSize: 16,
+      textAlign: 'left'
+    /*   marginTop:10, */
     },
     title: {
       fontSize: 30, // Ajusta el tamaño según tus preferencias

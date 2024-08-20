@@ -50,11 +50,18 @@ export interface AuthState {
   imagen1: string | undefined;
   imagenes: (string | null)[];
   User: string | null;
+  UserName: string | null;
+  UserLastName: string | null;
+
   setUser: (user: string) => void;
   pass: string | null;
   setPass: (pass: string) => void;
   getUser: () => string | null;
   getPass: () => string | null;
+  getUserName: () => string | null;
+  getUserLastName: () => string | null;
+  setUserName: (user: string) => void;
+  setUserLastName: (pass: string) => void;
 
   loginGonzaMejorado: (usuario: string, /* email: string,  */password: string, dni: string) => Promise<boolean>;
   recuperarDatos: ( numeroAfiliado: string, dni: string) => Promise<RecoverData| undefined >;
@@ -100,6 +107,12 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   setPass: (pass) => set({ pass }),
   getUser: () => get().User,
   getPass: () => get().pass,
+  UserName: null,
+  UserLastName: null,
+  setUserName: (UserName) =>set({ UserName }),
+  setUserLastName: (UserLastName) =>set({ UserLastName }),
+  getUserName: () => get().UserName,
+  getUserLastName: () => get().UserLastName,
 
   loginGonzaMejorado: async (usuario: string, /* email: string, */ password: string, dni: string) => {
     try {
@@ -175,6 +188,8 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
           const usuarioAfiliado = respuestaFrancoMejorada.data[0].usuAPP;
           const passAfiliado = respuestaFrancoMejorada.data[0].passAPP;
           const numeroAfiliadoApi = respuestaFrancoMejorada.data[0].nroAfiliado;
+          const usuarioNombre = respuestaFrancoMejorada.data[0].nombre;
+          const usuarioApellido = respuestaFrancoMejorada.data[0].apellido;
          
         console.log('numeroAfiliadoApi CONSULTA', numeroAfiliadoApi);
         console.log('idAfiliadoTitular', idAfiliadoTitular);
@@ -182,6 +197,8 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
         console.log('dniAfiliado', dniAfiliado);
         console.log('usuarioAfiliado', usuarioAfiliado);
         console.log('passAfiliado', passAfiliado);
+        console.log('usuarioNombre', usuarioNombre);
+        console.log('usuarioApellido', usuarioApellido);
 
         /* Logica para establecer usuario y contraseña:  */
 
@@ -196,7 +213,9 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
           console.log('Recuperación aprobada');
           return {
             usuarioAfiliado,
-            passAfiliado
+            passAfiliado,
+            usuarioNombre,
+            usuarioApellido
           };
 
         }
@@ -214,7 +233,6 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
       return 
     }
   },
-
 
   ObtenerFamiliares: async (idAfiliado: string): Promise<any[]> => {
     //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar
@@ -436,7 +454,6 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
     }
   },
  
-
   /* set({ idsEspecialidades: idsEspecialidades })esto no esta funcionando resolver */
   registerUser: async (email: string, password: string, fullName: string) => {
     try {

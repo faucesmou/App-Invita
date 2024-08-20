@@ -1,5 +1,5 @@
 import { Layout, Text, Input, Button } from "@ui-kitten/components"
-import { Alert, StyleSheet, useWindowDimensions } from "react-native"
+import { Alert, StyleSheet, View, useWindowDimensions } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 
 import { StackScreenProps } from "@react-navigation/stack";
@@ -8,8 +8,9 @@ import { useState } from "react";
 import { useAuthStore } from "../../store/auth/useAuthStore";
 import { MyIcon } from "../../components/ui/MyIcon";
 import { RootStackParams } from "../../routes/StackNavigator";
-/* import { API_URL, STAGE } from "@env";
-import { useCredentialStore } from "../../store/credentials/useCredentialStore"; */
+import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 
 
 
@@ -19,11 +20,11 @@ interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 export const LoginScreen = ({ navigation }: Props) => {
 
   const { height } = useWindowDimensions();
-
+  const { top } = useSafeAreaInsets();
 
 
   const { loginGonzaMejorado } = useAuthStore();
-  /*   const { consultaDatosCredencial } = useCredentialStore(); */
+ 
 
   const [isPosting, setIsPosting] = useState(false)
   const [form, setForm] = useState({
@@ -36,7 +37,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   const onLoginGonza = async () => {
 
    
-    if (/* form.email.length === 0 ||*/  form.password.length === 0 || form.usuario.length === 0) {
+    if ( form.password.length === 0 || form.usuario.length === 0) {
       Alert.alert('Usuario y contraseña son obligatorios');
       return;
     }
@@ -46,13 +47,9 @@ export const LoginScreen = ({ navigation }: Props) => {
     setIsPosting(false);
 
     if (salioBien) return;
-    Alert.alert('Error', 'Usuario o contraseña incorrectos');
+    Alert.alert('Ups!', 'Usuario o contraseña incorrectos');
     return;
   }
-
-  /* console.log({ apiUrl: API_URL, stage: STAGE} ) */
-
-  //si no sucede esto:form.dni.length === 0 ni es un login exitoso se muestran las siguientes vistas:-------->
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -70,24 +67,7 @@ export const LoginScreen = ({ navigation }: Props) => {
         {/* Inputs */}
 
         <Layout style={{ marginTop: 20 }}>
-         {/*  <Input
-            placeholder="correo electronico"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={form.email}
-            onChangeText={(email) => setForm({ ...form, email })}
-            accessoryLeft={<MyIcon name="email-outline" />}
-            style={{ marginBottom: 10 }}
-          />
-          <Input
-            placeholder="contraseña"
-            autoCapitalize="none"
-            secureTextEntry
-            value={form.password}
-            onChangeText={(password) => setForm({ ...form, password })}
-            accessoryLeft={<MyIcon name="lock-outline" />}
-            style={{ marginBottom: 10 }}
-          /> */}
+      
           <Input
             placeholder="Usuario"
             autoCapitalize="none"
@@ -107,7 +87,6 @@ export const LoginScreen = ({ navigation }: Props) => {
           />
         </Layout>
 
-        {/*   <Text>{ JSON.stringify(form, null, 2)} </Text> */}
 
         {/* Espacio: */}
 
@@ -119,13 +98,31 @@ export const LoginScreen = ({ navigation }: Props) => {
           <Button
           style={styles.customButton}
             disabled={isPosting}
-            accessoryRight={<MyIcon name="arrow-forward-outline" white />}
+            accessoryRight={<MyIcon name="arrow-forward-outline" white isDisabled={isPosting}  />}
             onPress={onLoginGonza}
           >
             Ingresar
           </Button>
 
         </Layout>
+        {
+        isPosting ? (
+
+          <View
+            style={{
+              flex: 0.5,
+              marginTop: top - 25,
+              marginBottom: 0,
+            }}
+          >
+            <FullScreenLoader />
+          </View>
+
+        )
+          :
+          <>
+          </>
+      }
 
         {/* informacion para crear cuenta */}
 
@@ -145,8 +142,6 @@ export const LoginScreen = ({ navigation }: Props) => {
           status="primary"
             category="s1"
             onPress={() => navigation.navigate('RecoverData')}
-          /*   onPress={() => navigation.navigate('RegisterScreen')} */
-          /*   onPress={() => { }} */
           >
             {' '}
             Recuperar Datos{' '}

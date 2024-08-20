@@ -1,12 +1,14 @@
 import { Layout, Text, Input, Button } from "@ui-kitten/components"
-import { Alert, StyleSheet, useWindowDimensions } from "react-native"
+import { Alert, Linking, StyleSheet, View, useWindowDimensions } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import { MyIcon } from "../../components/ui/MyIcon";
 
 import { StackScreenProps } from "@react-navigation/stack";
 import { useAuthStore } from "../../store/auth/useAuthStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RootStackParams } from "../../routes/StackNavigator";
+import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
@@ -14,9 +16,16 @@ interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
 
 export const RecoverData = ({ navigation }: Props) => {
 
-  const { recuperarDatos, setUser, setPass  } = useAuthStore();
+  const [linkPixi, setLinkPixi] = useState("");
+  const [linkAndesSalud, setLinkAndesSalud] = useState("");
+
+  const { recuperarDatos, setUser, setPass, setUserName, setUserLastName  } = useAuthStore();
+/*   const [isConsulting, setIsConsulting] = useState(false); */
 
   const [isRecovering, setIsRecovering] = useState(false)
+  const { top } = useSafeAreaInsets();
+
+
   const [form, setForm] = useState({
     numeroAfiliado: '',
     idAfiliado: '',
@@ -38,14 +47,20 @@ export const RecoverData = ({ navigation }: Props) => {
       if (respuesta) {
         const user = respuesta.usuarioAfiliado
         const pass = respuesta.passAfiliado;
+     const usuarioNombre = respuesta.usuarioNombre
+        const usuarioApellido = respuesta.usuarioApellido; 
         setUser(user);
         setPass(pass); 
+        setUserName(usuarioNombre);
+        setUserLastName(usuarioApellido); 
         console.log('el usuario en recover data es: ', user);
         console.log('el pass en recover data es: ', pass);
-        setIsRecovering(false);
+        console.log('el usuarioNombre en recover data es: ', usuarioNombre);
+        console.log('el usuarioApellido en recover data es: ', usuarioApellido);
         navigation.navigate('UserData')
+        setIsRecovering(false);
       } else {
-        Alert.alert('Error', 'Dni o Numero de Afiliado son incorrectos');
+        Alert.alert('Ups!', 'El Dni o Numero de Credencial son incorrectos');
       }
     } catch (error) {
       console.error('Error al recuperar los datos:', error);
@@ -54,11 +69,59 @@ export const RecoverData = ({ navigation }: Props) => {
     }
   }
 
+  useEffect(() => {
+    const openURLAndesSalud = async () =>{
+      if(linkAndesSalud){
+        try{
+          await Linking.openURL(linkAndesSalud)
+        } catch (err) {
+          console.log('Error al intentar ingresar a Andes Salud:', err);
+        } finally {
+        
+          setLinkAndesSalud('');
+        }
+      }
+    }
+    openURLAndesSalud()
+  }, [linkAndesSalud])
+  
+  useEffect(() => {
+    
+    const openUrlPixi = async () =>{
+      if(linkPixi){
+        try{
+          await Linking.openURL(linkPixi)
+        } catch (err) {
+          console.log('error al intentar ingresar a whatsapp Pixi:', err);
+        } finally {
+        
+          setLinkPixi('');
+        }
+      }
+    }
+   
+    openUrlPixi();
+  }, [linkPixi]);
+
+
+  let UrlPixi = `https://api.whatsapp.com/send?phone=542613300622&text=%C2%A1Hola%2C%20Pixi!%20Vengo%20de%20la%20APP%20y%20tengo%20algunas%20consultas.%20%F0%9F%91%8D`
+  let UrlAndes = `https://www.andessalud.com.ar/`
+  
+  const handleOpenURLPixi = () => {
+    console.log('entrando a whatsapp Pixi');
+    
+    setLinkPixi(UrlPixi);
+  }
+  const handleOpenURLAndes = () => {
+    console.log('entrando a Andes Salud');
+    
+    setLinkAndesSalud(UrlAndes);
+  }
 
   const { height } = useWindowDimensions();
 
     return (
-      <Layout style={{ flex: 1 }}>
+      <Layout style={{ flex: 1, /* backgroundColor: 'green' */ }}>
         <ScrollView style={{ marginHorizontal: 40 }}>
           <Layout style={{ paddingTop: height * 0.20 }}>
             <Text category="h1"
@@ -87,15 +150,7 @@ export const RecoverData = ({ navigation }: Props) => {
               accessoryLeft={<MyIcon name="email-outline" />}
               style={{ marginBottom: 10 }}
             />
-           {/*  <Input
-              placeholder="contraseña"
-              autoCapitalize="none"
-              value={form.password}
-              onChangeText={(password) => setForm({ ...form, password })}
-              secureTextEntry
-              accessoryLeft={<MyIcon name="lock-outline" />}
-              style={{ marginBottom: 10 }}
-            /> */}
+         
           </Layout>
 
           {/* Espacio */}
@@ -107,17 +162,35 @@ export const RecoverData = ({ navigation }: Props) => {
           <Layout style={{ marginTop: 20 }}>
             <Button
               style={styles.customButton}
-              accessoryRight={<MyIcon name="arrow-forward-outline" white />}
-              onPress={ recover       
-              }
+              disabled={isRecovering}
+              accessoryRight={<MyIcon name="arrow-forward-outline" white isDisabled={isRecovering} />}
+              onPress={ recover}
             >
               Recuperar Datos
             </Button>
 
           </Layout>
+          {
+        isRecovering ? (
+
+          <View
+            style={{
+              flex: 0.5,
+              marginTop: top - 25,
+              marginBottom: 0,
+            }}
+          >
+            <FullScreenLoader />
+          </View>
+
+        )
+          :
+          <>
+          </>
+      }
 
           {/* informacion para crear cuenta */}
-          <Layout style={{ height: 50 }} />
+          <Layout style={{ height: 30 }} />
 
           <Layout style={{
             alignItems: 'center',
@@ -125,16 +198,16 @@ export const RecoverData = ({ navigation }: Props) => {
             justifyContent: 'center'
           }}>
             <Text style={styles.customText2}>
-             El Numero de credencial es el que figura en tu tarjeta de Andes Salud
+             El Número de credencial es el que figura en tu tarjeta de Andes Salud
             </Text>
             <Text style={styles.customText2}>
-           ¿No encuentras tu Numero? Solicitalo con Pixi:
+           ¿No encuentras tu Número? Solicítalo con Pixi:
             </Text>
             <Text
               style={styles.customText3}
               status="primary"
               category="s1"
-              onPress={() => navigation.navigate('LoginScreen')}
+              onPress={handleOpenURLPixi}
             >
               {' '}
               Pixi{' '}
@@ -146,10 +219,11 @@ export const RecoverData = ({ navigation }: Props) => {
           <Layout style={{
             alignItems: 'flex-end',
             flexDirection: 'row',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            marginBottom:10,
           }}>
             <Text>
-              ¿ya tienes una cuenta?
+              ¿Ya tienes una cuenta?
             </Text>
             <Text
               style={styles.customText}
@@ -160,6 +234,7 @@ export const RecoverData = ({ navigation }: Props) => {
               {' '}
               Ingresar{' '}
             </Text>
+
           </Layout>
 
 
@@ -176,7 +251,7 @@ export const RecoverData = ({ navigation }: Props) => {
               style={styles.customText}
               status="primary"
               category="s1"
-              onPress={() => navigation.goBack()}
+              onPress={handleOpenURLAndes}
             >
               {' '}
               Andes Salud {' '}
@@ -201,7 +276,7 @@ export const RecoverData = ({ navigation }: Props) => {
     },
     customText2: {
      /*  color: '#4285F4', */
-      marginBottom:15,
+      marginBottom:10,
       textAlign: 'center'
     },
     customText3: {
@@ -209,4 +284,5 @@ export const RecoverData = ({ navigation }: Props) => {
      fontSize:20,
      fontWeight:'bold',
     },
+
   });
