@@ -177,7 +177,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             });
           });
           setPrestadores(arrayPrestadores)
-          console.log('Los prestadores son ----------->>>>>: ', prestadores);
+          setPrestadoresCordoba(arrayPrestadores);
           
 
 
@@ -307,6 +307,27 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
     );
   };
 
+  const [prestadoresCordoba, setPrestadoresCordoba] = useState<Prestador[]>([]);
+const [mostrarFiltrados, setMostrarFiltrados] = useState(false);
+const [pressedButton, setPressedButton] = useState(null);
+const handleButtonPress = (buttonName:any) => {
+  setPressedButton(buttonName);
+  filtrarPorCordoba();
+};
+const filtrarPorCordoba = () => {
+  const filtrados = prestadores.filter(prestador =>
+    prestador.localidad.toUpperCase().includes("CORDOBA")
+  );
+  setPrestadoresCordoba(filtrados);
+  setMostrarFiltrados(true);
+};
+const mostrarTodos = () => {
+  setMostrarFiltrados(false);
+};
+
+
+
+
   return (
     <View
 
@@ -328,6 +349,27 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
       }}>{nombreEspecialidadSeleccionada}</Text>
 
       <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 0 }}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity 
+         /*  style={styles.button}  */
+         style={[
+          styles.button,
+          pressedButton === 'Córdoba' && styles.pressedButton,
+        ]}
+          onPress={filtrarPorCordoba}>
+            <Text style={styles.buttonText}>Córdoba</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+         /*  style={styles.button}  */
+         style={[
+          styles.button,
+          pressedButton === 'Todos' && styles.pressedButton,
+        ]}
+          onPress={mostrarTodos}>
+            <Text style={styles.buttonText}>Todos</Text>
+          </TouchableOpacity>
+        </View>
 
       {isConsulting ? (
      
@@ -338,8 +380,48 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
       ) : (
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
 
-          {prestadores.map((prestador) => (
-            /*   {cartillas.map((cartilla, index) => ( */
+
+{(mostrarFiltrados ? prestadoresCordoba : prestadores).map((prestador) => (
+    <View key={prestador.idConvenio} style={styles.TertiaryButton}>
+      <View style={styles.contentWrapper2}>
+        <View style={styles.textWrapper}>
+          <Text style={styles.descriptionTextNombre}>{prestador.nombre}</Text>
+          <View style={styles.direccionContainer}>
+            {prestador.lat && prestador.long ? (
+              <>
+                <Text style={styles.descriptionText}>
+                  Direccion: {prestador.domicilio} Localidad: {prestador.localidad}
+                </Text>
+                <TouchableOpacity
+                  style={styles.telefonoTouchable}
+                  onPress={() => handleShowLocation(prestador.lat, prestador.long)}
+                >
+                  <Text style={styles.descriptionTextMapa}>Ver Mapa</Text>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <Text style={styles.descriptionText}>Direccion: {prestador.domicilio}</Text>
+            )}
+          </View>
+          <View style={styles.telefonosContainer}>
+            <Text style={styles.descriptionText}>Teléfonos:</Text>
+            {prestador.telefonos.length > 0 && prestador.telefonos[0] !== "No disponible" ? (
+              prestador.telefonos.map((telefono) => (
+                <TouchableOpacity style={styles.telefonoTouchable} key={telefono} onPress={() => handlePhonePress2(telefono)}>
+                  <Text style={styles.descriptionTexttelefono}>{telefono}</Text>
+                </TouchableOpacity>
+              ))
+            ) : (
+              <Text style={styles.descriptionText}>No disponible</Text>
+            )}
+          </View>
+        </View>
+      </View>
+    </View>
+  ))}
+
+         {/*  {prestadores.map((prestador) => (
+          
 
             <View key={prestador.idConvenio} style={styles.TertiaryButton}>
               <View style={styles.contentWrapper2}>
@@ -397,7 +479,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             </View>
 
 
-          ))}
+          ))} */}
         </ScrollView>
       )
       }
@@ -486,6 +568,27 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 5,
     marginHorizontal: 3,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+   /*  justifyContent: 'space-around', */
+  /*   marginVertical: 5, */
+    alignItems:'center',
+    justifyContent: 'center'
+  },
+  button: {
+    backgroundColor: globalColors.pressed,
+    padding: 5,
+    borderRadius: 5,
+    margin: 5,
+    alignSelf:'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  pressedButton: {
+    backgroundColor: 'red', // O el color que quieras para el botón presionado
   },
 })
 
