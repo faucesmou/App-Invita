@@ -242,7 +242,7 @@ export const ConsultaScreenFinal = () => {
               paddingHorizontal: 10, 
               paddingVertical: 5,
               marginHorizontal: 40,
-              backgroundColor: SelectedEspecialidadNombre ? globalColors.earthYellow2  : 'white' 
+              backgroundColor: SelectedEspecialidadNombre ?  globalColors.NaranjaPastel   : 'white' 
             }}
             >
           <Text style={{ 
@@ -290,7 +290,7 @@ export const ConsultaScreenFinal = () => {
               paddingHorizontal: 10, 
               paddingVertical: 5,
               marginHorizontal: 40,
-              backgroundColor: SelectedPrestadorNombre ? globalColors.earthYellow2 : 'white' 
+              backgroundColor: SelectedPrestadorNombre ? globalColors.NaranjaPastel : 'white' 
             }}
             >
           <Text style={{ 

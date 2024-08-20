@@ -177,6 +177,8 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             });
           });
           setPrestadores(arrayPrestadores)
+          console.log('Los prestadores son ----------->>>>>: ', prestadores);
+          
 
 
 
@@ -345,9 +347,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
                   <Text style={styles.descriptionTextNombre}>
                     {prestador.nombre}
                   </Text>
-                  {/*  <Text style={styles.descriptionText}>
-                    Direccion:{prestador.domicilio}
-                  </Text>  */}
+                 
                   <View style={styles.direccionContainer} >
                     {prestador.lat != "" && prestador.long != "" ?
                       (
@@ -355,6 +355,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
 
                           <Text style={styles.descriptionText}>
                             Direccion: {prestador.domicilio}
+                           Localidad: {prestador.localidad}
                           </Text>
 
                           <TouchableOpacity

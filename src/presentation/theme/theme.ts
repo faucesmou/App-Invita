@@ -36,8 +36,14 @@ gray3:'#DCDCDC',
 babyPowder: '#FDFDF8ff',
 earthYellow: '#E0A058ff',
 earthYellow2: '#E4B576ff',
+earthYellow3: '#FFFF00',
+Yellow4: '#f5f502',
+Yellow5: '#f8ffb2',
 whiteColor: '#FFFFFFff',
 white22: '#F7C552',
+NaranjaCoral: '#f48c42 ',
+NaranjaPastel: '#ffe2b2',
+NaranjaPastel2: '#ffd2a2',
 
 }
 export const globalStyles = StyleSheet.create({

@@ -316,7 +316,7 @@ export const EstudiosMedicosScreen = () => {
               paddingHorizontal: 10, 
               paddingVertical: 10,
               marginHorizontal: 40,
-              backgroundColor: SelectedPrestadorNombre ? globalColors.earthYellow2 :'white' 
+              backgroundColor: SelectedPrestadorNombre ? globalColors.NaranjaPastel :'white' 
             }}
             >
           <Text style={{ 

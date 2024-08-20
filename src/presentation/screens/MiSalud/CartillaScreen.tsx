@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Alert, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { globalColors } from '../../theme/theme'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -19,6 +19,34 @@ export const CartillaScreen = () => {
   const headerHeight = 120; // Altura del encabezado
   const adjustedHeaderHeight = headerHeight + top 
 
+  const handlePhonePress2 = (phoneNumber: any) => {
+    Alert.alert(
+      'Llamar',
+      `¿Deseas llamar al número ${phoneNumber}?`,
+      [
+        {
+          text: 'Llamar',
+          onPress: () => {
+            // Aquí mostrarías un mensaje indicando que la acción se realizaría en un dispositivo físico
+            console.log('Llamar:', phoneNumber);
+            Linking.openURL(`tel:${phoneNumber}`)
+            .then(()=> {
+              console.log('llamada iniciada correctamente');
+              
+            })
+            .catch((err)=>{
+              Alert.alert('Ups!', 'No se pudo llamar al número indicado, por favor verifica que sea válido');
+              console.log('el error al intentar hacer la llamada es el siguiente:', err);
+            })
+          },
+        },
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+      ]
+    );
+  };
 
   return (
     <View
@@ -79,13 +107,25 @@ export const CartillaScreen = () => {
             <Text style={styles.emergencySubitle}>En caso de emergencias, comunicate a los siguientes números:</Text>
           </View>
           <View >
+
             <Text style={styles.emergencyProvincesTitle}> Mendoza</Text>
-            <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text>
+              <TouchableOpacity onPress={() => handlePhonePress2('0810-333-9743')}>
+                          <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text>
+                        </TouchableOpacity>  
+
+        {/*     <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text> */}
             <Text style={styles.emergencyProvincesTitle}> San Juan</Text>
-            <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text>
+            <TouchableOpacity onPress={() => handlePhonePress2('264-631-3531')}>
+                          <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text>
+                        </TouchableOpacity> 
+            {/* <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text> */}
             <Text style={styles.emergencyProvincesTitle}> San Luis</Text>
-            <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text>
-            <Text style={styles.emergencyProvincesNumbers}> 266-443-5700</Text>
+            <TouchableOpacity onPress={() => handlePhonePress2('265-742-8786')}>
+                          <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text>
+                        </TouchableOpacity> 
+            <TouchableOpacity onPress={() => handlePhonePress2('266-443-5700')}>
+                          <Text style={styles.emergencyProvincesNumbers}> 266-443-5700</Text>
+                        </TouchableOpacity> 
           </View>
 
         </View>
