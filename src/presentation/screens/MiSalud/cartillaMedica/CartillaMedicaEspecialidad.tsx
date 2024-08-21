@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Linking, Alert, Platform } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Linking, Alert, Platform, FlatList, Modal, Dimensions } from 'react-native';
 
 import axios from 'axios';
 
@@ -33,29 +33,33 @@ interface Prestador {
   telefonos: string[];
 }
 
-
 export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }: Props) => {
+  
+  console.log('Entrando a CartillaMedicaEspecialidad--------------------->');
 
+  const screenWidth = Dimensions.get('window').width;
+  const dynamicGap = screenWidth * 0.00;
+
+  const dynamicMargin = screenWidth * 0.01;
 
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [modalData, setModalData] = useState([]);
-
-
-  console.log('Entrando a CartillaMedicaEspecialidad--------------------->');
-  const { idAfiliadoTitular, idAfiliado, idCartillaSeleccionada, nombreEspecialidadSeleccionada } = useAuthStore();
-  console.log('id de la Cartilla Seleccionada:', idCartillaSeleccionada);
-
-
-  const { top } = useSafeAreaInsets();
+  
+  const [selectedValue, setSelectedValue] = useState('Todos');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [cartillas, setCartillas] = useState<{ nombre: string; /* descripcion: string; */ idConvenio: string }[]>([]);
   const [cartillas2, setCartillas2] = useState<{ nombre: string; idConvenio: string }[]>([]);
-
   const [prestadores, setPrestadores] = useState<Prestador[]>([]);
-
+  const [prestadoresCordoba, setPrestadoresCordoba] = useState<Prestador[]>([]);
+  const [mostrarFiltrados, setMostrarFiltrados] = useState(false);
+  const [pressedButton, setPressedButton] = useState(null);
+  
+  const { idAfiliadoTitular, idAfiliado, idCartillaSeleccionada, nombreEspecialidadSeleccionada } = useAuthStore();
+  const { top } = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
-
+  const options = ['Todos', 'Córdoba', 'Mendoza', 'San Juan', 'San Luis'];
 
  
 
@@ -76,21 +80,9 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
         const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscarPrestadoresCartilla?IMEI=&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA&idCartilla=${idCartillaSeleccionada}`)
         const xmlData = response.data;
 
-        /*  interface Prestador {
-           idConvenio: string;
-           nombre: string;
-           domicilio: string;
-           localidad: string;
-           provincia: string;
-           lat: string;
-           long: string;
-           telefonos: string[];
-       } */
         // Convertir XML a JSON
         const result = xml2js(xmlData, { compact: true });
         const result2 = xml2js(xmlData, { compact: true }) as ElementCompact;
-
-        /*    console.log('Resultado:-->>>>>>>>:-->>>>>>>>:-->>>>>>>>', result2.Resultado); */
 
         try {
 
@@ -108,7 +100,6 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             descartar: prestadores.descartar[index]
           })) : [];
 
-          /* console.log('luego de useEffect CartillaMedicaEspecialidad--------------------->-ESTE es el nombreEspecialidad--->', JSON.stringify(nombreEspecialidad)); */
 
           const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? domicilios.idConvenioDom.map((_, index) => ({
             idConvenioDom: domicilios.idConvenioDom[index],
@@ -177,6 +168,8 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             });
           });
           setPrestadores(arrayPrestadores)
+          console.log('estos son los prestadores: ', prestadores);
+          
           setPrestadoresCordoba(arrayPrestadores);
           
 
@@ -307,25 +300,97 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
     );
   };
 
-  const [prestadoresCordoba, setPrestadoresCordoba] = useState<Prestador[]>([]);
-const [mostrarFiltrados, setMostrarFiltrados] = useState(false);
-const [pressedButton, setPressedButton] = useState(null);
-const handleButtonPress = (buttonName:any) => {
-  setPressedButton(buttonName);
-  filtrarPorCordoba();
-};
+
 const filtrarPorCordoba = () => {
   const filtrados = prestadores.filter(prestador =>
     prestador.localidad.toUpperCase().includes("CORDOBA")
   );
+  console.log("Prestadores filtrados por Córdoba:", filtrados);
+  setPrestadoresCordoba(filtrados);
+  setMostrarFiltrados(true);
+};
+const filtrarPorSanJuan = () => {
+  const filtrados = prestadores.filter(prestador =>
+    prestador.localidad.toUpperCase().includes("CORDOBA")
+  );
+  console.log("Prestadores filtrados por Córdoba:", filtrados);
   setPrestadoresCordoba(filtrados);
   setMostrarFiltrados(true);
 };
 const mostrarTodos = () => {
+  console.log("Se toco en mostrar todos");
   setMostrarFiltrados(false);
 };
+/* const handleValueChange = (itemValue) => {
+    setSelectedValue(itemValue);
 
+    switch (itemValue) {
+      case 'Cordoba':
+        filtrarPorCordoba();
+        break;
+      case 'Mendoza':
+        // Llama a la función de filtro para Mendoza
+        break;
+      case 'San Juan':
+        // Llama a la función de filtro para San Juan
+        break;
+      case 'San Luis':
+        // Llama a la función de filtro para San Luis
+        break;
+      case 'Todos':
+        mostrarTodos();
+        break;
+      default:
+        break;
+    }
+  }; */
+const handleSelect = (value: any) => {
+    setSelectedValue(value);
+    setModalVisible(false);
+switch (value) {
+      case 'Cordoba':
+        filtrarPorCordoba();
+        break;
+      case 'Mendoza':
+        console.log("Se toco en mendoza");
+        break;
+      case 'San Juan':
+        console.log("Se toco en san juan");
+        break;
+      case 'San Luis':
+        console.log("Se toco en san luis");
+        break;
+      case 'Todos':
+        mostrarTodos();
+        break;
+      default:
+        break;
+    }
+  };
+  const handleSelect2 = (value) => {
+    const actions = {
+      'Córdoba': filtrarPorCordoba,
+      'Mendoza': filtrarPorCordoba,
+      'San Juan': filtrarPorCordoba,
+      'San Luis': filtrarPorCordoba,
+      'Todos': mostrarTodos,
+    };
 
+    const action = actions[value];
+    if (action) {
+      action();
+    } else {
+      console.warn(`No hay acción definida para la opción: ${value}`);
+    }
+
+    setSelectedValue(value);
+    setModalVisible(false);  // Cierra el modal después de seleccionar
+  };
+   const renderOption = ({ item }) => (
+    <TouchableOpacity style={styles.option} onPress={() => handleSelect(item)}>
+      <Text style={styles.optionText}>{item}</Text>
+    </TouchableOpacity>
+  );
 
 
   return (
@@ -348,28 +413,79 @@ const mostrarTodos = () => {
 
       }}>{nombreEspecialidadSeleccionada}</Text>
 
-      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 0 }}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity 
-         /*  style={styles.button}  */
-         style={[
-          styles.button,
-          pressedButton === 'Córdoba' && styles.pressedButton,
-        ]}
-          onPress={filtrarPorCordoba}>
-            <Text style={styles.buttonText}>Córdoba</Text>
-          </TouchableOpacity>
+{/* <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.dropdownButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.dropdownButtonText}>{selectedValue}</Text>
+      </TouchableOpacity>
 
-          <TouchableOpacity 
-         /*  style={styles.button}  */
-         style={[
-          styles.button,
-          pressedButton === 'Todos' && styles.pressedButton,
-        ]}
-          onPress={mostrarTodos}>
-            <Text style={styles.buttonText}>Todos</Text>
-          </TouchableOpacity>
-        </View>
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          onPress={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContent}>
+            <FlatList
+              data={options}
+              renderItem={renderOption}
+              keyExtractor={(item) => item}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        </TouchableOpacity>
+      </Modal> */}
+      <View style={[styles.container, { gap: dynamicGap }]}>
+        {/* Botón que abre el modal */}
+        <Text style={[styles.consignaText, { marginHorizontal:dynamicMargin }]}>Filtrá tus prestadores: </Text>
+        <TouchableOpacity
+          style={[styles.selectButton, {marginHorizontal:dynamicMargin}]}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.buttonText}>{selectedValue}</Text>
+        </TouchableOpacity>
+
+        {/* Modal para seleccionar las opciones */}
+        <Modal
+          visible={modalVisible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <ScrollView>
+                {['Todos', 'Córdoba', 'Mendoza', 'San Juan', 'San Luis'].map((option) => (
+                  <TouchableOpacity
+                    key={option}
+                    style={styles.modalOption}
+                    onPress={() => handleSelect2(option)}
+                  >
+                    <Text style={styles.optionText}>{option}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.closeButtonText}>Cerrar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+      </View>
+
+      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 0 }}>
+
+            
 
       {isConsulting ? (
      
@@ -586,9 +702,90 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    margin:0,
+    padding:0,
+   
+  },
+  consignaText: {
+    color: 'black',
+    fontSize: 18,
+    margin:0,
+    padding:0
   },
   pressedButton: {
     backgroundColor: 'red', // O el color que quieras para el botón presionado
+  },
+/* intento de modal dropdown: */
+container: {
+/*     flex: 1, */
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection:'row',
+    gap: -10,
+  },
+  dropdownButton: {
+    backgroundColor: '#4CAF50',
+    padding: 10,
+    borderRadius: 5,
+    width: 200,
+    alignItems: 'center',
+  },
+  dropdownButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    width: 250,
+    borderRadius: 10,
+    maxHeight: 200, // Limita la altura del modal para permitir el scroll
+    padding: 10,
+  },
+  option: {
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  optionText: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  /* segundo intento de modal:  */
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#007AFF',
+    padding: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  modalOption: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  selectButton: {
+    backgroundColor: '#007AFF',
+    padding: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+
+/*     marginHorizontal: 20, */
   },
 })
 
