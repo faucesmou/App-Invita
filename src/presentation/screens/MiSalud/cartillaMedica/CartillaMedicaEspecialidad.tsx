@@ -66,15 +66,13 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
   const { idAfiliadoTitular, idAfiliado, idCartillaSeleccionada, nombreEspecialidadSeleccionada } = useAuthStore();
   const { top } = useSafeAreaInsets();
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
-  const options = ['Todos', 'Córdoba', 'Mendoza', 'San Juan', 'San Luis'];
-
- 
+  
 
   useEffect(() => {
 
     const CartillaRequest = async () => {
 
-      if (idCartillaSeleccionada === undefined) {
+      if (idCartillaSeleccionada === undefined ) {
         let sinCartilas = [{
           nombre: 'No se encontraron prestadores para esta especialidad',
           idConvenio: 'sin convenio'
@@ -175,12 +173,10 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             });
           });
           setPrestadores(arrayPrestadores)
-          console.log('estos son los prestadores: ', prestadores);
+        console.log('prestadores son: --->', prestadores);
+        
           
           setPrestadoresCordoba(arrayPrestadores);
-          
-
-
 
         } catch (err) {
           console.log('Tuvimos un problemita en CartillaRequest (CartillaMedicaEspecialidad). Err:', err);
@@ -309,34 +305,46 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
 
 
 const filtrarPorCordoba = () => {
-  const filtrados = prestadores.filter(prestador =>
-    prestador.localidad.toUpperCase().includes("CORDOBA")
-  );
-  console.log("Prestadores filtrados por Córdoba:", filtrados);
+  const palabrasClave = [ "CORDOBA", "B5000","5105","VILLA ALLENDE", ];  
+     const filtrados = prestadores.filter(prestador =>
+    palabrasClave.some(palabra =>
+      prestador.localidad.toUpperCase().includes(palabra)
+    )
+  ); 
   setPrestadoresCordoba(filtrados);
   setProvinciaSeleccionada('Córdoba');
   setMostrarFiltrados(true);
 };
 const filtrarPorSanJuan = () => {
-  const filtrados = prestadores.filter(prestador =>
-    prestador.localidad.toUpperCase().includes("SAN JUAN")
+
+   const palabrasClave = [ "5400", "CAUCETE", "5442", "SAN JUAN"]; 
+   const filtrados = prestadores.filter(prestador =>
+    palabrasClave.some(palabra =>
+      prestador.localidad.toUpperCase().includes(palabra)
+    )
   );
-  console.log("Prestadores filtrados por San Juan:", filtrados);
   setPrestadoresSanJuan(filtrados);
   setProvinciaSeleccionada('San Juan');
   setMostrarFiltrados(true);
 };
+
 const filtrarPorMendoza = () => {
+  const palabrasClave = ["MENDOZA", "5500", "5519", "5501","5521","5515", "5509",  "DORREGO", "LUJAN DE CUYO", "MAIPU", "GUAYMALLEN", "LAVALLE","GENERAL SAN MARTIN", "TUNUYAN", "GODOY CRUZ"];
   const filtrados = prestadores.filter(prestador =>
-    prestador.localidad.toUpperCase().includes("MENDOZA")
+    palabrasClave.some(palabra =>
+      prestador.localidad.toUpperCase().includes(palabra)
+    )
   );
   setPrestadoresMendoza(filtrados);
   setProvinciaSeleccionada('Mendoza');
   setMostrarFiltrados(true);
 };
 const filtrarPorSanLuis = () => {
+  const palabrasClave = [ "5700", "SAN LUIS", "VILLA MERCEDES", "5730"];
   const filtrados = prestadores.filter(prestador =>
-    prestador.localidad.toUpperCase().includes("SAN LUIS")
+    palabrasClave.some(palabra =>
+      prestador.localidad.toUpperCase().includes(palabra)
+    )
   );
   setPrestadoresSanLuis(filtrados);
   setProvinciaSeleccionada('San Luis');
@@ -349,56 +357,6 @@ const filtrarPorTodos = () => {
   setMostrarFiltrados(true);
 };
 
-const mostrarTodos = () => {
-  console.log("Se toco en mostrar todos");
-  setMostrarFiltrados(false);
-};
-/* const handleValueChange = (itemValue) => {
-    setSelectedValue(itemValue);
-
-    switch (itemValue) {
-      case 'Cordoba':
-        filtrarPorCordoba();
-        break;
-      case 'Mendoza':
-        // Llama a la función de filtro para Mendoza
-        break;
-      case 'San Juan':
-        // Llama a la función de filtro para San Juan
-        break;
-      case 'San Luis':
-        // Llama a la función de filtro para San Luis
-        break;
-      case 'Todos':
-        mostrarTodos();
-        break;
-      default:
-        break;
-    }
-  }; */
-const handleSelect = (value: any) => {
-    setSelectedValue(value);
-    setModalVisible(false);
-switch (value) {
-      case 'Cordoba':
-        filtrarPorCordoba();
-        break;
-      case 'Mendoza':
-        console.log("Se toco en mendoza");
-        break;
-      case 'San Juan':
-        console.log("Se toco en san juan");
-        break;
-      case 'San Luis':
-        console.log("Se toco en san luis");
-        break;
-      case 'Todos':
-        mostrarTodos();
-        break;
-      default:
-        break;
-    }
-  };
   const handleSelect2 = (value) => {
     const actions = {
       'Córdoba': filtrarPorCordoba,
@@ -414,15 +372,10 @@ switch (value) {
     } else {
       console.warn(`No hay acción definida para la opción: ${value}`);
     }
-
     setSelectedValue(value);
     setModalVisible(false);  // Cierra el modal después de seleccionar
   };
- /*   const renderOption = ({ item }) => (
-    <TouchableOpacity style={styles.option} onPress={() => handleSelect(item)}>
-      <Text style={styles.optionText}>{item}</Text>
-    </TouchableOpacity>
-  ); */
+ 
   const renderPrestadores = () => {
     switch (provinciaSeleccionada) {
       case 'Córdoba':
@@ -441,6 +394,7 @@ switch (value) {
         return prestadores; 
     }
   };
+  const prestadoresParaMostrar = renderPrestadores();
 
   return (
     <View
@@ -462,37 +416,10 @@ switch (value) {
 
       }}>{nombreEspecialidadSeleccionada}</Text>
 
-{/* <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.dropdownButton}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.dropdownButtonText}>{selectedValue}</Text>
-      </TouchableOpacity>
 
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <TouchableOpacity
-          style={styles.modalOverlay}
-          onPress={() => setModalVisible(false)}
-        >
-          <View style={styles.modalContent}>
-            <FlatList
-              data={options}
-              renderItem={renderOption}
-              keyExtractor={(item) => item}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
-        </TouchableOpacity>
-      </Modal> */}
       <View style={[styles.container, { gap: dynamicGap }]}>
         {/* Botón que abre el modal */}
-        <Text style={[styles.consignaText, { marginHorizontal:dynamicMargin }]}>Filtrá tus prestadores: </Text>
+        <Text style={[styles.consignaText, { marginHorizontal:dynamicMargin }]}>Filtrá tus Prestadores: </Text>
         <TouchableOpacity
           style={[styles.selectButton, {marginHorizontal:dynamicMargin}]}
           onPress={() => setModalVisible(true)}
@@ -532,119 +459,68 @@ switch (value) {
 
       </View>
 
-      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 0 }}>
-
-            
-
-      {isConsulting ? (
-     
-        <> 
-   
-          <FullScreenLoader /> 
-        </>
-      ) : (
-        <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
+      <View style={{ flex: 1, marginBottom: 60, marginTop: 0 }}>
 
 
-{/* (mostrarFiltrados ? prestadoresCordoba : prestadores).map((prestador) => */ renderPrestadores().map((prestador) => (
-    <View key={prestador.idConvenio} style={styles.TertiaryButton}>
-      <View style={styles.contentWrapper2}>
-        <View style={styles.textWrapper}>
-          <Text style={styles.descriptionTextNombre}>{prestador.nombre}</Text>
-          <View style={styles.direccionContainer}>
-            {prestador.lat && prestador.long ? (
-              <>
-                <Text style={styles.descriptionText}>
-                  Direccion: {prestador.domicilio} Localidad: {prestador.localidad}
+
+        {isConsulting ? (
+
+          <>
+
+            <FullScreenLoader />
+          </>
+        ) : (
+          <ScrollView >
+            {prestadoresParaMostrar.length === 0 ? (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>
+                  No se encontraron prestadores para esta Especialidad y Provincia.
                 </Text>
-                <TouchableOpacity
-                  style={styles.telefonoTouchable}
-                  onPress={() => handleShowLocation(prestador.lat, prestador.long)}
-                >
-                  <Text style={styles.descriptionTextMapa}>Ver Mapa</Text>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <Text style={styles.descriptionText}>Direccion: {prestador.domicilio}</Text>
-            )}
-          </View>
-          <View style={styles.telefonosContainer}>
-            <Text style={styles.descriptionText}>Teléfonos:</Text>
-            {prestador.telefonos.length > 0 && prestador.telefonos[0] !== "No disponible" ? (
-              prestador.telefonos.map((telefono) => (
-                <TouchableOpacity style={styles.telefonoTouchable} key={telefono} onPress={() => handlePhonePress2(telefono)}>
-                  <Text style={styles.descriptionTexttelefono}>{telefono}</Text>
-                </TouchableOpacity>
-              ))
-            ) : (
-              <Text style={styles.descriptionText}>No disponible</Text>
-            )}
-          </View>
-        </View>
-      </View>
-    </View>
-  ))}
-
-         {/*  {prestadores.map((prestador) => (
-          
-
-            <View key={prestador.idConvenio} style={styles.TertiaryButton}>
-              <View style={styles.contentWrapper2}>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.descriptionTextNombre}>
-                    {prestador.nombre}
-                  </Text>
-                 
-                  <View style={styles.direccionContainer} >
-                    {prestador.lat != "" && prestador.long != "" ?
-                      (
-                        <>
-
-                          <Text style={styles.descriptionText}>
-                            Direccion: {prestador.domicilio}
-                           Localidad: {prestador.localidad}
-                          </Text>
-
-                          <TouchableOpacity
-                            style={styles.telefonoTouchable}
-                            onPress={() => handleShowLocation(prestador.lat, prestador.long)}
-                          >
-                            <Text style={styles.descriptionTextMapa}>Ver Mapa</Text>
-                          </TouchableOpacity>
-
-                        </>
-                      )
-                      : (
-                        <Text style={styles.descriptionText}>
-                          Direccion:{prestador.domicilio}
-                        </Text>
-                      )
-                    }
-                  </View>
-
-                  <View style={styles.telefonosContainer} >
-                    <Text style={styles.descriptionText}>
-                      Teléfonos:
-                    </Text>
-                    {prestador.telefonos.length > 0 && prestador.telefonos[0] !== 'No disponible' ? (
-                      prestador.telefonos.map((telefono) => (
-                        <TouchableOpacity style={styles.telefonoTouchable} key={telefono} onPress={() => handlePhonePress2(telefono)}>
-                          <Text style={styles.descriptionTexttelefono}>{telefono}</Text>
-                        </TouchableOpacity>
-                      ))
-                    ) : (
-                      <Text style={styles.descriptionText}>No disponible</Text>
-                    )}
-
-                  </View>
-
-
-                </View>
               </View>
-            </View>
+            ) : (
 
+              renderPrestadores().map((prestador) => (
+                <View key={prestador.idConvenio} style={styles.TertiaryButton}>
+                  <View style={styles.contentWrapper2}>
+                    <View style={styles.textWrapper}>
+                      <Text style={styles.descriptionTextNombre}>{prestador.nombre}</Text>
+                      <View style={styles.direccionContainer}>
+                        {prestador.lat && prestador.long ? (
+                          <>
+                            <Text style={styles.descriptionText}>
+                              Direccion: {prestador.domicilio} Localidad: {prestador.localidad}
+                            </Text>
+                            <TouchableOpacity
+                              style={styles.telefonoTouchable}
+                              onPress={() => handleShowLocation(prestador.lat, prestador.long)}
+                            >
+                              <Text style={styles.descriptionTextMapa}>Ver Mapa</Text>
+                            </TouchableOpacity>
+                          </>
+                        ) : (
+                          <Text style={styles.descriptionText}>Direccion: {prestador.domicilio}</Text>
+                        )}
+                      </View>
+                      <View style={styles.telefonosContainer}>
+                        <Text style={styles.descriptionText}>Teléfonos:</Text>
+                        {prestador.telefonos.length > 0 && prestador.telefonos[0] !== "No disponible" ? (
+                          prestador.telefonos.map((telefono) => (
+                            <TouchableOpacity style={styles.telefonoTouchable} key={telefono} onPress={() => handlePhonePress2(telefono)}>
+                              <Text style={styles.descriptionTexttelefono}>{telefono}</Text>
+                            </TouchableOpacity>
+                          ))
+                        ) : (
+                          <Text style={styles.descriptionText}>No disponible</Text>
+                        )}
+                      </View>
+                    </View>
+                  </View>
+                </View>
 
-          ))} */}
+              ))
+            )
+            }
+
         </ScrollView>
       )
       }
@@ -689,8 +565,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
    justifyContent: 'center',
-/*   marginTop:5, */
-/*   backgroundColor: 'yellow'  */
   },
   telefonosContainer: {
     display: 'flex',
@@ -698,14 +572,11 @@ const styles = StyleSheet.create({
    justifyContent: 'center',
   flexWrap:'wrap',
   marginTop:5,
-/*   backgroundColor: 'yellow'  */
-
   },
   descriptionTextNombre: {
     color: 'black',
     fontSize: 18,
     textAlign: 'center',
-    
   },
   telefonoTouchable: {
  marginLeft:5,
@@ -714,14 +585,12 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: 15,
     textAlign: 'center',
- /*    textDecorationLine: 'underline', */
   },
   descriptionTextMapa: {
     color: 'black',
     fontSize: 15,
     textAlign: 'center',
     fontWeight: 'bold',
- /*    textDecorationLine: 'underline', */
   },
   contentWrapper2: {
     flexDirection: 'row',
@@ -734,27 +603,12 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     marginHorizontal: 3,
   },
-  buttonContainer: {
-    flexDirection: 'row',
-   /*  justifyContent: 'space-around', */
-  /*   marginVertical: 5, */
-    alignItems:'center',
-    justifyContent: 'center'
-  },
-  button: {
-    backgroundColor: globalColors.pressed,
-    padding: 5,
-    borderRadius: 5,
-    margin: 5,
-    alignSelf:'center',
-  },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
     margin:0,
     padding:0,
     backgroundColor: '#4285F4',
-   
   },
   consignaText: {
     color: 'black',
@@ -762,35 +616,13 @@ const styles = StyleSheet.create({
     margin:0,
     padding:0
   },
-  pressedButton: {
-    backgroundColor: 'red', // O el color que quieras para el botón presionado
-  },
-/* intento de modal dropdown: */
+/* inicio del modal  */
 container: {
-/*     flex: 1, */
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection:'row',
     gap: -10,
     marginBottom: 12,
-  },
-  dropdownButton: {
-    backgroundColor: '#4285F4',
-  /*   backgroundColor: '#4CAF50', */
-    padding: 10,
-    borderRadius: 5,
-    width: 200,
-    alignItems: 'center',
-  },
-  dropdownButtonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: 'white',
@@ -799,19 +631,12 @@ container: {
     maxHeight: 400, // Limita la altura del modal para permitir el scroll
     padding: 10,
   },
-  option: {
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
   optionText: {
     fontSize: 16,
     textAlign: 'center',
   },
-  /* segundo intento de modal:  */
   closeButton: {
     marginTop: 20,
- /*    backgroundColor: '#007AFF', */
  backgroundColor: '#4285F4',
     padding: 10,
     borderRadius: 8,
@@ -831,16 +656,24 @@ container: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  /*   minHeight: '90%', */
   },
   selectButton: {
     backgroundColor: '#4285F4',
-    /* backgroundColor: '#007AFF', */
     padding: 8,
     borderRadius: 8,
     alignItems: 'center',
-
-/*     marginHorizontal: 20, */
+  },
+  /* cartel de no hay prestadores:  */
+  noDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  noDataText: {
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center',
   },
 })
 
