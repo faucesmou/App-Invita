@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { View, Text, ScrollView, StyleSheet, Image, Pressable, Modal, } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, Pressable, Modal } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { xml2js } from 'xml-js';
@@ -48,18 +48,8 @@ interface AutorizadasData {
   dom2Prestador: string;
   afiliado: string;
   coseguro: string;
-
-
-  /*  idOrden: idOrden,
-        estado: estado,
-        nombrePrestacion: nombrePrestacion,
-        comentarioRechazo: '',
-        fecVencimiento: fecVencimiento,
-        prestador: prestador, 
-        dom1Prestador: dom1Prestador,
-        dom2Prestador: dom2Prestador,
-        coseguro: coseguro, */
 }
+
 
 type Notification = {
   idOrden: string;
@@ -469,7 +459,10 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
 
                 <Modal
                   /*    key={index} */
-                  animationType="slide"
+                  animationType="fade"
+                  // La animación de entrada y salida duracion en milisegundos
+                /*   animationInTiming={50} 
+                  animationOutTiming={50}  */
                   transparent={true}
                   visible={modalVisible}
                   onRequestClose={closeModal}
@@ -527,7 +520,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
 
               <Modal
                 /*    key={index} */
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible3}
                 onRequestClose={closeModal}
@@ -567,7 +560,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
               )}
 
               <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible2}
                 onRequestClose={closeModal}

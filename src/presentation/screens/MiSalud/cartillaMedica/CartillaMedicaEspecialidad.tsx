@@ -97,7 +97,9 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
           const telefonos = result2.Resultado.fila.tablaTelefonos;
 
           // Asegúrate de que estamos tratando con arreglos
-          const prestadoresList = Array.isArray(prestadores.idConvenio) ? prestadores.idConvenio.map((_, index) => ({
+          const prestadoresList = Array.isArray(prestadores.idConvenio) ? 
+          //@ts-ignore
+          prestadores.idConvenio.map((_, index) => ({
             idConvenio: prestadores.idConvenio[index],
             nombre: prestadores.nombre[index],
             ordenAccion: prestadores.ordenAccion[index],
@@ -106,7 +108,9 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
           })) : [];
 
 
-          const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? domicilios.idConvenioDom.map((_, index) => ({
+          const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? 
+          //@ts-ignore
+          domicilios.idConvenioDom.map((_, index) => ({
             idConvenioDom: domicilios.idConvenioDom[index],
             idDomicilioDom: domicilios.idDomicilioDom[index],
             domicilio: domicilios.domicilio[index],
@@ -117,7 +121,9 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             paraOrden: domicilios.paraOrden[index]
           })) : [];
 
-          const telefonosList = Array.isArray(telefonos.idDomicilioTel) ? telefonos.idDomicilioTel.map((_, index) => ({
+          const telefonosList = Array.isArray(telefonos.idDomicilioTel) ? 
+          //@ts-ignore
+          telefonos.idDomicilioTel.map((_, index) => ({
             idDomicilioTel: telefonos.idDomicilioTel[index],
             telefono: telefonos.telefono[index]
           })) : [];
@@ -357,7 +363,7 @@ const filtrarPorTodos = () => {
   setMostrarFiltrados(true);
 };
 
-  const handleSelect2 = (value) => {
+  const handleSelect2 = (value:any) => {
     const actions = {
       'Córdoba': filtrarPorCordoba,
       'Mendoza': filtrarPorMendoza,
@@ -365,7 +371,7 @@ const filtrarPorTodos = () => {
       'San Luis': filtrarPorSanLuis,
       'Todos': filtrarPorTodos,
     };
-
+//@ts-ignore
     const action = actions[value];
     if (action) {
       action();
@@ -431,7 +437,7 @@ const filtrarPorTodos = () => {
         <Modal
           visible={modalVisible}
           transparent={true}
-          animationType="slide"
+          animationType="fade"
           onRequestClose={() => setModalVisible(false)}
         >
           <View style={styles.modalContainer}>
@@ -530,11 +536,6 @@ const filtrarPorTodos = () => {
 
   )
 }
-
-
-
-
-
 
 
 const styles = StyleSheet.create({

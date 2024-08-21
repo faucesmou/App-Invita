@@ -537,7 +537,7 @@ export const Buzon = () => {
 
               <Modal
                 /*    key={index} */
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={closeModal}
@@ -586,7 +586,7 @@ export const Buzon = () => {
 
               <Modal
                 /*    key={index} */
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible3}
                 onRequestClose={closeModal}
@@ -627,7 +627,7 @@ export const Buzon = () => {
               )}
 
               <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible2}
                 onRequestClose={closeModal}

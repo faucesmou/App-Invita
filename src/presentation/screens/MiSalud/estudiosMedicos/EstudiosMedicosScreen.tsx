@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, Alert, TextInput, ScrollView, Image  } from 'react-native'
+import { Text, View, Alert, TextInput, ScrollView, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { xml2js } from 'xml-js';
 import { Picker } from '@react-native-picker/picker';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
@@ -70,7 +70,7 @@ export const EstudiosMedicosScreen = () => {
       GuardarIdFamiliarSeleccionado(idAfiliado);
       console.log('datos FamiliarSeleccionadoDatos', FamiliarSeleccionadoDatos);
       console.log('datos de familiar encontrado: apellidoYNombre + idAfiliado -->-->-->--> ', apellidoYNombre, idAfiliado);
-      
+
     } else {
       console.log('No se encontró el familiar');
 
@@ -85,7 +85,7 @@ export const EstudiosMedicosScreen = () => {
   const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
   const [IdPrestadorElegido, setIdPrestadorElegido] = useState<string>('');
   const [NumeroPrestadoresEncontrados, setNumeroDePrestadoresEncontrados] = useState<number>(0);
- 
+
 
   //--------------------- LOGICA PARA EL INPUT DE BÙSQUEDA DE PRESTADOR-------------------------------------->
   const [isPosting, setIsPosting] = useState(false)
@@ -115,12 +115,12 @@ export const EstudiosMedicosScreen = () => {
 
         });
         console.log('nombresPrestadores-->', nombresPrestadores);
-        
+
 
         if (nombresPrestadores.length === 0) {
           setNombresDePrestadores(["No se encontraron prestadores"]);
           setNumeroDePrestadoresEncontrados(0)
-             } else {
+        } else {
           setNombresDePrestadores(nombresPrestadores);
           let CantidadDePrestadoresEncontrados = nombresPrestadores.length;
           setNumeroDePrestadoresEncontrados(CantidadDePrestadoresEncontrados)
@@ -128,7 +128,7 @@ export const EstudiosMedicosScreen = () => {
           if (nombresPrestadores.length === 1) {
             handleSelectPrestador(nombresPrestadores[0], 0);
             setNumeroDePrestadoresEncontrados(1)
-          }          
+          }
         }
         return true;
 
@@ -141,7 +141,7 @@ export const EstudiosMedicosScreen = () => {
       console.log(' No se puede llamar a ObtenerPrestadoresEstudiosMedicos desde el EstudiosMedicosScreen.');
     }
   };
-/* Por el momento no se usa este handle porque he quitado el botón "buscar prestador" y se busca automaticamente mientras el usuario escribe. */
+  /* Por el momento no se usa este handle porque he quitado el botón "buscar prestador" y se busca automaticamente mientras el usuario escribe. */
   const HandleBuscarPrestador = async () => {
 
     setIsPosting(true);
@@ -184,7 +184,7 @@ export const EstudiosMedicosScreen = () => {
     if (NombresDePrestadores.length === 1 && !SelectedPrestadorNombre) {
       handleSelectPrestador(NombresDePrestadores[0], 0);
     }
-  }, [NombresDePrestadores, IdPrestadorElegido, ]);
+  }, [NombresDePrestadores, IdPrestadorElegido,]);
 
   useEffect(() => {
 
@@ -193,7 +193,7 @@ export const EstudiosMedicosScreen = () => {
       try {
         if (idAfiliado !== undefined) {
           const FamiliaresObtenidosObjeto = await ObtenerFamiliares(idAfiliado);
-       
+
           setFamiliaresObtenidosObjeto(FamiliaresObtenidosObjeto);
           const mensajePredeterminado = 'Desliza hacia arriba';
           const nombresFamiliares = [mensajePredeterminado, ...FamiliaresObtenidosObjeto.map((familiar) => familiar.apellidoYNombre)];
@@ -214,33 +214,37 @@ export const EstudiosMedicosScreen = () => {
     /*     obtenerEspecialidadesConsulta();
         obtenerPrestadoresConsulta(); */
   }, [/* selectedFamiliarNombre, */ /* SelectedEspecialidadNombre, */ /* IdEspecialidadElegida,*/ /* SelectedPrestadorNombre *//* IdPrestadorElegido */])
-
+  const cerrarTeclado = () => {
+    Keyboard.dismiss();
+  };
 
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
   return (
-    <View style={globalStyles.container}>
 
-    <CustomHeader color={globalColors.black} /* titleSize={27} */ /> 
+    <View style={globalStyles.container}>
+      <CustomHeader color={globalColors.black} /* titleSize={27} */ />
 
       <BackButton />
 
-  {/*     <Text style={{ marginBottom: 5, marginTop: 10, fontSize: 25, textAlign: 'center'}}>Solicitar Estudio Médico</Text> */}
 
       <View
         style={{   /* backgroundColor: 'green', */  flex: 1, marginBottom: '15%', marginTop: '0%' }}>
         {/*   <ScrollView> */}
 
-        {/* -----------------FAMILIAR---------------- */}
 
+        {/* -----------------FAMILIAR---------------- */}
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
+      
+      
         <View style={{   /*  backgroundColor: 'orange', */   borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 10 }}>
-          
+
           <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 5 }}>Selecciona un familiar</Text>
           <View style={globalStyles.pickerWrapper2}>
-          <View style={{  marginTop: 10 }}>
-          <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
-            {/* <ion-icon name="chevron-forward-outline"></ion-icon> */}
+            <View style={{ marginTop: 10 }}>
+              <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+              {/* <ion-icon name="chevron-forward-outline"></ion-icon> */}
             </View>
             <Picker
               style={globalStyles.inputIOS}
@@ -257,40 +261,36 @@ export const EstudiosMedicosScreen = () => {
             </Picker>
           </View>
         </View>
-
-      
-
+        </TouchableWithoutFeedback> 
 
         {/* -----------------INPUT 2 PARA ESCRIBIR EL PRESTADOR---------------- */}
         <Divider />
+        {/*   <KeyboardAvoidingView behavior="padding"> */}
 
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
+          <View style={globalStyles.containerInput2} >
+            <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 15 }}>Selecciona un prestador</Text>
+            <TextInput
+              editable={true}
+              style={globalStyles.estilosInput2}
+              placeholder="Escriba aquí el prestador deseado"
+              placeholderTextColor="gray"
+              value={busqueda.cadena}
+              onChangeText={(cadena) => setBusqueda({ cadena })}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        {/*  </KeyboardAvoidingView> */}
 
-        <View style={globalStyles.containerInput2} >
-        <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 15 }}>Selecciona un prestador</Text>
-          <TextInput
-            style={globalStyles.estilosInput2}
-            placeholder="Escriba aquí el prestador deseado"
-            placeholderTextColor="gray"
-            value={busqueda.cadena}
-            onChangeText={(cadena) => setBusqueda({ cadena })}
-
-          />
-        </View>
-
-         {/* -----------------PRESTADOR---------------- */}
-
+        {/* -----------------PRESTADOR---------------- */}
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
         <View style={{ borderRadius: 10, overflow: 'hidden', marginVertical: 5, justifyContent: 'center', marginBottom: 25 }}>
           <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Prestadores encontrados: {NumeroPrestadoresEncontrados} </Text>
-        {/*   <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 10, marginTop: 10 }}>Desliza verticalmente para visualizarlos:</Text> */}
-          
+
           <View style={globalStyles.pickerWrapper2}>
-       {/*    <Image 
-            source={require('../../../assets/images/logogris.png')} 
-            style={globalStyles.arrowImage} 
-            resizeMode="contain" // Ajusta la imagen manteniendo su relación de aspecto
-            /> */}
-             <View style={{  marginTop: 10 }}>
-          <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
+
+            <View style={{ marginTop: 10 }}>
+              <IonIcon name='chevron-forward-outline' size={30} color="#505050" /* style={globalStyles.icon} */ />
             </View>
             <Picker
               style={globalStyles.inputIOS}
@@ -306,61 +306,68 @@ export const EstudiosMedicosScreen = () => {
                 />
               ))}
             </Picker>
-          
-        
+
+
           </View>
           <Text style={{ fontSize: 15, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Prestador Seleccionado:</Text>
 
-        <View
-            style={{ borderRadius: 15,
-              paddingHorizontal: 10, 
+          <View
+            style={{
+              borderRadius: 15,
+              paddingHorizontal: 10,
               paddingVertical: 10,
               marginHorizontal: 40,
-              backgroundColor: SelectedPrestadorNombre ? globalColors.NaranjaPastel :'white' 
+              backgroundColor: SelectedPrestadorNombre ? globalColors.NaranjaPastel : 'white'
             }}
-            >
-          <Text style={{ 
-            fontSize: 15, 
-            textAlign: 'center', 
-            marginBottom: 0, 
-            marginTop: 0, 
-            
-             }}
-             >{SelectedPrestadorNombre} </Text>
+          >
+            <Text style={{
+              fontSize: 15,
+              textAlign: 'center',
+              marginBottom: 0,
+              marginTop: 0,
 
-      
+            }}
+            >{SelectedPrestadorNombre} </Text>
+
+
           </View>
         </View>
+        </TouchableWithoutFeedback>
 
-        {/* componente para cargar imagenes: */}
+       <TouchableWithoutFeedback onPress={cerrarTeclado} >
         <Divider />
-       
+        </TouchableWithoutFeedback> 
 
-        <UploadImage />
- 
+        {/* componente para cargar imagenes: UploadImage */}
+       <TouchableWithoutFeedback onPress={cerrarTeclado} >
+       <UploadImage />
+        </TouchableWithoutFeedback> 
 
-         <TertiaryButton
+       {/*  <UploadImage /> */}
+
+
+        <TertiaryButton
           onPress={() => navigation.navigate('Estudios enviados')}
           label="Solicitar mi estudio"
           color={globalColors.profile2}
           iconName='medkit-outline'
-         description='Presiona aquí para continuar' 
+          description='Presiona aquí para continuar'
         />
-        
+
+
       </View>
-      
     </View>
   )
 }
 
-       {/*  <PrimaryButton
+{/*  <PrimaryButton
           onPress={() => navigation.navigate('EstudiosMedicosEnviados')}
           label=" Solicitar Estudios Medicos"
         /> */}
-       {/* -----------------INPUT 1 POSIBLE PARA ESCRIBIR EL PRESTADOR (VARIANTE)---------------- */}
-{/* La desventaja de este input es que no logro customisar el placeholder */}
-       
-        {/*   <Layout style={{ marginTop: 20 }}>
+{/* -----------------INPUT 1 POSIBLE PARA ESCRIBIR EL PRESTADOR (VARIANTE)---------------- */ }
+{/* La desventaja de este input es que no logro customisar el placeholder */ }
+
+{/*   <Layout style={{ marginTop: 20 }}>
 
           <Input
             placeholder="Escriba un prestador para buscar"
@@ -371,10 +378,10 @@ export const EstudiosMedicosScreen = () => {
             style={{ marginBottom: 10}}         
           />
         </Layout> */}
-        
-        {/* BOTON OPCIONAL 1 PARA EJECUTAR LA BÙSQUEDA: */}
 
-        {/* <Layout style={{
+{/* BOTON OPCIONAL 1 PARA EJECUTAR LA BÙSQUEDA: */ }
+
+{/* <Layout style={{
           marginHorizontal: 90,
         }}>
           <PrimaryButton
