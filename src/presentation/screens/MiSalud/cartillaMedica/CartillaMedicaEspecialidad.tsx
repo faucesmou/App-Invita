@@ -53,6 +53,13 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
   const [cartillas2, setCartillas2] = useState<{ nombre: string; idConvenio: string }[]>([]);
   const [prestadores, setPrestadores] = useState<Prestador[]>([]);
   const [prestadoresCordoba, setPrestadoresCordoba] = useState<Prestador[]>([]);
+  const [prestadoresSanJuan, setPrestadoresSanJuan] = useState<Prestador[]>([]);
+  const [prestadoresMendoza, setPrestadoresMendoza] = useState<Prestador[]>([]);
+  const [prestadoresSanLuis, setPrestadoresSanLuis] = useState<Prestador[]>([]);
+  const [prestadoresTodos, setPrestadoresTodos] = useState<Prestador[]>([]);
+  const [provinciaSeleccionada, setProvinciaSeleccionada] = useState<string | null>(null); 
+
+
   const [mostrarFiltrados, setMostrarFiltrados] = useState(false);
   const [pressedButton, setPressedButton] = useState(null);
   
@@ -307,16 +314,41 @@ const filtrarPorCordoba = () => {
   );
   console.log("Prestadores filtrados por Córdoba:", filtrados);
   setPrestadoresCordoba(filtrados);
+  setProvinciaSeleccionada('Córdoba');
   setMostrarFiltrados(true);
 };
 const filtrarPorSanJuan = () => {
   const filtrados = prestadores.filter(prestador =>
-    prestador.localidad.toUpperCase().includes("CORDOBA")
+    prestador.localidad.toUpperCase().includes("SAN JUAN")
   );
-  console.log("Prestadores filtrados por Córdoba:", filtrados);
-  setPrestadoresCordoba(filtrados);
+  console.log("Prestadores filtrados por San Juan:", filtrados);
+  setPrestadoresSanJuan(filtrados);
+  setProvinciaSeleccionada('San Juan');
   setMostrarFiltrados(true);
 };
+const filtrarPorMendoza = () => {
+  const filtrados = prestadores.filter(prestador =>
+    prestador.localidad.toUpperCase().includes("MENDOZA")
+  );
+  setPrestadoresMendoza(filtrados);
+  setProvinciaSeleccionada('Mendoza');
+  setMostrarFiltrados(true);
+};
+const filtrarPorSanLuis = () => {
+  const filtrados = prestadores.filter(prestador =>
+    prestador.localidad.toUpperCase().includes("SAN LUIS")
+  );
+  setPrestadoresSanLuis(filtrados);
+  setProvinciaSeleccionada('San Luis');
+  setMostrarFiltrados(true);
+};
+const filtrarPorTodos = () => {
+  const filtrados = prestadores
+  setPrestadoresTodos(filtrados);
+  setProvinciaSeleccionada('Todos');
+  setMostrarFiltrados(true);
+};
+
 const mostrarTodos = () => {
   console.log("Se toco en mostrar todos");
   setMostrarFiltrados(false);
@@ -370,10 +402,10 @@ switch (value) {
   const handleSelect2 = (value) => {
     const actions = {
       'Córdoba': filtrarPorCordoba,
-      'Mendoza': filtrarPorCordoba,
-      'San Juan': filtrarPorCordoba,
-      'San Luis': filtrarPorCordoba,
-      'Todos': mostrarTodos,
+      'Mendoza': filtrarPorMendoza,
+      'San Juan': filtrarPorSanJuan,
+      'San Luis': filtrarPorSanLuis,
+      'Todos': filtrarPorTodos,
     };
 
     const action = actions[value];
@@ -386,12 +418,29 @@ switch (value) {
     setSelectedValue(value);
     setModalVisible(false);  // Cierra el modal después de seleccionar
   };
-   const renderOption = ({ item }) => (
+ /*   const renderOption = ({ item }) => (
     <TouchableOpacity style={styles.option} onPress={() => handleSelect(item)}>
       <Text style={styles.optionText}>{item}</Text>
     </TouchableOpacity>
-  );
-
+  ); */
+  const renderPrestadores = () => {
+    switch (provinciaSeleccionada) {
+      case 'Córdoba':
+        console.log('es el caso cordoba ');
+        return prestadoresCordoba;
+      case 'San Juan':
+        console.log('es el caso san juan ');
+        return prestadoresSanJuan;
+      case 'Mendoza':
+        console.log('es el caso mendoza ');
+        return prestadoresMendoza;
+      case 'San Luis':
+        console.log('es el caso san luis ');
+        return prestadoresSanLuis;
+      default:
+        return prestadores; 
+    }
+  };
 
   return (
     <View
@@ -497,7 +546,7 @@ switch (value) {
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
 
 
-{(mostrarFiltrados ? prestadoresCordoba : prestadores).map((prestador) => (
+{/* (mostrarFiltrados ? prestadoresCordoba : prestadores).map((prestador) => */ renderPrestadores().map((prestador) => (
     <View key={prestador.idConvenio} style={styles.TertiaryButton}>
       <View style={styles.contentWrapper2}>
         <View style={styles.textWrapper}>
@@ -704,6 +753,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin:0,
     padding:0,
+    backgroundColor: '#4285F4',
    
   },
   consignaText: {
@@ -722,9 +772,11 @@ container: {
     alignItems: 'center',
     flexDirection:'row',
     gap: -10,
+    marginBottom: 12,
   },
   dropdownButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#4285F4',
+  /*   backgroundColor: '#4CAF50', */
     padding: 10,
     borderRadius: 5,
     width: 200,
@@ -744,7 +796,7 @@ container: {
     backgroundColor: 'white',
     width: 250,
     borderRadius: 10,
-    maxHeight: 200, // Limita la altura del modal para permitir el scroll
+    maxHeight: 400, // Limita la altura del modal para permitir el scroll
     padding: 10,
   },
   option: {
@@ -759,7 +811,8 @@ container: {
   /* segundo intento de modal:  */
   closeButton: {
     marginTop: 20,
-    backgroundColor: '#007AFF',
+ /*    backgroundColor: '#007AFF', */
+ backgroundColor: '#4285F4',
     padding: 10,
     borderRadius: 8,
     alignItems: 'center',
@@ -778,9 +831,11 @@ container: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  /*   minHeight: '90%', */
   },
   selectButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#4285F4',
+    /* backgroundColor: '#007AFF', */
     padding: 8,
     borderRadius: 8,
     alignItems: 'center',
