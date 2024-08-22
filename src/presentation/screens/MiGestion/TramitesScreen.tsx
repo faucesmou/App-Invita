@@ -14,7 +14,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SecondaryButton } from '../../components/shared/SecondaryButton'
 import { IonIcon } from '../../components/shared/IonIcon'
 import NotiMensajes from '../../components/shared/Noti-mensajes'
-import NotiComponent3 from '../../components/shared/NotiComponent3'
+import NotiComponent3 from '../../components/shared/NotiComponent3' 
+import NotiComponent4 from '../mas/NotiComponent4'
 
 export const TramitesScreen = () => {
   console.log('Entrando a TramitesScreen (Mi Gestion)')
@@ -22,9 +23,13 @@ export const TramitesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const headerHeight = 120; // Altura inicial del encabezado
   const adjustedHeaderHeight = headerHeight + top // Ajusta la altura para tener en cuenta los márgenes seguros
-
+  const { setShouldUpdateNotifications } = useAuthStore();
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
+
+  useEffect(() => {
+    setShouldUpdateNotifications(true);
+  }, []);
 
   return (
     <View style={styles.screenContainer}
@@ -61,7 +66,8 @@ export const TramitesScreen = () => {
             <NotiMensajes />
           </Pressable>
           
-          <NotiComponent3/> 
+       {/*   <NotiComponent4/>   */}
+       <NotiComponent3/> 
         </View>
       </View>
 

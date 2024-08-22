@@ -10,9 +10,9 @@ interface Notificacion {
   visto: string;
 }
 
-const NotiComponent3 = () => {
+const NotiComponent4 = () => {
 
-  console.log('Inicializando componente de notificaciones (NotiComponent3)->', );
+  console.log('Inicializando componente de notificaciones (NotiComponent4)------>', );
   
   const { idAfiliado, actualizarNotificaciones, setShouldUpdateNotifications } = useAuthStore();
   const setMedicalNotifications = useNotificationStore((state) => state.setMedicalNotifications);
@@ -182,4 +182,4 @@ return null;
 }
 
 
-export default NotiComponent3;
+export default NotiComponent4;

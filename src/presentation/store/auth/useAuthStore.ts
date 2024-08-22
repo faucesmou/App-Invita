@@ -62,12 +62,13 @@ export interface AuthState {
   getUserLastName: () => string | null;
   setUserName: (user: string) => void;
   setUserLastName: (pass: string) => void;
+  actualizarNotificaciones: boolean;
 
   loginGonzaMejorado: (usuario: string, /* email: string,  */password: string, dni: string) => Promise<boolean>;
   recuperarDatos: ( numeroAfiliado: string, dni: string) => Promise<RecoverData| undefined >;
   
  /*  ObtenerFamiliares: (idAfiliado: string)=> Promise<string[]>; */
-  ObtenerFamiliares: (idAfiliado: string, apellidoYNombre:string)=> Promise<any[]>;
+  ObtenerFamiliares: (idAfiliado: string, /* apellidoYNombre:string */)=> Promise<any[]>;
   ObtenerEspecialidades: (idAfiliado: string, idAfiliadoTitular:string)=> Promise<any[]>;
   ObtenerPrestadores: (idAfiliado: string, idAfiliadoTitular:string, idPrestacion: string)=> Promise<any[]>;
   ObtenerPrestadoresEstudiosMedicos: (idAfiliado: string, cadena: string)=> Promise<any[]>;
@@ -79,7 +80,7 @@ export interface AuthState {
   logout: () => Promise<void>;
   registerUser: (email: string, password: string, fullName: string) => Promise<void>;
   GuardarIdCartillaSeleccionada:(idCartilla: string, nombreEspecialidadSeleccionada: string)=> Promise<any[]>;
-
+  setShouldUpdateNotifications:(estado:boolean) => void;
 }
 
 
@@ -113,6 +114,8 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   setUserLastName: (UserLastName) =>set({ UserLastName }),
   getUserName: () => get().UserName,
   getUserLastName: () => get().UserLastName,
+  actualizarNotificaciones: false,
+  setShouldUpdateNotifications: (value: boolean) => set({ actualizarNotificaciones: value }),
 
   loginGonzaMejorado: async (usuario: string, /* email: string, */ password: string, dni: string) => {
     try {

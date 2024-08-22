@@ -223,7 +223,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
     
  CombinedData2()
 
-  }, [idAfiliado, listadoEstMedicosVisible]);
+  }, [/* idAfiliado, */ listadoEstMedicosVisible]);
 
   const PracticaResueltaRequest = async (
     afiliado: string,

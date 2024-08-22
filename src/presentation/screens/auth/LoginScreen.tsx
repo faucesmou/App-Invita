@@ -52,7 +52,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   }
 
   return (
-    <Layout style={{ flex: 1 }}>
+    <Layout style={{ flex: 1, backgroundColor: 'green', }}>
       <ScrollView style={{ marginHorizontal: 40 }}>
         <Layout style={{ paddingTop: height * 0.20 }}>
           <Text category="h1"

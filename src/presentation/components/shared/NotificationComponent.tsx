@@ -122,7 +122,7 @@ ProductsRequest();
     }, 50000); // Intervalo de 5 segundos
 
     return () => clearInterval(intervalId);
-  }, [idAfiliado, notifications, setNotifications]);
+  }, [/* idAfiliado, */ notifications, setNotifications ]);
 
   return null;
 };

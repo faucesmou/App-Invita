@@ -3,12 +3,12 @@ import { Text, View } from 'react-native'
 
 import { Picker } from '@react-native-picker/picker';
 import { globalColors, globalStyles } from '../../theme/theme'
-import { PrimaryButton } from '../../components/shared/PrimaryButton'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+/* import { PrimaryButton } from '../../components/shared/PrimaryButton' */
+import { NavigationProp, useNavigation, useIsFocused } from '@react-navigation/native'
 import { RootStackParams } from '../../routes/StackNavigator'
 import CustomHeader from '../../components/CustomHeader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
-import { IndexPath, Layout, Select, SelectItem, SelectGroup, } from '@ui-kitten/components'
+/* import { IndexPath, Layout, Select, SelectItem, SelectGroup, } from '@ui-kitten/components' */
 import { BackButton } from '../../components/shared/BackButton'
 import { TertiaryButton } from '../../components/shared/TertiaryButton';
 import { IonIcon } from '../../components/shared/IonIcon';
@@ -16,7 +16,7 @@ import Divider from '../../components/shared/Divider';
 
 
 export const ConsultaScreenFinal = () => {
-
+  console.log('Entrando al ConsultaScreenFinal---->')
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades, ObtenerPrestadores, GuardarIdPrestador, GuardarIdFamiliarSeleccionado } = useAuthStore();
 
 
@@ -28,13 +28,15 @@ export const ConsultaScreenFinal = () => {
   const [FamiliarSeleccionadoDatos, setFamiliarSeleccionadoDatos] = useState<string[]>([]); // 
 
   const handleSelectFamiliar = (itemValue: string | number, itemIndex: number) => {
+  
+  
     setSelectedFamiliarNombre(nombresDeFamiliares[itemIndex]);
     const familiarEncontrado: any = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === itemValue);
     if (familiarEncontrado) {
       setFamiliarSeleccionadoDatos(familiarEncontrado)
       const { apellidoYNombre, idAfiliado }: { apellidoYNombre: string, idAfiliado: string } = familiarEncontrado;
       console.log('Apellido y Nombre:', apellidoYNombre);
-      console.log('ID de Afiliado:', idAfiliado);
+      console.log('ID de Afiliado--->:', idAfiliado);
       GuardarIdFamiliarSeleccionado(idAfiliado);
     } else {
       console.log('No se encontró el familiar');

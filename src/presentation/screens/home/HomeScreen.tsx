@@ -19,11 +19,22 @@ import { IonIcon } from '../../components/shared/IonIcon';
 import NotiComponent3 from '../../components/shared/NotiComponent3';
 import NotiMensajes from '../../components/shared/Noti-mensajes';
 import { useNotificationStore } from '../../store/notification-store';
+import { useAuthStore } from '../../store/auth/useAuthStore';
 
 
 
 export const HomeScreen = () => {
   console.log('Entrando al homeScreen---->')
+    /* importante:  */
+  /* He implementado lo siguiente para evitar consultas innecesarias del NotiComponent. Solo se realizaran las consultas y actualizacion de datos cuando setiemos ShouldUpdateNotifications a true. Caso contrario solo entra al componente pero no hace las consultas. */
+  const { setShouldUpdateNotifications } = useAuthStore();
+  useEffect(() => {
+    setShouldUpdateNotifications(true);
+  }, []);
+
+  /* usar este useEffect solo en los componentes que realmente queramos que actualicen las notificaciones.  */
+  
+
 
 /* contexto para avisar que se carga por primera vez al notificador */
 /* const { initialLoadComplete, setInitialLoadComplete } = useNotificationStore(); */

@@ -61,7 +61,7 @@ const colorNaranja = globalColors.orange
         <MisDatosScreen/>
 
          <TertiaryButton
-           onPress={()=> navigation.navigate('Buzon') }
+           onPress={()=> navigation.navigate('Buzón') }
           label="Buzón de Avisos"
           color={globalColors.profile2}
           iconName='mail-unread-outline'

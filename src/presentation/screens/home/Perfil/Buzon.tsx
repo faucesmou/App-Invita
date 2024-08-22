@@ -191,7 +191,7 @@ export const Buzon = () => {
 
     ProductsRequest();
 
-  }, [idAfiliado, listadoEstMedicosVisible]);
+  }, [/* idAfiliado, */ listadoEstMedicosVisible]);
 
   const PracticaResueltaRequest = async (idOrden: string, estado: string, comentarioRechazo?: string) => {
     console.log('Se activó PracticaResueltaRequest de Buzon. Id de la Consulta Seleccionada->:', idOrden);
@@ -310,9 +310,6 @@ export const Buzon = () => {
     }
   };
   
-
-   
-
 
   const getButtonText = (notificacion: string) => {
     if (notificacion === 'PRACTAUT') {
