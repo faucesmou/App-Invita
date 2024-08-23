@@ -36,6 +36,7 @@ export const EstudiosMedicosEnv = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false); // Nuevo estado
   const [showErrorMessage, setShowErrorMessage] = useState(false); // Nuevo estado
 
+  
   useEffect(() => {
     const getIMEI = async () => {
       try {

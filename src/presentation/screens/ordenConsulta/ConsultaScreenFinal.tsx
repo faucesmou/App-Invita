@@ -18,7 +18,8 @@ import Divider from '../../components/shared/Divider';
 export const ConsultaScreenFinal = () => {
   console.log('Entrando al ConsultaScreenFinal---->')
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades, ObtenerPrestadores, GuardarIdPrestador, GuardarIdFamiliarSeleccionado } = useAuthStore();
-
+/* use state para asegurarnos de que los 3 inputs fueron guardados antes de permitirle al usuario enviar la solicitud:  */
+const [isFormComplete, setIsFormComplete] = useState(false);
 
   //---------------------LOGICA PARA EL SELECT DE FAMILIAR ELEGIDO-------------------------------------->
   //useStates: State 1 (nombresDeFamiliares): para guardar un listado de solamente NOMBRES de Familiares (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (FamiliaresObtenidosObjeto): datos de los familiares obtenidos de la consulta (nombre y id). State 3(selectedFamiliarNombre): nombre del familiar seleccionado. State4(FamiliarSeleccionadoDatos) : nombre y id del familiar seleccionado. 
@@ -27,7 +28,7 @@ export const ConsultaScreenFinal = () => {
   const [selectedFamiliarNombre, setSelectedFamiliarNombre] = useState<string | null>(null);
   const [FamiliarSeleccionadoDatos, setFamiliarSeleccionadoDatos] = useState<string[]>([]); // 
 
-  const handleSelectFamiliar = (itemValue: string | number, itemIndex: number) => {
+  const handleSelectFamiliar = async (itemValue: string | number, itemIndex: number) => {
   
   
     setSelectedFamiliarNombre(nombresDeFamiliares[itemIndex]);
@@ -37,7 +38,7 @@ export const ConsultaScreenFinal = () => {
       const { apellidoYNombre, idAfiliado }: { apellidoYNombre: string, idAfiliado: string } = familiarEncontrado;
       console.log('Apellido y Nombre:', apellidoYNombre);
       console.log('ID de Afiliado--->:', idAfiliado);
-      GuardarIdFamiliarSeleccionado(idAfiliado);
+      await GuardarIdFamiliarSeleccionado(idAfiliado);
     } else {
       console.log('No se encontró el familiar');
 
@@ -76,7 +77,7 @@ export const ConsultaScreenFinal = () => {
   const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
   const [IdPrestadorElegido, setIdPrestadorElegido] = useState<string>('');
 
-  const handleSelectPrestador = (itemValue: string | number, itemIndex: number) => {
+  const handleSelectPrestador = async (itemValue: string | number, itemIndex: number) => {
     setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
     const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);
     if (PrestadorEncontrado) {
@@ -84,8 +85,8 @@ export const ConsultaScreenFinal = () => {
       const { prestador, idPrestador }: { prestador: string, idPrestador: string } = PrestadorEncontrado;
       console.log('Nombre del Prestador:', prestador);
       console.log('ID del Prestador:', idPrestador);
+      await GuardarIdPrestador(idPrestador)
       setIdPrestadorElegido(idPrestador)
-      GuardarIdPrestador(idPrestador)
     } else {
       console.log('No se encontró la especialidad');
 
@@ -173,6 +174,11 @@ export const ConsultaScreenFinal = () => {
 
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
+/* hasta que no se carguen todos los inputs no se habilita el boton de enviar consulta:  */
+  useEffect(() => {
+    setIsFormComplete(!!selectedFamiliarNombre && !!SelectedEspecialidadNombre && !!SelectedPrestadorNombre);
+  }, [selectedFamiliarNombre, SelectedEspecialidadNombre, SelectedPrestadorNombre]);
+
 
   return (
     <View style={globalStyles.container}>
@@ -320,6 +326,7 @@ export const ConsultaScreenFinal = () => {
           color={globalColors.profile2}
           iconName='people-outline'
          description='Presiona para continuar' 
+         disabled={!isFormComplete}
         />
       </View>
 

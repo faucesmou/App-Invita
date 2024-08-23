@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { globalColors, globalStyles } from '../../theme/theme'
@@ -15,11 +15,8 @@ import { useAuthStore } from '../../store/auth/useAuthStore'
 
 
 export const MiOrdenConsultaScreen = () => {
-
+  console.log('entrando a MiOrdenConsultaScreen----->>>:');
   const {  idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado } = useAuthStore();
-/*   console.log('id idAfiliadoSeleccionado: ', idAfiliadoSeleccionado);
-  console.log(' titular orden de consulta: ',  idAfiliadoTitular );
-  console.log('prestacion: ',  idPrestacion ); */
   
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
@@ -27,11 +24,29 @@ export const MiOrdenConsultaScreen = () => {
 
   const [ordenConsulta, setOrdenConsulta] = useState(null);
   const [isConsulting, setIsConsulting] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
+
+     // Verificamos que las constantes estén definidas antes de proceder
+     if (!idAfiliadoTitular || !idPrestacion || !idPrestador || !idAfiliadoSeleccionado) {
+      console.log('Esperando que todas las constantes estén definidas...');
+      return; // Si no están definidas, no ejecutes la consulta todavía
+    }
     setIsConsulting(true);
+
     const OrdenConsultaRequest = async () => {
+
+      console.log('este es el idAfiliadoSeleccionado:', idAfiliadoSeleccionado);
+      console.log('este es el idAfiliadoTitular:', idAfiliadoTitular);
+      console.log('este es el idPrestacion:', idPrestacion);
+      console.log('este es el idPrestador:', idPrestador);
+
       try {
+
         setIsConsulting(true);
+
         const response = await axios.get(`https://andessalud.createch.com.ar/api/ordenDeConsulta?idAfiliado=${idAfiliadoSeleccionado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}&idPrestador=${idPrestador}`);
         const Url = response.data;
         console.log('este es el Url', Url);
@@ -39,13 +54,19 @@ export const MiOrdenConsultaScreen = () => {
         console.log('este es el afiliados:', ordenConsulta);
         setIsConsulting(false);
 
-      } catch (error) {
+      } catch (error:any) {
         console.error('Error al obtener los datos de los afiliados:', error);
+        const errorMessage = error.response?.data || null
+        console.log('este es el afiliados:', errorMessage);
+        setShowErrorMessage(true); 
+      
+      } finally{
+        setIsConsulting(false);
       }
     };
     OrdenConsultaRequest()
 
-  }, []);
+  }, [idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado]);
 
   const handleOpenURL = () => {
     if (ordenConsulta) {
@@ -60,24 +81,24 @@ export const MiOrdenConsultaScreen = () => {
         flex: 1,
         paddingHorizontal: 20,
         marginTop: 0,
-         backgroundColor: 'white' 
+        backgroundColor: 'white'
       }}
-      >
+    >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray2}  titleSize={28} />
+      <CustomHeader color={globalColors.gray2} titleSize={28} />
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (
           <>
-         
-          <View
-          
-          style={styles.waitingContainer }
-          >
-            <View style={styles.containerMessage}>
-           
-              <Text style={styles.epigrafeMessage}>Aguardá un momento </Text>
-              <Text style={styles.epigrafeMessage}>Estamos procesando tu orden</Text>
+
+            <View
+
+              style={styles.waitingContainer}
+            >
+              <View style={styles.containerMessage}>
+
+                <Text style={styles.epigrafeMessage}>Aguardá un momento </Text>
+                <Text style={styles.epigrafeMessage}>Estamos procesando tu orden</Text>
 
                 <Text style={styles.epigrafeMessage} >Esto puede tomar algunos unos minutos</Text>
 
@@ -85,39 +106,58 @@ export const MiOrdenConsultaScreen = () => {
 
             </View>
             <FullScreenLoader
-              layoutStyle={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: 35 }} 
-              spinnerSize="giant" 
-              spinnerStatus="info" 
-            
+              layoutStyle={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: 35 }}
+              spinnerSize="giant"
+              spinnerStatus="info"
+
             />
           </>
         )
           :
-          <View 
-          style={{
-             marginTop:10,
-             backgroundColor: 'white' 
-          }}
-          >
-           
 
-            <Text style={{ marginBottom: 5, fontSize: 25, }}>Orden generada</Text>
-            <Text style={{ marginBottom: 5, fontSize: 20, }}>Ingrese al siguiente link para su descarga:</Text>
-            <TouchableOpacity onPress={handleOpenURL}>
-              <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15, color: 'blue' }}>
-                {ordenConsulta}
-              </Text>
-            </TouchableOpacity>
-
+          (
+            showErrorMessage ? (
+              <>
             
-            </View>
-          
-      }
-           {/*  <Text style={{ marginBottom: 5, fontSize: 25 }}>Orden de Consulta Link:</Text> */}
-            {/*       <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15 }}>{`Orden Link: ${ordenConsulta}`}</Text>
-          <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15 }}>{`Orden Link: ${ordenConsulta}`}</Text> */}
+              <View style={styles.errorContainer}>
+                <Text style={styles.titleMessage}>No se pudo enviar la información</Text>
+                <Image source={require('../../assets/images/400ErrorBadRequest-bro.png')} style={styles.errorImage} />
+              </View>
+              <View
+                style={{
+                  marginTop: 10,
+                  backgroundColor: '#FFFFFF',
+                }}
+              >
+                <Text style={{ marginBottom: 5, fontSize: 20,  color:'#030136' }}>Dificultades en la solicitud</Text>
+                <Text style={{ marginBottom: 5, fontSize: 18, color:'#595960' }}>Tuvimos inconvenientes para procesar tu solicitud por favor intenta nuevamente más tarde</Text>
+              {/*   <Text style={{ marginBottom: 5, fontSize: 18, color:'#595960' }}>{error}</Text> */}
+              </View>
+              </>
+            ) :
+              (
 
-          </View>
+                <View
+                 /*  style={{
+                    marginTop: 10,
+                    backgroundColor: 'white'
+                  }} */
+                  style={styles.successContainer}
+                >
+
+                  <Text style={styles.titleMessage}/* style={{ marginBottom: 5, fontSize: 25, color:'#030136' }} */
+                  >Orden generada</Text>
+                  <Text style={{ marginBottom: 5, fontSize: 20, marginTop: 10, color:'#595960'  }}>Ingrese al siguiente link para su descarga:</Text>
+                  <TouchableOpacity onPress={handleOpenURL}>
+                    <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15, color: 'blue' }}>
+                      {ordenConsulta}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )
+          )
+      }
+    </View>
   )
 }
 
@@ -127,6 +167,32 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     /*     padding: 20, */
     backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+  shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5, 
+  },
+  successContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+    /*     padding: 20, */
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    alignItems: 'center',
+  shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5, 
+  },
+  errorContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+    /*     padding: 20, */
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     alignItems: 'center',
   shadowColor: '#000',
@@ -159,10 +225,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     backgroundColor:'green'
   }, 
-  successMessage: {
-    fontSize: 25,
+  titleMessage: {
+    fontSize: 22,
     marginTop:10,
     marginBottom:5,
+    color:'#030136',
+    fontWeight:'bold',
   },
   epigrafeMessage: {
     fontSize: 20,

@@ -23,13 +23,13 @@ export const TramitesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const headerHeight = 120; // Altura inicial del encabezado
   const adjustedHeaderHeight = headerHeight + top // Ajusta la altura para tener en cuenta los márgenes seguros
-  const { setShouldUpdateNotifications } = useAuthStore();
+ /*  const { setShouldUpdateNotifications } = useAuthStore(); */
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
-  useEffect(() => {
+/*   useEffect(() => {
     setShouldUpdateNotifications(true);
-  }, []);
+  }, []); */
 
   return (
     <View style={styles.screenContainer}
@@ -67,7 +67,7 @@ export const TramitesScreen = () => {
           </Pressable>
           
        {/*   <NotiComponent4/>   */}
-       <NotiComponent3/> 
+    {/*    <NotiComponent3/>  */}
         </View>
       </View>
 

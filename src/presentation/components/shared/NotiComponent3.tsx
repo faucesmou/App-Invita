@@ -169,8 +169,8 @@ const NotiComponent3 = () => {
 
   fetchNotifications()
 
-  const intervalId = setInterval(fetchNotifications, 500000000); 
-  return () => clearInterval(intervalId);
+/*   const intervalId = setInterval(fetchNotifications, 500000000); 
+  return () => clearInterval(intervalId); */
     }
     console.log('No se consultaron las notificaciones------------>', );
 

@@ -73,6 +73,7 @@ export interface AuthState {
   ObtenerPrestadores: (idAfiliado: string, idAfiliadoTitular:string, idPrestacion: string)=> Promise<any[]>;
   ObtenerPrestadoresEstudiosMedicos: (idAfiliado: string, cadena: string)=> Promise<any[]>;
   GuardarIdPrestador: (idPrestador: string)=> Promise<boolean> ;
+
   GuardarImagenes: (newImages: (string | null)[]) => Promise<boolean>;
  /*  GuardarImagenes: (base64String: string) => Promise<boolean>; */
   GuardarIdFamiliarSeleccionado: (idAfiliado: string)=> Promise<any[]>;
@@ -311,6 +312,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
     //funcion para manejar la respuesta de la API y guardar solo los ids de cada familiar:
     //guardo el id de la especialidad elegida en el context para recuperarla luego en la orden de consulta.
     set({ idPrestacion: idPrestacion })
+    console.log(' Se guardo correctamente el idPrestacion seleccionado en el useAuthStore');
     const obtenerPrestadoresObjeto = (respuestaApi:string) =>{
       try{
       const respuesta = JSON.parse(respuestaApi);
@@ -439,7 +441,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
   GuardarIdFamiliarSeleccionado: async ( idAfiliado: string): Promise<string[]> => {
     try {
       set({ idAfiliadoSeleccionado: idAfiliado })
- 
+  console.log(' Se guardo correctamente el idFamiliar seleccionado en el useAuthStore');
     return []; 
   } catch (error) {
       console.log('ha ocurrido un error al guardar idAfiliado en el useAuthStore');
