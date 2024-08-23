@@ -26,15 +26,22 @@ export const MiOrdenConsultaScreen = () => {
   const [isConsulting, setIsConsulting] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false); 
 
   useEffect(() => {
 
      // Verificamos que las constantes estén definidas antes de proceder
-     if (!idAfiliadoTitular || !idPrestacion || !idPrestador || !idAfiliadoSeleccionado) {
+     if (!idAfiliadoTitular || !idPrestacion || !idPrestador || !idAfiliadoSeleccionado || isConsulting || mounted) {
       console.log('Esperando que todas las constantes estén definidas...');
       return; // Si no están definidas, no ejecutes la consulta todavía
     }
-    setIsConsulting(true);
+
+ // Si ya se está consultando, no lo hagas de nuevo
+/*  if (isConsulting) {
+  return;
+} */
+setIsConsulting(true);
+setMounted(true);  // Marca como montado para evitar re-ejecuciones
 
     const OrdenConsultaRequest = async () => {
 
@@ -45,28 +52,28 @@ export const MiOrdenConsultaScreen = () => {
 
       try {
 
-        setIsConsulting(true);
+     /*    setIsConsulting(true); */
 
         const response = await axios.get(`https://andessalud.createch.com.ar/api/ordenDeConsulta?idAfiliado=${idAfiliadoSeleccionado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}&idPrestador=${idPrestador}`);
         const Url = response.data;
         console.log('este es el Url', Url);
         setOrdenConsulta(Url);
-        console.log('este es el afiliados:', ordenConsulta);
+        console.log('este es el ordenConsulta (url):', ordenConsulta);
         setIsConsulting(false);
 
       } catch (error:any) {
         console.error('Error al obtener los datos de los afiliados:', error);
-        const errorMessage = error.response?.data || null
-        console.log('este es el afiliados:', errorMessage);
+        const errorMessage = error.response?.data || 'no hay mensaje de error'
+        console.log('este es el errorMessage:', errorMessage);
         setShowErrorMessage(true); 
-      
+       
       } finally{
         setIsConsulting(false);
       }
     };
     OrdenConsultaRequest()
 
-  }, [idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado]);
+  }, [idAfiliadoTitular, idPrestacion, idPrestador, idAfiliadoSeleccionado, mounted]);
 
   const handleOpenURL = () => {
     if (ordenConsulta) {
