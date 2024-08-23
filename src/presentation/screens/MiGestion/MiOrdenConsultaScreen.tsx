@@ -153,13 +153,19 @@ setMounted(true);  // Marca como montado para evitar re-ejecuciones
                 >
 
                   <Text style={styles.titleMessage}/* style={{ marginBottom: 5, fontSize: 25, color:'#030136' }} */
-                  >Orden generada</Text>
-                  <Text style={{ marginBottom: 5, fontSize: 20, marginTop: 10, color:'#595960'  }}>Ingrese al siguiente link para su descarga:</Text>
+                  >¡Tu Orden está lista!</Text>
+                  <Text style={{ marginBottom: 5, fontSize: 20, marginTop: 10, color:'#595960'  }}>Ingresá al siguiente link para descargarla:</Text>
                   <TouchableOpacity onPress={handleOpenURL}>
                     <Text style={{ marginBottom: 25, marginTop: 15, fontSize: 15, color: 'blue' }}>
                       {ordenConsulta}
                     </Text>
                   </TouchableOpacity>
+                  <View style={styles.imageContainer}>
+                {/* <Text style={styles.titleMessage}>Gracias por elegirnos</Text> */}
+                <Image source={require('../../assets/images/logoAndesSaludRedondo4.png')} style={styles.successImage} />
+               {/*  <Image source={require('../../../assets/images/MailSent-rafiki.png')} style={styles.successImage} /> */}
+               <Text style={styles.epigrafeMessage}>Estar bien es más fácil</Text>
+              </View>
                 </View>
               )
           )
@@ -194,6 +200,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 1,
     elevation: 5, 
+  },
+  
+  imageContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+    /*     padding: 20, */
+    backgroundColor: '#FFFFFF',
+   /*  borderRadius: 10, */
+    alignItems: 'center',
+/*   shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5,  */
   },
   errorContainer: {
     marginTop: 20,
@@ -243,7 +263,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop:5,
     marginBottom:5,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    color:'#595960' ,
   },
   successImage: {
     width: 150,

@@ -32,7 +32,8 @@ import { RootStackParams } from '../../../routes/StackNavigator';
 export const FormulariosEspScreen = () => {
 
   const { idAfiliadoTitular } = useAuthStore();
-  console.log('idAfiliadoTitular ---->', idAfiliadoTitular);
+ /*  console.log('idAfiliadoTitular ---->', idAfiliadoTitular); */
+
 
 
   const { top } = useSafeAreaInsets();
@@ -72,8 +73,8 @@ export const FormulariosEspScreen = () => {
            }]; */
         setFormularios(mappedFormularios);
 
-        console.log('este es el mappedProducts:', mappedFormularios);
-        console.log('este es el formularios useState:', formularios);
+/*         console.log('este es el mappedProducts:', mappedFormularios); */
+/*         console.log('este es el formularios useState:', formularios); */
 
       } catch (error) {
         console.error('Error al obtener los formularios:', error);
