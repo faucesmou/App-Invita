@@ -425,9 +425,9 @@ const filtrarPorTodos = () => {
 
       <View style={[styles.container, { gap: dynamicGap }]}>
         {/* Botón que abre el modal */}
-        <Text style={[styles.consignaText, { marginHorizontal:dynamicMargin }]}>Filtrá tus Prestadores: </Text>
+        <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Filtrá tus Prestadores: </Text>
         <TouchableOpacity
-          style={[styles.selectButton, {marginHorizontal:dynamicMargin}]}
+          style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
           onPress={() => setModalVisible(true)}
         >
           <Text style={styles.buttonText}>{selectedValue}</Text>

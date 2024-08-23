@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: globalColors.gray2,
     marginHorizontal: 40,
     alignSelf: 'stretch',
+    marginBottom:10,
+    marginTop:10,
   },
 });
 

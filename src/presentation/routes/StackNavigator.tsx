@@ -40,6 +40,7 @@ import { Facturas } from '../screens/home/Facturas/Facturas';
 import { LoginScreen2 } from '../screens/auth/LoginScreen2';
 import { RecoverData } from '../screens/auth/RecoverData';
 import { UserData } from '../screens/auth/UserData';
+import { ConsultaScreenUx } from '../screens/ordenConsulta/ConsultaScreenUx';
 
 /* import { UserData } from '../screens/auth/userData'; */
 
@@ -70,7 +71,8 @@ export type RootStackParams = {
   SideMenuNavigator: undefined,
   CredencialScreenPrueba:undefined,
   ConsultaScreen: undefined,
-  Consulta: undefined,
+  Consulta2: undefined,
+  "Consulta": undefined,
   Formulario:undefined,
   CartillaScreen: undefined,
   Cartillas: undefined,
@@ -174,7 +176,8 @@ export const StackNavigator = () => {
 {/* MI GESTIÓN (TramitesScreen): */}
 
 {/* Solicitar orden de consulta: */}
-      <Stack.Screen name="Consulta" component={ConsultaScreenFinal} options={{ headerShown: true }} />
+      <Stack.Screen name="Consulta2" component={ConsultaScreenFinal} options={{ headerShown: true }} />
+      <Stack.Screen name="Consulta" component={ConsultaScreenUx} options={{ headerShown: true }} />
 
 {/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
       <Stack.Screen name="Orden Enviada" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />

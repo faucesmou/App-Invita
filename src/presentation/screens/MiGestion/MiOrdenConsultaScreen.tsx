@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
-import { globalColors, globalStyles } from '../../theme/theme'
-import { FlatList } from 'react-native-gesture-handler'
+import { globalColors } from '../../theme/theme'
 import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import { BackButton } from '../../components/shared/BackButton'
@@ -25,7 +24,6 @@ export const MiOrdenConsultaScreen = () => {
   const [ordenConsulta, setOrdenConsulta] = useState(null);
   const [isConsulting, setIsConsulting] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false); 
 
   useEffect(() => {
@@ -37,9 +35,7 @@ export const MiOrdenConsultaScreen = () => {
     }
 
  // Si ya se está consultando, no lo hagas de nuevo
-/*  if (isConsulting) {
-  return;
-} */
+
 setIsConsulting(true);
 setMounted(true);  // Marca como montado para evitar re-ejecuciones
 
@@ -51,8 +47,6 @@ setMounted(true);  // Marca como montado para evitar re-ejecuciones
       console.log('este es el idPrestador:', idPrestador);
 
       try {
-
-     /*    setIsConsulting(true); */
 
         const response = await axios.get(`https://andessalud.createch.com.ar/api/ordenDeConsulta?idAfiliado=${idAfiliadoSeleccionado}&idAfiliadoTitular=${idAfiliadoTitular}&idPrestacion=${idPrestacion}&idPrestador=${idPrestador}`);
         const Url = response.data;
@@ -138,21 +132,17 @@ setMounted(true);  // Marca como montado para evitar re-ejecuciones
               >
                 <Text style={{ marginBottom: 5, fontSize: 20,  color:'#030136' }}>Dificultades en la solicitud</Text>
                 <Text style={{ marginBottom: 5, fontSize: 18, color:'#595960' }}>Tuvimos inconvenientes para procesar tu solicitud por favor intenta nuevamente más tarde</Text>
-              {/*   <Text style={{ marginBottom: 5, fontSize: 18, color:'#595960' }}>{error}</Text> */}
+             
               </View>
               </>
             ) :
               (
 
                 <View
-                 /*  style={{
-                    marginTop: 10,
-                    backgroundColor: 'white'
-                  }} */
                   style={styles.successContainer}
                 >
 
-                  <Text style={styles.titleMessage}/* style={{ marginBottom: 5, fontSize: 25, color:'#030136' }} */
+                  <Text style={styles.titleMessage}
                   >¡Tu Orden está lista!</Text>
                   <Text style={{ marginBottom: 5, fontSize: 20, marginTop: 10, color:'#595960'  }}>Ingresá al siguiente link para descargarla:</Text>
                   <TouchableOpacity onPress={handleOpenURL}>
@@ -161,9 +151,9 @@ setMounted(true);  // Marca como montado para evitar re-ejecuciones
                     </Text>
                   </TouchableOpacity>
                   <View style={styles.imageContainer}>
-                {/* <Text style={styles.titleMessage}>Gracias por elegirnos</Text> */}
+               
                 <Image source={require('../../assets/images/logoAndesSaludRedondo4.png')} style={styles.successImage} />
-               {/*  <Image source={require('../../../assets/images/MailSent-rafiki.png')} style={styles.successImage} /> */}
+              
                <Text style={styles.epigrafeMessage}>Estar bien es más fácil</Text>
               </View>
                 </View>
@@ -178,7 +168,6 @@ const styles = StyleSheet.create({
   waitingContainer: {
     marginTop: 20,
     marginBottom: 20,
-    /*     padding: 20, */
     backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
@@ -191,7 +180,6 @@ const styles = StyleSheet.create({
   successContainer: {
     marginTop: 10,
     marginBottom: 20,
-    /*     padding: 20, */
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     alignItems: 'center',
@@ -205,20 +193,12 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginTop: 10,
     marginBottom: 20,
-    /*     padding: 20, */
     backgroundColor: '#FFFFFF',
-   /*  borderRadius: 10, */
     alignItems: 'center',
-/*   shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
-    elevation: 5,  */
   },
   errorContainer: {
     marginTop: 20,
     marginBottom: 20,
-    /*     padding: 20, */
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     alignItems: 'center',
@@ -227,30 +207,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 1,
     elevation: 5, 
-  },
-  informationContainer: {
-    marginTop: 10,
-    marginBottom: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    alignItems: 'center',
-  shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 1,
-    elevation: 5, 
-   
   },
   containerMessage: {
     marginTop: 15, 
     marginBottom:20, 
     marginHorizontal: 5,
-  }, 
-  containerLoader: {
-    marginTop: 0, 
-    marginBottom:35,  
-    marginHorizontal: 5,
-    backgroundColor:'green'
   }, 
   titleMessage: {
     fontSize: 22,
@@ -275,18 +236,5 @@ const styles = StyleSheet.create({
     width: 220,
     height: 220,
     marginBottom:5,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    width: '80%',
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
   },
 })
