@@ -41,6 +41,7 @@ import { LoginScreen2 } from '../screens/auth/LoginScreen2';
 import { RecoverData } from '../screens/auth/RecoverData';
 import { UserData } from '../screens/auth/UserData';
 import { ConsultaScreenUx } from '../screens/ordenConsulta/ConsultaScreenUx';
+import { EstudiosMedicosScreenUx } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosScreenUx';
 
 /* import { UserData } from '../screens/auth/userData'; */
 
@@ -82,7 +83,8 @@ export type RootStackParams = {
   EstudiosMedicos: undefined, 
   "Estudios Médicos": undefined,
   "Estudios": undefined,
-  "Estudios enviados": undefined,
+ "Estudios!": undefined,
+  "Enviado": undefined,
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
   Facturas:undefined,
@@ -171,7 +173,8 @@ export const StackNavigator = () => {
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="Prestadores" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
-      <Stack.Screen name="Estudios" component={EstudiosMedicosScreen} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} />
+      <Stack.Screen name="Estudios!" component={EstudiosMedicosScreen} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} />
+   <Stack.Screen name="Estudios" component={EstudiosMedicosScreenUx} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} /> 
       
 {/* MI GESTIÓN (TramitesScreen): */}
 
@@ -181,7 +184,7 @@ export const StackNavigator = () => {
 
 {/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
       <Stack.Screen name="Orden Enviada" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="Estudios enviados" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
+      <Stack.Screen name="Enviado" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
 
 {/* Obtener Formularios Especiales: */}
       <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />

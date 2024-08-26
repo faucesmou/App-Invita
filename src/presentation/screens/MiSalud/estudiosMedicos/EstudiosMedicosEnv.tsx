@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet,Platform, NativeModules  } from 'react-native'
+import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet,Platform, NativeModules,   } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
+/*  import * as Clipboard from '@react-native-clipboard/clipboard';  */
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { RootStackParams } from '../../../routes/StackNavigator'
@@ -152,9 +153,20 @@ export const EstudiosMedicosEnv = () => {
       }
     }
 
-    EstudiosMedicosRequest()
+    EstudiosMedicosRequest()   /* descomentar al terminar */
   /*   EnvioIdAfiliadoSeleccionado() */
   }, []);
+
+
+/*   const handleCopyPress = (textToCopy: string) => {
+    Clipboard.setString(textToCopy)
+      .then(() => {
+        Alert.alert('Texto copiado', 'El texto se ha copiado al portapapeles');
+      })
+      .catch(err => {
+        console.error('Error al copiar al portapapeles:', err);
+      });
+}; */
 
   return (
     <View
@@ -166,7 +178,7 @@ export const EstudiosMedicosEnv = () => {
       }}
     >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray2} titleSize={28}/>
+      <CustomHeader color={globalColors.gray2} /* titleSize={28} *//>
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (
@@ -188,7 +200,7 @@ export const EstudiosMedicosEnv = () => {
             {/* View para mostrar éxito */}
             {showSuccessMessage && (
               <View style={styles.successContainer}>
-                <Text style={styles.successMessage}>Datos Enviados con Éxito!</Text>
+                <Text style={styles.successMessage}>!Petición enviada con Éxito!</Text>
                 <Image source={require('../../../assets/images/logoAndesSaludRedondo4.png')} style={styles.successImage} />
                {/*  <Image source={require('../../../assets/images/MailSent-rafiki.png')} style={styles.successImage} /> */}
                <Text style={styles.epigrafeMessage}>Estar bien es más fácil</Text>
@@ -197,8 +209,9 @@ export const EstudiosMedicosEnv = () => {
 
             {/* View para mostrar mensaje de mensaje no enviado con exito*/}
             {showErrorMessage && (
-              <View style={styles.successContainer}>
-                <Text style={styles.successMessage}>Problemas al enviar los datos</Text>
+              <View style={styles.problemsContainer}>
+                <Text style={styles.problemMessage}>No se pudo procesar la solicitud</Text>
+                <Text style={styles.epigrafeMessage}>Por favor intente nuevamente más tarde</Text>
                 <Image source={require('../../../assets/images/400ErrorBadRequest-bro.png')} style={styles.errorImage} />
               </View>
             )}
@@ -213,28 +226,28 @@ export const EstudiosMedicosEnv = () => {
                  </View>
                  
                  <Text style={globalStyles.resultText}>{result.mensaje}</Text>
-                <Text style={globalStyles.resultFecha}>ID Orden: {result.idOrden}</Text>
-                <Text style={globalStyles.resultFecha}>Fecha de Solicitud: {result.fecSolicitud}</Text>
+                 <View style={{ marginTop:5, marginBottom: 10,}}>
+                <Text style={globalStyles.resultOrdenText}>ID Orden:</Text>
+               
+                <Text style={globalStyles.resultFecha}>{result.idOrden}</Text>
+                
+                <Text style={globalStyles.resultOrdenText}>Fecha de Solicitud:</Text>
+              
+                <Text style={globalStyles.resultFecha}>{result.fecSolicitud}</Text>
+           
+                </View>
                 {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
                 {verificacionMensaje && <Text style={globalStyles.resultText} >{verificacionMensaje}</Text>}
 
               </View>
 
-             {/*    <Text style={globalStyles.titleEstudiosMedicosEnv}>Información de tu solicitud</Text>            
-                <Text style={globalStyles.resultText}>{result.mensaje}</Text>
-                <Text style={globalStyles.resultText}>ID Orden: {result.idOrden}</Text>
-                <Text style={globalStyles.resultText}>Fecha de Solicitud: {result.fecSolicitud}</Text>
-                {verificacionMensaje && <Text>{verificacionMensaje}</Text>} */}
+        
 
               </View>
             )}
-            {showErrorMessage && (
-              <View style={globalStyles.errorContainerEstudios}>
-                <Text style={globalStyles.titleErrorEstMedicosEnv}>Problemas en la solicitud</Text>
-                <Text style={{...globalStyles.resultText, textAlign:'center'}}>Intente nuevamente más tarde</Text>
-                <Text style={globalStyles.errorTextEstudios}>Datos incompletos{/* {result.mensaje} */}</Text>
-              </View>
-            )}
+
+
+        
 
           </View>
 
@@ -248,6 +261,19 @@ export const EstudiosMedicosEnv = () => {
 
 const styles = StyleSheet.create({
   successContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+    /*     padding: 20, */
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+  shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5, 
+  },
+  problemsContainer: {
     marginTop: 20,
     marginBottom: 20,
     /*     padding: 20, */
@@ -274,14 +300,28 @@ const styles = StyleSheet.create({
    
   },
   successMessage: {
-    fontSize: 25,
+    fontSize: 22,
     marginTop:10,
     marginBottom:5,
+    color:'#030136',
+    fontWeight:'bold',
+   
+  },
+  problemMessage: {
+    fontSize: 22,
+    marginTop:10,
+    marginBottom:5,
+    color:'#030136',
+    fontWeight:'bold',
+    
+   
   },
   epigrafeMessage: {
     fontSize: 20,
     marginTop:5,
-    marginBottom:5,
+    marginBottom:10,
+    color:'#595960' ,
+    alignSelf: 'center',
   },
   successImage: {
     width: 150,
@@ -307,17 +347,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 })
-/* ALTERNATIVA DE MODAL PARA MOSTRAR DATOS ENVIADOS CON EXITO:  */
-{/*  <Modal
-   transparent={true}
-   visible={showSuccessModal}
-   onRequestClose={() => setShowSuccessModal(false)}
- >
-   <View style={styles.modalContainer}>
-     <View style={styles.modalContent}>
-       <Text style={styles.successMessage}>Datos enviados con éxito</Text>
-       <Image  source={require('path-to-your-image.png')}  style={styles.successImage} />
-       <Button title="Cerrar" onPress={() => setShowSuccessModal(false)} />
-     </View>
-   </View>
- </Modal> */}

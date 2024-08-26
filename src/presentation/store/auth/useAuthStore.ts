@@ -362,7 +362,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
       }
 
       const prestadoresData = result.Resultado.fila.tablaPrestadores;
-      console.log('prestadoresData:', prestadoresData);
+     
 
 /*   Mapear los datos correctamente */
       let infoPrestadores: Prestador[];
@@ -382,7 +382,7 @@ export const useAuthStore = create<AuthState>()((set , get) => ({
           ordenAccion: prestadoresData.ordenAccion._text // Incluir ordenAccion si es necesario
         }];
       }
-      console.log('infoPrestadores:', infoPrestadores);
+      
       return infoPrestadores;
     } catch (error) {
       console.log('Error en la función RecepcionRespuestaPrestadores', error);

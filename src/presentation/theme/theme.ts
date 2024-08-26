@@ -228,9 +228,11 @@ export const globalStyles = StyleSheet.create({
   infoEstudiosMedicosEnv: {
     marginBottom: 5,
     marginTop:10,
-    fontSize: 21,
+    fontSize: 20,
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
+    color:'#030136',
+    fontWeight:'bold',
   },
   resultText: {
     fontSize: 18,
@@ -240,12 +242,26 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   resultFecha: {
+
     fontSize: 17,
     fontFamily: 'Quicksand-Light',
-    margin: 10,
+    marginHorizontal: 10,
     marginTop: 0,
-    alignItems: 'flex-start',
+   alignItems: 'flex-start', 
+/*    textAlign: 'center', */
+    /* flexWrap: 'nowrap' */
   },
+  resultOrdenText: {
+    fontSize: 17,
+    fontFamily: 'Quicksand-Light',
+    marginHorizontal: 10,
+    marginTop: 0,
+    fontWeight: 'bold',
+   textAlign: 'center',
+    flexWrap: 'nowrap',
+    alignItems: 'flex-start', 
+    color:'#030136',
+  }, 
 
   errorContainerEstudios: {
     marginTop: 20,
