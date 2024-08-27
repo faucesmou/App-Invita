@@ -60,7 +60,9 @@ export type RootStackParams = {
   Perfil: undefined,
   MiGestión: undefined,
   MisDatos: undefined,
-  "Orden Enviada": undefined,
+ /*  "Orden Enviada": undefined, */
+  "¡Enviada!": undefined,
+  "Enviando": undefined,
   Credencial: undefined,
   Cartilla: undefined,
   LoginScreen: undefined,
@@ -183,7 +185,7 @@ export const StackNavigator = () => {
       <Stack.Screen name="Consulta" component={ConsultaScreenUx} options={{ headerShown: true }} />
 
 {/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
-      <Stack.Screen name="Orden Enviada" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Enviando" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
       <Stack.Screen name="Enviado" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
 
 {/* Obtener Formularios Especiales: */}

@@ -455,7 +455,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
         } 
 
          <TertiaryButton
-          onPress={() => navigation.navigate('Orden Enviada')}
+          onPress={() => navigation.navigate('Enviando')}
           label="Continuar con la solicitud"
           color={globalColors.profile2}
           iconName='people-outline'

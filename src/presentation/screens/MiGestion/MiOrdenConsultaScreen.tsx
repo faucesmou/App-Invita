@@ -97,21 +97,23 @@ setMounted(true);  // Marca como montado para evitar re-ejecuciones
               style={styles.waitingContainer}
             >
               <View style={styles.containerMessage}>
-
-                <Text style={styles.epigrafeMessage}>Aguardá un momento </Text>
+              <View  style={styles.containerEpigrafe} >
+                <Text style={styles.epigrafeMessage}>Aguardá un momento por favor</Text>
                 <Text style={styles.epigrafeMessage}>Estamos procesando tu orden</Text>
-
-                <Text style={styles.epigrafeMessage} >Esto puede tomar algunos unos minutos</Text>
-
+                </View>
+                <View  style={styles.containerEpigrafe2} >
+                <Text style={styles.epigrafeMessage2} >Esto puede tomar algunos unos minutos</Text>
+                <Text style={styles.epigrafeMessage2} >No cierre esta ventana hasta que se complete el proceso de solicitud</Text>
+                </View>
               </View>
 
             </View>
-            <FullScreenLoader
+         <FullScreenLoader
               layoutStyle={{ justifyContent: 'flex-start', alignItems: 'center', marginTop: 35 }}
               spinnerSize="giant"
               spinnerStatus="info"
 
-            />
+            /> 
           </>
         )
           :
@@ -128,6 +130,7 @@ setMounted(true);  // Marca como montado para evitar re-ejecuciones
                 style={{
                   marginTop: 10,
                   backgroundColor: '#FFFFFF',
+                  marginHorizontal:10,
                 }}
               >
                 <Text style={{ marginBottom: 5, fontSize: 20,  color:'#030136' }}>Dificultades en la solicitud</Text>
@@ -222,10 +225,35 @@ const styles = StyleSheet.create({
   },
   epigrafeMessage: {
     fontSize: 20,
-    marginTop:5,
+    marginTop:0,
+    marginBottom:5,
+    alignSelf: 'center',
+   color:'#030136',
+   fontWeight:'bold',
+  },
+  containerEpigrafe: {
+   /*  fontSize: 18, */
+    marginTop:0,
+    marginBottom:5,
+    alignSelf: 'center',
+    textAlign:'center',
+    color:'#595960' ,
+  },
+  containerEpigrafe2: {
+   /*  fontSize: 18, */
+    marginTop:15,
+    marginBottom:5,
+    alignSelf: 'center',
+    textAlign:'center',
+    color:'#595960' ,
+  },
+  epigrafeMessage2: {
+    fontSize: 17,
+    marginTop:3,
     marginBottom:5,
     alignSelf: 'center',
     color:'#595960' ,
+    textAlign:'center'
   },
   successImage: {
     width: 150,

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { RootStackParams } from "../../routes/StackNavigator";
 import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { IonIcon } from "../../components/shared/IonIcon";
 
 
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
@@ -142,15 +143,16 @@ export const RecoverData = ({ navigation }: Props) => {
               style={{ marginBottom: 10 }}
             />
             <Input
-              placeholder="Numero de Credencial"
+              placeholder="Número de Credencial"
               keyboardType="email-address"
               autoCapitalize="none"
               value={form.numeroAfiliado}
               onChangeText={(numeroAfiliado) => setForm({ ...form, numeroAfiliado })}
-              accessoryLeft={<MyIcon name="email-outline" />}
-              style={{ marginBottom: 10 }}
+              accessoryLeft={<IonIcon name='card-outline' size={25} color="#505050" marginLeft={'2%'} /> }
+              
+              style={{ marginBottom: 10,}}
             />
-         
+        
           </Layout>
 
           {/* Espacio */}
@@ -283,6 +285,11 @@ export const RecoverData = ({ navigation }: Props) => {
      color: '#4285F4', 
      fontSize:20,
      fontWeight:'bold',
+    },
+    icon: {
+      alignItems: 'flex-start',
+      marginBottom: 0,
+      marginLeft:5,
     },
 
   });

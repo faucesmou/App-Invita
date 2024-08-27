@@ -1,5 +1,5 @@
 import { Layout, Text, Input, Button, Icon } from "@ui-kitten/components"
-import { Alert, StyleSheet, useWindowDimensions, TouchableOpacity, Clipboard, Animated, View } from "react-native"
+import { Alert, StyleSheet, useWindowDimensions, TouchableOpacity, Animated, View, Linking } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import { MyIcon } from "../../components/ui/MyIcon";
 
@@ -19,10 +19,10 @@ export const UserData = ( ) => {
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     });
   }
-
+  const [isUserValid, setIsUserValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showUser, setShowUser] = useState(false);
-
+  const [linkAndesSalud, setLinkAndesSalud] = useState("");
 
   const { getUser, getPass, getUserName, getUserLastName} = useAuthStore();
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
@@ -38,7 +38,10 @@ export const UserData = ( ) => {
   useEffect(() => {
     // Siempre que user o pass cambien, se re-renderiza el componente
     console.log('Usuario actualizado:', currentUser);
-    console.log('Contraseña actualizada:', currentUser);
+    console.log('Contraseña actualizada:', currentPass);
+    if( currentUser != "---" && currentPass != "---"){
+      setIsUserValid(true)
+    }
   }, [currentUser, currentPass]);
 
   const { height } = useWindowDimensions();
@@ -49,6 +52,30 @@ export const UserData = ( ) => {
   const toggleUserVisibility = () => {
     setShowUser(!showUser);
   };
+  /* parte de la logica para enviar al afiliado a inscribirse */
+  useEffect(() => {
+    const openURLAndesSalud = async () =>{
+      if(linkAndesSalud){
+        try{
+          await Linking.openURL(linkAndesSalud)
+        } catch (err) {
+          console.log('Error al intentar ingresar a Andes Salud:', err);
+        } finally {
+        
+          setLinkAndesSalud('');
+        }
+      }
+    }
+    openURLAndesSalud()
+  }, [linkAndesSalud])
+
+ 
+  let UrlAndes = `https://www.andessalud.com.ar/`
+  const handleOpenURLAndes = () => {
+    console.log('entrando a Andes Salud');
+    
+    setLinkAndesSalud(UrlAndes);
+  }
 
   return (
     <Layout style={{ flex: 1 }}>
@@ -61,10 +88,65 @@ export const UserData = ( ) => {
           <Text 
             style={styles.text}
           >Hola {currentUserName}{' '}{currentUserLastName}! </Text>
+
+
+           {!isUserValid  ? 
+        (
+          <>
+          <Text style={{ marginBottom: '3%', marginTop: '3%', fontSize: 18, textAlign: 'left', color: '#595960', }}>Actualmente no tienes un Usuario y Contraseña</Text> 
+          <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 18, textAlign: 'left', color: '#595960', }}>Para establecer tu Usuario y Contraseña ingresa a la página de Andes Salud y sigue los pasos para registrar una cuenta</Text> 
+
+
+          <Layout style={{
+            marginTop: '100%',
+            alignItems: 'flex-end',
+            flexDirection: 'row',
+            justifyContent: 'center'
+          }}>
+            <Text>
+              ¿No tienes cuenta? 
+              Registrate en 
+            </Text>
+            <Text
+              style={styles.customText}
+              status="primary"
+              category="s1"
+              onPress={handleOpenURLAndes}
+            >
+              {' '}
+              Andes Salud {' '}
+            </Text>
+          </Layout>
+
+           {/* informacion para crear cuenta */}
+        <Layout style={{ height: 10 }} />
+
+<Layout style={{
+  alignItems: 'flex-end',
+  flexDirection: 'row',
+  justifyContent: 'center'
+}}>
+  <Text>
+    ¿Deseas iniciar sesión?
+  </Text>
+  <Text
+    style={styles.customText}
+    status="primary"
+    category="s1"
+    onPress={() => navigation.navigate('LoginScreen')}
+  >
+    {' '}
+    Iniciar sesión{' '}
+  </Text>
+</Layout>
+          </>
+        ) :
+              <> 
           <Text 
             style={styles.text2}
           >A continuacion puedes acceder a tus datos de Usuario:</Text>
-  
+{/* <Text style={{ marginBottom: '3%', marginTop: '3%', fontSize: 18, textAlign: 'left', color: '#595960', }}>Actualmente no tienes un Usuario y Contraseña</Text>  */}
+
     <View style={{ alignItems:'center' }} >
 
           <View style={styles.userContainer}>
@@ -92,17 +174,7 @@ export const UserData = ( ) => {
             />
           </View>
 
-
     </View>
-      
-        </Layout>
-
-      
-  
-
-        <Layout style={{ height: 10 }} />
-
-
         {/* informacion para crear cuenta */}
         <Layout style={{ height: 50 }} />
 
@@ -124,6 +196,19 @@ export const UserData = ( ) => {
             Iniciar sesión{' '}
           </Text>
         </Layout>
+    </> 
+        }  
+
+  
+      
+        </Layout>
+
+      
+  
+
+        <Layout style={{ height: 10 }} />
+
+
 
       </ScrollView>
 
@@ -155,7 +240,7 @@ export const UserData = ( ) => {
     },
     passwordText: {
     fontSize: 17, 
-     flex: 0.8 // Ocupa todo el espacio disponible menos el icono
+     flex: 0.8, // Ocupa todo el espacio disponible menos el icono
     },
     passwordIcon: {
       width: '35%', 
@@ -163,17 +248,25 @@ export const UserData = ( ) => {
       aspectRatio: 1, // Mantiene una proporción cuadrada
     },
     text: {
-      fontSize: 16,
+      fontSize: 20,
       marginTop:15,
       textAlign: 'left'
     },
     text2: {
-      fontSize: 16,
-      textAlign: 'left'
+      marginBottom: '3%', 
+      marginTop: '3%', 
+      fontSize: 19, 
+      textAlign: 'left', 
+      color: '#595960',
+    /*   fontSize: 16,
+      textAlign: 'left' */
     /*   marginTop:10, */
     },
     title: {
-      fontSize: 30, // Ajusta el tamaño según tus preferencias
+      fontSize: 33, // Ajusta el tamaño según tus preferencias
       textAlign: 'center',
+    },
+    customText: {
+      color: '#4285F4',
     },
   });
