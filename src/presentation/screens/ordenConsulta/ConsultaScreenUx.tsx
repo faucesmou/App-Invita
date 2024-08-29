@@ -18,8 +18,8 @@ import Divider from '../../components/shared/Divider';
 export const ConsultaScreenUx = () => {
   console.log('Entrando al ConsultaScreen Ux---->')
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, ObtenerEspecialidades, ObtenerPrestadores, GuardarIdPrestador, GuardarIdFamiliarSeleccionado } = useAuthStore();
-/* use state para asegurarnos de que los 3 inputs fueron guardados antes de permitirle al usuario enviar la solicitud:  */
-const [isFormComplete, setIsFormComplete] = useState(false);
+  /* use state para asegurarnos de que los 3 inputs fueron guardados antes de permitirle al usuario enviar la solicitud:  */
+  const [isFormComplete, setIsFormComplete] = useState(false);
 
   //---------------------LOGICA PARA EL SELECT DE FAMILIAR ELEGIDO-------------------------------------->
   //useStates: State 1 (nombresDeFamiliares): para guardar un listado de solamente NOMBRES de Familiares (sin el id) y poder mostrarlos en el select para que elija el usuario. State2 (FamiliaresObtenidosObjeto): datos de los familiares obtenidos de la consulta (nombre y id). State 3(selectedFamiliarNombre): nombre del familiar seleccionado. State4(FamiliarSeleccionadoDatos) : nombre y id del familiar seleccionado. 
@@ -29,9 +29,10 @@ const [isFormComplete, setIsFormComplete] = useState(false);
   const [FamiliarSeleccionadoDatos, setFamiliarSeleccionadoDatos] = useState<string[]>([]); // 
 
   const handleSelectFamiliar = async (itemValue: string | number, itemIndex: number) => {
-  
-  
+
+
     setSelectedFamiliarNombre(nombresDeFamiliares[itemIndex]);
+    //@ts-ignore
     const familiarEncontrado: any = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === itemValue);
     if (familiarEncontrado) {
       setFamiliarSeleccionadoDatos(familiarEncontrado)
@@ -45,9 +46,10 @@ const [isFormComplete, setIsFormComplete] = useState(false);
     }
 
   };
-  const handleSelectFamiliarNuevoSelect = async (familiarSeleccionado: string ) => {
-  
+  const handleSelectFamiliarNuevoSelect = async (familiarSeleccionado: string) => {
+
     setSelectedFamiliarNombre(familiarSeleccionado);
+    //@ts-ignore
     const familiarEncontrado: any = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === familiarSeleccionado);
     if (familiarEncontrado) {
       setFamiliarSeleccionadoDatos(familiarEncontrado)
@@ -60,7 +62,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
 
     }
     setSelectedValue(familiarSeleccionado)
-    setModalVisible(false); 
+    setModalVisible(false);
 
   };
 
@@ -76,6 +78,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
 
   const handleSelectEspecialidad = (itemValue: string | number, itemIndex: number) => {
     setSelectedEspecialidadNombre(NombresDeEspecialidades[itemIndex]);
+    //@ts-ignore
     const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === itemValue);
     if (EspecialidadEncontrada) {
       setEspecialidadSeleccionadaDatos(EspecialidadEncontrada)
@@ -87,8 +90,9 @@ const [isFormComplete, setIsFormComplete] = useState(false);
 
 
   };
-  const handleSelectEspecialidadNuevoSelect = (especialidadSeleccionada: string ) => {
+  const handleSelectEspecialidadNuevoSelect = (especialidadSeleccionada: string) => {
     setSelectedEspecialidadNombre(especialidadSeleccionada);
+    //@ts-ignore
     const EspecialidadEncontrada: any = EspecialidadesObtenidasObjeto.find(especialidad => especialidad.nombreParaAfiliado === especialidadSeleccionada);
     if (EspecialidadEncontrada) {
       setEspecialidadSeleccionadaDatos(EspecialidadEncontrada)
@@ -97,7 +101,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
       setIdEspecialidadElegida(idPrestacion)
       setSelectedEspecialidad(especialidadSeleccionada)
       console.log('IdEspecialidadElegida esde el handle del nuevo select pa->:', IdEspecialidadElegida);
-      console.log('SelectedEspecialidad--desde el handle del nuevo select pa->:', selectedEspecialidad );
+      console.log('SelectedEspecialidad--desde el handle del nuevo select pa->:', selectedEspecialidad);
 
     }
     setModalEspecialidadVisible(false)
@@ -111,7 +115,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
   const [PrestadorSeleccionadoDatos, setPrestadorSeleccionadoDatos] = useState<string[]>([]);
   const [IdPrestadorElegido, setIdPrestadorElegido] = useState<string>('');
 
-//---------------------NUEVO SELECT NUEVO SELECT NUEVOOOOO-------------------------------------->
+  //---------------------NUEVO SELECT NUEVO SELECT NUEVOOOOO-------------------------------------->
   const [modalVisible, setModalVisible] = useState(false);
   const [modalEspecialidadVisible, setModalEspecialidadVisible] = useState(false);
   const [modalPrestadorVisible, setModalPrestadorVisible] = useState(false);
@@ -121,24 +125,24 @@ const [isFormComplete, setIsFormComplete] = useState(false);
   const [selectedValue, setSelectedValue] = useState('Familiares');
   const [selectedEspecialidad, setSelectedEspecialidad] = useState('Especialidades');
   const [selectedPrestador, setSelectedPrestador] = useState('Prestadores');
-/*   const handleSelect2 = (nombre:any) => {
-    const actions = {
-      'Córdoba': filtrarPorCordoba,
-      'Mendoza': filtrarPorMendoza,
-      'San Juan': filtrarPorSanJuan,
-      'San Luis': filtrarPorSanLuis,
-      'Todos': filtrarPorTodos,
-    };
-
-    const action = actions[nombre];
-    if (action) {
-      action();
-    } else {
-      console.warn(`No hay acción definida para la opción: ${nombre}`);
-    }
-    setSelectedValue(nombre);
-    setModalVisible(false);  // Cierra el modal después de seleccionar
-  }; */
+  /*   const handleSelect2 = (nombre:any) => {
+      const actions = {
+        'Córdoba': filtrarPorCordoba,
+        'Mendoza': filtrarPorMendoza,
+        'San Juan': filtrarPorSanJuan,
+        'San Luis': filtrarPorSanLuis,
+        'Todos': filtrarPorTodos,
+      };
+  
+      const action = actions[nombre];
+      if (action) {
+        action();
+      } else {
+        console.warn(`No hay acción definida para la opción: ${nombre}`);
+      }
+      setSelectedValue(nombre);
+      setModalVisible(false);  // Cierra el modal después de seleccionar
+    }; */
 
 
 
@@ -146,6 +150,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
 
   const handleSelectPrestador = async (itemValue: string | number, itemIndex: number) => {
     setSelectedPrestadorNombre(NombresDePrestadores[itemIndex]);
+    //@ts-ignore
     const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === itemValue);
     if (PrestadorEncontrado) {
       setPrestadorSeleccionadoDatos(PrestadorEncontrado)
@@ -161,8 +166,9 @@ const [isFormComplete, setIsFormComplete] = useState(false);
 
   };
 
-  const handleSelectPrestadorNuevoSelect = async (prestadorSeleccionado: string ) => {
+  const handleSelectPrestadorNuevoSelect = async (prestadorSeleccionado: string) => {
     setSelectedPrestadorNombre(prestadorSeleccionado);
+    //@ts-ignore
     const PrestadorEncontrado: any = PrestadoresObtenidosObjeto.find(prestador => prestador.prestador === prestadorSeleccionado);
     if (PrestadorEncontrado) {
       setPrestadorSeleccionadoDatos(PrestadorEncontrado)
@@ -241,10 +247,11 @@ const [isFormComplete, setIsFormComplete] = useState(false);
           if (nombresPrestadores[0] === "No se encontraron prestadores para la especialidad indicada.") {
             setNombresDePrestadores(["Elija familiar y especialidad"]);
           } else {
-                 const mensajePredeterminado = '(Desliza hacia arriba)';
-          const nombresPrestadoresParaMostrar = [mensajePredeterminado, ...PrestadoresObtenidos.map((prestador) => prestador.prestador)];
-          setNombresDePrestadores(nombresPrestadoresParaMostrar)
-           /*  setNombresDePrestadores(nombresPrestadores); */
+            const mensajePredeterminado = '(Desliza hacia arriba)';
+            //@ts-ignore
+            const nombresPrestadoresParaMostrar = [mensajePredeterminado, ...PrestadoresObtenidos.map((prestador) => prestador.prestador)];
+            setNombresDePrestadores(nombresPrestadoresParaMostrar)
+            /*  setNombresDePrestadores(nombresPrestadores); */
           }
 
 
@@ -265,7 +272,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
 
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
-/* hasta que no se carguen todos los inputs no se habilita el boton de enviar consulta:  */
+  /* hasta que no se carguen todos los inputs no se habilita el boton de enviar consulta:  */
   useEffect(() => {
     setIsFormComplete(!!selectedFamiliarNombre && !!SelectedEspecialidadNombre && !!SelectedPrestadorNombre);
   }, [selectedFamiliarNombre, SelectedEspecialidadNombre, SelectedPrestadorNombre]);
@@ -278,191 +285,192 @@ const [isFormComplete, setIsFormComplete] = useState(false);
 
       <BackButton />
 
-      <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', color:'#030136'}}>Solicita tu Orden de Consulta</Text> 
+      <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', color: '#030136' }}>Solicita tu Orden de Consulta</Text>
 
-{/* color: '#'595960 */}
+      {/* color: '#'595960 */}
 
 
 
       <View
-        style={{  /*  backgroundColor: 'green',  */  flex: 1, marginBottom: '7%', marginTop: '2%' }}>
+        style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: '7%', marginTop: '2%' }}>
 
-        
+
         <Divider />
 
         {/* -----------------FAMILIAR NUEVO SELECT---------------- */}
 
         <View style={[styles.container, { gap: dynamicGap }]}>
-        {/* Botón que abre el modal */}
-        <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona el Familiar:</Text>
-        <TouchableOpacity
-          style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
-          onPress={() => setModalVisible(true)}
-        >
-          <Text style={styles.buttonText}>{selectedValue}</Text>
-        </TouchableOpacity>
+          {/* Botón que abre el modal */}
+          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona el Familiar:</Text>
+          <TouchableOpacity
+            style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.buttonText}>{selectedValue}</Text>
+          </TouchableOpacity>
 
-        {/* Modal para seleccionar las opciones */}
-        <Modal
-          visible={modalVisible}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-            <View style={{alignSelf:'center'}}>
-              <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
+          {/* Modal para seleccionar las opciones */}
+          <Modal
+            visible={modalVisible}
+            transparent={true}
+            animationType="fade"
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <View style={{ alignSelf: 'center' }}>
+                  <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
+                </View>
+                <ScrollView>
+                  {nombresDeFamiliares.map((option) => (
+                    <TouchableOpacity
+                      key={option}
+                      style={styles.modalOption}
+                      onPress={() => handleSelectFamiliarNuevoSelect(option)}
+                    >
+                      <Text style={styles.optionText}>{option}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+                <View style={{ alignSelf: 'center', marginTop: 5 }}>
+                  <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
+                </View>
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>Cerrar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-              <ScrollView>
-                {nombresDeFamiliares.map((option) => (
-                  <TouchableOpacity
-                    key={option}
-                    style={styles.modalOption}
-                    onPress={() => handleSelectFamiliarNuevoSelect(option)}
-                  >
-                    <Text style={styles.optionText}>{option}</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-              <View style={{alignSelf:'center', marginTop:5}}>
-              <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
-            </View>
-              <TouchableOpacity
-                style={styles.closeButton}
-                 onPress={() => setModalVisible(false)} 
-              >
-                <Text style={styles.closeButtonText}>Cerrar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+          </Modal>
 
-      </View>
-
-       <Divider />
-       {/* -----------------ESPECIALIDAD Nuevo SElectt---------------- */}
-
-      <View style={[styles.container, { gap: dynamicGap }]}>
-        {/* Botón que abre el modal */}
-        <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona una Especialidad:</Text>
-        <TouchableOpacity
-          style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
-          onPress={() => setModalEspecialidadVisible(true)}
-        >
-          <Text style={styles.buttonText}>{selectedEspecialidad}</Text>
-        </TouchableOpacity>
-
-        {/* Modal para seleccionar las opciones */}
-        <Modal
-          visible={modalEspecialidadVisible}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setModalEspecialidadVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContentEspecialidad}>
-            <View style={{alignSelf:'center'}}>
-              <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
-            </View>
-              <ScrollView>
-                {NombresDeEspecialidades.map((option) => (
-                  <TouchableOpacity
-                    key={option}
-                    style={styles.modalOption}
-                    onPress={() => handleSelectEspecialidadNuevoSelect(option)}
-                  >
-                    <Text style={styles.optionText}>{option}</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-              <View style={{alignSelf:'center', marginTop:5}}>
-              <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
-            </View>
-              <TouchableOpacity
-                style={styles.closeButton}
-               onPress={() => setModalEspecialidadVisible(false)} 
-              >
-                <Text style={styles.closeButtonText}>Cerrar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-
-      </View>
-
-          {/* -----------------PRESTADOR Nuevo SElectt---------------- */}
-
-          <Divider />
-
-          <View style={[styles.container, { gap: dynamicGap }]}>
-        {/* Botón que abre el modal */}
-        <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona un Prestador:</Text>
-        <TouchableOpacity
-          style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
-          onPress={() => setModalPrestadorVisible(true)}
-        >
-          <Text style={styles.buttonText}>{selectedPrestador}</Text>
-        </TouchableOpacity>
-
-        {/* Modal para seleccionar las opciones */}
-        <Modal
-          visible={modalPrestadorVisible}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setModalPrestadorVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContentEspecialidad}>
-            <View style={{alignSelf:'center'}}>
-              <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
-            </View>
-              <ScrollView>
-                {NombresDePrestadores.map((option) => (
-                  <TouchableOpacity
-                    key={option}
-                    style={styles.modalOption}
-                    onPress={() => handleSelectPrestadorNuevoSelect(option)}
-                  >
-                    <Text style={styles.optionText}>{option}</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-              <View style={{alignSelf:'center', marginTop:5}}>
-              <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
-            </View>
-              <TouchableOpacity
-                style={styles.closeButton}
-               onPress={() => setModalPrestadorVisible(false)} 
-              >
-                <Text style={styles.closeButtonText}>Cerrar</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-
-      </View>
+        </View>
 
         <Divider />
-      
-        <View style={{alignSelf:'center', marginTop:5}}>
+        {/* -----------------ESPECIALIDAD Nuevo SElectt---------------- */}
 
-        {!isFormComplete  ? 
-        (
-          <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 18, textAlign: 'center', color: '#595960', /* color:'#030136' */}}>Completa todos los campos para poder continuar con tu solicitud</Text> 
-        ) :
-        null        
-        } 
+        <View style={[styles.container, { gap: dynamicGap }]}>
+          {/* Botón que abre el modal */}
+          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona una Especialidad:</Text>
+          <TouchableOpacity
+            style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
+            onPress={() => setModalEspecialidadVisible(true)}
+          >
+            <Text style={styles.buttonText}>{selectedEspecialidad}</Text>
+          </TouchableOpacity>
 
-         <TertiaryButton
-          onPress={() => navigation.navigate('Enviando')}
-          label="Continuar con la solicitud"
-          color={globalColors.profile2}
-          iconName='people-outline'
-         description='Presiona para continuar' 
-         disabled={!isFormComplete}
-        />
+          {/* Modal para seleccionar las opciones */}
+          <Modal
+            visible={modalEspecialidadVisible}
+            transparent={true}
+            animationType="fade"
+            onRequestClose={() => setModalEspecialidadVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContentEspecialidad}>
+                <View style={{ alignSelf: 'center' }}>
+                  <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
+                </View>
+                <ScrollView>
+                  {NombresDeEspecialidades.map((option) => (
+                    <TouchableOpacity
+                      key={option}
+                      style={styles.modalOption}
+                      onPress={() => handleSelectEspecialidadNuevoSelect(option)}
+                    >
+                      <Text style={styles.optionText}>{option}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+                <View style={{ alignSelf: 'center', marginTop: 5 }}>
+                  <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
+                </View>
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setModalEspecialidadVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>Cerrar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
+          </Modal>
+
+        </View>
+
+        {/* -----------------PRESTADOR Nuevo SElectt---------------- */}
+
+        <Divider />
+
+        <View style={[styles.container, { gap: dynamicGap }]}>
+          {/* Botón que abre el modal */}
+          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona un Prestador:</Text>
+          <TouchableOpacity
+            style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
+            onPress={() => setModalPrestadorVisible(true)}
+          >
+            <Text style={styles.buttonText}> {selectedPrestador}  {/* {selectedPrestador.toLowerCase()}  */}</Text>
+          </TouchableOpacity>
+
+          {/* Modal para seleccionar las opciones */}
+          <Modal
+            visible={modalPrestadorVisible}
+            transparent={true}
+            animationType="fade"
+            onRequestClose={() => setModalPrestadorVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContentEspecialidad}>
+                <View style={{ alignSelf: 'center' }}>
+                  <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
+                </View>
+                <ScrollView>
+                  {NombresDePrestadores.map((option) => (
+                    <TouchableOpacity
+                      key={option}
+                      style={styles.modalOption}
+                      onPress={() => handleSelectPrestadorNuevoSelect(option)}
+                    >
+                      <Text style={styles.optionText}>{option} </Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+                <View style={{ alignSelf: 'center', marginTop: 5 }}>
+                  <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
+                </View>
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={() => setModalPrestadorVisible(false)}
+                >
+                  <Text style={styles.closeButtonText}>Cerrar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
+        </View>
+
+        <Divider />
+
+        <View style={{ alignSelf: 'center', marginTop: 5, /* backgroundColor:'yellow',  */}}>
+
+          {!isFormComplete ?
+            (
+              <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 18, textAlign: 'center', color: '#595960', /* color:'#030136' */ }}>Completá todos los campos para poder continuar con tu solicitud</Text>
+            ) :
+            null
+          }
+
+          <TertiaryButton
+            onPress={() => navigation.navigate('Enviando')}
+            label="Continuar con la solicitud"
+            color={globalColors.profile2}
+            iconName='people-outline'
+            description='Presiona para continuar'
+            disabled={!isFormComplete}
+            textSize={18}
+          />
+        </View>
       </View>
 
     </View>
@@ -473,23 +481,24 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    margin:0,
-    padding:0,
-    backgroundColor: '#4285F4', 
+    margin: 0,
+    padding: 0,
+    backgroundColor: '#4285F4',
+    fontSize: 18,
     /* backgroundColor: SelectedPrestadorNombre ? globalColors.NaranjaPastel : 'white' */
   },
   consignaText: {
     color: 'black',
     fontSize: 20,
-    margin:0,
-    padding:0,
-    marginBottom:10,
+    margin: 0,
+    padding: 0,
+    marginBottom: 10,
   },
   /* inicio del modal  */
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection:'column',
+    flexDirection: 'column',
     gap: -10,
     marginBottom: 12,
     marginTop: 12,
@@ -503,22 +512,22 @@ const styles = StyleSheet.create({
   },
   modalContentEspecialidad: {
     backgroundColor: '#FFFFFF',
-   /*  backgroundColor: 'blue', */
+    /*  backgroundColor: 'blue', */
     width: '70%',
     borderRadius: 10,
     maxHeight: '80%', // Limita la altura del modal para permitir el scroll
     padding: 10,
     justifyContent: 'center',
-   /*  alignItems: 'center', */
+    /*  alignItems: 'center', */
   },
   optionText: {
     fontSize: 16,
     textAlign: 'center',
-   /*  color: '#595960',  */
+    /*  color: '#595960',  */
   },
   closeButton: {
     marginTop: 10,
- backgroundColor: '#4285F4',
+    backgroundColor: '#4285F4',
     padding: 10,
     borderRadius: 8,
     alignItems: 'center',
@@ -526,7 +535,7 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'white',
     fontSize: 16,
-  
+
   },
   modalOption: {
     paddingVertical: 10,

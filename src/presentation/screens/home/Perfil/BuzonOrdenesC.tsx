@@ -215,7 +215,7 @@ const { orderNotifications, setOrderNotifications } = useNotificationStore.getSt
         setIsConsulting(false);
     
       } catch (error) {
-        console.error('Error al obtener combinar y guardar los datos de ordenes de consulta:', error);
+        console.log('Error al obtener combinar y guardar los datos de ordenes de consulta:', error);
         setIsConsulting(false);
        /*  setModalVisible2(true); */
       }

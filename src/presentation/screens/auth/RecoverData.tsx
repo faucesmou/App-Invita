@@ -48,7 +48,9 @@ export const RecoverData = ({ navigation }: Props) => {
       if (respuesta) {
         const user = respuesta.usuarioAfiliado
         const pass = respuesta.passAfiliado;
-     const usuarioNombre = respuesta.usuarioNombre
+        //@ts-ignore
+        const usuarioNombre = respuesta.usuarioNombre
+        //@ts-ignore
         const usuarioApellido = respuesta.usuarioApellido; 
         setUser(user);
         setPass(pass); 
@@ -243,9 +245,12 @@ export const RecoverData = ({ navigation }: Props) => {
           <Layout style={{
             alignItems: 'flex-end',
             flexDirection: 'row',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            marginHorizontal:'5%',
           }}>
-            <Text>
+            <Text
+            style={{marginLeft:'4%'}}
+            >
               ¿No tienes cuenta? 
               Registrate en 
             </Text>

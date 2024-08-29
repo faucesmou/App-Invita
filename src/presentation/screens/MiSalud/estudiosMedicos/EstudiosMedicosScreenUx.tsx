@@ -241,6 +241,7 @@ export const EstudiosMedicosScreenUx = () => {
   const handleSelectFamiliarNuevoSelect = async (familiarSeleccionado: string) => {
 
     setSelectedFamiliarNombre(familiarSeleccionado);
+    //@ts-ignore
     const familiarEncontrado: any = FamiliaresObtenidosObjeto.find(familiar => familiar.apellidoYNombre === familiarSeleccionado);
     if (familiarEncontrado) {
       setFamiliarSeleccionadoDatos(familiarEncontrado)
@@ -375,7 +376,7 @@ export const EstudiosMedicosScreenUx = () => {
 
           <TouchableWithoutFeedback onPress={cerrarTeclado} >
             <View style={globalStyles.containerInput2} >
-              <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 0 }}>Utilizá el siguiente buscador para encontrar tu prestador</Text>
+              <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 18, textAlign: 'center', marginBottom: 10, marginTop: 0 }}>Utilizá el siguiente buscador para encontrar tu prestador</Text>
               <TextInput
                 editable={true}
                 style={globalStyles.estilosInput2}
@@ -503,7 +504,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     backgroundColor: '#4285F4',
-    fontSize: 18,
+    fontSize: 16,
     /* backgroundColor: SelectedPrestadorNombre ? globalColors.NaranjaPastel : 'white' */
   },
   consignaText: {

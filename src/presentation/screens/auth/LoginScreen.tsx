@@ -23,7 +23,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   const { top } = useSafeAreaInsets();
 
 
-  const { loginGonzaMejorado } = useAuthStore();
+  const { loginGonzaMejorado, guardarDatosLoginEnContext, loginGonzaMejorado2, } = useAuthStore();
  
 
   const [isPosting, setIsPosting] = useState(false)
@@ -34,7 +34,7 @@ export const LoginScreen = ({ navigation }: Props) => {
     dni: '',
   })
 
-  const onLoginGonza = async () => {
+/*   const onLoginGonza = async () => {
 
    
     if ( form.password.length === 0 || form.usuario.length === 0) {
@@ -44,12 +44,55 @@ export const LoginScreen = ({ navigation }: Props) => {
     setIsPosting(true); 
   
     const salioBien = await loginGonzaMejorado( form.usuario, form.password, form.dni)
+
+    const guardarDatosUsuarioEnContext = await guardarDatosLoginEnContext(form.dni)
+
+    if(!guardarDatosUsuarioEnContext){
+      console.log('no se pudieron guardar los datos de usuario desde el loginScreen');
+      
+    }
     setIsPosting(false);
 
     if (salioBien) return;
     Alert.alert('Ups!', 'Usuario o contraseña incorrectos');
     return;
-  }
+  } */
+  const onLoginGonza2 = async () => {
+
+    if (form.password.length === 0 || form.usuario.length === 0) {
+      Alert.alert('Usuario y contraseña son obligatorios');
+      return;
+    }
+  
+    setIsPosting(true);
+  
+    try {
+      const loginExitoso = await loginGonzaMejorado2(form.usuario, form.password);
+  
+      if (loginExitoso) {
+      /* const idAfiliadoActual = idAfiliado */
+      const { idAfiliado } = useAuthStore.getState(); 
+
+      if (idAfiliado) {
+        // Llama a guardarDatosLoginEnContext con el idAfiliado actualizado
+        const datosGuardados = await guardarDatosLoginEnContext(idAfiliado);
+
+        if (!datosGuardados) {
+          console.error('No se pudieron guardar los datos de usuario desde el LoginScreen');
+        }
+      } else {
+        console.error('idAfiliado no está disponible');
+      }
+
+      } else {
+        Alert.alert('Ups!', 'Usuario o contraseña incorrectos');
+      }
+    } catch (error) {
+      console.error('Error durante el login:', error);
+    } finally {
+      setIsPosting(false);
+    }
+  };
 
   return (
     <Layout style={{ flex: 1, /* backgroundColor: 'green', */ }}>
@@ -99,7 +142,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           style={styles.customButton}
             disabled={isPosting}
             accessoryRight={<MyIcon name="arrow-forward-outline" white isDisabled={isPosting}  />}
-            onPress={onLoginGonza}
+            onPress={onLoginGonza2}
           >
             Ingresar
           </Button>

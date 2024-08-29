@@ -7,6 +7,8 @@ interface FullScreenLoaderProps {
   spinnerSize?: 'small' | 'medium' | 'large' | 'giant'; // Tamaños posibles del Spinner
   spinnerStatus?: 'primary' | 'success' | 'info' | 'warning' | 'danger'; // Modificar el símbolo/color del Spinner
   spinnerStyle?: StyleProp<ViewStyle>;
+/*   marginTop?: number;
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch';  */
 }
 
 export const FullScreenLoader: React.FC<FullScreenLoaderProps> = ({
@@ -17,7 +19,7 @@ export const FullScreenLoader: React.FC<FullScreenLoaderProps> = ({
 }) => {
   return (
     <Layout
-      style={[{ flex: 1, justifyContent: 'center', alignItems: 'center' }, layoutStyle]} // Mezcla los estilos por defecto con los que se pasan por props
+      style={[{ flex: 1, justifyContent: 'center', alignItems: 'center', }, layoutStyle]} // Mezcla los estilos por defecto con los que se pasan por props
     >
       <Spinner
         size={spinnerSize} 

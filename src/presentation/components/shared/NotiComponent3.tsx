@@ -154,7 +154,7 @@ const NotiComponent3 = () => {
       setOrderNotifications(combinedData); 
      
     } catch (error) {
-      console.error('Error en Noti Component 3. en CombinedData2 (las notficaciones de las ordenes de consulta):', error);
+      console.log('Error en Noti Component 3. en CombinedData2 (las notficaciones de las ordenes de consulta):', error);
 
     }
   }
