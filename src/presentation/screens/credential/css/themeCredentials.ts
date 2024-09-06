@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const credentialsColors = {
     blue:'#0f4f87',
@@ -94,31 +95,41 @@ export const globalStylesCredentials = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: 'white',
    /*  padding: 10, */
-    marginTop: 10,
+    marginTop: hp('0%'),
+    marginBottom: hp('0%'),
+   /*  marginTop: 10, */
     flexDirection: 'column',
     overflow: 'hidden', 
-    marginVertical: 20,
-    width: '100%'/* 390 */,//En el 15maxpro estaba en 390.
-    height: 230,
+  /*   marginVertical: 20, */
+    width:  wp('90%'),/* 390 *///probamos con medidas que se ajustan mejor a la ventana.
+    /* width: '100%'. *//* 390 *///En el 15maxpro estaba en 390.
+    height: hp('25%'),
+  /*   height: 230, */
     paddingHorizontal: 0,
     color: 'white',
     borderRadius: 10, 
+    backgroundColor: 'violet',
+    zIndex: 3,
        
   },
   frenteCardHome2: {
   /*   padding: 10,
     marginTop: 10, */
-    marginTop:30,
+    marginTop: hp('6%'),
+ /*    marginTop:30, */
     paddingHorizontal: 0,
     marginBottom:10,
     flexDirection: 'column',
    /*  overflow: 'hidden',  */
     marginVertical: 0,
-    width: 380,
-    height: 220,
+    width:  wp('89%'),
+   /*  width: 380, */
+   height: hp('24%'),
+   /*  height: 220, */
     color: 'white',
     borderRadius: 10,    
-    zIndex: 2,
+    zIndex: 3,
+   /*  zIndex: 2, */
   },
   dorsoCard: {
     flexDirection: 'column',
@@ -135,10 +146,14 @@ export const globalStylesCredentials = StyleSheet.create({
     overflow: 'hidden', 
    alignItems: 'center',
     marginVertical: 0,
-    width: 50,
-    height: 40,
+    width: wp('13%'),
+   /*  width: 50, */
+   height: hp('6%'),
+   /*  height: 40, */
     color: 'white',
-    borderRadius: 10,    
+    borderRadius: 10, 
+    marginBottom: hp('1%'),
+     marginTop: hp('-3%')    
   },
   contenedorTituloAndesDorso: {
     flexDirection: 'row',
@@ -161,21 +176,26 @@ export const globalStylesCredentials = StyleSheet.create({
     fontWeight: 'bold',
   },
   planTitleHome: {
-    fontSize: 26,   
+    fontSize: hp('3%'),   
+    /* fontSize: 26,  */  
     color: 'white',
-    padding: 10,
+    padding: hp('1%'),
+    /* padding: 10, */
     bottom:'80%',
-    marginRight:'5%',
+    marginRight:wp('5%'),
+   /*  marginRight:'5%', */
     fontWeight: 'bold',
   },
   fuente: {
     top:'auto',
-    bottom:'80%',
+    bottom:hp('19.5%'),
+   /*  bottom:'80%', */
 /*     backgroundColor:'green',  */
   },
   tituloAndes: {
     color:'white',
-    fontSize:15,
+    fontSize: hp('1.7%'),
+   /*  fontSize:15, */
     fontWeight: 'bold',
   }, 
 

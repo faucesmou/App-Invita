@@ -1,21 +1,16 @@
-//import { globalStyles } from '../../theme/theme'
+
 import { type NavigationProp, useNavigation, DrawerActions } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, Image, Linking, Pressable, } from 'react-native'
 import { RootStackParams } from '../../routes/StackNavigator';
-import { useProfileStore } from '../../store/profile-store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { HamburgerMenu } from '../../components/shared/HamburgerMenu';
-import CustomHeader from '../../components/CustomHeader';
 import Credencial from '../../components/shared/Credencial';
 import { SecondaryButton } from '../../components/shared/SecondaryButton';
 import { globalColors } from '../../theme/theme';
 import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
-import { BackButton } from '../../components/shared/BackButton';
-import { IonIcon } from '../../components/shared/IonIcon';
 
-/* import NotificationComponent from '../../components/shared/NotificationComponent'; */
+
 import NotiComponent3 from '../../components/shared/NotiComponent3';
 import NotiMensajes from '../../components/shared/Noti-mensajes';
 import { useNotificationStore } from '../../store/notification-store';
@@ -88,10 +83,11 @@ const handleOpenURL = () => {
             height: adjustedHeaderHeight,
             backgroundColor: 'black',
             display: 'flex',
-            flexDirection: 'row'
+            flexDirection: 'row',
+           
           }]}>
 
-        <View style={{ width: '80%', marginBottom: 10  }}>
+        <View style={{ width: '80%', marginBottom: 20,  }}>
 
           <Text style={{
             fontSize: 35,
@@ -131,7 +127,7 @@ const handleOpenURL = () => {
           style={styles.innerContainer}
         >
           <Text style={styles.text} >
-            Bienvenido a Andes Salud
+            Bienvenido a Andes Salud 
           </Text>
 
           <Image source={require('../../assets/images/logogris.png')}
@@ -248,7 +244,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: '20%',
     marginLeft:0,
-/*    backgroundColor:'green'  */
   },
   rowContainer1: {
     flexDirection: 'row',
@@ -256,7 +251,6 @@ const styles = StyleSheet.create({
     maxWidth:'50%', 
     maxHeight:'70%',
     marginTop: '0%',
- /*   backgroundColor:'yellow'  */
   },
   rowContainer2: {
     flexDirection: 'row',
@@ -264,7 +258,6 @@ const styles = StyleSheet.create({
     maxWidth:'50%', 
     maxHeight:'70%',
     marginTop: '3%',
- /*   backgroundColor:'yellow'  */
   },
  card: {
   width: '90%',
@@ -309,7 +302,6 @@ innerContainer: {
   flexDirection:'row',
   height: '50%',
   marginHorizontal:20,//En el 15maxpro estaba en 40.
-/*   backgroundColor:'green' */
 },
 image: {
   flex: 0.2,

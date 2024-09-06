@@ -66,3 +66,6 @@ yarn-error.log
 
 # testing
 /coverage
+
+# Este archivo suele generarse automáticamente por Xcode, y en la mayoría de los casos no es necesario rastrearlo en Git
+ios/NavigationApp6.xcodeproj/project.xcworkspace/

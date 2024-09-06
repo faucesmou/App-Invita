@@ -8,10 +8,12 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "start:ios8": "npx react-native run-ios --udid B42A8283-E560-405C-B2DD-2999FB883805",
     "start:ios15ProMax": "npx react-native run-ios --udid DA117F3A-AF7F-4A88-B202-9DCCCEFE1133",
     "start:ios14": "npx react-native run-ios --udid 20CB557F-2352-4645-9187-573316FD6B7C",
     "start:ios14Pro": "npx react-native run-ios --udid DA522C2D-B8A5-47ED-A363-C1D123E7C3D8",
-    "start:ios14ProMax": "npx react-native run-ios --udid F091BE3C-882E-48F7-9657-652D4EF764FF"
+    "start:ios14ProMax": "npx react-native run-ios --udid F091BE3C-882E-48F7-9657-652D4EF764FF",
+    "start:ios13Mini": "npx react-native run-ios --udid AF7645B7-67CE-4108-A0F3-1AD47C4F517D"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
@@ -36,6 +38,7 @@
     "react-native-linear-gradient": "^2.8.3",
     "react-native-pager-view": "^6.2.3",
     "react-native-reanimated": "^3.6.1",
+    "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^4.10.1",
     "react-native-screens": "^3.29.0",
     "react-native-shadow": "^1.2.2",

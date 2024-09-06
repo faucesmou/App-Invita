@@ -8,7 +8,7 @@ import { xml2json } from 'xml-js';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
 import { globalStylesCredentials } from '../../screens/credential/css/themeCredentials';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const convert = { xml2json };
 const isotipo = require('../../screens/credential/CredentialsData/images/Isotipo.png');
@@ -111,28 +111,47 @@ const Credencial = () => {
 
 
   return (
-    <View style={{ flex: 1, marginBottom:0 }}>
+    <View style={{ /* flex: 1, */ marginBottom:0, zIndex: 3, height: hp('23%'), marginTop: hp('0%')  }}>
       {isConsulting ? (
       /*   <FullScreenLoader /> */
       <>
       </>
       ) : (
-        <View >
+        <View style={{ height: hp('23%'), marginTop: hp('-1%') }} >
           <LinearGradient colors={planColors} style={globalStylesCredentials.frenteCardHome}>
             <ImageBackground source={require('../../screens/credential/CredentialsData/images/BackgroundLogoGray3.png')} 
             imageStyle={{
               resizeMode: "cover",/* cover o contain */
               flex: 1,
               justifyContent: 'flex-start',
-              width: '100%',
-              height: '80%',
-              transform: [{ translateX: 190 }, { translateY: -40 }],
+             /*  width: '100%', */
+              width: wp('90%'),
+            /*   height: '80%', */
+              height: hp('33%'),
+              transform: [{ translateX: wp('44%') }, { translateY: hp('-4%') }],
+             /*  transform: [{ translateX: 190 }, { translateY: -40 }], */
             }} 
             
             >
               <View>
-                <View style={{ alignItems: 'flex-start', padding: 12 }}>
-                  <Image source={isotipo} style={{ width: 50, height: 50, marginBottom: 10 }} />
+                <View style={{ alignItems: 'flex-start',
+                 padding: wp('2%'),
+                  marginTop: hp('1%') }}>
+                  <View style={{ width: wp('13%'),
+                   height: hp('6%'), 
+                   marginBottom: hp('0.5%'), 
+                   marginTop: hp('-1%'), 
+                   minHeight:hp('10%')  }} >
+                  <Image source={isotipo} style={{ /* width: 50 */
+                  width: wp('13%'), 
+                  height: hp('6%'), 
+                  /* height: 50 */
+                  minHeight:hp('7%') ,
+                   marginBottom: hp('0%'),
+                    marginTop: hp('0%'),
+                    resizeMode: 'contain'
+                      }} />
+                  </View>
                   <View style={globalStylesCredentials.contenedorTituloAndes}>
                     <Text style={globalStylesCredentials.tituloAndes}>andes</Text>
                     <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
@@ -142,12 +161,12 @@ const Credencial = () => {
                     <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
                     <View /* style={globalStylesCredentials.fuente} */
                       style={[globalStylesCredentials.fuente,
-                      cantidadPalabras >= 3 && { width: '60%' },
-                      cantidadPalabras === 2 && { width: '50%' },
+                      cantidadPalabras >= 3 && { /* width: '60%' */ width: wp('60%') },
+                      cantidadPalabras === 2 && { /* width: '50%' */ width: wp('50%') },
                       ]} >
-                      <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
-                      <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
-                      <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>
+                      <Text style={{ color: 'white', fontSize: hp('1.7%') }}>{datosCredencial.nombreAfiliado}</Text>
+                      <Text style={{ color: 'white', fontSize: hp('1.7%') }}>{datosCredencial.numAfiliado}</Text>
+                      <Text style={{ color: 'white', fontSize: hp('1.7%') }}>{datosCredencial.fecVencimiento}</Text>
                     </View>
                   </View>
                 </View>

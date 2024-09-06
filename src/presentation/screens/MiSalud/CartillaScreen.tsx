@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Dimensions, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { globalColors } from '../../theme/theme'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -10,14 +10,25 @@ import { TertiaryButton } from '../../components/shared/TertiaryButton';
 import { IonIcon } from '../../components/shared/IonIcon';
 import NotiMensajes from '../../components/shared/Noti-mensajes';
 import NotiComponent3 from '../../components/shared/NotiComponent3';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const CartillaScreen = () => {
   console.log('Entrando a Cartilla Screen--------->');
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   const { top } = useSafeAreaInsets();
-  const headerHeight = 120; // Altura del encabezado
-  const adjustedHeaderHeight = headerHeight + top 
+/*   const headerHeight = 120; // Altura del encabezado
+  const adjustedHeaderHeight = headerHeight + top  */
+
+  const { height } = Dimensions.get('window');
+
+  let headerHeight = hp('12%'); // Ajusta el tamaño de la cabecera según el alto de la pantalla
+ let adjustedHeaderHeight = headerHeight + top 
+  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+    headerHeight = hp('17%'); // Ajuste para pantallas más pequeñas
+    adjustedHeaderHeight = headerHeight + top 
+  }
+
 
   const handlePhonePress2 = (phoneNumber: any) => {
     Alert.alert(
@@ -62,13 +73,18 @@ export const CartillaScreen = () => {
         }
       ]}>
 
-        <View style={{ width: '80%', marginBottom: 10, }}>
+        <View style={{ width: '80%', marginBottom: hp('1%') }}>
 
           <Text style={{
-            fontSize: 35,
+              fontSize: wp('7%'), // Ajuste responsivo para el tamaño del texto
+              textAlign: 'center',
+              color: 'white',
+              marginLeft: wp('10%'),
+              marginBottom: hp('1%')
+            /* fontSize: 35,
             textAlign: 'center',
             marginLeft: '12%',
-            color: 'white',
+            color: 'white', */
             /*   backgroundColor: 'yellow' */
 
           }} >
@@ -82,7 +98,7 @@ export const CartillaScreen = () => {
             console.log('presiono el boton ');
             navigation.navigate('Buzón')
           }}
-            style={{ marginLeft: 0, marginBottom: 5 }}
+            style={{ marginLeft: 0,  marginBottom: hp('3%') /* marginBottom: 5 */ }}
           >
             {/*  <IonIcon name='notifications-outline' color={'white'} size={35} />  */}
             <NotiMensajes />
@@ -103,7 +119,7 @@ export const CartillaScreen = () => {
       <View style={styles.bigContentContainer} >
         <View style={styles.emergencyContainer} >
           <View style={{ marginBottom: 15 }}>
-            <Text style={{ fontSize: 30, textAlign: 'center', color: globalColors.orange2, fontWeight: 'bold', marginTop: 0, marginBottom: 10 }} > Urgencias y Emergencias</Text>
+            <Text style={{ /* fontSize: 30 */ fontSize: hp('3.5%'), textAlign: 'center', color: globalColors.orange2, fontWeight: 'bold', marginTop: 0,  marginBottom: wp('1%')/* marginBottom: 10 */ }} > Urgencias y Emergencias</Text>
             <Text style={styles.emergencySubitle}>En caso de emergencias, comunicate a los siguientes números:</Text>
           </View>
           <View >
@@ -130,7 +146,7 @@ export const CartillaScreen = () => {
 
         </View>
 
-        <View style={{ marginTop: 20, }}>
+        <View style={{    marginTop: hp('1%') }}>
          
           <TertiaryButton
             onPress={() => navigation.navigate('Cartillas')}
@@ -164,13 +180,16 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     position: 'absolute',
-    top: 120, 
-    width: '100%',
+    top: hp('12%'), 
+  /*   top: 120,  */
+   /*  width: '100%', */
+   width: wp('95%'),
+   alignSelf:'center',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1,
+    zIndex: 3,
     paddingHorizontal: 0,
-    marginBottom: 10,
+    marginBottom: hp('0%'),
     borderRadius: 20,
   },
   bigContentContainer: {
@@ -181,32 +200,40 @@ const styles = StyleSheet.create({
     backgroundColor: 'white' /* globalColors.white1 */
   },
   card: {
-    width: '90%',
-    padding: '3%',
+   /*  width: '90%', */
+   width: wp('90%'),
+  /*   padding: '3%', */
+  padding: wp('2.5%'),
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 7 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
+    shadowRadius: 3,
     elevation: 5,
   },
   cardTitle: {
-    fontSize: 22,
+    /* fontSize: 22, */
+    fontSize: hp('2.5%'),
     fontWeight: 'normal',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: wp('2%'),
+  /*   marginBottom: 10, */
   },
   cardSubtitle: {
-    fontSize: 18,
+  /*   fontSize: 18, */
+  fontSize: hp('2%'),
     textAlign: 'center',
     color: 'black',
   },
   emergencyContainer: {
     backgroundColor: 'white',
-    marginTop: '20%',
-    marginHorizontal: 30,
-    padding: 10,
+    marginTop: hp('7%'),
+  /*   marginTop: '20%', */
+    marginHorizontal: wp('6%'),
+ /*    marginHorizontal: 30, */
+    padding: wp('1%'),
+   /*  padding: 10, */
     borderWidth: 0.3,
     borderColor: 'white',
     borderRadius: 15,
@@ -214,9 +241,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
     shadowRadius: 20,
+    zIndex: 3,
   },
   emergencySubitle: {
-    fontSize: 18,
+    fontSize: hp('2%'),
+ /*    fontSize: 18, */
     marginBottom: 0,
     fontFamily: 'Quicksand-Regular',
     textAlign: 'center',
@@ -224,13 +253,15 @@ const styles = StyleSheet.create({
   emergencyProvincesTitle: {
     color: 'brown',
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: hp('2.5%'),
+  /*   fontSize: 25, */
     textAlign: 'center'
   },
   emergencyProvincesNumbers: {
     color: globalColors.yellow,
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: hp('2.5%'),
+  /*   fontSize: 20, */
     textAlign: 'center'
   },
  

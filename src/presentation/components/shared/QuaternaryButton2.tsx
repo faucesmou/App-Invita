@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'; //supuestamente esto generaba anidacion( revisar )
 import React from 'react'
-import { Pressable, StyleSheet, Text, View, TextStyle  } from 'react-native';
+import { Pressable, StyleSheet, Text, View  } from 'react-native';
 import { globalColors, globalStyles } from '../../theme/theme';
 import { IonIcon } from './IonIcon';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -12,15 +12,14 @@ interface Props {
     color?: string;
     disabled?: boolean;
     iconName?: string;
+    iconName2?: string;
     description?: string;
-    textSize?:number;
-    textAlign?: TextStyle['textAlign']
 }
 
 
-export const TertiaryButton = ( { onPress, label, color, disabled, iconName, description, textSize, textAlign }: Props) => {
+export const QuaternaryButton2 = ( { onPress, label, color, disabled, iconName,iconName2, description }: Props) => {
   const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
- 
+
   const navigation = useNavigation();
 
   return (
@@ -35,11 +34,15 @@ export const TertiaryButton = ( { onPress, label, color, disabled, iconName, des
       ]}
     >
       <View style={styles.contentWrapper2}>
+      {iconName2 && (
+          <View style={styles.iconWrapper2}>
+            <IonIcon name={iconName2} size={hp('3.5%')} color="gray" />
+          </View>
+        )} 
+
         <View style={styles.textWrapper}>
           {label && (
-            <Text /* style={[styles.buttonText, { fontSize: textSize ? textSize : 20, textAlign: textAlign ? textAlign : 'left'  }] } */
-            style={StyleSheet.flatten([styles.buttonText, { fontSize: textSize || wp('5%'), textAlign: textAlign || 'left' }])}
-            >
+            <Text style={styles.buttonText}>
               {label}
             </Text>
           )}
@@ -51,7 +54,7 @@ export const TertiaryButton = ( { onPress, label, color, disabled, iconName, des
         </View>
         {iconName && (
           <View style={styles.iconWrapper}>
-            <IonIcon name={iconName} size={hp('4%')} color="gray" />
+            <IonIcon name={iconName} size={hp('3.5%')} color="gray" />
           </View>
         )}
       </View>
@@ -61,54 +64,61 @@ export const TertiaryButton = ( { onPress, label, color, disabled, iconName, des
 
 const styles = StyleSheet.create({
   TertiaryButton: {
-    backgroundColor: 'white',
-  minWidth: wp('80%'),
-/*   minWidth: '80%',  */
+    /* backgroundColor: 'green', */
+    minWidth: '80%',
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 15,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
-    shadowRadius: 20,
-    padding: wp('2%'),
-   /*  padding: 10, */
-    margin: wp('1%'),
-   /*  margin: 5, */
-    marginBottom: wp('2%'),
-   /*  marginBottom: 10, */
-    marginHorizontal: wp('3%'),
-   /*  marginHorizontal: 15, */
+    shadowRadius: 15,
+    padding: 10,
+    margin: 5,
+    marginBottom: hp('2.8%'),
+  /*   marginBottom: 30, */
+    marginTop:5,
+    marginHorizontal: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   contentWrapper2: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal:wp('1%'),
-  /*   paddingHorizontal:5, */
+    paddingHorizontal:5,
+/*     backgroundColor:'orange' */
   },
   textWrapper: {
-    flex: 1,
-    paddingRight: wp('1%'),
-   /*  paddingRight: 5, */
+ /*    flex: 1, */
+    paddingRight: wp('0.1%'),
+  /*   paddingRight: 5, */
+    paddingLeft: wp('0.1%'),
+   /*  paddingLeft: 5, */
+    justifyContent: 'center',
+  /*   backgroundColor:'green' */
   },
   iconWrapper: {
     justifyContent: 'flex-end',
-    marginLeft: wp('1%'),
-   /*  backgroundColor:'blue', */
-   /*  marginLeft: 10, */
+    marginLeft: 10,
+  /*   backgroundColor:'yellow' */
+  },
+  iconWrapper2: {
+    justifyContent: 'flex-start',
+    marginRight: 10,
+   /*  backgroundColor:'yellow' */
   },
   buttonText: {
     color: 'black',
-    fontSize: wp('3.2%'),
-    /* fontSize: 20, */
+    fontSize: hp('2.2%'),
+   /*  fontSize: 20, */
     fontWeight: 'normal',
+    justifyContent: 'center',
+/*     backgroundColor:'blue' */
   },
   descriptionText: {
     color: 'gray',
-    fontSize: wp('4.5%'),
-    /* fontSize: 18, */
+    fontSize: hp('2.1%'),
+   /*  fontSize: 18, */
+    justifyContent: 'flex-start',
   },
 });
