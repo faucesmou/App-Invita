@@ -3,9 +3,15 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNotificationStore } from '../../store/notification-store';
 import { IonIcon } from './IonIcon';
 
+interface Props {
+  counter?:number;
 
+}
+interface Props2 {
+  IonIconSize?:number;
+}
 
-const NotificationBadge = ( {counter }) => {
+const NotificationBadge = ( {counter }: Props) => {
   return (
     <View style={styles.badge}>
       <Text style={styles.badgeText}>{counter}</Text>
@@ -14,17 +20,19 @@ const NotificationBadge = ( {counter }) => {
 };
 
 
-const NotiMensajes = () => {
- const combinedNotifications = useNotificationStore((state) => state.combinedNotifications); 
-// Calcular el número de notificaciones no vistas
-const unseenNotificationsCount = combinedNotifications.filter(notification => notification.visto === 'no visto').length;
-console.log(' Los mensajes no vistos son.--->',unseenNotificationsCount );
+const NotiMensajes = ( {IonIconSize}: Props2) => {
 
-
+  let IconSize = IonIconSize || 35
+  
+  const combinedNotifications = useNotificationStore((state) => state.combinedNotifications); 
+  // Calcular el número de notificaciones no vistas
+  const unseenNotificationsCount = combinedNotifications.filter(notification => notification.visto === 'no visto').length;
+  console.log(' Los mensajes no vistos son.--->',unseenNotificationsCount );
+  
   
   return (
     <View style={{ display: 'flex', flexWrap: 'wrap', marginTop: 15 }}>
-      <IonIcon name='notifications-outline' color={'white'} size={35} />
+      <IonIcon name='notifications-outline' color={'white'} size={IconSize} />
       {unseenNotificationsCount > 0 && (
         <NotificationBadge counter={unseenNotificationsCount} />
       )}

@@ -17,16 +17,30 @@ export const CartillaScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   const { top } = useSafeAreaInsets();
-/*   const headerHeight = 120; // Altura del encabezado
-  const adjustedHeaderHeight = headerHeight + top  */
+  /*   const headerHeight = 120; // Altura del encabezado
+    const adjustedHeaderHeight = headerHeight + top  */
 
   const { height } = Dimensions.get('window');
 
   let headerHeight = hp('12%'); // Ajusta el tamaño de la cabecera según el alto de la pantalla
- let adjustedHeaderHeight = headerHeight + top 
+  let adjustedHeaderHeight = headerHeight + top
+  let buttonTextFontSize = wp('5%');
+  let buttonDescriptionFontSize = wp('4.5%');
+  let cardTitleFontSize: number = hp('2.5%');
+ let cardDescriptionFontSize: number = hp('2%');
+ let iconNotificationFontSize: number = wp('8%');
+ let titleMarginBottom: number  = hp('1%'); 
+ let iconMarginBottom: number  = hp('3%');  
   if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
     headerHeight = hp('17%'); // Ajuste para pantallas más pequeñas
-    adjustedHeaderHeight = headerHeight + top 
+    adjustedHeaderHeight = headerHeight + top;
+    buttonTextFontSize = wp('4.8%');
+    buttonDescriptionFontSize = wp('4%');
+    cardTitleFontSize = hp('3%');
+    cardDescriptionFontSize = hp('2.5%');
+    iconNotificationFontSize = wp('7%');
+    titleMarginBottom = hp('3%');
+     iconMarginBottom = hp('6%'); 
   }
 
 
@@ -41,14 +55,14 @@ export const CartillaScreen = () => {
             // Aquí mostrarías un mensaje indicando que la acción se realizaría en un dispositivo físico
             console.log('Llamar:', phoneNumber);
             Linking.openURL(`tel:${phoneNumber}`)
-            .then(()=> {
-              console.log('llamada iniciada correctamente');
-              
-            })
-            .catch((err)=>{
-              Alert.alert('Ups!', 'No se pudo llamar al número indicado, por favor verifica que sea válido');
-              console.log('el error al intentar hacer la llamada es el siguiente:', err);
-            })
+              .then(() => {
+                console.log('llamada iniciada correctamente');
+
+              })
+              .catch((err) => {
+                Alert.alert('Ups!', 'No se pudo llamar al número indicado, por favor verifica que sea válido');
+                console.log('el error al intentar hacer la llamada es el siguiente:', err);
+              })
           },
         },
         {
@@ -63,24 +77,24 @@ export const CartillaScreen = () => {
     <View
       style={styles.screenContainer}
     >
-   
 
-      <View style={[styles.headerContainer, 
-        {
-          height: adjustedHeaderHeight,
-          display: 'flex',
-          flexDirection: 'row'
-        }
+
+      <View style={[styles.headerContainer,
+      {
+        height: adjustedHeaderHeight,
+        display: 'flex',
+        flexDirection: 'row'
+      }
       ]}>
 
-        <View style={{ width: '80%', marginBottom: hp('1%') }}>
+        <View style={{ width: '80%', marginBottom: titleMarginBottom}}>
 
           <Text style={{
-              fontSize: wp('7%'), // Ajuste responsivo para el tamaño del texto
-              textAlign: 'center',
-              color: 'white',
-              marginLeft: wp('10%'),
-              marginBottom: hp('1%')
+            fontSize: wp('7%'), // Ajuste responsivo para el tamaño del texto
+            textAlign: 'center',
+            color: 'white',
+            marginLeft: wp('10%'),
+            marginBottom: hp('1%')
             /* fontSize: 35,
             textAlign: 'center',
             marginLeft: '12%',
@@ -98,10 +112,10 @@ export const CartillaScreen = () => {
             console.log('presiono el boton ');
             navigation.navigate('Buzón')
           }}
-            style={{ marginLeft: 0,  marginBottom: hp('3%') /* marginBottom: 5 */ }}
+            style={{ marginLeft: 0, marginBottom: iconMarginBottom /* marginBottom: 5 */ }}
           >
             {/*  <IonIcon name='notifications-outline' color={'white'} size={35} />  */}
-            <NotiMensajes />
+            <NotiMensajes IonIconSize={iconNotificationFontSize} />
           </Pressable>
           <NotiComponent3 />
 
@@ -111,51 +125,55 @@ export const CartillaScreen = () => {
 
       <View style={styles.cardContainer} >
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Tu Prepaga Digital</Text>
-          <Text style={styles.cardSubtitle}>Accedé a todos los centros de atención</Text>
+          <Text style={{ fontSize: cardTitleFontSize, fontWeight: 'normal', textAlign: 'center', marginBottom: wp('2%') }}/* style={styles.cardTitle} */>Tu Prepaga Digital</Text>
+          <Text style={{ fontSize: cardDescriptionFontSize,
+    textAlign: 'center',
+    color: 'black',}}/* style={styles.cardSubtitle} */>Accedé a todos los centros de atención</Text>
         </View>
       </View>
-    
+
       <View style={styles.bigContentContainer} >
         <View style={styles.emergencyContainer} >
           <View style={{ marginBottom: 15 }}>
-            <Text style={{ /* fontSize: 30 */ fontSize: hp('3.5%'), textAlign: 'center', color: globalColors.orange2, fontWeight: 'bold', marginTop: 0,  marginBottom: wp('1%')/* marginBottom: 10 */ }} > Urgencias y Emergencias</Text>
+            <Text style={{ /* fontSize: 30 */ fontSize: hp('3.5%'), textAlign: 'center', color: globalColors.orange2, fontWeight: 'bold', marginTop: 0, marginBottom: wp('1%')/* marginBottom: 10 */ }} > Urgencias y Emergencias</Text>
             <Text style={styles.emergencySubitle}>En caso de emergencias, comunicate a los siguientes números:</Text>
           </View>
           <View >
 
             <Text style={styles.emergencyProvincesTitle}> Mendoza</Text>
-              <TouchableOpacity onPress={() => handlePhonePress2('0810-333-9743')}>
-                          <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text>
-                        </TouchableOpacity>  
+            <TouchableOpacity onPress={() => handlePhonePress2('0810-333-9743')}>
+              <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text>
+            </TouchableOpacity>
 
-        {/*     <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text> */}
+            {/*     <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text> */}
             <Text style={styles.emergencyProvincesTitle}> San Juan</Text>
             <TouchableOpacity onPress={() => handlePhonePress2('264-631-3531')}>
-                          <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text>
-                        </TouchableOpacity> 
+              <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text>
+            </TouchableOpacity>
             {/* <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text> */}
             <Text style={styles.emergencyProvincesTitle}> San Luis</Text>
             <TouchableOpacity onPress={() => handlePhonePress2('265-742-8786')}>
-                          <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text>
-                        </TouchableOpacity> 
+              <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => handlePhonePress2('266-443-5700')}>
-                          <Text style={styles.emergencyProvincesNumbers}> 266-443-5700</Text>
-                        </TouchableOpacity> 
+              <Text style={styles.emergencyProvincesNumbers}> 266-443-5700</Text>
+            </TouchableOpacity>
           </View>
 
         </View>
 
-        <View style={{    marginTop: hp('1%') }}>
-         
+        <View style={{ marginTop: hp('1%') }}>
+
           <TertiaryButton
             onPress={() => navigation.navigate('Cartillas')}
             label="Cartilla Médica"
             color={globalColors.profile2}
             iconName='heart-outline'
             description='Accedé a todas las cartillas'
+            textSize={buttonTextFontSize} 
+            descriptionSize={buttonDescriptionFontSize}
           />
-          
+
         </View>
       </View>
 
@@ -180,11 +198,11 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     position: 'absolute',
-    top: hp('12%'), 
-  /*   top: 120,  */
-   /*  width: '100%', */
-   width: wp('95%'),
-   alignSelf:'center',
+    top: hp('12%'),
+    /*   top: 120,  */
+    /*  width: '100%', */
+    width: wp('95%'),
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 3,
@@ -194,16 +212,16 @@ const styles = StyleSheet.create({
   },
   bigContentContainer: {
     flex: 1,
-    marginTop: -25,
+    marginTop: wp('-6%'),
     zIndex: 0.5,
     borderRadius: 15,
-    backgroundColor: 'white' /* globalColors.white1 */
+    backgroundColor: globalColors.white2
   },
   card: {
-   /*  width: '90%', */
-   width: wp('90%'),
-  /*   padding: '3%', */
-  padding: wp('2.5%'),
+    /*  width: '90%', */
+    width: wp('90%'),
+    /*   padding: '3%', */
+    padding: wp('2.5%'),
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
@@ -218,22 +236,21 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     textAlign: 'center',
     marginBottom: wp('2%'),
-  /*   marginBottom: 10, */
+    /*   marginBottom: 10, */
   },
   cardSubtitle: {
-  /*   fontSize: 18, */
-  fontSize: hp('2%'),
+    fontSize: hp('2%'),
     textAlign: 'center',
     color: 'black',
   },
   emergencyContainer: {
     backgroundColor: 'white',
     marginTop: hp('7%'),
-  /*   marginTop: '20%', */
+    /*   marginTop: '20%', */
     marginHorizontal: wp('6%'),
- /*    marginHorizontal: 30, */
+    /*    marginHorizontal: 30, */
     padding: wp('1%'),
-   /*  padding: 10, */
+    /*  padding: 10, */
     borderWidth: 0.3,
     borderColor: 'white',
     borderRadius: 15,
@@ -245,7 +262,7 @@ const styles = StyleSheet.create({
   },
   emergencySubitle: {
     fontSize: hp('2%'),
- /*    fontSize: 18, */
+    /*    fontSize: 18, */
     marginBottom: 0,
     fontFamily: 'Quicksand-Regular',
     textAlign: 'center',
@@ -254,21 +271,21 @@ const styles = StyleSheet.create({
     color: 'brown',
     fontWeight: 'bold',
     fontSize: hp('2.5%'),
-  /*   fontSize: 25, */
+    /*   fontSize: 25, */
     textAlign: 'center'
   },
   emergencyProvincesNumbers: {
     color: globalColors.yellow,
     fontWeight: 'bold',
     fontSize: hp('2.5%'),
-  /*   fontSize: 20, */
+    /*   fontSize: 20, */
     textAlign: 'center'
   },
- 
+
 });
 
 
-  {/*   <TouchableOpacity
+{/*   <TouchableOpacity
           onPress={() => {
             Clipboard.setString(currentUser);
             Alert.alert('Copiado en el portapapeles.');

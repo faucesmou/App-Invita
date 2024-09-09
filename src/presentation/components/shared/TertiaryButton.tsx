@@ -14,15 +14,18 @@ interface Props {
     iconName?: string;
     description?: string;
     textSize?:number;
+    descriptionSize?: number;
     textAlign?: TextStyle['textAlign']
 }
 
 
-export const TertiaryButton = ( { onPress, label, color, disabled, iconName, description, textSize, textAlign }: Props) => {
+export const TertiaryButton = ( { onPress, label, color, disabled, iconName, description, textSize, textAlign, descriptionSize }: Props) => {
   const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
  
   const navigation = useNavigation();
 
+
+  
   return (
     <Pressable
       onPress={disabled ? undefined : onPress}
@@ -44,7 +47,7 @@ export const TertiaryButton = ( { onPress, label, color, disabled, iconName, des
             </Text>
           )}
           {description && (
-            <Text style={styles.descriptionText}>
+            <Text style={[styles.descriptionText, { fontSize: descriptionSize || wp('4.5%') }]}>
               {description}
             </Text>
           )}

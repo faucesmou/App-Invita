@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, Dimensions } from 'react-native'
 import { globalColors, globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'
@@ -16,14 +16,40 @@ import { IonIcon } from '../../components/shared/IonIcon'
 import NotiMensajes from '../../components/shared/Noti-mensajes'
 import NotiComponent3 from '../../components/shared/NotiComponent3' 
 import NotiComponent4 from '../mas/NotiComponent4'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+
 
 export const TramitesScreen = () => {
   console.log('Entrando a TramitesScreen (Mi Gestion)')
 
   const { top, bottom } = useSafeAreaInsets();
-  const headerHeight = 120; // Altura inicial del encabezado
-  const adjustedHeaderHeight = headerHeight + top // Ajusta la altura para tener en cuenta los márgenes seguros
- /*  const { setShouldUpdateNotifications } = useAuthStore(); */
+
+ /* mejorando responsividad: */
+ const { height } = Dimensions.get('window');
+
+ let headerHeight = hp('12%'); // Ajusta el tamaño de la cabecera según el alto de la pantalla
+ let buttonTextFontSize = wp('5%');
+ let buttonDescriptionFontSize = wp('4.5%');
+ let cardTitleFontSize: number = hp('2.5%');
+let cardDescriptionFontSize: number = hp('2%');
+let iconNotificationFontSize: number = wp('8%');
+let titleMarginBottom: number  = hp('1%'); 
+let iconMarginBottom: number  = hp('3%');  
+
+ let adjustedHeaderHeight = headerHeight + top 
+ if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+  headerHeight = hp('17%'); // Ajuste para pantallas más pequeñas
+  adjustedHeaderHeight = headerHeight + top;
+  buttonTextFontSize = wp('4.8%');
+  buttonDescriptionFontSize = wp('4%');
+  cardTitleFontSize = hp('3%');
+  cardDescriptionFontSize = hp('2.5%');
+  iconNotificationFontSize = wp('7%');
+  titleMarginBottom = hp('3%');
+   iconMarginBottom = hp('6%');  
+}
+
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
@@ -41,13 +67,14 @@ export const TramitesScreen = () => {
           flexDirection: 'row' }
         ]}>
 
-        <View style={{ width: '80%', marginBottom: 10  }}>
+        <View style={{ width: '80%', marginBottom: titleMarginBottom }}>
 
           <Text style={{
-            fontSize: 35,
+           fontSize: wp('7%'), // Ajuste responsivo para el tamaño del texto
             textAlign: 'center',
             color: 'white',
-            marginLeft: '12%',
+            marginLeft: wp('10%'),
+            marginBottom: hp('1%')
           }} >
             Mi Gestión
           </Text>
@@ -58,12 +85,12 @@ export const TramitesScreen = () => {
             console.log('presiono el boton ');
             navigation.navigate('Buzón')
           }}
-            style={{ marginLeft: 0, marginBottom: 5 }}
+            style={{ marginLeft: 0, marginBottom: iconMarginBottom }}
           >
 {/* 
             <IonIcon name='notifications-outline' color={'white'} size={35} /> */}
 
-            <NotiMensajes />
+            <NotiMensajes IonIconSize={iconNotificationFontSize} />
           </Pressable>
           
        {/*   <NotiComponent4/>   */}
@@ -74,8 +101,11 @@ export const TramitesScreen = () => {
 
       <View style={styles.cardContainer} >
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Autorizaciones</Text>
-          <Text style={styles.cardSubtitle}>Gestioná todas tus solicitudes</Text>
+          <Text style={{ fontSize: cardTitleFontSize, fontWeight: 'normal', textAlign: 'center', marginBottom: wp('2%') }}>Autorizaciones</Text>
+
+          <Text style={{ fontSize: cardDescriptionFontSize,
+    textAlign: 'center',
+    color: 'black',}}>Gestioná todas tus solicitudes</Text>
         </View>
       </View>
       <View style={styles.bigContentContainer} >
@@ -90,6 +120,8 @@ export const TramitesScreen = () => {
             color={globalColors.profile2}
             iconName='people-outline'
             description='Gestioná la orden de tu consulta'
+            textSize={buttonTextFontSize} 
+            descriptionSize={buttonDescriptionFontSize}
           />{/* <ion-icon name="people-outline"></ion-icon> */}
 
 
@@ -99,6 +131,8 @@ export const TramitesScreen = () => {
             color={globalColors.profile2}
             iconName='medkit-outline'
             description='Gestioná la orden de tus estudios'
+            textSize={buttonTextFontSize} 
+            descriptionSize={buttonDescriptionFontSize}
           />
 
 
@@ -109,6 +143,8 @@ export const TramitesScreen = () => {
             color={globalColors.profile2}
             iconName='document-text-outline'
             description='Descargá tus formularios'
+            textSize={buttonTextFontSize} 
+            descriptionSize={buttonDescriptionFontSize}
           />
 
             
@@ -138,6 +174,7 @@ export const TramitesScreen = () => {
       </View>
     </View>
   )
+  
 }
 const styles = StyleSheet.create({
 
@@ -159,49 +196,40 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     position: 'absolute',
-    top: 120, 
-    width: '100%',
+    top: hp('12%'), 
+    width: wp('97%'),
+   alignSelf:'center',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1,
+    zIndex: 3,
     paddingHorizontal: 0,
-    marginBottom: 10,
+    marginBottom: hp('0%'),
     borderRadius: 20,
   },
   bigContentContainer: {
     flex: 1,
-    marginTop: -25,
+    marginTop: wp('-6%'),
     zIndex: 0.5,
     borderRadius: 15,
     backgroundColor: globalColors.white2
   },
   card: {
-    width: '90%',
-    padding: '3%',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 7 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-    borderColor: 'white',
-   
-  },
-  cardTitle: {
-    fontSize: 22,
-    fontWeight: 'normal',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  cardSubtitle: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: 'black',
+       /*  width: '90%', */
+   width: wp('90%'),
+   /*   padding: '3%', */
+   padding: wp('2.5%'),
+     backgroundColor: 'white',
+     borderRadius: 20,
+     shadowColor: '#000',
+     shadowOffset: { width: 0, height: 7 },
+     shadowOpacity: 0.1,
+     shadowRadius: 3,
+     elevation: 5,
   },
   buttonsContainer: {
     zIndex: 1.5,
-    marginTop: 70,
+    marginTop: hp('7%'),
+   /*  marginTop: 70, */
     borderRadius: 15,
 /*     backgroundColor: 'yellow' */
   },

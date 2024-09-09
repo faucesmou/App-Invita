@@ -54,6 +54,30 @@ export const HomeScreenUx = ( ) => {
     headerHeight = hp('5%'); // Ajuste para pantallas más pequeñas
   }
 
+  let buttonTextFontSize = wp('5%');
+  let buttonDescriptionFontSize = wp('4.5%');
+  let cardTitleFontSize: number = hp('2.5%');
+ let cardDescriptionFontSize: number = hp('2%');
+ let iconNotificationFontSize: number = wp('8%');
+ let titleMarginBottom: number  = hp('1%'); 
+ let iconMarginBottom: number  = hp('3%');  
+ 
+  let adjustedHeaderHeight = headerHeight + top 
+  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+  /*  headerHeight = hp('15%');  */// Ajuste para pantallas más pequeñas
+   /* adjustedHeaderHeight = headerHeight + top; */
+   buttonTextFontSize = wp('4.8%');
+   buttonDescriptionFontSize = wp('4%');
+   cardTitleFontSize = hp('3%');
+   cardDescriptionFontSize = hp('2.5%');
+   iconNotificationFontSize = wp('7%');
+   titleMarginBottom = hp('3%');
+    iconMarginBottom = hp('5%');  
+ }
+
+
+
+
   useEffect(() => {
     const openURL = async () => {
       if (ordenConsulta) {
@@ -103,7 +127,7 @@ const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, desc
   return (
     <View style={styles.screenContainer}>
       <View style={[styles.headerContainer, { height: headerHeight,  backgroundColor: 'black', },]}>
-        <View style={{ width: wp('80%'), marginBottom: hp('1%') }}>
+        <View style={{ width: wp('80%'), marginBottom: titleMarginBottom }}>
           <Text style={styles.headerText}>Inicio</Text>
         </View>
         <View>
@@ -111,9 +135,9 @@ const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, desc
             onPress={() => {
               navigation.navigate('Buzón');
             }}
-            style={{ marginLeft: 0, marginBottom: hp('1%') }}
+            style={{ marginLeft: 0, marginBottom: iconMarginBottom }}
           >
-            <NotiMensajes />
+            <NotiMensajes IonIconSize={iconNotificationFontSize} />
           </Pressable>
           <NotiComponent3 />
         </View>
@@ -242,7 +266,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     position: 'absolute',
-    top: hp('11%'),
+    top: hp('10%'),
     height: hp('28%'),
     width: wp('95%'),
     alignItems: 'center',
@@ -314,7 +338,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     marginBottom: hp('-7%'),
    /*  marginBottom: -60, */
-    marginTop: hp('25%'),
+    marginTop: hp('24%'),
     /* marginTop: 190, */
    /*  flex: hp('0.3%'), */
    /*  flex: 0.4, */
