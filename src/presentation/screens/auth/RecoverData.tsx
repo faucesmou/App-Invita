@@ -10,6 +10,7 @@ import { RootStackParams } from "../../routes/StackNavigator";
 import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IonIcon } from "../../components/shared/IonIcon";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
@@ -122,14 +123,21 @@ export const RecoverData = ({ navigation }: Props) => {
   }
 
   const { height } = useWindowDimensions();
+  let paddingTopNumber = hp('18%');
+  let paddingHorizontalNumber = wp('7%');
+  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+    paddingTopNumber = hp('12%');
+    paddingHorizontalNumber = wp('6%'); 
+  }
+
 
     return (
-      <Layout style={{ flex: 1, /* backgroundColor: 'green' */ }}>
-        <ScrollView style={{ marginHorizontal: 40 }}>
-          <Layout style={{ paddingTop: height * 0.20 }}>
+      <Layout style={{ flex: 1 }}>
+        <ScrollView style={{ marginHorizontal: paddingHorizontalNumber }}>
+          <Layout style={{ paddingTop:paddingTopNumber/*  height * 0.20  */}}>
             <Text category="h1"
               style={{ marginBottom: 20 }}
-            > Recuperar Datos</Text>
+            >Recuperar Datos</Text>
             <Text category="p1">Por favor, completa los siguientes campos para continuar</Text>
 
           </Layout>
@@ -194,12 +202,13 @@ export const RecoverData = ({ navigation }: Props) => {
       }
 
           {/* informacion para crear cuenta */}
-          <Layout style={{ height: 30 }} />
+          <Layout style={{ height: hp('2%') }} />
 
           <Layout style={{
             alignItems: 'center',
             flexDirection: 'column',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            
           }}>
             <Text style={styles.customText2}>
              El Número de credencial es el que figura en tu tarjeta de Andes Salud
@@ -218,13 +227,13 @@ export const RecoverData = ({ navigation }: Props) => {
             </Text>
           </Layout>
 
-          <Layout style={{ height: 40 }} />
+          <Layout style={{ height: hp('2.5%'), /* backgroundColor:'yellow', */ }} />
 
           <Layout style={{
             alignItems: 'flex-end',
             flexDirection: 'row',
             justifyContent: 'center',
-            marginBottom:10,
+            marginBottom:hp('1%'),
           }}>
             <Text>
               ¿Ya tienes una cuenta?
@@ -243,19 +252,20 @@ export const RecoverData = ({ navigation }: Props) => {
 
 
           <Layout style={{
-            alignItems: 'flex-end',
+            alignItems: 'center',
             flexDirection: 'row',
-            justifyContent: 'center',
-            marginHorizontal:'5%',
+           /*  justifyContent: 'center', */
+            marginHorizontal:'0%',
+            alignSelf:'center',
+       /*      backgroundColor:'green', */
           }}>
             <Text
-            style={{marginLeft:'4%'}}
-            >
-              ¿No tienes cuenta? 
-              Registrate en 
+            style={{/* marginLeft:'4%', */ alignSelf:'center', /* marginHorizontal:wp('0%') */}}
+            >¿No tienes cuenta? 
+              Registrate en
             </Text>
             <Text
-              style={styles.customText}
+              style={{color: '#4285F4', alignSelf:'center',marginHorizontal:'0%',}/* styles.customText */}
               status="primary"
               category="s1"
               onPress={handleOpenURLAndes}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet,Platform, NativeModules,   } from 'react-native'
+import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet,Platform, NativeModules, Dimensions, ScrollView,   } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 /*  import * as Clipboard from '@react-native-clipboard/clipboard';  */
@@ -14,7 +14,7 @@ import { useAuthStore } from '../../../store/auth/useAuthStore'
 import { xml2js } from 'xml-js';
 import { globalColors, globalStyles } from '../../../theme/theme'
 import { globalStylesCredentials } from '../../credential/css/themeCredentials'
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
@@ -153,7 +153,7 @@ export const EstudiosMedicosEnv = () => {
       }
     }
 
-    EstudiosMedicosRequest()   /* descomentar al terminar */
+  EstudiosMedicosRequest()   /* descomentar al terminar */
   /*   EnvioIdAfiliadoSeleccionado() */
   }, []);
 
@@ -168,6 +168,21 @@ export const EstudiosMedicosEnv = () => {
       });
 }; */
 
+
+const { height } = Dimensions.get('window');
+let MarginTopSeleccionaFamiliar: number = hp('0.5%');
+let MarginTopDivider: number = hp('0.5%');
+let buttonTextFontSize = wp('4.3%');
+let optionSelectedTextFontSize = wp('4.3%'); 
+let buttonDescriptionFontSize = wp('4.5%');
+if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+
+  MarginTopSeleccionaFamiliar = hp('0%');
+  MarginTopDivider = hp('0.5%');
+  buttonTextFontSize = wp('3.8%');
+  buttonDescriptionFontSize = wp('4%');
+  optionSelectedTextFontSize = wp('4%'); 
+}
   return (
     <View
       style={{
@@ -178,8 +193,9 @@ export const EstudiosMedicosEnv = () => {
       }}
     >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray2} /* titleSize={28} *//>
-      <BackButton onPress={() => navigation.navigate('home')} />
+      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} /* titleSize={28} *//>
+      <BackButton onPress={() => navigation.navigate('home')} Size={hp('4%')} />
+      <ScrollView>  
       {
         isConsulting ? (
           <View
@@ -252,6 +268,7 @@ export const EstudiosMedicosEnv = () => {
           </View>
 
       }
+       </ScrollView>  
     </View>
   )
 }

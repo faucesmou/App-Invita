@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Text, View, Linking } from 'react-native';
+import { Text, View, Linking, ScrollView, Dimensions } from 'react-native';
 
 import axios from 'axios';
 
@@ -18,6 +18,7 @@ import { globalColors, globalStyles } from '../../../theme/theme';
 import CustomHeader from '../../../components/CustomHeader';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../../routes/StackNavigator';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
@@ -101,16 +102,17 @@ export const FormulariosEspScreen = () => {
 
   const color = globalColors.orange
 
+
   return (
     <View
    
       style={globalStyles.container}
   
     >
-      <CustomHeader color={globalColors.black} /* color={color} */ />
+      <CustomHeader color={globalColors.black} titleSize={hp('4%')}  />
 
-      <BackButton />
-
+      <BackButton Size={hp('4%')} />
+ <ScrollView>    
       <Text style={{ marginBottom: 5, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Formularios Especiales</Text>
 
       <View style={{ /* backgroundColor: 'green', */  flex: 1, marginBottom: 30, marginTop: 15 }}>
@@ -126,7 +128,7 @@ export const FormulariosEspScreen = () => {
           </View>
         ))}
       </View>
-
+</ScrollView> 
     </View>
 
   )

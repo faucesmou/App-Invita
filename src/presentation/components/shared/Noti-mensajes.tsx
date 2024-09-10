@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useNotificationStore } from '../../store/notification-store';
 import { IonIcon } from './IonIcon';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 interface Props {
   counter?:number;
 
@@ -14,7 +14,9 @@ interface Props2 {
 const NotificationBadge = ( {counter }: Props) => {
   return (
     <View style={styles.badge}>
-      <Text style={styles.badgeText}>{counter}</Text>
+      <Text style={{display: 'flex', flexWrap: 'nowrap', color: 'black',
+    fontSize: wp('2.3%'),
+    fontWeight: 'bold',}/* styles.badgeText */}>{counter}</Text>
     </View>
   );
 };
@@ -31,7 +33,7 @@ const NotiMensajes = ( {IonIconSize}: Props2) => {
   
   
   return (
-    <View style={{ display: 'flex', flexWrap: 'wrap', marginTop: 15 }}>
+    <View style={{ display: 'flex', flexWrap: 'nowrap', /* marginTop: 15, */  marginTop: wp('6%'), /* backgroundColor:'green' */ }}>
       <IonIcon name='notifications-outline' color={'white'} size={IconSize} />
       {unseenNotificationsCount > 0 && (
         <NotificationBadge counter={unseenNotificationsCount} />
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     color: 'black',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
   },
 });

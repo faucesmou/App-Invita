@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const globalColors = {
   primary: '#7037eb',
@@ -54,7 +55,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: 'white',/* globalColors.gray3 *//* 'yellow' */ /* 'gray' */ /* globalColors.background */
     textAlign: 'center',
     justifyContent: 'center',
-    marginBottom:30,
+    marginBottom:5,
   },
   inputIOS: {
     padding: 0,
@@ -198,17 +199,23 @@ export const globalStyles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
     justifyContent: 'center',
-    paddingHorizontal: 30,
+    paddingHorizontal: wp('5%'),
+ 
+  /*   paddingHorizontal: 30, */
    /*   backgroundColor: 'yellow'  */
   },
   estilosInput2: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    paddingLeft: 15,
-    fontSize: 20,
+    padding: hp('1%'),
+   /*  paddingLeft: 15, */
+    fontSize: hp('2.1%'),
     fontFamily: 'Quicksand-Light',
-    borderRadius: 15,
+    borderRadius: 13,
+  /*   alignSelf: 'center', */
+    flexWrap:'wrap',
+   /*  minWidth:wp('15%') */
   },
   /* estilos para estudios medicos enviados: */
   containerEstudiosMedicosEnv: {

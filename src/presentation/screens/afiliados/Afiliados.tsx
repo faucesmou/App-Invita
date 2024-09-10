@@ -13,7 +13,7 @@ import CustomHeader from '../../components/CustomHeader';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import Credencial from '../../components/shared/Credencial';
 import { TertiaryButton } from '../../components/shared/TertiaryButton';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 /* const products = [
@@ -71,9 +71,9 @@ export const Afiliados = () => {
 
       }}
     >
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} />
 
-      <BackButton />
+      <BackButton Size={hp('4%')}/>
       <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center', }}>Afiliados a Cargo</Text>
 
       <View

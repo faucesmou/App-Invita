@@ -5,6 +5,7 @@ import RNFS from 'react-native-fs';
 import axios from 'axios';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const UploadImage: React.FC = () => {
   /* quiero usar estos estados par mostra la imagen y chequear si estan guardandose o quitandse */
@@ -138,8 +139,11 @@ const UploadImage: React.FC = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Cargá las imágenes de tus Estudios</Text>
 
+    <View  style={{ marginBottom: wp('0.5%'),  marginTop: wp('0.5%'),}}>
       <Button title="Seleccionar Imágenes" onPress={handleImagePicker} />
-      <ScrollView style={{ width: '100%', /* backgroundColor:'green'  */ }} >
+    </View>
+
+   {/*    <ScrollView style={{ width: '100%',  }} > */}
 
         {fileNames.map((fileName, index) => (
           fileName && (
@@ -161,7 +165,7 @@ const UploadImage: React.FC = () => {
             </View>
           )
         ))}
-      </ScrollView>
+   {/*    </ScrollView> */}
 
     </View>
   );
@@ -171,11 +175,13 @@ const UploadImage: React.FC = () => {
     container: {
       /*    flex: 1, */
       padding: 10,
-      marginTop: 10,
+      marginTop: wp('2%'),
       justifyContent: 'center',
       alignItems: 'center',
+      marginBottom: wp('1%')
   /*   backgroundColor:'green',  */
-    maxHeight: '30%',
+   /*  maxHeight: '30%', */
+    /* marginBottom: wp('0%'), marginTop: hp('0%') */
     },
     containerTitle: {
       marginBottom: 0,

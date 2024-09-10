@@ -15,7 +15,7 @@ import { RootStackParams } from '../../../routes/StackNavigator';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import datos from './datosPrueba.json';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface Saldo {
   id: number;
@@ -144,9 +144,9 @@ export const PagosScreen = () => {
 
       style={globalStyles.container}
     >
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} />
 
-      <BackButton />
+      <BackButton Size={hp('4%')}/>
 
       <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Estado de Pagos</Text>
       <ScrollView >

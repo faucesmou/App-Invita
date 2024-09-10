@@ -13,7 +13,7 @@ import { BackButton } from '../../components/shared/BackButton'
 import { TertiaryButton } from '../../components/shared/TertiaryButton';
 import { IonIcon } from '../../components/shared/IonIcon';
 import Divider from '../../components/shared/Divider';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const ConsultaScreenUx = () => {
   console.log('Entrando al ConsultaScreen Ux---->')
@@ -278,14 +278,34 @@ export const ConsultaScreenUx = () => {
   }, [selectedFamiliarNombre, SelectedEspecialidadNombre, SelectedPrestadorNombre]);
 
 
+  const { height } = Dimensions.get('window');
+  let MarginTopSeleccionaFamiliar: number = hp('0.5%');
+  let MarginTopDivider: number = hp('0.5%');
+  let buttonTextFontSize = wp('4.3%');
+ let consignaTextFontSize = wp('5.3%'); 
+ let titleTextFontSize = wp('5.7%'); 
+ let optionSelectedTextFontSize = wp('4.3%'); 
+  let buttonDescriptionFontSize = wp('4.5%');
+  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+
+    MarginTopSeleccionaFamiliar = hp('0%');
+    MarginTopDivider = hp('0.5%');
+    buttonTextFontSize = wp('3.8%');
+    buttonDescriptionFontSize = wp('4%');
+    optionSelectedTextFontSize = wp('4%'); 
+    titleTextFontSize = wp('5%');
+    consignaTextFontSize = wp('4.9%'); 
+  }
+
+
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.black} />
+      <CustomHeader color={globalColors.black} titleSize={hp('4%')}  />
 
-      <BackButton />
+      <BackButton Size={hp('4%')} />
 
-      <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', color: '#030136' }}>Solicita tu Orden de Consulta</Text>
+      <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: titleTextFontSize, textAlign: 'center', color: '#030136' }}>Solicitá tu Orden de Consulta</Text>
 
       {/* color: '#'595960 */}
 
@@ -295,13 +315,13 @@ export const ConsultaScreenUx = () => {
         style={{ /* backgroundColor: 'green', */ flex: 1, marginBottom: '7%', marginTop: '2%' }}>
 
 
-        <Divider />
+        <Divider marginTopDivider={MarginTopDivider}  />
 
         {/* -----------------FAMILIAR NUEVO SELECT---------------- */}
 
         <View style={[styles.container, { gap: dynamicGap }]}>
           {/* Botón que abre el modal */}
-          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona el Familiar:</Text>
+          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin, fontSize:consignaTextFontSize }]}>Selecciona el Familiar:</Text>
           <TouchableOpacity
             style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
             onPress={() => setModalVisible(true)}
@@ -347,12 +367,12 @@ export const ConsultaScreenUx = () => {
 
         </View>
 
-        <Divider />
+        <Divider  marginTopDivider={MarginTopDivider} />
         {/* -----------------ESPECIALIDAD Nuevo SElectt---------------- */}
 
         <View style={[styles.container, { gap: dynamicGap }]}>
           {/* Botón que abre el modal */}
-          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona una Especialidad:</Text>
+          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin, fontSize:consignaTextFontSize  }]}>Selecciona una Especialidad:</Text>
           <TouchableOpacity
             style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
             onPress={() => setModalEspecialidadVisible(true)}
@@ -400,11 +420,17 @@ export const ConsultaScreenUx = () => {
 
         {/* -----------------PRESTADOR Nuevo SElectt---------------- */}
 
-        <Divider />
+     
+        <Divider  marginTopDivider={MarginTopDivider} />
 
+        { height < 680? (
+         <Divider  marginTopDivider={MarginTopDivider} />
+      ) : null
+
+        } 
         <View style={[styles.container, { gap: dynamicGap }]}>
           {/* Botón que abre el modal */}
-          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona un Prestador:</Text>
+          <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin, fontSize:consignaTextFontSize  }]}>Selecciona un Prestador:</Text>
           <TouchableOpacity
             style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
             onPress={() => setModalPrestadorVisible(true)}
@@ -449,10 +475,10 @@ export const ConsultaScreenUx = () => {
           </Modal>
 
         </View>
+     
+        <Divider  marginTopDivider={MarginTopDivider} />
 
-        <Divider />
-
-        <View style={{ alignSelf: 'center', marginTop: 5, /* backgroundColor:'yellow',  */}}>
+        <View style={{ alignSelf: 'center', marginTop:hp('1%')/* marginTop: 5, */ /* backgroundColor:'yellow', marginTop:hp('1%') */}}>
 
           {!isFormComplete ?
             (
@@ -499,8 +525,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    gap: -10,
-    marginBottom: 12,
+  /*   gap: -10, */
+    marginBottom: 10,
     marginTop: 12,
   },
   modalContent: {

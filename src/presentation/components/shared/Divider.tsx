@@ -3,8 +3,12 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { globalColors } from '../../theme/theme';
 
-const Divider: React.FC = () => {
-  return <View style={styles.divider} />;
+interface Prop {
+  marginTopDivider?: number
+}
+
+const Divider: React.FC<Prop> = ({marginTopDivider}: Prop) => {
+  return <View style={[styles.divider, {marginTop: marginTopDivider || 10}]} />;
 };
 
 const styles = StyleSheet.create({
@@ -14,7 +18,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     alignSelf: 'stretch',
     marginBottom:10,
-    marginTop:10,
+ /*    marginTop:10, */
   },
 });
 

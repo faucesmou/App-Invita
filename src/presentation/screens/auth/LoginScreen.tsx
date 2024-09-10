@@ -10,6 +10,7 @@ import { MyIcon } from "../../components/ui/MyIcon";
 import { RootStackParams } from "../../routes/StackNavigator";
 import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
@@ -94,22 +95,28 @@ export const LoginScreen = ({ navigation }: Props) => {
     }
   };
 
+  let paddingTopNumber = hp('18%');
+  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+    paddingTopNumber = hp('12%');
+
+  }
+
   return (
     <Layout style={{ flex: 1, /* backgroundColor: 'green', */ }}>
-      <ScrollView style={{ marginHorizontal: 40 }}>
-        <Layout style={{ paddingTop: height * 0.20 }}>
+      <ScrollView style={{ marginHorizontal: hp('5%') }}>
+        <Layout style={{ paddingTop: paddingTopNumber/* height * 0.20 */ }}>
           <Text category="h1"
-            style={{ marginBottom: 20 }}
+            style={{ marginBottom: hp('2%')}}
           >Bienvenido a Andes Salud</Text>
           <Text category="h1"
-            style={{ marginBottom: 20, fontSize: 20 }}
-          > Ingresar </Text>
+            style={{ marginBottom: hp('2%'), fontSize: hp('2.5%') }}
+          >Ingresar </Text>
           <Text category="p2">Por favor, ingrese su Usuario y Contraseña para continuar</Text>
         </Layout>
 
         {/* Inputs */}
 
-        <Layout style={{ marginTop: 20 }}>
+        <Layout style={{ marginTop: hp('3%') }}>
       
           <Input
             placeholder="Usuario"
@@ -117,7 +124,7 @@ export const LoginScreen = ({ navigation }: Props) => {
             value={form.usuario}
             onChangeText={(usuario) => setForm({ ...form, usuario })}
             accessoryLeft={<MyIcon name="arrowhead-right-outline" />}
-            style={{ marginBottom: 10 }}
+            style={{ marginBottom: hp('1%') }}
           />
            <Input
             placeholder="Contraseña"
@@ -126,18 +133,18 @@ export const LoginScreen = ({ navigation }: Props) => {
             value={form.password}
             onChangeText={(password) => setForm({ ...form, password })}
             accessoryLeft={<MyIcon name="lock-outline" />}
-            style={{ marginBottom: 10 }}
+            style={{ marginBottom: hp('1%') }}
           />
         </Layout>
 
 
         {/* Espacio: */}
 
-        <Layout style={{ height: 10 }} />
+        <Layout style={{ height: hp('1%') }} />
 
         {/* Button: */}
 
-        <Layout style={{ marginTop: 20 }}>
+        <Layout style={{ marginTop: hp('2%') }}>
           <Button
           style={styles.customButton}
             disabled={isPosting}
@@ -154,7 +161,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           <View
             style={{
               flex: 0.5,
-              marginTop: top - 25,
+              marginTop: top - hp('2%'),
               marginBottom: 0,
             }}
           >
@@ -169,7 +176,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
         {/* informacion para crear cuenta */}
 
-        <Layout style={{ height: 50 }} />
+        <Layout style={{ height: hp('6%') }} />
 
         <Layout style={{
           alignItems: 'center',

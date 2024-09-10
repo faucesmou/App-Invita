@@ -14,20 +14,23 @@ import UploadImage from '../../../components/shared/UploadImage';
 import { TertiaryButton } from '../../../components/shared/TertiaryButton';
 import { IonIcon } from '../../../components/shared/IonIcon';
 import Divider from '../../../components/shared/Divider';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
 export const EstudiosMedicosScreenUx = () => {
 
 
+
+
+
   const { ObtenerFamiliares, idAfiliado, idAfiliadoTitular, cadena, ObtenerPrestadoresEstudiosMedicos, GuardarIdPrestador, GuardarIdFamiliarSeleccionado, GuardarImagenes, imagenes } = useAuthStore();
 
-    /* logica para no mostrar boton de enviar hasta que no esten los datos: */
-   
-    const [SelectedEspecialidadNombre, setSelectedEspecialidadNombre] = useState<string | null>(null);
+  /* logica para no mostrar boton de enviar hasta que no esten los datos: */
 
-    const [SelectedImage, setSelectedImage] = useState(false)
+  const [SelectedEspecialidadNombre, setSelectedEspecialidadNombre] = useState<string | null>(null);
+
+  const [SelectedImage, setSelectedImage] = useState(false)
 
   const [isFormComplete, setIsFormComplete] = useState(false);
 
@@ -276,7 +279,7 @@ export const EstudiosMedicosScreenUx = () => {
       setIdPrestadorElegido(idConvenio)
       setSelectedPrestador(prestadorSeleccionado)
       setSelectedEspecialidadNombre(prestadorSeleccionado)
-      
+
       console.log('Nombre del Prestador desde el nuevo select: se habria guardado en el context', nombre);
       console.log('ID del Prestador desde el nuevo select:', idConvenio);
     } else {
@@ -297,35 +300,58 @@ export const EstudiosMedicosScreenUx = () => {
     setIsFormComplete(!!selectedFamiliarNombre && !!SelectedEspecialidadNombre && !!SelectedImage);
   }, [selectedFamiliarNombre, SelectedEspecialidadNombre, SelectedImage]);
 
+  const { height } = Dimensions.get('window');
+  let MarginTopSeleccionaFamiliar: number = hp('0.5%');
+  let MarginTopDivider: number = hp('0.5%');
+  let buttonTextFontSize = wp('4.3%');
+ let optionSelectedTextFontSize = wp('4.3%'); 
+  let buttonDescriptionFontSize = wp('4.5%');
+  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+
+    MarginTopSeleccionaFamiliar = hp('0%');
+    MarginTopDivider = hp('0.5%');
+    buttonTextFontSize = wp('3.8%');
+    buttonDescriptionFontSize = wp('4%');
+    optionSelectedTextFontSize = wp('4%'); 
+  }
+
   return (
 
     <View style={globalStyles.container}>
+ <ScrollView>  
+      <CustomHeader color={globalColors.black} titleSize={hp('4%')}  />
 
-      <CustomHeader color={globalColors.black} /* titleSize={27} */ />
-
-      <BackButton />
+      <BackButton Size={hp('4%')}/>
       {/*   <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', color:'#030136'}}>Estudios medicos Ux</Text>  */}
-  
-        <View
-          style={{   /* backgroundColor: 'green', */  flex: 1, marginBottom: '15%', marginTop: '0%' }}>
 
-          {/* <TouchableWithoutFeedback onPress={cerrarTeclado} > 
+      <View
+        style={{   /* backgroundColor: 'green', */  flex: 1, marginBottom: '15%', marginTop: '0%' }}>
+
+        {/* <TouchableWithoutFeedback onPress={cerrarTeclado} > 
 
         </TouchableWithoutFeedback>*/}
 
           {/* -----------------FAMILIAR---------------- */}
+
           <TouchableWithoutFeedback onPress={cerrarTeclado} >
 
             {/* -----------------FAMILIAR NUEVO SELECT---------------- */}
 
-            <View style={[styles.container, { gap: dynamicGap }]}>
+            <View style={[styles.container, { gap: dynamicGap, marginTop: MarginTopSeleccionaFamiliar }]}>
               {/* Botón que abre el modal */}
               <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Selecciona el Familiar:</Text>
               <TouchableOpacity
                 style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
                 onPress={() => setModalFamiliarVisible(true)}
               >
-                <Text style={styles.buttonText}>{selectedValue}</Text>
+                <Text style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  margin: 0,
+                  padding: 0,
+                  backgroundColor: '#4285F4',
+                  fontSize: optionSelectedTextFontSize,
+                }/* styles.buttonText */}>{selectedValue}</Text>
               </TouchableOpacity>
 
               {/* Modal para seleccionar las opciones */}
@@ -336,163 +362,177 @@ export const EstudiosMedicosScreenUx = () => {
                 onRequestClose={() => setModalFamiliarVisible(false)}
               >
                 <View style={styles.modalContainer}>
-                  <View style={styles.modalContent}>
-                    <View style={{ alignSelf: 'center' }}>
-                      <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
-                    </View>
-                    <ScrollView>
-                      {nombresDeFamiliares.map((option) => (
-                        <TouchableOpacity
-                          key={option}
-                          style={styles.modalOption}
-                          onPress={() => handleSelectFamiliarNuevoSelect(option)}
-                        >
-                          <Text style={styles.optionText}>{option}</Text>
-                        </TouchableOpacity>
-                      ))}
-                    </ScrollView>
-                    <View style={{ alignSelf: 'center', marginTop: 5 }}>
-                      <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
-                    </View>
-                    <TouchableOpacity
-                      style={styles.closeButton}
-                      onPress={() => setModalFamiliarVisible(false)}
-                    >
-                      <Text style={styles.closeButtonText}>Cerrar</Text>
-                    </TouchableOpacity>
+                <View style={styles.modalContent}>
+                  <View style={{ alignSelf: 'center' }}>
+                    <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
                   </View>
+                  <ScrollView>
+                    {nombresDeFamiliares.map((option) => (
+                      <TouchableOpacity
+                        key={option}
+                        style={styles.modalOption}
+                        onPress={() => handleSelectFamiliarNuevoSelect(option)}
+                      >
+                        <Text style={{
+                          fontSize: buttonTextFontSize,
+                          textAlign: 'center',
+                        }/* styles.optionText */}>{option}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                  <View style={{ alignSelf: 'center', marginTop: 5 }}>
+                    <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
+                  </View>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalFamiliarVisible(false)}
+                  >
+                    <Text style={styles.closeButtonText}>Cerrar</Text>
+                  </TouchableOpacity>
                 </View>
-              </Modal>
+              </View>
+            </Modal>
 
-            </View>
+          </View>
 
-          </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
 
-          {/* -----------------INPUT 2 PARA ESCRIBIR EL PRESTADOR---------------- */}
-          <TouchableWithoutFeedback onPress={cerrarTeclado} >
-            <Divider />
-          </TouchableWithoutFeedback>
-          {/*   <KeyboardAvoidingView behavior="padding"> */}
+        {/* -----------------INPUT 2 PARA ESCRIBIR EL PRESTADOR---------------- */}
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
+          <Divider marginTopDivider={MarginTopDivider} />
+        </TouchableWithoutFeedback>
+        {/*   <KeyboardAvoidingView behavior="padding"> */}
 
-          <TouchableWithoutFeedback onPress={cerrarTeclado} >
-            <View style={globalStyles.containerInput2} >
-              <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 18, textAlign: 'center', marginBottom: 10, marginTop: 0 }}>Utilizá el siguiente buscador para encontrar tu prestador</Text>
-              <TextInput
-                editable={true}
-                style={globalStyles.estilosInput2}
-                placeholder="Escribí aquí el prestador deseado"
-                placeholderTextColor="gray"
-                value={busqueda.cadena}
-                onChangeText={(cadena) => setBusqueda({ cadena })}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          {/*  </KeyboardAvoidingView> */}
-
-
-          {/* -----------------PRESTADOR---------------- */}
-          {/*  <Divider /> */}
-          <TouchableWithoutFeedback onPress={cerrarTeclado} >
-
-            <Text style={{ fontSize: 18, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Prestadores encontrados: {NumeroPrestadoresEncontrados} </Text>
-
-          </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
+          <View style={globalStyles.containerInput2} >
+            <Text style={{ /* backgroundColor: 'yellow', */ fontSize: 18, textAlign: 'center', marginBottom: 10, marginTop: 0 }}>Utilizá el siguiente buscador para encontrar tu prestador</Text>
+            <TextInput
+              editable={true}
+              style={globalStyles.estilosInput2}
+              placeholder="Escribí aquí el prestador deseado"
+              placeholderTextColor="gray"
+              value={busqueda.cadena}
+              onChangeText={(cadena) => setBusqueda({ cadena })}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        {/*  </KeyboardAvoidingView> */}
 
 
+        {/* -----------------PRESTADOR---------------- */}
+        {/*  <Divider /> */}
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
+
+          <Text style={{ fontSize: hp('2.2%') /* 18 */, textAlign: 'center', marginBottom: 5, marginTop: 5 }}>Prestadores encontrados: {NumeroPrestadoresEncontrados} </Text>
+
+        </TouchableWithoutFeedback>
 
 
-          {/* -----------------PRESTADOR Nuevo SElectt---------------- */}
 
-          <TouchableWithoutFeedback onPress={cerrarTeclado} >
+
+        {/* -----------------PRESTADOR Nuevo SElectt---------------- */}
+
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
 
 
 
             <View style={[styles.container, { gap: dynamicGap }]}>
               {/* Botón que abre el modal */}
-              <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin, textAlign: 'center', }]}>Selecciona un Prestador:</Text>
+              <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin, textAlign: 'center', fontSize: hp('2.5%') }]}>Selecciona un Prestador:</Text>
               <TouchableOpacity
                 style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
                 onPress={() => setModalPrestadorVisible(true)}
               >
-                <Text style={styles.buttonText}>{selectedPrestador} ({NumeroPrestadoresEncontrados})</Text>
+                <Text style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  margin: 0,
+                  padding: 0,
+                  backgroundColor: '#4285F4',
+                  fontSize: optionSelectedTextFontSize,
+                }}/* style={styles.buttonText} */>{selectedPrestador} ({NumeroPrestadoresEncontrados})</Text>
               </TouchableOpacity>
 
-              {/* Modal para seleccionar las opciones */}
-              <Modal
-                visible={modalPrestadorVisible}
-                transparent={true}
-                animationType="fade"
-                onRequestClose={() => setModalPrestadorVisible(false)}
-              >
-                <View style={styles.modalContainer}>
-                  <View style={styles.modalContentEspecialidad}>
-                    <View style={{ alignSelf: 'center' }}>
-                      <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
-                    </View>
-                    <ScrollView>
-                      {NombresDePrestadores.map((option) => (
-                        <TouchableOpacity
-                          key={option}
-                          style={styles.modalOption}
-                          onPress={() => handleSelectPrestadorNuevoSelect(option)}
-                        >
-                          <Text style={styles.optionText}>{option}</Text>
-                        </TouchableOpacity>
-                      ))}
-                    </ScrollView>
-                    <View style={{ alignSelf: 'center', marginTop: 5 }}>
-                      <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
-                    </View>
-                    <TouchableOpacity
-                      style={styles.closeButton}
-                      onPress={() => setModalPrestadorVisible(false)}
-                    >
-                      <Text style={styles.closeButtonText}>Cerrar</Text>
-                    </TouchableOpacity>
+            {/* Modal para seleccionar las opciones */}
+            <Modal
+              visible={modalPrestadorVisible}
+              transparent={true}
+              animationType="fade"
+              onRequestClose={() => setModalPrestadorVisible(false)}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContentEspecialidad}>
+                  <View style={{ alignSelf: 'center' }}>
+                    <IonIcon name='chevron-up-circle-outline' size={20} color="#505050" />
                   </View>
+                  <ScrollView>
+                    {NombresDePrestadores.map((option) => (
+                      <TouchableOpacity
+                        key={option}
+                        style={styles.modalOption}
+                        onPress={() => handleSelectPrestadorNuevoSelect(option)}
+                      >
+                        <Text style={styles.optionText}>{option}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                  <View style={{ alignSelf: 'center', marginTop: 5 }}>
+                    <IonIcon name='chevron-down-circle-outline' size={20} color="#505050" />
+                  </View>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalPrestadorVisible(false)}
+                  >
+                    <Text style={styles.closeButtonText}>Cerrar</Text>
+                  </TouchableOpacity>
                 </View>
-              </Modal>
+              </View>
+            </Modal>
 
-            </View>
-          </TouchableWithoutFeedback>
-
-
-
-
-          <TouchableWithoutFeedback onPress={cerrarTeclado} >
-            <Divider />
-          </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
 
 
-          <UploadImage />
 
 
-          {/* componente para cargar imagenes: UploadImage */}
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
+          <Divider marginTopDivider={MarginTopDivider} />
+        </TouchableWithoutFeedback>
 
-     <TouchableWithoutFeedback onPress={cerrarTeclado} > 
+       {/*  <View style={{ marginBottom: wp('0%'), marginTop: hp('0%') }}> */}
+        <UploadImage />
+          
+        {/*    </View> */}
 
-           <View style={{ flex: 0, justifyContent: 'flex-end' }}>
 
-           {!isFormComplete  ? 
-        (
-          <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 18, textAlign: 'center', color: '#595960', /* color:'#030136' */}}>Completa todos los campos para poder continuar con tu solicitud</Text> 
-        ) :
-        null        
-        } 
+        {/* componente para cargar imagenes: UploadImage */}
 
-          <TertiaryButton
-            onPress={() => navigation.navigate('Enviado')}
-            label="Solicitar mi estudio"
-            color={globalColors.profile2}
-            iconName='medkit-outline'
-            description='Presiona aquí para continuar'
-            disabled={!isFormComplete}
-          />
-            </View>
-            </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={cerrarTeclado} >
 
-        </View>
- 
+          <View style={{ flex: 0, justifyContent: 'flex-end' }}>
+
+            {!isFormComplete ?
+              (
+                <Text style={{ marginBottom: wp('1.5%'), marginTop: wp('1%'), fontSize: hp('2.2%'), textAlign: 'center', color: '#595960', /* color:'#030136' */ }}>Completá todos los campos para poder continuar con tu solicitud</Text>
+              ) :
+              null
+            }
+
+            <TertiaryButton
+              onPress={() => navigation.navigate('Enviado')}
+              label="Solicitar mi estudio"
+              color={globalColors.profile2}
+              iconName='medkit-outline'
+              description='Presiona aquí para continuar'
+              disabled={!isFormComplete}
+              textSize={buttonTextFontSize}
+              descriptionSize={buttonDescriptionFontSize}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
+ </ScrollView> 
+
     </View>
   )
 }

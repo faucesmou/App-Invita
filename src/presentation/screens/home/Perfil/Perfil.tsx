@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Dimensions } from 'react-native'
 import { StackActions, type NavigationProp, useNavigation} from '@react-navigation/native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useAuthStore } from '../../../store/auth/useAuthStore'
@@ -10,6 +10,8 @@ import { BackButton } from '../../../components/shared/BackButton'
 import { MisDatosScreen } from '../../profile/MisDatosScreen'
 import { TertiaryButton } from '../../../components/shared/TertiaryButton'
 import { useNotificationStore } from '../../../store/notification-store'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 /* interface OnPressHandler {
   logout: () => Promise<void>;
@@ -42,7 +44,20 @@ const colorNaranja = globalColors.orange
   });
 }; */
 
+const { height } = Dimensions.get('window');
 
+ 
+ let buttonTextFontSize = wp('5%');
+ let buttonDescriptionFontSize = wp('4.5%');
+ 
+
+ if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+ 
+
+  buttonTextFontSize = wp('4.2%');
+  buttonDescriptionFontSize = wp('4%');
+
+}
 
   return (
     <View 
@@ -65,6 +80,8 @@ const colorNaranja = globalColors.orange
           label="Buzón de Avisos"
           color={globalColors.profile2}
           iconName='mail-unread-outline'
+          textSize={buttonTextFontSize} 
+          descriptionSize={buttonDescriptionFontSize}
       /*     description='Gestioná la orden de tus estudios' */
         />
 
@@ -75,6 +92,8 @@ const colorNaranja = globalColors.orange
           label="Cerrar Sesión"
           color={globalColors.profile2}
           iconName='power-outline' 
+          textSize={buttonTextFontSize} 
+          descriptionSize={buttonDescriptionFontSize}
           /*  iconName='caret-forward-circle-outline' */
          /*  iconName='log-out-outline' */
       /*     description='Gestioná la orden de tus estudios' */
@@ -85,6 +104,8 @@ const colorNaranja = globalColors.orange
         label="Regresar"
         color={globalColors.profile2}
         iconName='medkit-outline'
+        textSize={buttonTextFontSize} 
+        descriptionSize={buttonDescriptionFontSize}
       /*     description='Gestioná la orden de tus estudios' */
       />
     </View>

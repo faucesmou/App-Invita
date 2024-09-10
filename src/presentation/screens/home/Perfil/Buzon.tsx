@@ -14,7 +14,7 @@ import { IonIcon } from '../../../components/shared/IonIcon';
 import Divider from '../../../components/shared/Divider';
 import { BuzonOrdenesC } from './BuzonOrdenesC';
 import { useNotificationStore } from '../../../store/notification-store';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 interface Notificacion {
@@ -389,9 +389,9 @@ export const Buzon = () => {
         marginBottom: 0,
       }}
     >
-      <CustomHeader color={globalColors.black} />
+      <CustomHeader color={globalColors.black} titleSize={hp('4%')} />
 
-      <BackButton />
+      <BackButton Size={hp('4%')}/>
 
       <View
         style={{

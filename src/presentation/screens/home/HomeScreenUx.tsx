@@ -26,6 +26,8 @@ interface Props {
   iconName?: string;
   description?: string;
   textOverflow?: string;
+  textSize?:any;
+  descriptionSize?: any;
 }
 
 
@@ -56,18 +58,24 @@ export const HomeScreenUx = ( ) => {
 
   let buttonTextFontSize = wp('5%');
   let buttonDescriptionFontSize = wp('4.5%');
+  
+  let buttonsTitleFontSize = wp('4%');
+  let DescriptionFontSize = wp('3.9%');
+
   let cardTitleFontSize: number = hp('2.5%');
  let cardDescriptionFontSize: number = hp('2%');
  let iconNotificationFontSize: number = wp('8%');
  let titleMarginBottom: number  = hp('1%'); 
  let iconMarginBottom: number  = hp('3%');  
  
-  let adjustedHeaderHeight = headerHeight + top 
   if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
-  /*  headerHeight = hp('15%');  */// Ajuste para pantallas más pequeñas
-   /* adjustedHeaderHeight = headerHeight + top; */
+   
    buttonTextFontSize = wp('4.8%');
    buttonDescriptionFontSize = wp('4%');
+
+   buttonsTitleFontSize = wp('3.8%')
+   DescriptionFontSize = wp('3.1%');
+
    cardTitleFontSize = hp('3%');
    cardDescriptionFontSize = hp('2.5%');
    iconNotificationFontSize = wp('7%');
@@ -97,7 +105,8 @@ export const HomeScreenUx = ( ) => {
 
 /* const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background); */
 
-const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, description,textOverflow }: Props) => {
+const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, description,textSize,
+  descriptionSize, textOverflow, }: Props) => {
   const backColor = disabled ? 'gray' : '#fff';
 
   return (
@@ -112,16 +121,16 @@ const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, desc
       ]}
     >
       <View /* style={{ maxWidth: '30%'  }} */>
+      
         <IonIcon name={iconName} size={hp('3%')} color="#505050" style={styles.icon} />
         <View style={styles.innerContainer}>
-        {label && <Text style={styles.label}>{label}</Text>}
-        {description && <Text numberOfLines={2} ellipsizeMode="tail" style={styles.description}>{description}</Text>}
+        {label && <Text  style={[styles.label, { fontSize: buttonsTitleFontSize  }]}/* style={styles.label}  */>{label}</Text>}
+        {description && <Text numberOfLines={2} ellipsizeMode="tail" style={[styles.description, { fontSize: DescriptionFontSize }]}/* style={styles.description} */>{description}</Text>}
         </View>
       </View>
     </Pressable>
   );
 };
-
 
 
   return (
@@ -149,7 +158,7 @@ const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, desc
 
       <View style={styles.imageContainer}>
         <View style={styles.innerContainer2}>
-          <Text style={styles.text2}>Bienvenido a Andes Salud UX</Text>
+          <Text style={styles.text2}>Bienvenido a Andes Salud</Text>
           <Image
             source={require('../../assets/images/logogris.png')}
             style={styles.image2}
@@ -174,6 +183,8 @@ const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, desc
             iconName="cloud-download-outline"
             iconName2="mail-outline"
             description="Accedé a todas tus facturas"
+            textSize={buttonTextFontSize} 
+            descriptionSize={buttonDescriptionFontSize}
           />
         </View>
         <View style={styles.buttonsContainer}>
@@ -182,13 +193,19 @@ const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, desc
               onPress: () => navigation.navigate('Afiliados'),
               label: 'Mi Grupo Familiar',
               iconName: 'people-circle-outline',
-              description: 'Tu Grupo Familiar y credenciales '
+              description: 'Tu Grupo Familiar y credenciales ',
+              textSize:{buttonsTitleFontSize},
+              descriptionSize:{DescriptionFontSize} 
+              /*  textSize={buttonTextFontSize} 
+          descriptionSize:{buttonDescriptionFontSize} */
             })}
             {renderSecondaryButton({
               onPress: () => navigation.navigate('Perfil'),
               label: 'Mi Perfil',
               iconName: 'person-circle-outline',
-              description: 'Tu cuenta personalizada'
+              description: 'Tu cuenta personalizada',
+              textSize:{buttonsTitleFontSize},
+              descriptionSize:{DescriptionFontSize} 
             })}
             
           {/*   <SecondaryButton2
@@ -211,14 +228,18 @@ const renderSecondaryButton = ({ onPress, label, color, disabled, iconName, desc
               onPress: () => navigation.navigate('Pagos'),
               label: 'Mis Pagos',
               iconName: 'file-tray-full-outline',
-              description: 'Accedé al estado de tus pagos'
+              description: 'Accedé al estado de tus pagos',
+              textSize:{buttonsTitleFontSize},
+              descriptionSize:{DescriptionFontSize} 
             })}
             {renderSecondaryButton({
               /* onPress: () => navigation.navigate('Perfil'), */
               onPress: handleOpenURL,
               label: 'Asistencia',
               iconName: 'chatbubbles-outline',
-              description: 'Chateá con nuestro soporte'
+              description: 'Chateá con nuestro soporte',
+              textSize:{buttonsTitleFontSize},
+              descriptionSize:{DescriptionFontSize} 
             })}
            {/*  <SecondaryButton2
               onPress={() => navigation.navigate('Pagos')}
@@ -386,6 +407,7 @@ const styles = StyleSheet.create({
    /*  width: '100%', */
   /*   height: '100%', */
     margin: 0,
+    marginLeft: wp('4%'),
     flexWrap: 'wrap'
   },
   image: {

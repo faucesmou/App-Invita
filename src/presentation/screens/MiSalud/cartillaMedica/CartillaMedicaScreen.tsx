@@ -15,7 +15,7 @@ import { globalColors, globalStyles } from '../../../theme/theme';
 import CustomHeader from '../../../components/CustomHeader';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../../routes/StackNavigator';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const CartillaMedicaScreen = () => {
   console.log('Entrando a CARTILLA MEDICA------->');
@@ -78,20 +78,20 @@ export const CartillaMedicaScreen = () => {
       style={{...globalStyles.container, marginBottom:0, }}
 
     >
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} />
 
-      <BackButton />
+      <BackButton Size={hp('4%')}/>
 
       <Text style={{
         marginBottom: 0,
         marginTop: 0,
-        fontSize: 30,
+        fontSize: hp('4%'),
         textAlign: 'center',
         color: globalColors.gray2,
         fontWeight: 'bold'
       }}>Especialidades</Text>
 
-      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: 60, marginTop: 15 }}>
+      <View style={{ /* backgroundColor: 'yellow', */ flex: 1, marginBottom: hp('4%'), marginTop: hp('1%') }}>
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
           {cartillas.map((cartilla, index) => (
 

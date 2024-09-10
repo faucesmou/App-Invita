@@ -15,7 +15,7 @@ import CustomHeader from '../../../components/CustomHeader';
 import { PrimaryButton } from '../../../components/shared/PrimaryButton';
 import { RootStackParams } from '../../../routes/StackNavigator';
 import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface Props {
   idCartilla?: string;
@@ -405,17 +405,17 @@ const filtrarPorTodos = () => {
   return (
     <View
 
-      style={{ ...globalStyles.container, marginBottom: 0, }}
+      style={{ ...globalStyles.container, marginBottom: hp('0%'), }}
 
     >
-      <CustomHeader color={globalColors.gray2} />
+      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} />
 
-      <BackButton />
+      <BackButton Size={hp('4%')}/>
 
       <Text style={{
         marginBottom: 10,
         marginTop: 0,
-        fontSize: 30,
+        fontSize: hp('3.5%'),
         textAlign: 'center',
         color: globalColors.gray2,
         fontWeight: 'bold',
@@ -423,9 +423,9 @@ const filtrarPorTodos = () => {
       }}>{nombreEspecialidadSeleccionada}</Text>
 
 
-      <View style={[styles.container, { gap: dynamicGap }]}>
+      <View style={[styles.container, { gap: dynamicGap, }]}>
         {/* Botón que abre el modal */}
-        <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin }]}>Filtrá tus Prestadores: </Text>
+        <Text style={[styles.consignaText, { marginHorizontal: dynamicMargin, fontSize: hp('2.5%') }]}>Filtrá tus Prestadores: </Text>
         <TouchableOpacity
           style={[styles.selectButton, { marginHorizontal: dynamicMargin }]}
           onPress={() => setModalVisible(true)}
@@ -465,7 +465,7 @@ const filtrarPorTodos = () => {
 
       </View>
 
-      <View style={{ flex: 1, marginBottom: 60, marginTop: 0 }}>
+      <View style={{ flex: 1, marginBottom: hp('4%'), marginTop: 0 }}>
 
 
 

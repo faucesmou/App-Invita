@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { globalColors, globalStyles } from '../../theme/theme'
@@ -11,7 +11,7 @@ import { BackButton } from '../../components/shared/BackButton'
 import CustomHeader from '../../components/CustomHeader'
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader'
 import { useAuthStore } from '../../store/auth/useAuthStore'
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
@@ -63,19 +63,21 @@ export const MisDatosScreen = () => {
 
   }, [])
   const colorNaranja = globalColors.orange
+
+
+
+
   return (
     <View style={{
-      /*  flex: 1,
-       paddingHorizontal: 20,
-       marginTop: top, */
       marginTop: 0,
-      /*  backgroundColor: 'yellow' */
     }}
-
     >
+         <CustomHeader color={globalColors.black} titleSize={hp('4%')} />
+
+<BackButton Size={hp('4%')}/>
 
 
-      <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center' }}>Mis Datos</Text>
+      <Text style={{ marginBottom: hp('1%'), fontSize: hp('3%'), textAlign: 'center' }}>Mis Datos</Text>
 
       {/*    <BackButton onPress={() => navigation.navigate('home')} /> */}
       {
@@ -84,8 +86,8 @@ export const MisDatosScreen = () => {
           <View
             style={{
               flex: 0.5,
-              marginTop: top - 10,
-              marginBottom: 40,
+              marginTop: top - hp('0%'),
+              marginBottom: hp('6%'),
             }}
           >
             <FullScreenLoader />
@@ -99,11 +101,11 @@ export const MisDatosScreen = () => {
               <View>
                 <View>
                   <View style={styles.container}>
-                    <Text style={styles.text}>{`${item.apellidoYNombre}`}</Text>
-                    <Text style={styles.text}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
+                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`${item.apellidoYNombre}`}</Text>
+                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
                  {/*    <Text style={styles.text}>{`Edad: ${item.edad}`}</Text> */}
-                    <Text style={styles.text}>{`Plan: ${item.planPrestacional}`}</Text>
-                    <Text style={styles.text}>{`Estado: ${item.estadoAfiliacion}`}</Text>
+                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`Plan: ${item.planPrestacional}`}</Text>
+                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`Estado: ${item.estadoAfiliacion}`}</Text>
 
                   </View>
 

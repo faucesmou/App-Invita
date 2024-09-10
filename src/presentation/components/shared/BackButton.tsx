@@ -6,9 +6,10 @@ import { IonIcon } from './IonIcon';
 interface BackButtonProps {
   goToPage?: string;
   onPress?: () => void;
+  Size?: number;
 }
 
-export const BackButton = ({ goToPage, onPress }: BackButtonProps) => {
+export const BackButton = ({ goToPage, onPress, Size }: BackButtonProps) => {
 
     const navigation = useNavigation();
 
@@ -32,7 +33,7 @@ const handlePress = () => {
             <Pressable onPress={handlePress}
             style={{marginLeft:20, marginBottom: 20}}
             >
-           <IonIcon name='arrow-back' color= { 'white' } size = {35}/> 
+           <IonIcon name='arrow-back' color= { 'white' } size = {Size || 35}/> 
             </Pressable>
             
           )

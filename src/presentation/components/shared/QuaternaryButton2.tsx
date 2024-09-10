@@ -14,10 +14,13 @@ interface Props {
     iconName?: string;
     iconName2?: string;
     description?: string;
+    textSize?:number;
+    descriptionSize?: number;
 }
 
 
-export const QuaternaryButton2 = ( { onPress, label, color, disabled, iconName,iconName2, description }: Props) => {
+export const QuaternaryButton2 = ( { onPress, label, color, disabled, iconName,iconName2, description,textSize,
+  descriptionSize }: Props) => {
   const backColor = disabled ? globalColors.disabled : (color ? color : globalColors.background);
 
   const navigation = useNavigation();
@@ -42,12 +45,12 @@ export const QuaternaryButton2 = ( { onPress, label, color, disabled, iconName,i
 
         <View style={styles.textWrapper}>
           {label && (
-            <Text style={styles.buttonText}>
+            <Text style={[styles.buttonText, { fontSize: descriptionSize || wp('4.5%') }]}/* style={styles.buttonText} */ >
               {label}
             </Text>
           )}
           {description && (
-            <Text style={styles.descriptionText}>
+            <Text style={[styles.descriptionText, { fontSize: descriptionSize || wp('4.5%') }]}>
               {description}
             </Text>
           )}
@@ -95,6 +98,7 @@ const styles = StyleSheet.create({
     paddingLeft: wp('0.1%'),
    /*  paddingLeft: 5, */
     justifyContent: 'center',
+    marginHorizontal:wp('1%'),
   /*   backgroundColor:'green' */
   },
   iconWrapper: {

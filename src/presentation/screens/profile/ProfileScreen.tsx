@@ -8,7 +8,7 @@ import { globalColors, globalStyles } from '../../theme/theme'
 import { useCounterStore } from '../../store/counter-store'
 import { RootStackParams } from '../../routes/StackNavigator'
 import CustomHeader from '../../components/CustomHeader'
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 export const ProfileScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
@@ -68,7 +68,7 @@ useEffect(() => {
    
       backgroundColor: '#e9f6f8'
     }}>
-      <CustomHeader color={colorNaranja} />
+      <CustomHeader color={colorNaranja}  titleSize={hp('4%')} />
       
       <PrimaryButton
       onPress={ ()=> navigation.navigate('MisDatos')}

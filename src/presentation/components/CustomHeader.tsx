@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { globalColors } from '../theme/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface Props {
   color?: string;
