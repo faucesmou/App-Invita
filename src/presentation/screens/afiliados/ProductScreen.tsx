@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, Text, View, Dimensions } from 'react-native'
 import { RootStackParams } from '../../routes/StackNavigator';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { globalColors, globalStyles } from '../../theme/theme';
@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomHeader from '../../components/CustomHeader';
 import Credencial from '../../components/shared/Credencial';
 import { CredencialFamiliar } from '../../components/shared/CredencialFamiliar';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 export const ProductScreen = () => {
@@ -40,13 +41,15 @@ navigation.setOptions({
     navigation.goBack(); // Retroceder a la pantalla anterior
   };
 
+
+
   return (
     <View 
     style={{...globalStyles.productScreen, marginTop: 0 }}
     >
-      <CustomHeader color={globalColors.black}   />
+      <CustomHeader color={globalColors.black} titleSize={hp('4%')}   />
       
-      <BackButton /> 
+      <BackButton Size={hp('4%')}  /> 
 
       <View
       style={{ 

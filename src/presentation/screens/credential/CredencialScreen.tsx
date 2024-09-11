@@ -9,6 +9,8 @@ import { RootStackParams } from '../../routes/StackNavigator'
 import { HamburgerMenu } from '../../components/shared/HamburgerMenu'
 import CustomHeader from '../../components/CustomHeader'
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 export const CredencialScreen = () => {
 
@@ -38,7 +40,7 @@ export const CredencialScreen = () => {
 
   return (
     <View style={globalStyles.container}>
-      <CustomHeader />
+      <CustomHeader titleSize={hp('4%')} />
 
       <HamburgerMenu />
       {/*     <BackButton onPress={() => navigation.navigate('home')} /> */}
