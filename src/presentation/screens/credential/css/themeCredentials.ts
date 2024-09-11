@@ -134,9 +134,12 @@ export const globalStylesCredentials = StyleSheet.create({
   dorsoCard: {
     flexDirection: 'column',
     marginVertical: 0,
-    marginTop: 70,
+    marginTop: hp('3%'),
+   /*  marginTop: 70, */
     width: '100%',
-    height: '40%',
+    /* width: '100%', */
+    height: hp('22%'),
+   /*  height: '40%', */
     color: 'white',
     alignItems: 'center',
     justifyContent: 'center',    
@@ -148,12 +151,27 @@ export const globalStylesCredentials = StyleSheet.create({
     marginVertical: 0,
     width: wp('13%'),
    /*  width: 50, */
-   height: hp('6%'),
+   height: hp('5%'),
    /*  height: 40, */
     color: 'white',
     borderRadius: 10, 
     marginBottom: hp('1%'),
      marginTop: hp('-3%')    
+  },
+  contenedorTituloAndesFamiliar: {
+    flexDirection: 'column',
+    overflow: 'hidden', 
+   alignItems: 'center',
+    marginVertical: 0,
+    width: wp('13%'),
+   /*  width: 50, */
+   height: hp('4%'),
+   /*  height: 40, */
+    color: 'white',
+    borderRadius: 10, 
+    marginBottom: hp('1%'),
+     marginTop: hp('-1%'),
+     marginLeft: hp('0.5%')    
   },
   contenedorTituloAndesDorso: {
     flexDirection: 'row',
@@ -161,10 +179,11 @@ export const globalStylesCredentials = StyleSheet.create({
     justifyContent: 'flex-start',
     marginVertical: 0,
     marginRight:'5%',
-    width: 50,
-    height: 40,
+    width: wp('13%'),
+    height: hp('3%'),
     color: 'blue',
-    borderRadius: 10,  
+    borderRadius: 10, 
+    marginTop: hp('-0.8%') 
    
   },
   planTitle: {

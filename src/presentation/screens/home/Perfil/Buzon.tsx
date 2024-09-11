@@ -739,12 +739,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontSize: 18,
+    fontSize: hp('1.9%'),
+    /* fontSize: 18, */
     fontWeight: 'normal',
   },
   descriptionText: {
     color: 'gray',
-    fontSize: 18,
+    fontSize: hp('1.9%'),
   },
   errorContainerBuzon: {
     marginTop: 20,
@@ -806,8 +807,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   MainTitle: {
-    marginBottom: 5,
-    fontSize: 20,
+    marginBottom: hp('1%'),
+    fontSize: hp('2.4%'),
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
  /*    backgroundColor:'blue', */
@@ -815,7 +816,7 @@ const styles = StyleSheet.create({
   },
   titleEstudiosMedicosAfuera: {
     marginBottom: 5,
-    fontSize: 20,
+    fontSize: hp('2.3%'),
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
  /*    backgroundColor:'blue', */

@@ -1,6 +1,6 @@
 // Credencial.tsx
 import React, { useEffect, useState } from 'react';
-import { View, ImageBackground, Image } from 'react-native';
+import { View, ImageBackground, Image, Linking } from 'react-native';
 import axios from 'axios';
 import LinearGradient from 'react-native-linear-gradient';
 import { Text } from '@ui-kitten/components';
@@ -8,6 +8,7 @@ import { xml2json } from 'xml-js';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import { FullScreenLoader } from '../ui/FullScreenLoader';
 import { globalStylesCredentials } from '../../screens/credential/css/themeCredentials';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 const convert = { xml2json };
@@ -30,6 +31,8 @@ interface CredencialFamiliarProps {
 export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
   const [credencial, setCredencial] = useState('');
   const [isConsulting, setIsConsulting] = useState(false);
+  const [linkAndesSalud, setLinkAndesSalud] = useState("");
+  let UrlAndes = `https://www.andessalud.com.ar/`
   const [datosCredencial, setDatosCredencial] = useState({
     plan: '',
     nombreAfiliado: '',
@@ -56,6 +59,30 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
   const planColors = getPlanColors(datosCredencial.plan);
 
   /*   const planColors = PlanPalettes[datosCredencial.plan] || []; */
+  const handleOpenURLAndes = () => {
+    console.log('entrando a Andes Salud');
+    
+   setLinkAndesSalud(UrlAndes);
+  }
+
+  useEffect(() => {
+    const openURLAndesSalud = async () =>{
+      if(linkAndesSalud){
+        try{
+          await Linking.openURL(linkAndesSalud)
+        } catch (err) {
+          console.log('Error al intentar ingresar a Andes Salud:', err);
+        } finally {
+        
+          setLinkAndesSalud('');
+        }
+      }
+    }
+    openURLAndesSalud()
+  }, [linkAndesSalud])
+
+
+
 
   useEffect(() => {
     const consultaDatosCredencial = async (idAfiliado: string | undefined) => {
@@ -122,9 +149,9 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
             
             >
               <View>
-                <View style={{ alignItems: 'flex-start', padding: 5, marginTop: 5 }}>
-                  <Image source={isotipo} style={{ width: 50, height: 50, marginBottom: 10 }} />
-                  <View style={globalStylesCredentials.contenedorTituloAndes}>
+                <View style={{ alignItems: 'flex-start', padding: wp('1%'), marginTop: hp('1%') }}>
+                  <Image source={isotipo} style={{ width: wp('11%'), height: hp('6%'), marginBottom: hp('1%'),  resizeMode: 'contain', marginLeft: hp('1%') }} />
+                  <View style={globalStylesCredentials.contenedorTituloAndesFamiliar}>
                     <Text style={globalStylesCredentials.tituloAndes}>andes</Text>
                     <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
                   </View>
@@ -133,14 +160,14 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
                     <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
                     <View /* style={globalStylesCredentials.fuente} */
                       style={[globalStylesCredentials.fuente,
-                      cantidadPalabras >= 3 && { width: '60%' },
-                      cantidadPalabras === 2 && { width: '50%' },
+                      cantidadPalabras >= 3 && { width: wp('60%')/* width: '60%'  */},
+                      cantidadPalabras === 2 && { /* width: '50%' */ width: wp('50%')},
                       ]}
 
                     >
-                    <Text style={{ color: 'white' }}>{datosCredencial.nombreAfiliado}</Text>
-                    <Text style={{ color: 'white' }}>{datosCredencial.numAfiliado}</Text>
-                    <Text style={{ color: 'white' }}>{datosCredencial.fecVencimiento}</Text>
+                    <Text style={{ color: 'white', fontSize: hp('1.7%') }}>{datosCredencial.nombreAfiliado}</Text>
+                    <Text style={{ color: 'white', fontSize: hp('1.7%')  }}>{datosCredencial.numAfiliado}</Text>
+                    <Text style={{ color: 'white', fontSize: hp('1.7%')  }}>{datosCredencial.fecVencimiento}</Text>
                   </View>
                 </View>
               </View>
@@ -149,19 +176,19 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
 
        {/* dorso de la tarjeta: */}
 
-               <View  >
+               <View style={{ marginTop: hp('1%')}} >
 
                 <LinearGradient
                   colors={planColors}
                   /* style={globalStylesCredentials.frenteCard} */
-                  style={{...globalStylesCredentials.frenteCardHome, marginBottom:10,}}
+                  style={{...globalStylesCredentials.frenteCardHome, marginBottom:10, height: hp('27%')}}
                 >
 
                   <View  >
-                    <View style={{ alignItems: 'flex-end', width: '95%', height: 50, padding: 10, }}>
+                    <View style={{ alignItems: 'flex-end', width: '95%', height: hp('4%')/* height:50 */, padding: 10, }}>
                       <Image
                         source={isotipo}
-                        style={{ width: 50, height: 50, marginBottom: 10, alignItems: 'center', }}
+                        style={{ width: wp('10%'), height: hp('5%'), marginBottom: 10, alignItems: 'center', resizeMode: "contain" }}
                       />
                       <View style={globalStylesCredentials.contenedorTituloAndesDorso}>
                         <Text style={globalStylesCredentials.tituloAndes} >andes</Text>
@@ -172,21 +199,21 @@ export const CredencialFamiliar = ({ idAfiliado }: CredencialFamiliarProps) => {
                     <View style={globalStylesCredentials.dorsoCard}>
                       <View style={{ alignItems: 'center' }}>
                         <View style={{ padding: 5 }}>
-                          <Text style={{ color: 'white', textAlign: 'center', fontSize: 15, fontWeight: 'bold' }}>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize: hp('1.5%') , fontWeight: 'bold' }}>
                             Esta credencial es personal e intransferible para uso exclusivo del titular. Debe presentarse acompañado de DNI o Cédula de Identidad
                           </Text>
                         </View>
                         <View style={{ backgroundColor: 'white', padding: 5, borderRadius: 10 }}>
-                          <Text style={{ color: 'blue', textAlign: 'center', fontWeight: 'bold' }}>
+                          <Text style={{ color: 'blue', textAlign: 'center', fontWeight: 'bold', fontSize: hp('1.5%')}} onPress={handleOpenURLAndes}   >
                             www.andessalud.com.ar
                           </Text>
                         </View>
                         <View style={{ padding: 5 }}>
-                          <Text style={{ color: 'white', textAlign: 'center', fontSize: 13, }}>
+                          <Text style={{ color: 'white', textAlign: 'center', fontSize: hp('1.5%') , }}>
                             Superintendencia de Servicio de Salud
                           </Text>
                           <Text style={{ color: 'white', textAlign: 'center', fontSize: 12, }}>
-                            Órgano de Control 0800 222 SALUD (72583) www.sssalud.gov.ar
+                            Órgano de Control 0800 222 SALUD (72583) www.argentina.gob.ar/sssalud
                           </Text>
                         </View>
                       </View>

@@ -13,6 +13,7 @@ import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
 import { IonIcon } from '../../../components/shared/IonIcon';
 import Divider from '../../../components/shared/Divider';
 import { useNotificationStore } from '../../../store/notification-store';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 
@@ -677,12 +678,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontSize: 18,
+/*     fontSize: 18, */
+     fontSize: hp('1.9%'),
     fontWeight: 'normal',
   },
   descriptionText: {
     color: 'gray',
-    fontSize: 18,
+    fontSize: hp('1.9%'),
   },
   errorContainerBuzon: {
     marginTop: 20,
@@ -705,7 +707,7 @@ const styles = StyleSheet.create({
   },
   titleEstudiosMedicosAfuera: {
     marginBottom: 5,
-    fontSize: 20,
+    fontSize: hp('2.3%'),
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
     minWidth:'100%',
