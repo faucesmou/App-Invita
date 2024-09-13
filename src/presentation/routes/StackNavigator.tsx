@@ -42,6 +42,7 @@ import { RecoverData } from '../screens/auth/RecoverData';
 import { UserData } from '../screens/auth/UserData';
 import { ConsultaScreenUx } from '../screens/ordenConsulta/ConsultaScreenUx';
 import { EstudiosMedicosScreenUx } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosScreenUx';
+import { LoginScreenNew } from '../screens/auth/LoginScreenNew';
 
 /* import { UserData } from '../screens/auth/userData'; */
 
@@ -66,6 +67,7 @@ export type RootStackParams = {
   Credencial: undefined,
   Cartilla: undefined,
   LoginScreen: undefined,
+  LoginScreenNew: undefined,
   LoginScreen2: undefined,
   LoginGonzalo: undefined,
   RegisterScreen: undefined,
@@ -115,7 +117,7 @@ export const StackNavigator = () => {
   return (
     <Stack.Navigator
     /* ATENCIÒN ACÁ: INITIAL RouteName: esto define el loging sino anda usar la variante de abajo comentada. */
-      initialRouteName={status === 'authenticated' ? 'home' : 'LoginGonzalo'}
+      initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreenNew'/* 'LoginGonzalo' */}
    /*    initialRouteName={'home'} */
       screenOptions={{
         headerShown: false,
@@ -129,6 +131,7 @@ export const StackNavigator = () => {
 
 {/* ------------VISTAS INICIO SESIÓN: -------------->*/}
     <Stack.Screen name='LoginScreen' component={LoginScreen} options={{ headerShown: false }} /> 
+    <Stack.Screen name='LoginScreenNew' component={LoginScreenNew} options={{ headerShown: false }} /> 
       {/* <Stack.Screen name='LoginGonzalo' component={LoginScreen2} options={{ headerShown: false }} /> */}
       
       <Stack.Screen name='RegisterScreen' component={RegisterScreen} options={{ headerShown: false }} />

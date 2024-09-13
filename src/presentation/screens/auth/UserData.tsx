@@ -84,7 +84,7 @@ export const UserData = ( ) => {
           
           <Text category="h1"
             style={styles.title}
-          > Tus Datos </Text>
+          > Tus Datos</Text>
           <Text 
             style={styles.text}
           >Hola {currentUserName}{' '}{currentUserLastName}! </Text>
@@ -133,7 +133,7 @@ export const UserData = ( ) => {
     style={styles.customText}
     status="primary"
     category="s1"
-    onPress={() => navigation.navigate('LoginScreen')}
+    onPress={() => navigation.navigate('LoginScreenNew')}
   >
     {' '}
     Iniciar sesión{' '}
@@ -190,7 +190,7 @@ export const UserData = ( ) => {
             style={styles.customText}
             status="primary"
             category="s1"
-            onPress={() => navigation.navigate('LoginScreen')}
+            onPress={() => navigation.navigate('LoginScreenNew')}
           >
             {' '}
             Iniciar sesión{' '}

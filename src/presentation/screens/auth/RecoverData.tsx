@@ -242,7 +242,7 @@ export const RecoverData = ({ navigation }: Props) => {
               style={styles.customText}
               status="primary"
               category="s1"
-              onPress={() => navigation.navigate('LoginScreen')}
+              onPress={() => navigation.navigate('LoginScreenNew')}
             >
               {' '}
               Ingresar{' '}
