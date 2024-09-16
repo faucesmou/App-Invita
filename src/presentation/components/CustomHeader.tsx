@@ -17,7 +17,7 @@ const CustomHeader = ( {color, titleSize} : Props) => {
   const { top, bottom } = useSafeAreaInsets();
   const headerHeight = 70; // Altura inicial del encabezado
   const adjustedHeaderHeight = headerHeight + top; // Ajusta la altura para tener en cuenta los márgenes seguros
-  const backColor = color ? color : globalColors.profile2
+  const backColor = color ? color : '#7ba1c3'/* globalColors.profile2 */
 
   React.useEffect(() => {
     navigation.setOptions({

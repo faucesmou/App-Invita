@@ -13,6 +13,7 @@ import { CartillaScreen } from '../screens/MiSalud/CartillaScreen';
 import { HomeScreenUx } from '../screens/home/HomeScreenUx';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Dimensions, StyleSheet } from 'react-native';
+import { HomeScreenUxNew } from '../screens/home/HomeScreenUxNew';
 
 const Tab = createBottomTabNavigator();
 
@@ -59,9 +60,12 @@ export const BottomTabsNavigator = () => {
     {/*   <Tab.Screen name="HomeScreen"
         options={{ title: 'Inicio', tabBarIcon: ({ color }) => (<IonIcon name='home-outline' color={color}  />), headerShown: false  }}
         component={HomeScreen} /> */}
-      <Tab.Screen name="HomeScreenUx"
+    {/*   <Tab.Screen name="HomeScreenUx"
         options={{ title: 'Inicio', tabBarIcon: ({ color }) => (<IonIcon name='home-outline' color={color} size={hp('3.9%')}  />), headerShown: false  }}
-        component={HomeScreenUx} />
+        component={HomeScreenUx} /> */}
+     <Tab.Screen name="HomeScreenUxNew"
+        options={{ title: 'Inicio', tabBarIcon: ({ color }) => (<IonIcon name='home-outline' color={color} size={hp('3.9%')}  />), headerShown: false  }}
+        component={HomeScreenUxNew} />
       <Tab.Screen name="Cartilla"
         options={{ title: 'MiSalud', tabBarIcon: ({ color }) => (<IonIcon name='heart-outline' color={color}  size={hp('3.8%')  } />), headerShown: false  }}
         component={CartillaScreen} />

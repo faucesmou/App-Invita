@@ -52,6 +52,7 @@ import { LoginScreenNew } from '../screens/auth/LoginScreenNew';
 
 export type RootStackParams = {
   home: undefined,
+  HomeScreenUxNew: undefined,
  /*  Product: { id: number, name: string }, */
   Credenciales: { id: number, name: string },
   Products: undefined,
@@ -117,7 +118,7 @@ export const StackNavigator = () => {
   return (
     <Stack.Navigator
     /* ATENCIÒN ACÁ: INITIAL RouteName: esto define el loging sino anda usar la variante de abajo comentada. */
-      initialRouteName={status === 'authenticated' ? 'home' : 'LoginScreenNew'/* 'LoginGonzalo' */}
+      initialRouteName={status === 'authenticated' ? /* 'HomeScreenUxNew' */  'home'  : 'LoginScreenNew'/* 'LoginGonzalo' */}
    /*    initialRouteName={'home'} */
       screenOptions={{
         headerShown: false,

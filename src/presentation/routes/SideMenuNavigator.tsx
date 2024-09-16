@@ -83,7 +83,8 @@ export const SideMenuNavigator = () => {
 
       <Drawer.Screen
         options={{ drawerIcon: ({ color }) => (<IonIcon name='caret-forward-circle-outline' color={color}  />), /* intento sacar el onAnimatedValueUpdate agregando esto: : title: 'Home' */ }}
-        name="Home" component={StackNavigator}  />
+       /*  name="HomeScreenUxNew" */  name="Home"  component={StackNavigator}  />
+       
 
       <Drawer.Screen
         options={{ drawerIcon: ({ color }) => (<IonIcon name='person-circle-outline' color={color} />), headerShown: true, title: 'Mi Perfil' }}

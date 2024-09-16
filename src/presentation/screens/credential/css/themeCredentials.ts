@@ -110,7 +110,26 @@ export const globalStylesCredentials = StyleSheet.create({
     borderRadius: 10, 
     backgroundColor: 'violet',
     zIndex: 3,
-       
+  },
+  frenteCardHomeNew: {
+    borderWidth: 0.5,
+    borderColor: 'white',
+   /*  padding: 10, */
+    marginTop: hp('0%'),
+    marginBottom: hp('0%'),
+   /*  marginTop: 10, */
+    flexDirection: 'column',
+    overflow: 'hidden', 
+  /*   marginVertical: 20, */
+    width:  wp('80%'),/* 390 *///probamos con medidas que se ajustan mejor a la ventana.
+    /* width: '100%'. *//* 390 *///En el 15maxpro estaba en 390.
+    height: hp('22%'),
+  /*   height: 230, */
+    paddingHorizontal: 0,
+    color: 'white',
+    borderRadius: 20, 
+    backgroundColor: 'violet',
+    zIndex: 3,
   },
   frenteCardHome2: {
   /*   padding: 10,
@@ -119,6 +138,25 @@ export const globalStylesCredentials = StyleSheet.create({
  /*    marginTop:30, */
     paddingHorizontal: 0,
     marginBottom:10,
+    flexDirection: 'column',
+   /*  overflow: 'hidden',  */
+    marginVertical: 0,
+    width:  wp('89%'),
+   /*  width: 380, */
+   height: hp('24%'),
+   /*  height: 220, */
+    color: 'white',
+    borderRadius: 10,    
+    zIndex: 3,
+   /*  zIndex: 2, */
+  },
+  frenteCardHome2New: {
+  /*   padding: 10,
+    marginTop: 10, */
+    marginTop: hp('6%'),
+ /*    marginTop:30, */
+    paddingHorizontal: 0,
+    marginBottom:5,
     flexDirection: 'column',
    /*  overflow: 'hidden',  */
     marginVertical: 0,
@@ -157,6 +195,20 @@ export const globalStylesCredentials = StyleSheet.create({
     borderRadius: 10, 
     marginBottom: hp('1%'),
      marginTop: hp('-3%')    
+  },
+  contenedorTituloAndesNew: {
+    flexDirection: 'column',
+    overflow: 'hidden', 
+   alignItems: 'center',
+    marginVertical: 0,
+    width: wp('13%'),
+   /*  width: 50, */
+   height: hp('4%'),
+   /*  height: 40, */
+    color: 'white',
+    borderRadius: 10, 
+    marginBottom: hp('1%'),
+     marginTop: hp('-4.5%')    
   },
   contenedorTituloAndesFamiliar: {
     flexDirection: 'column',
@@ -205,6 +257,17 @@ export const globalStylesCredentials = StyleSheet.create({
    /*  marginRight:'5%', */
     fontWeight: 'bold',
   },
+  planTitleHomeNew: {
+    fontSize: hp('3%'),   
+    /* fontSize: 26,  */  
+    color: 'white',
+    padding: hp('1%'),
+    /* padding: 10, */
+    bottom:'80%',
+    marginRight:wp('10%'),
+   /*  marginRight:'5%', */
+    fontWeight: 'bold',
+  },
   fuente: {
     top:'auto',
     bottom:hp('19.5%'),
@@ -212,6 +275,12 @@ export const globalStylesCredentials = StyleSheet.create({
 /*     backgroundColor:'green',  */
   },
   tituloAndes: {
+    color:'white',
+    fontSize: hp('1.7%'),
+   /*  fontSize:15, */
+    fontWeight: 'bold',
+  }, 
+  tituloAndesNew: {
     color:'white',
     fontSize: hp('1.7%'),
    /*  fontSize:15, */

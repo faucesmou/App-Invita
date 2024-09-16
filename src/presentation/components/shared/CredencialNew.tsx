@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Text } from '@ui-kitten/components';
 import { xml2json } from 'xml-js';
 import { useAuthStore } from '../../store/auth/useAuthStore';
-import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
+import { FullScreenLoader } from '../ui/FullScreenLoader';
 import { globalStylesCredentials } from '../../screens/credential/css/themeCredentials';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -23,7 +23,7 @@ const PlanPalettes: Record<PlanName, string[]> =  {
   green: ['#29bd0f', '#47ac34', '#47ac34', '#47ac34'],
 };
 
-const Credencial = () => {
+const CredencialNew = () => {
   const [credencial, setCredencial] = useState('');
   const [isConsulting, setIsConsulting] = useState(false);
   const [datosCredencial, setDatosCredencial] = useState({
@@ -119,17 +119,17 @@ const Credencial = () => {
       <>
       </>
       ) : (
-        <View style={{ height: hp('23%'), marginTop: hp('-1%') }} >
-          <LinearGradient colors={planColors} style={globalStylesCredentials.frenteCardHome}>
+        <View style={{ height: hp('23%'), marginTop: hp('-1%'), /* backgroundColor:'green', */ transform: [{ rotate: '2deg' }] }} >
+          <LinearGradient colors={planColors} style={globalStylesCredentials.frenteCardHomeNew}>
             <ImageBackground source={require('../../screens/credential/CredentialsData/images/BackgroundLogoGray3.png')} 
             imageStyle={{
               resizeMode: "cover",/* cover o contain */
               flex: 1,
               justifyContent: 'flex-start',
              /*  width: '100%', */
-              width: wp('90%'),
+              width: wp('80%'),
             /*   height: '80%', */
-              height: hp('33%'),
+              height: hp('30%'),
               transform: [{ translateX: wp('44%') }, { translateY: hp('-4%') }],
              /*  transform: [{ translateX: 190 }, { translateY: -40 }], */
             }} 
@@ -145,22 +145,23 @@ const Credencial = () => {
                    marginTop: hp('-1%'), 
                    minHeight:hp('10%')  }} >
                   <Image source={isotipo} style={{ /* width: 50 */
-                  width: wp('13%'), 
-                  height: hp('6%'), 
+                  width: wp('10%'), 
+                  height: hp('3%'), 
                   /* height: 50 */
-                  minHeight:hp('7%') ,
+                  minHeight:hp('6%') ,
                    marginBottom: hp('0%'),
                     marginTop: hp('0%'),
+                    marginLeft: hp('0.5%'),
                     resizeMode: 'contain'
                       }} />
                   </View>
-                  <View style={globalStylesCredentials.contenedorTituloAndes}>
-                    <Text style={globalStylesCredentials.tituloAndes}>andes</Text>
-                    <Text style={globalStylesCredentials.tituloAndes}>salud</Text>
+                  <View style={globalStylesCredentials.contenedorTituloAndesNew}>
+                    <Text style={globalStylesCredentials.tituloAndesNew}>andes</Text>
+                    <Text style={globalStylesCredentials.tituloAndesNew}>salud</Text>
                     </View>
                   </View>
-                  <View style={[globalStylesCredentials.frenteCardHome2, { alignItems: 'flex-end', justifyContent: 'flex-end' }]}>
-                    <Text style={globalStylesCredentials.planTitleHome}>Plan {datosCredencial.plan}</Text>
+                  <View style={[globalStylesCredentials.frenteCardHome2New, { alignItems: 'flex-end', justifyContent: 'flex-end' }]}>
+                    <Text style={globalStylesCredentials.planTitleHomeNew}>Plan {datosCredencial.plan}</Text>
                     <View /* style={globalStylesCredentials.fuente} */
                       style={[globalStylesCredentials.fuente,
                       cantidadPalabras >= 3 && { /* width: '60%' */ width: wp('60%') },
@@ -180,4 +181,4 @@ const Credencial = () => {
   );
 };
 
-export default Credencial;
+export default CredencialNew;
