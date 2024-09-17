@@ -78,7 +78,7 @@ export const CartillaMedicaScreen = () => {
       style={{...globalStyles.container, marginBottom:0, }}
 
     >
-      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} />
+      <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('4%')} />
 
       <BackButton Size={hp('4%')}/>
 

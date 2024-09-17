@@ -183,7 +183,7 @@ const [isFormComplete, setIsFormComplete] = useState(false);
   return (
     <View style={globalStyles.container}>
 
-      <CustomHeader color={globalColors.black} />
+      <CustomHeader /* color={globalColors.black}  *//>
 
       <BackButton />
 

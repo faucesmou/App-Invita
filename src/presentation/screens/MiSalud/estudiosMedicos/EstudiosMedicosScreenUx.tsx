@@ -319,7 +319,7 @@ export const EstudiosMedicosScreenUx = () => {
 
     <View style={globalStyles.container}>
  <ScrollView>  
-      <CustomHeader color={globalColors.black} titleSize={hp('4%')}  />
+      <CustomHeader /* color={globalColors.black} */ titleSize={hp('4%')}  />
 
       <BackButton Size={hp('4%')}/>
       {/*   <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', color:'#030136'}}>Estudios medicos Ux</Text>  */}

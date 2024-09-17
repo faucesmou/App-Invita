@@ -47,7 +47,7 @@ navigation.setOptions({
     <View 
     style={{...globalStyles.productScreen, marginTop: 0 }}
     >
-      <CustomHeader color={globalColors.black} titleSize={hp('4%')}   />
+      <CustomHeader /* color={globalColors.black}  */titleSize={hp('4%')}   />
       
       <BackButton Size={hp('4%')}  /> 
 

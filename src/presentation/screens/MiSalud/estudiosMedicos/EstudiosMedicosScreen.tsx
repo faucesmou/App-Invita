@@ -224,7 +224,7 @@ export const EstudiosMedicosScreen = () => {
   return (
 
     <View style={globalStyles.container}>
-      <CustomHeader color={globalColors.black} /* titleSize={27} */ />
+      <CustomHeader /* color={globalColors.black}  *//* titleSize={27} */ />
 
       <BackButton />
 

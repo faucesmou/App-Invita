@@ -68,7 +68,7 @@ useEffect(() => {
    
       backgroundColor: '#e9f6f8'
     }}>
-      <CustomHeader color={colorNaranja}  titleSize={hp('4%')} />
+      <CustomHeader /* color={colorNaranja}  */ titleSize={hp('4%')} />
       
       <PrimaryButton
       onPress={ ()=> navigation.navigate('MisDatos')}

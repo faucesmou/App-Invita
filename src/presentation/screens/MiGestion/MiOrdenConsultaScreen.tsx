@@ -86,7 +86,7 @@ setMounted(true);  // Marca como montado para evitar re-ejecuciones
       }}
     >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray2} titleSize={28} />
+      <CustomHeader /* color={globalColors.gray2}  */titleSize={28} />
       <BackButton onPress={() => navigation.navigate('home')} />
       {
         isConsulting ? (

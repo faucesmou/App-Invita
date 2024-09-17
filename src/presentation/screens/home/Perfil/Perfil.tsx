@@ -68,7 +68,7 @@ const { height } = Dimensions.get('window');
 /*       backgroundColor: 'green' */
     }}
     >
-      <CustomHeader  color={globalColors.black}  />
+      <CustomHeader  /* color={globalColors.black}  */ />
        <BackButton /> 
      {/*    <Text style={{marginBottom: 10}}> Settings Screen</Text> */}
 

@@ -328,7 +328,7 @@ export const Facturas = () => {
 
       style={globalStyles.container}
     >
-      <CustomHeader color={globalColors.black} titleSize={hp('4%')} />
+      <CustomHeader /* color={globalColors.black}  */ titleSize={hp('4%')} />
 
       <BackButton Size={hp('4%')}/>
 

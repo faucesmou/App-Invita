@@ -129,8 +129,8 @@ export const HomeScreenUxNew = () => {
         ]}
       >
         <View style={{ margin: '0%' }} >
-          <View style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}  >
-            <IonIcon name={iconName} size={hp('3%')} color="#505050" style={styles.icon} />
+          <View style={{ alignItems: 'center', display: 'flex', justifyContent: 'center',  /* backgroundColor: 'violet', */ maxWidth: wp('42%'),}}  >
+            <IonIcon name={iconName} size={hp('3.3%')} color="#505050" style={styles.icon} />
           </View>
           <View style={styles.innerContainerNew}>
             {label && <Text style={[styles.label, { fontSize: buttonsTitleFontSize }]}/* style={styles.label}  */>{label}</Text>}
@@ -152,7 +152,7 @@ export const HomeScreenUxNew = () => {
       >
 
 
-      <View style={[styles.headerContainer, { height: headerHeight, backgroundColor: '#7ba1c3', },]}>
+      <View style={[styles.headerContainer, { height: headerHeight, backgroundColor: '#e1a159'/* '#7ba1c3' */, },]}>
         <View style={{ width: wp('80%'), marginBottom: titleMarginBottom }}>
           <Text style={styles.headerText}>Inicio</Text>
         </View>
@@ -228,7 +228,9 @@ export const HomeScreenUxNew = () => {
                 onPress: () => navigation.navigate('MiSalud'),
                 /*   onPress: handleOpenURL, */
                 label: 'Mi Salud',
-                iconName: 'chatbubbles-outline',
+                iconName: 'fitness-outline',
+              /*   iconName: 'heart-circle-outline', */
+              /*   iconName: 'chatbubbles-outline', */
                 description: 'Cartilla médica y emergencias',
                 textSize: { buttonsTitleFontSize },
                 descriptionSize: { DescriptionFontSize }
@@ -236,7 +238,8 @@ export const HomeScreenUxNew = () => {
               {renderSecondaryButton({
                 onPress: () => navigation.navigate('MiGestión'),
                 label: 'Gestiones',
-                iconName: 'file-tray-full-outline',
+                iconName: 'layers-outline',
+                /* iconName: 'file-tray-full-outline', */
                 description: 'Órdenes de consulta, estudios médicos y más',
                 textSize: { buttonsTitleFontSize },
                 descriptionSize: { DescriptionFontSize }
@@ -244,14 +247,19 @@ export const HomeScreenUxNew = () => {
             </View>
           </View>
 
-          <View style={styles.facturaContainer}>
+          <View style={styles.mensajeSoporteContainer}>
+             
+             {/*  <Text style={styles.text3New}>¿Necesitas asistencia?</Text> */}
+
             <Pressable
              onPress={handleOpenURL}
+             style={styles.mensajeSoporteContainer}
             >
-              <View>
               <Text style={styles.text3New}>¿Necesitas asistencia?</Text>
-              <Text style={styles.text4New}>Chatea con nuestro soporte</Text>
+              <View style={styles.containerText4New}>
+              <Text style={styles.text4New}>Chateá con nuestro soporte</Text>
               </View>
+              
             </Pressable>
           </View>
         </View>
@@ -282,8 +290,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: wp('100%'),
-    /*  width: '100%', */
-    /*  backgroundColor: 'red', */
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 15,
@@ -324,9 +330,11 @@ const styles = StyleSheet.create({
     marginHorizontal: wp('3%'),
     /* backgroundColor: 'orange', */
   },
-  facturaContainer: {
+  mensajeSoporteContainer: {
     marginBottom: hp('1%'),
-    marginTop: hp('1%'),
+    marginTop: hp('2%'),
+    alignContent:'center',
+    marginHorizontal: wp('5%'),
   },
   buttonsContainer: {
     zIndex: 1,
@@ -407,11 +415,8 @@ const styles = StyleSheet.create({
     flex: 0.2,
     width: wp('100%'),
     height: hp('3.5%')
-    /*  width: '100%', */
-    /* height: '100%', */
   },
   text2: {
-    /*  fontSize: 24, */
     fontSize: hp('2.5%'),
     textAlign: 'center',
     flex: 1,
@@ -424,7 +429,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   text2New: {
-   
     fontSize: hp('2.8%'),
     fontWeight:'bold',
     textAlign: 'center',
@@ -435,32 +439,37 @@ const styles = StyleSheet.create({
     margin: 0,
     marginLeft: wp('4%'),
     flexWrap: 'wrap',
-    color: '#022c78'
+    color: '#e1a159',
+    /* color: '#753817' */
+   /*  color: '#022c78' */
 
   },
   text3New: {
-   /*  fontSize: hp('2%'), */
+    fontSize: hp('2%'),
     fontWeight:'bold',
     textAlign: 'center',
-    /* flex: 1, */
-    width: wp('100%'),
-  height: hp('2%'), 
     margin: 0,
     marginLeft: wp('0'),
     flexWrap: 'wrap',
     color: 'black'
-   /*  color: '#022c78' */
+  },
+  containerText4New: {
+    backgroundColor: '#ebc103',
+    /* backgroundColor: '#e6ba00', */
+    /* backgroundColor: '#fbd1a5', */
+    /* backgroundColor: '#e1a159', */
+    borderRadius: 5,
+    paddingHorizontal: 0,
+    paddingVertical: 3,
+    marginTop: wp('1%'),
   },
   text4New: {
+    fontSize: hp('1.8%'),
     fontWeight:'bold',
-    textAlign: 'center',
-    width: wp('100%'),
-  height: hp('2%'), 
-    marginTop: wp('0.5%'),
+    textAlign: 'center', 
     marginLeft: wp('0%'),
     flexWrap: 'wrap',
-    color: 'black'
- 
+    color: 'black',
   },
   image: {
     width: wp('40%'), // Ajuste responsivo para la imagen
@@ -477,11 +486,11 @@ const styles = StyleSheet.create({
     maxHeight: hp('15%'),
     maxWidth: wp('54%'),
     minWidth: wp('47%'),
-    minHeight: hp('13%'),
+    minHeight: hp('12%'),
     borderColor: 'white',
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 45,
-    margin: wp('0.5%'),
+    margin: wp('0.7%'),
     alignItems: 'center',
     /*  alignItems: 'flex-start', */
     textAlign: 'center',
@@ -497,7 +506,8 @@ const styles = StyleSheet.create({
   icon: {
     marginBottom: hp('1%'),
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+   
   },
   innerContainer: {
     flexDirection: 'column',
@@ -515,11 +525,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     /*   width: '100%',  */
     width: wp('100%'),
-    marginTop: hp('0.2%'),
+    marginTop: hp('0.1%'),
     maxWidth: wp('42%'),
-    maxHeight: hp('8%'),
-    minHeight: hp('7%'),
-    /*   backgroundColor: 'violet', */
+    maxHeight: hp('10%'),
+    minHeight: hp('7.2%'),
+      /* backgroundColor: 'violet', */
     flexWrap: 'wrap',
     overflow: 'hidden',
   },
@@ -531,7 +541,8 @@ const styles = StyleSheet.create({
     /*  maxwidth: '100%', */
     marginBottom: hp('0%'),
     /*   backgroundColor: 'red', */
-    maxHeight: hp('4%'),
+    maxHeight: hp('2.5%'),
+    minHeight: hp('2.2%'),
     marginTop: hp('0.5%'),
     textAlign: 'center',
     flexWrap: 'wrap',
@@ -550,5 +561,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     textAlign: 'center',
     marginBottom: hp('0%'),
+    /* backgroundColor: 'violet', */
   },
 });

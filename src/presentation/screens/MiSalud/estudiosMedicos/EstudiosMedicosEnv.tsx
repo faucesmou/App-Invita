@@ -193,7 +193,7 @@ if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPho
       }}
     >
       <HamburgerMenu />
-      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} /* titleSize={28} *//>
+      <CustomHeader /* color={globalColors.gray2}  */titleSize={hp('4%')} /* titleSize={28} *//>
       <BackButton onPress={() => navigation.navigate('home')} Size={hp('4%')} />
       <ScrollView>  
       {

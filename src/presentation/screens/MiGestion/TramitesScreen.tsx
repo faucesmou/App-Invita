@@ -36,7 +36,7 @@ let cardDescriptionFontSize: number = hp('2%');
 let iconNotificationFontSize: number = wp('8%');
 let titleMarginBottom: number  = hp('1%'); 
 let iconMarginBottom: number  = hp('3%');  
-
+let arrowMarginBottom: number  = hp('1%');  
  let adjustedHeaderHeight = headerHeight + top 
  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
   headerHeight = hp('17%'); // Ajuste para pantallas más pequeñas
@@ -47,7 +47,8 @@ let iconMarginBottom: number  = hp('3%');
   cardDescriptionFontSize = hp('2.5%');
   iconNotificationFontSize = wp('7%');
   titleMarginBottom = hp('3%');
-   iconMarginBottom = hp('6%');  
+   iconMarginBottom = hp('6%'); 
+   arrowMarginBottom = hp('0.5%'); 
 }
 
 
@@ -67,25 +68,40 @@ let iconMarginBottom: number  = hp('3%');
           flexDirection: 'row' }
         ]}>
 
-        <View style={{ width: '80%', marginBottom: titleMarginBottom }}>
+<Pressable onPress={() => {
+            console.log('presiono el boton ');
+            navigation.navigate('HomeScreenUxNew')
+          }}
+            style={{ marginLeft: wp('3%'), marginBottom: arrowMarginBottom, }}
+          >
+          
+           <IonIcon name='arrow-back' color= { 'white' } size = {30}/> 
+          </Pressable>
+
+
+
+
+        <View style={{ width: '75%', marginBottom: titleMarginBottom }}>
 
           <Text style={{
            fontSize: wp('7%'), // Ajuste responsivo para el tamaño del texto
             textAlign: 'center',
+            fontWeight:'bold',
             color: 'white',
-            marginLeft: wp('10%'),
+            marginLeft: wp('0%'),
             marginBottom: hp('1%')
           }} >
             Mi Gestión
           </Text>
         </View>
+
         <View>
 
           <Pressable onPress={() => {
             console.log('presiono el boton ');
             navigation.navigate('Buzón')
           }}
-            style={{ marginLeft: 0, marginBottom: iconMarginBottom }}
+            style={{ marginLeft: 0, marginBottom: iconMarginBottom, marginRight: wp('3%') }}
           >
 {/* 
             <IonIcon name='notifications-outline' color={'white'} size={35} /> */}
@@ -188,7 +204,8 @@ const styles = StyleSheet.create({
   headerContainer: {
     zIndex: 0.25, 
     width: '100%',
-    backgroundColor: globalColors.gray2,
+    backgroundColor: '#e1a159',
+    /* backgroundColor: globalColors.gray2, */
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 15,

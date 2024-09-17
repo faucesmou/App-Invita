@@ -71,7 +71,7 @@ export const Afiliados = () => {
 
       }}
     >
-      <CustomHeader color={globalColors.gray2} titleSize={hp('4%')} />
+      <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('4%')} />
 
       <BackButton Size={hp('4%')}/>
       <Text style={{ marginBottom: 5, fontSize: 25, textAlign: 'center', }}>Afiliados a Cargo</Text>

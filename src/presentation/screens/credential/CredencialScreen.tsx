@@ -39,7 +39,7 @@ export const CredencialScreen = () => {
   };
 
   return (
-    <View style={globalStyles.container}>
+    <View style={globalStyles.container} > 
       <CustomHeader titleSize={hp('4%')} />
 
       <HamburgerMenu />

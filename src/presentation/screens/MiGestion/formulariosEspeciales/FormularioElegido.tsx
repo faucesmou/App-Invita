@@ -37,7 +37,7 @@ export const FormularioElegido = ({ route }) => {
     <View
       style={globalStyles.container}
     >
-      <CustomHeader color={color} />
+      <CustomHeader /* color={color}  *//>
       <BackButton />
 
       <View

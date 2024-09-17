@@ -11,6 +11,7 @@ import { IonIcon } from '../../components/shared/IonIcon';
 import NotiMensajes from '../../components/shared/Noti-mensajes';
 import NotiComponent3 from '../../components/shared/NotiComponent3';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { BackButton } from '../../components/shared/BackButton';
 
 export const CartillaScreen = () => {
   console.log('Entrando a Cartilla Screen--------->');
@@ -31,6 +32,7 @@ export const CartillaScreen = () => {
  let iconNotificationFontSize: number = wp('8%');
  let titleMarginBottom: number  = hp('1%'); 
  let iconMarginBottom: number  = hp('3%');  
+ let arrowMarginBottom: number  = hp('1%');  
   if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
     headerHeight = hp('17%'); // Ajuste para pantallas más pequeñas
     adjustedHeaderHeight = headerHeight + top;
@@ -41,6 +43,7 @@ export const CartillaScreen = () => {
     iconNotificationFontSize = wp('7%');
     titleMarginBottom = hp('3%');
      iconMarginBottom = hp('6%'); 
+     arrowMarginBottom = hp('0.5%');
   }
 
 
@@ -87,13 +90,28 @@ export const CartillaScreen = () => {
       }
       ]}>
 
-        <View style={{ width: '80%', marginBottom: titleMarginBottom}}>
+        
+
+        <Pressable onPress={() => {
+            console.log('presiono el boton ');
+            navigation.navigate('HomeScreenUxNew')
+          }}
+            style={{ marginLeft: wp('3%'), marginBottom: arrowMarginBottom, }}
+          >
+          
+           <IonIcon name='arrow-back' color= { 'white' } size = {30}/> 
+          </Pressable>
+
+        <View style={{ width: '75%', marginBottom: titleMarginBottom}}>
+
+
 
           <Text style={{
             fontSize: wp('7%'), // Ajuste responsivo para el tamaño del texto
             textAlign: 'center',
             color: 'white',
-            marginLeft: wp('10%'),
+            fontWeight:'bold',
+            marginLeft: wp('0%'),
             marginBottom: hp('1%')
             /* fontSize: 35,
             textAlign: 'center',
@@ -107,17 +125,18 @@ export const CartillaScreen = () => {
         </View>
 
         <View>
+       
 
           <Pressable onPress={() => {
             console.log('presiono el boton ');
             navigation.navigate('Buzón')
           }}
-            style={{ marginLeft: 0, marginBottom: iconMarginBottom /* marginBottom: 5 */ }}
+            style={{ marginLeft: 0, marginBottom: iconMarginBottom, marginRight: wp('3%') }}
           >
             {/*  <IonIcon name='notifications-outline' color={'white'} size={35} />  */}
             <NotiMensajes IonIconSize={iconNotificationFontSize} />
           </Pressable>
-          <NotiComponent3 />
+        {/*   <NotiComponent3 /> */}
 
         </View>
 
@@ -190,7 +209,8 @@ const styles = StyleSheet.create({
   headerContainer: {
     zIndex: 0.25,
     width: '100%',
-    backgroundColor: globalColors.gray2,
+    backgroundColor: '#e1a159',
+    /* backgroundColor: globalColors.gray2, */
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 15,
@@ -257,7 +277,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
-    shadowRadius: 20,
+    shadowRadius: 5,
     zIndex: 3,
   },
   emergencySubitle: {

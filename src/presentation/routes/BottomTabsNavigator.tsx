@@ -50,7 +50,9 @@ export const BottomTabsNavigator = () => {
         tabBarStyle: {
           borderTopWidth: 1,
           elevation: 10,
-          height: headerHeight,
+          height: 0,
+          // IMPORTANTE: AL COLOCAR EL HEIGHT EN 0 OCULTO EL BOTOM TAB NAVIGATOR.PARA REESTABLECERLO  DESCOMENTAR LO SIGUIENTE: height: headerHeight
+          /* height: headerHeight, */
           /* height: hp('12%'), */
          /*  height: 100, */
         }

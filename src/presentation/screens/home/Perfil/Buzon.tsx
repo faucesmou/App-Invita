@@ -389,7 +389,7 @@ export const Buzon = () => {
         marginBottom: 0,
       }}
     >
-      <CustomHeader color={globalColors.black} titleSize={hp('4%')} />
+      <CustomHeader /* color={globalColors.black}  */titleSize={hp('4%')} />
 
       <BackButton Size={hp('4%')}/>
 
@@ -768,7 +768,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom:5,
     padding: 5,
-    backgroundColor: globalColors.earthYellow2 /* brown2 *//* 'brown' *//* '#97e3b0' *//* '#d7e5f8' */,
+    backgroundColor: '#fbd1a5'/* globalColors.earthYellow2  *//* brown2 *//* 'brown' *//* '#97e3b0' *//* '#d7e5f8' */,
     borderRadius: 15,
     borderWidth:0,
     borderColor: globalColors.earthYellow2,

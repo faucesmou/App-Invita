@@ -112,7 +112,7 @@ export const globalStylesCredentials = StyleSheet.create({
     zIndex: 3,
   },
   frenteCardHomeNew: {
-    borderWidth: 0.5,
+    borderWidth: 0,
     borderColor: 'white',
    /*  padding: 10, */
     marginTop: hp('0%'),
