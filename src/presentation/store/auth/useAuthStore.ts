@@ -214,6 +214,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         const idAfiliado = respuestaFrancoMejorada.data[0].idAfiliado;
         const idAfiliadoTitular = respuestaFrancoMejorada.data[0].idAfiliadoTitular;
         const cuilTitular = respuestaFrancoMejorada.data[0].cuilTitular;
+        const nombrePila = respuestaFrancoMejorada.data[0].nombre;
 
    /*      const dniAfiliado = respuestaFrancoMejorada.data[0].nroDocumento;
         const usuarioAfiliado = respuestaFrancoMejorada.data[0].usuAPP;
@@ -225,7 +226,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
         if (idAfiliado != undefined && idAfiliadoTitular != undefined && cuilTitular != undefined) {
 
-          set({  idAfiliadoTitular: idAfiliadoTitular, cuilTitular: cuilTitular });
+          set({  idAfiliadoTitular: idAfiliadoTitular, cuilTitular: cuilTitular, UserName: nombrePila });
           console.log('los datos de idAfiliado, idAfiliadoTitular y cuilTitular fueron guardados en el context correctamente');
           set({  status: 'authenticated', });
           return true;

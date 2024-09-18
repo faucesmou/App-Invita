@@ -165,14 +165,17 @@ export const CartillaScreen = () => {
             </TouchableOpacity>
 
             {/*     <Text style={styles.emergencyProvincesNumbers}> 0810-333-9743</Text> */}
-            <Text style={styles.emergencyProvincesTitle}> San Juan</Text>
+            
+           {/*  <Text style={styles.emergencyProvincesTitle}> San Juan</Text>
             <TouchableOpacity onPress={() => handlePhonePress2('264-631-3531')}>
               <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
             {/* <Text style={styles.emergencyProvincesNumbers}> 264-631-3531</Text> */}
             <Text style={styles.emergencyProvincesTitle}> San Luis</Text>
             <TouchableOpacity onPress={() => handlePhonePress2('265-742-8786')}>
               <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text>
+             {/*  <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text> */}
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handlePhonePress2('266-443-5700')}>
               <Text style={styles.emergencyProvincesNumbers}> 266-443-5700</Text>

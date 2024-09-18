@@ -25,7 +25,7 @@ export const LoginScreenNew = ({ navigation }: Props) => {
   const { top } = useSafeAreaInsets();
 
 
-  const { loginGonzaMejorado, guardarDatosLoginEnContext, loginGonzaMejorado2, } = useAuthStore();
+  const { loginGonzaMejorado, guardarDatosLoginEnContext, loginGonzaMejorado2, setUserName } = useAuthStore();
 
 
   const [isPosting, setIsPosting] = useState(false)

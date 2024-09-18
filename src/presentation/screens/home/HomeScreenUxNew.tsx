@@ -34,13 +34,31 @@ interface Props {
 
 export const HomeScreenUxNew = () => {
   const { setShouldUpdateNotifications, getUserName } = useAuthStore();
-/*   function capitalizeWords(string:string) {
+
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null)
+
+  function capitalizeWords(string:string) {
     return string.replace(/\b\w+/g, function(word) {
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     });
   }
-  const currentUserName = capitalizeWords(getUserName());
+/*   const currentUserNameInicial = getUserName();
+  const currentUserName = capitalizeWords(currentUserNameInicial);
   console.log('currentUserName es: ', currentUserName); */
+
+
+  useEffect(() => {
+    
+      const currentUserNameInicial = getUserName(); // Obtención síncrona del nombre
+      if (currentUserNameInicial) {
+        const capitalizedUserName = capitalizeWords(currentUserNameInicial);
+        setCurrentUserName(capitalizedUserName); // Actualiza el estado
+      } else {
+        console.log('No se encontró el nombre de usuario');
+      }
+   
+  }, [getUserName])
+  
   useEffect(() => {
     setShouldUpdateNotifications(true);
   }, []);
@@ -176,7 +194,15 @@ export const HomeScreenUxNew = () => {
 
       <View style={styles.imageContainer}>
         <View style={styles.innerContainer2}>
-          <Text style={styles.text2New}>¡Hola, Gonzalo!{/* {currentUserName} */}</Text>
+
+          {currentUserName ? (
+            <Text style={styles.text2New}>¡Hola,{currentUserName}!</Text>
+          )
+        :
+        (
+          <Text style={styles.text2New}>¡Te estábamos esperando!</Text>
+        )
+        }
        
         </View>
       </View>
@@ -255,11 +281,19 @@ export const HomeScreenUxNew = () => {
              onPress={handleOpenURL}
              style={styles.mensajeSoporteContainer}
             >
-              <Text style={styles.text3New}>¿Necesitas asistencia?</Text>
+
               <View style={styles.containerText4New}>
+
+              <Text style={styles.text3New}>¿Necesitas asistencia?</Text>
+              <IonIcon name='chatbubbles-outline' color= { 'black' } size = {30} marginLeft={wp('2%')} /> 
+              </View>
+              {/* <Text style={styles.text3New}>¿Necesitas asistencia?</Text> */}
+
+              <View style={styles.containerText4New2}>
+
               <Text style={styles.text4New}>Chateá con nuestro soporte</Text>
               </View>
-              
+
             </Pressable>
           </View>
         </View>
@@ -440,9 +474,6 @@ const styles = StyleSheet.create({
     marginLeft: wp('4%'),
     flexWrap: 'wrap',
     color: '#e1a159',
-    /* color: '#753817' */
-   /*  color: '#022c78' */
-
   },
   text3New: {
     fontSize: hp('2%'),
@@ -451,9 +482,24 @@ const styles = StyleSheet.create({
     margin: 0,
     marginLeft: wp('0'),
     flexWrap: 'wrap',
-    color: 'black'
+    color: 'black',
+    /* backgroundColor: '#e1a159', */
   },
   containerText4New: {
+   /*  backgroundColor: '#ebc103', */
+    /* backgroundColor: '#e6ba00', */
+    /* backgroundColor: '#fbd1a5', */
+    /* backgroundColor: '#e1a159', */
+    borderRadius: 5,
+    paddingHorizontal: wp('11%'),
+    paddingVertical: 1,
+    marginTop: wp('0%'),
+    flexDirection:'row',
+ /*    backgroundColor: 'blue', */
+    alignItems:'center',
+    alignContent:'center'
+  },
+  containerText4New2: {
     backgroundColor: '#ebc103',
     /* backgroundColor: '#e6ba00', */
     /* backgroundColor: '#fbd1a5', */
@@ -462,6 +508,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 3,
     marginTop: wp('1%'),
+    marginHorizontal: wp('7%'),
   },
   text4New: {
     fontSize: hp('1.8%'),
