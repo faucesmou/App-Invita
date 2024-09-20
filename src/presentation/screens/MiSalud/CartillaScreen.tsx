@@ -175,10 +175,18 @@ export const CartillaScreen = () => {
             <Text style={styles.emergencyProvincesTitle}> San Luis</Text>
             <TouchableOpacity onPress={() => handlePhonePress2('265-742-8786')}>
               <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text>
-             {/*  <Text style={styles.emergencyProvincesNumbers}> 265-742-8786</Text> */}
+          
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handlePhonePress2('266-443-5700')}>
               <Text style={styles.emergencyProvincesNumbers}> 266-443-5700</Text>
+            </TouchableOpacity>
+            <Text style={styles.emergencyProvincesTitle}> Córdoba</Text>
+            <TouchableOpacity onPress={() => handlePhonePress2('0810-444-351111')}>
+              <Text style={styles.emergencyProvincesNumbers}> 0810-444-351111</Text>
+          
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handlePhonePress2('0810-333-351111')}>
+              <Text style={styles.emergencyProvincesNumbers}> 0810-333-351111</Text>
             </TouchableOpacity>
           </View>
 

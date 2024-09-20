@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { View, Text, ScrollView, StyleSheet, Image, Pressable, Modal, } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Image, Pressable, Modal, Linking, TouchableOpacity, } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { xml2js } from 'xml-js';
@@ -85,6 +85,8 @@ export const Buzon = () => {
 
         // @ts-ignore
         const notificacionesData = result.Resultado?.tablaDatos;
+  /*       console.log('NotificacionesData es :',notificacionesData ); */
+
 
         if (notificacionesData === undefined) {
           console.log('En ProductsRequest notificacionesData es undefined: No hay notificaciones para este usuario.');
@@ -280,12 +282,15 @@ export const Buzon = () => {
         }));
         if (combinedData && combinedData.length > 0) {
           setModalData(combinedData);
+      
+          /* 9D29D0A4-3A2F-4FBA-AF43-3727ED1C1ED7 */
+         
         } else {
           console.log('combinedData está vacío o no tiene la estructura esperada.');
         }
        /*  setModalData([combinedData]); */
        console.log('combinedData -->>>>>>>>:', JSON.stringify(combinedData)); 
-       console.log('ModalData -->>>>>>>>:', modalData); 
+     /*   console.log('ModalData -->>>>>>>>:', modalData);  */
   
         setModalVisible(true);
   
@@ -308,6 +313,7 @@ export const Buzon = () => {
       console.error('Error al obtener las notificaciones (PracticaResueltaRequest):', error);
       setModalVisible2(true);
     }
+   
   };
   
 
@@ -333,6 +339,13 @@ export const Buzon = () => {
   };
   const modifyEstMedicVisible = () => {
     setListadoEstMedicosVisible(prevState => !prevState);
+  };
+
+  const handlePress = (idOrden:string/* url: string */) => {
+    const url = `https://andessalud.createch.com.ar/documento/estudios?idOrden=${idOrden}&idAfiliado=${idAfiliado}`
+    console.log('este es el URL: ', url);
+    
+    Linking.openURL(url).catch((err) => console.error('Error al abrir el enlace del estudio:', err));
   };
 
  const exampleModalData = [
@@ -542,7 +555,7 @@ export const Buzon = () => {
               
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <Text style={styles.textStyletTitle}>Órdenes autorizadas: </Text>
+                    <Text style={styles.textStyletTitle}>Estudios autorizados: </Text>
                   <ScrollView contentContainerStyle={styles.scrollViewContent}>
                      {/*  {modalData.map((data, index) => ( */}
                      {modalData && modalData.map((data, index) => (
@@ -560,6 +573,18 @@ export const Buzon = () => {
                             <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
                             <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
                             <Text style={styles.textStylePractica}>Práctica: {data.prestacionDET}</Text>
+                            <Text style={styles.textStylePractica}>Id orden: {data.idOrden}</Text>
+                            
+                         {/*    <Text style={styles.textStylePractica}>idOrden: {data.idOrdenDET}</Text> */}
+
+                          {/*   <Text style={styles.textStylePractica}>idOrden: {data.idOrdenDET}</Text> */}
+
+                          <TouchableOpacity style={styles.primaryButton45} onPress={() => handlePress(data.idOrden)}>
+                          <Text style={styles.buttonText2}>
+                            Link de Descarga
+                          </Text>
+                        </TouchableOpacity>
+
                           </View>
 
                           <Divider />
@@ -591,7 +616,7 @@ export const Buzon = () => {
               
                 <View style={styles.centeredView}>
                   <View style={styles.modalView}>
-                    <Text style={styles.textStyletTitle}>Órden rechazada: </Text>
+                    <Text style={styles.textStyletTitle}>Estudio rechazado: </Text>
                   <ScrollView contentContainerStyle={styles.scrollViewContent}>
                       {rechazoData.map((data, index) => (
                         <>
@@ -852,8 +877,8 @@ const styles = StyleSheet.create({
       width: 2,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOpacity: 1,
+    shadowRadius: 3,
     elevation: 5,
     zIndex: 2, // Asegúrate de que el modal esté por encima del overlay
     width: '80%', // Ajusta el ancho según sea necesario
@@ -937,17 +962,37 @@ const styles = StyleSheet.create({
   //estilos para lograr un background borroso cuando esta el modal:
   overlay: {
     position: 'absolute',
-    top: 0,
+    overflow: 'hidden',
+   /*  top: 0, */
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(196, 193, 193, 0.27)', // Fondo semitransparente
+    backgroundColor: 'rgba(196, 193, 193, 0.15)', // Fondo semitransparente
+    borderRadius: 20,
     zIndex: 1, // Asegúrate de que esté por debajo del modal
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  primaryButton45: {
+    backgroundColor: 'green',
+    borderRadius: 5,
+    padding: 5,
+    margin: hp('1%'),
+    marginTop: hp('1%'),
+    marginBottom: 15,
+    marginHorizontal: wp('1%'),
+    paddingHorizontal: wp('1%'),
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
+  buttonText2: {
+    color: 'white',
+    fontSize: wp('4%'),
+    textAlign: 'center',
   },
 
 });

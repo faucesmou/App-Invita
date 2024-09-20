@@ -43,6 +43,7 @@ import { UserData } from '../screens/auth/UserData';
 import { ConsultaScreenUx } from '../screens/ordenConsulta/ConsultaScreenUx';
 import { EstudiosMedicosScreenUx } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosScreenUx';
 import { LoginScreenNew } from '../screens/auth/LoginScreenNew';
+import { EstudiosMedicosEnvNew } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosEnvNew';
 
 /* import { UserData } from '../screens/auth/userData'; */
 
@@ -90,6 +91,7 @@ export type RootStackParams = {
   "Estudios": undefined,
  "Estudios!": undefined,
   "Enviado": undefined,
+  "Enviado2": undefined,
   EstudiosMedicosEnviados:undefined,
   Pagos: undefined,
   Facturas:undefined,
@@ -190,7 +192,8 @@ export const StackNavigator = () => {
 
 {/* ConsultaScreenFinal Redirige a miOrdenConsultaScreen y muestra el Link: */}
       <Stack.Screen name="Enviando" component={MiOrdenConsultaScreen} options={{ headerShown: true }} />
-      <Stack.Screen name="Enviado" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
+      <Stack.Screen name="Enviado2" component={EstudiosMedicosEnv} options={{ headerShown: true }} />
+      <Stack.Screen name="Enviado" component={EstudiosMedicosEnvNew} options={{ headerShown: true }} />
 
 {/* Obtener Formularios Especiales: */}
       <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />

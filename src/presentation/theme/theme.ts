@@ -248,6 +248,22 @@ export const globalStyles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'flex-start',
   },
+  resultTextAprobado: {
+    fontSize: 18,
+    fontFamily: 'Quicksand-Light',
+    margin: 10,
+    marginTop: wp('1%'),
+    alignItems: 'flex-start',
+   /*  alignItems: 'flex-start', */
+  },
+  resultTextAprobadoIndicacion: {
+    fontSize: 18,
+    fontFamily: 'Quicksand-Light',
+    margin: 10,
+    marginTop: wp('0%'),
+    alignItems: 'center',
+   /*  alignItems: 'flex-start', */
+  },
   resultFecha: {
 
     fontSize: 17,

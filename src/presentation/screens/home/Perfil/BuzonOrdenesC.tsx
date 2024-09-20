@@ -757,8 +757,8 @@ const styles = StyleSheet.create({
       width: 2,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOpacity: 1,
+    shadowRadius: 3,
     elevation: 5,
     zIndex: 2, // Asegúrate de que el modal esté por encima del overlay
     width: '80%', // Ajusta el ancho según sea necesario
@@ -859,11 +859,13 @@ const styles = StyleSheet.create({
   //estilos para lograr un background borroso cuando esta el modal:
   overlay: {
     position: 'absolute',
-    top: 0,
+    overflow: 'hidden',
+   /*  top: 0, */
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(196, 193, 193, 0.27)', // Fondo semitransparente
+    backgroundColor: 'rgba(196, 193, 193, 0.15)', // Fondo semitransparente
+    borderRadius: 20,
     zIndex: 1, // Asegúrate de que esté por debajo del modal
   },
   centeredView: {
