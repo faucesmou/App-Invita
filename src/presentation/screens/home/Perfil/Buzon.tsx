@@ -180,6 +180,8 @@ export const Buzon = () => {
 
         // Asignamos las notificaciones filtradas al estado
       setNotificaciones(notificacionesOrdenadas);
+      console.log('set Notificaciones. Notificaciones:-->', notificaciones);
+      
 
     
         setIsConsulting(false);
@@ -573,7 +575,7 @@ export const Buzon = () => {
                             <Text style={styles.textStyle}>Dirección:{data.domRenglon1}{data.domRenglon2}</Text>
                             <Text style={styles.textStyleCoseguro}>Coseguro: ${data.coseguroENC}</Text>
                             <Text style={styles.textStylePractica}>Práctica: {data.prestacionDET}</Text>
-                            <Text style={styles.textStylePractica}>Id orden: {data.idOrden}</Text>
+                            {/* <Text style={styles.textStylePractica}>Id orden: {data.idOrden}</Text> */}
                             
                          {/*    <Text style={styles.textStylePractica}>idOrden: {data.idOrdenDET}</Text> */}
 
@@ -908,7 +910,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     textAlign: 'justify',
-    marginTop: 7,
+    marginTop: hp('0.5%'),
     fontSize:14,
   },
   valueCoseguro: {
@@ -942,7 +944,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     marginTop: 7,
-    marginBottom: 15,
+    marginBottom: hp('0.5%'),
     fontSize: 13,
   },
   textStyleCoseguro: {
@@ -981,7 +983,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     margin: hp('1%'),
-    marginTop: hp('1%'),
+    marginTop: hp('0%'),
     marginBottom: 15,
     marginHorizontal: wp('1%'),
     paddingHorizontal: wp('1%'),

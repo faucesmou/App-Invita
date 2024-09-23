@@ -173,10 +173,12 @@ const [linkDescargaEstudio, setLinkDescargaEstudio] = useState<string>()
 
         const resultadoBusqueda = await axios.get(`https://andessalud.createch.com.ar/estudios/consultar?idAfiliado=${idAfiliadoSeleccionado}&idOrden=${idOrdenBuscar}`);
 
-       /*  const resultadoBusqueda = await axios.get(`https://andessalud.createch.com.ar/estudios/consultar?idAfiliado=5AA57241-C4E6-4AD6-B7F2-B96D57C35DF4&idOrden=56DD751C-F198-47A6-B332-591DDE6B495B`); */
+        /* const resultadoBusqueda = await axios.get(`https://andessalud.createch.com.ar/estudios/consultar?idAfiliado=5AA57241-C4E6-4AD6-B7F2-B96D57C35DF4&idOrden=56DD751C-F198-47A6-B332-591DDE6B495B`); */
 
 
         console.log('resultadoBusqueda--->', resultadoBusqueda)
+        
+       
 
         const result = resultadoBusqueda.data.meta.message;
 
@@ -188,10 +190,11 @@ const [linkDescargaEstudio, setLinkDescargaEstudio] = useState<string>()
           
           setLinkDescargaEstudio(`https://andessalud.createch.com.ar/documento/estudios?idOrden=${idOrdenBuscar}&idAfiliado=${idAfiliadoSeleccionado}`)
           console.log('estudio encontrado--->')
+
+          /*   setLinkDescargaEstudio(`https://andessalud.createch.com.ar/documento/estudios?idOrden=9D29D0A4-3A2F-4FBA-AF43-3727ED1C1ED7&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA`)
+            console.log('estudio encontrado--->')
+           */
         }
-        /*   setLinkDescargaEstudio(`https://andessalud.createch.com.ar/documento/estudios?idOrden=9D29D0A4-3A2F-4FBA-AF43-3727ED1C1ED7&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA`)
-          console.log('estudio encontrado--->')
-        } */
 
 
 
@@ -295,7 +298,7 @@ if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPho
             {/* View para mostrar éxito */}
             {showSuccessMessage && (
               <View style={styles.successContainer}>
-                <Text style={styles.successMessage}>!Petición enviada con Éxito!</Text>
+                <Text style={styles.successMessage}>¡Petición enviada con Éxito!</Text>
                 <Image source={require('../../../assets/images/logoAndesSaludRedondo4.png')} style={styles.successImage} />
                {/*  <Image source={require('../../../assets/images/MailSent-rafiki.png')} style={styles.successImage} /> */}
                <Text style={styles.epigrafeMessage}>Estar bien es más fácil</Text>
@@ -325,9 +328,9 @@ if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPho
                  {!linkDescargaEstudio && <Text style={globalStyles.resultText}>{result.mensaje}</Text>}
 
                  <View style={{ marginTop:5, marginBottom: 10,}}>
-                <Text style={globalStyles.resultOrdenText}>ID Orden:</Text>
+                {/* <Text style={globalStyles.resultOrdenText}>ID Orden:</Text> */}
                
-                <Text style={globalStyles.resultFecha}>{result.idOrden}</Text>
+                {/* <Text style={globalStyles.resultFecha}>{result.idOrden}</Text> */}
                 
                 <Text style={globalStyles.resultOrdenText}>Fecha de Solicitud:</Text>
               
@@ -335,9 +338,11 @@ if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPho
            
                 </View>
                 {/*  <Text style={globalStyles.resultText}>ID Estado: {result.idEstado}</Text> */}
-                {verificacionMensaje && !linkDescargaEstudio && <Text style={globalStyles.resultText} >{verificacionMensaje}</Text>}
 
-                {linkDescargaEstudio && <Text style={globalStyles.resultTextAprobado} >Tu estudio ya fue aprobado!</Text> }
+                {/* la siguiente linea no se estaba usando:  */}
+              {/*   {verificacionMensaje && !linkDescargaEstudio && <Text style={globalStyles.resultText} >{verificacionMensaje}</Text>} */}
+
+                {linkDescargaEstudio && <Text style={globalStyles.resultTextAprobado} >¡Tu estudio ya fue autorizado!</Text> }
                 {linkDescargaEstudio && <Text style={globalStyles.resultTextAprobadoIndicacion}>Descargalo acá:</Text> }
               
                {linkDescargaEstudio && <TouchableOpacity style={styles.primaryButton45} onPress={() => handlePress(linkDescargaEstudio)}>

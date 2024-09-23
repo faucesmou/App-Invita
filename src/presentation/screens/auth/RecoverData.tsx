@@ -1,5 +1,5 @@
 import { Layout, Text, Input, Button } from "@ui-kitten/components"
-import { Alert, Linking, StyleSheet, View, useWindowDimensions } from "react-native"
+import { Alert, Linking, StyleSheet, View, useWindowDimensions, Image } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import { MyIcon } from "../../components/ui/MyIcon";
 
@@ -11,6 +11,7 @@ import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IonIcon } from "../../components/shared/IonIcon";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Path, Svg } from "react-native-svg";
 
 
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
@@ -123,34 +124,71 @@ export const RecoverData = ({ navigation }: Props) => {
   }
 
   const { height } = useWindowDimensions();
-  let paddingTopNumber = hp('18%');
+ /*  let paddingTopNumber = hp('18%'); */
+ let paddingTopNumber = hp('8.5%');
   let paddingHorizontalNumber = wp('7%');
   if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
-    paddingTopNumber = hp('12%');
+    /* paddingTopNumber = hp('12%'); */
+    paddingTopNumber = hp('5%');
     paddingHorizontalNumber = wp('6%'); 
   }
 
 
     return (
       <Layout style={{ flex: 1 }}>
-        <ScrollView style={{ marginHorizontal: paddingHorizontalNumber }}>
+        <ScrollView style={{ marginHorizontal: hp('0.7%') }}/* style={{ marginHorizontal: paddingHorizontalNumber }} */>
+
+
+       
+
           <Layout style={{ paddingTop:paddingTopNumber/*  height * 0.20  */}}>
-            <Text category="h1"
+
+
+          <View style={styles.topSection}>
+              <Image source={require('../../assets/images/logoBlanco3.png')}
+                style={styles.image}
+                resizeMode="contain"
+              />
+              <Text style={styles.textTitlePrincipal}>Recuperá</Text>
+              <Text style={styles.textTitlePrincipal}>Tu información</Text>
+
+            </View>
+
+          <View style={styles.waveContainer}>
+              <Svg
+                height={hp('13%')} // Ajusta el tamaño de la onda
+                width={wp('99%')}
+                /*  color={'black'} */
+                viewBox="0 0 1440 320" // Vista para el SVG
+
+              >
+                <Path
+                  fill="white" // Color de la sección inferior (fondo blanco)
+                  /* para controlar los picos y valles modifica estos primeros valores:  */
+                  d="M0,40 C520,20 1140,420 1440,160 L1640,1090 L0,400Z"
+                />
+              </Svg>
+            </View>
+
+           {/*  <Text category="h1"
               style={{ marginBottom: 20 }}
-            >Recuperar Datos</Text>
-            <Text category="p1">Por favor, completa los siguientes campos para continuar</Text>
+              style={styles.textTitle}
+            >Recuperar Datos</Text> */}
+
+            <Text /* category="p1" */ style={styles.text}>Por favor, completá los siguientes campos para continuar</Text>
 
           </Layout>
 
           {/* Inputs */}
 
-          <Layout style={{ marginTop: 20 }}>
+          <Layout style={{ marginTop: 15, paddingHorizontal: 20, }}>
             <Input
               placeholder="DNI"
               value={form.dni}
               onChangeText={(dni) => setForm({ ...form, dni })}
               accessoryLeft={<MyIcon name="person-outline" />}
-              style={{ marginBottom: 10 }}
+              style={{ marginBottom: 10, borderRadius: 15, }}
+
             />
             <Input
               placeholder="Número de Credencial"
@@ -158,74 +196,80 @@ export const RecoverData = ({ navigation }: Props) => {
               autoCapitalize="none"
               value={form.numeroAfiliado}
               onChangeText={(numeroAfiliado) => setForm({ ...form, numeroAfiliado })}
-              accessoryLeft={<IonIcon name='card-outline' size={25} color="#505050" marginLeft={'2%'} /> }
+              accessoryLeft={<IonIcon name='card-outline' size={25} color="#505050" marginLeft={'2%'} marginRight={'2.3%'}/> }
               
-              style={{ marginBottom: 10,}}
+              style={{ marginBottom: 10, borderRadius: 15, marginLeft: 1}}
             />
         
           </Layout>
 
           {/* Espacio */}
 
-          <Layout style={{ height: 10 }} />
+          <Layout style={{ height: 2 }} />
 
           {/* Button */}
 
-          <Layout style={{ marginTop: 20 }}>
+          <Layout style={{ marginTop: 0, paddingHorizontal: 20, }}>
             <Button
               style={styles.customButton}
               disabled={isRecovering}
               accessoryRight={<MyIcon name="arrow-forward-outline" white isDisabled={isRecovering} />}
-              onPress={ recover}
+              onPress={recover}
             >
               Recuperar Datos
             </Button>
 
           </Layout>
           {
-        isRecovering ? (
+            isRecovering ? (
 
-          <View
-            style={{
-              flex: 0.5,
-              marginTop: top - 25,
-              marginBottom: 0,
-            }}
-          >
-            <FullScreenLoader />
-          </View>
+              <>
+              <Layout style={{ height: hp('2%') }} />
+              <View
+                style={{
+                  flex: 0.5,
+                  marginTop: top - 25,
+                  marginBottom: 0,
+                }}
+              >
+                <FullScreenLoader />
+              </View>
+              
+              </>
 
-        )
-          :
-          <>
-          </>
-      }
+            )
+              :
+              <>
+              <Layout style={{ height: hp('2%') }} />
+
+<Layout style={{
+  alignItems: 'center',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  paddingHorizontal: 20,
+
+}}>
+  <Text style={styles.customText2}>
+    El Número de credencial es el que figura en tu tarjeta de Andes Salud
+  </Text>
+  <Text style={styles.customText2}>
+    ¿No encuentras tu Número? Solicítalo con Pixi:
+  </Text>
+  <Text
+    style={styles.customText3}
+    status="primary"
+    category="s1"
+    onPress={handleOpenURLPixi}
+  >
+    {' '}
+    Pixi{' '}
+  </Text>
+</Layout>
+              </>
+          }
 
           {/* informacion para crear cuenta */}
-          <Layout style={{ height: hp('2%') }} />
-
-          <Layout style={{
-            alignItems: 'center',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            
-          }}>
-            <Text style={styles.customText2}>
-             El Número de credencial es el que figura en tu tarjeta de Andes Salud
-            </Text>
-            <Text style={styles.customText2}>
-           ¿No encuentras tu Número? Solicítalo con Pixi:
-            </Text>
-            <Text
-              style={styles.customText3}
-              status="primary"
-              category="s1"
-              onPress={handleOpenURLPixi}
-            >
-              {' '}
-              Pixi{' '}
-            </Text>
-          </Layout>
+          
 
           <Layout style={{ height: hp('2.5%'), /* backgroundColor:'yellow', */ }} />
 
@@ -233,7 +277,8 @@ export const RecoverData = ({ navigation }: Props) => {
             alignItems: 'flex-end',
             flexDirection: 'row',
             justifyContent: 'center',
-            marginBottom:hp('1%'),
+            marginBottom: hp('1%'),
+            paddingHorizontal: 20,
           }}>
             <Text>
               ¿Ya tienes una cuenta?
@@ -254,18 +299,19 @@ export const RecoverData = ({ navigation }: Props) => {
           <Layout style={{
             alignItems: 'center',
             flexDirection: 'row',
-           /*  justifyContent: 'center', */
-            marginHorizontal:'0%',
-            alignSelf:'center',
-       /*      backgroundColor:'green', */
+            /*  justifyContent: 'center', */
+            marginHorizontal: '0%',
+            alignSelf: 'center',
+            paddingHorizontal: 20,
+            /*      backgroundColor:'green', */
           }}>
             <Text
-            style={{/* marginLeft:'4%', */ alignSelf:'center', /* marginHorizontal:wp('0%') */}}
-            >¿No tienes cuenta? 
+              style={{/* marginLeft:'4%', */ alignSelf: 'center', /* marginHorizontal:wp('0%') */ }}
+            >¿No tienes cuenta?
               Registrate en
             </Text>
             <Text
-              style={{color: '#4285F4', alignSelf:'center',marginHorizontal:'0%',}/* styles.customText */}
+              style={{ /* color: '#4285F4' */color: '#7ba1c3', alignSelf: 'center', marginHorizontal: '0%', }/* styles.customText */}
               status="primary"
               category="s1"
               onPress={handleOpenURLAndes}
@@ -283,13 +329,20 @@ export const RecoverData = ({ navigation }: Props) => {
   }
   const styles = StyleSheet.create({
     customButton: {
-      backgroundColor: '#4285F4',
+      backgroundColor: '#ECB30C',
+    /*   backgroundColor: '#4285F4', */
       borderRadius: 10,
       margin: 10,
       padding: 15,
+      borderColor: '#ECB30C',
+      marginBottom: wp('0%'),
+      maxWidth: hp('30%'),
+      minWidth: hp('15%'),
+      alignSelf:'center',
     },
     customText: {
-      color: '#4285F4',
+     /*  color: '#4285F4', */
+     color: '#7ba1c3',
     },
     customText2: {
      /*  color: '#4285F4', */
@@ -297,7 +350,8 @@ export const RecoverData = ({ navigation }: Props) => {
       textAlign: 'center'
     },
     customText3: {
-     color: '#4285F4', 
+   /*   color: '#4285F4',  */
+   color: '#7ba1c3',
      fontSize:20,
      fontWeight:'bold',
     },
@@ -305,6 +359,48 @@ export const RecoverData = ({ navigation }: Props) => {
       alignItems: 'flex-start',
       marginBottom: 0,
       marginLeft:5,
+    },
+    waveContainer: {
+      backgroundColor: '#ECB30C', // Fondo blanco en la parte inferior
+      marginTop: -hp('2%'), // Para ajustar la superposición de la onda
+      marginBottom: hp('0%'),
+    },
+    textTitle: {
+      fontSize: wp('8%'),
+      color: 'black',
+      fontWeight:'bold',
+      textAlign: 'center',
+      alignSelf:'center',
+      /* marginBottom: 20  */
+    },
+    topSection: {
+      backgroundColor: '#ECB30C', // Fondo naranja en la parte superior
+      height: hp('23%'),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textTitlePrincipal: {
+      fontSize: wp('6.8%'),
+      color: 'white',
+      fontWeight:'bold',
+      textAlign: 'center',
+      alignSelf:'center'
+    },
+    image: {
+      width: wp('20%'), 
+      height: hp('10%'), 
+      marginBottom: wp('1%'),
+      marginTop: hp('0.5%'),
+    },
+    text: {
+      fontSize: wp('4%'),
+      color: 'black',
+      fontWeight:'bold',
+      marginBottom: hp('0%'),
+      flex: 1,
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
     },
 
   });

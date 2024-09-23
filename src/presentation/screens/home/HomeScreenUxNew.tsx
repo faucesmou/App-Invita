@@ -99,8 +99,8 @@ export const HomeScreenUxNew = () => {
     buttonTextFontSize = wp('4.8%');
     buttonDescriptionFontSize = wp('4%');
 
-    buttonsTitleFontSize = wp('3.8%')
-    DescriptionFontSize = wp('2.8%');
+    buttonsTitleFontSize = wp('3.4%')
+    DescriptionFontSize = wp('2.5%');
 
     cardTitleFontSize = hp('3%');
     cardDescriptionFontSize = hp('2.5%');
@@ -196,7 +196,7 @@ export const HomeScreenUxNew = () => {
         <View style={styles.innerContainer2}>
 
           {currentUserName ? (
-            <Text style={styles.text2New}>¡Hola,{currentUserName}!</Text>
+            <Text style={styles.text2New}>¡Hola, {currentUserName}!</Text>
           )
         :
         (
@@ -532,7 +532,7 @@ const styles = StyleSheet.create({
     flex: 0.5,
     maxHeight: hp('15%'),
     maxWidth: wp('54%'),
-    minWidth: wp('47%'),
+    minWidth: wp('48%'),
     minHeight: hp('12%'),
     borderColor: 'white',
     borderWidth: 1,

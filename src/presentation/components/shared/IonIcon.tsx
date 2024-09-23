@@ -8,11 +8,12 @@ interface Props{
     size?: number;
     color?: string;
     marginLeft?:string;
+    marginRight?:string;
 }
 
 
 
-export const IonIcon = ({name, size = 33, color = 'black', marginLeft = '0%'}: Props ) => {
+export const IonIcon = ({name, size = 33, color = 'black', marginLeft = '0%', marginRight = '0%'}: Props ) => {
   return (
     
     <Icon 
@@ -20,6 +21,7 @@ export const IonIcon = ({name, size = 33, color = 'black', marginLeft = '0%'}: P
     size= { size }
     color= { color }
     marginLeft= { marginLeft }
+    marginRight= { marginRight }
     />
   )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { type NavigationProp, useNavigation } from '@react-navigation/native';
-import { Linking, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import { Linking, StyleSheet, Text, TouchableOpacity, View, Button, useWindowDimensions } from 'react-native';
 import axios from 'axios';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BoxShadow } from 'react-native-shadow';
@@ -49,7 +49,7 @@ const shadowOpt = {
   height: 200,
   color: "#000",
   border: 8,
-  shadowRadius: 15,
+  shadowRadius: 21,
   radius: 3,
   opacity: 0.1,
   x: -5,
@@ -139,6 +139,17 @@ export const PagosScreen = () => {
   };
 
 
+  const { height } = useWindowDimensions();
+  let modalsTitleFontSize = wp('4.5%');
+  let paddingTopNumber = hp('8.5%');
+  let cardTitleFontSize: number = hp('2.5%');
+  if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
+    paddingTopNumber = hp('5%');
+    modalsTitleFontSize = wp('4.2%');
+    cardTitleFontSize = hp('1.5%');
+  }
+
+
   return (
     <View
 
@@ -170,14 +181,14 @@ export const PagosScreen = () => {
                   <View style={styles.card}>
 
                       
-                    <Text style={globalStyles.resultText3}>{saldo.tipoSaldo}</Text>
+                    <Text style={[styles.resultText3, {fontSize: modalsTitleFontSize}]}>{saldo.tipoSaldo}</Text>
 
-                    <Text style={globalStyles.resultText2}>Medio de Pago: {saldo.medioPago}</Text> 
+                    <Text style={[globalStyles.resultText2, {fontSize: modalsTitleFontSize}]}>Medio de Pago: {saldo.medioPago}</Text> 
 
                     { saldo.pagado === false ? 
                       (
                           <>
-                          <Text style={globalStyles.resultText2}>Saldo: ${saldo.debePagar}</Text>
+                          <Text style={[globalStyles.resultText2, { fontSize: modalsTitleFontSize}]}>Saldo: ${saldo.debePagar}</Text>
                         <TouchableOpacity style={styles.primaryButton45} onPress={() => handlePress(saldo.linkDePago)}>
                           <Text style={globalStyles.buttonText}>
                             Link de Pago
@@ -188,7 +199,7 @@ export const PagosScreen = () => {
                       ) : (
 
                     <View style={globalStyles.paidSign} >
-                      <Text style={globalStyles.buttonText}>
+                      <Text style={[globalStyles.buttonText, {fontSize: modalsTitleFontSize}]}>
                         Pagado
                       </Text>
                     </View>
@@ -244,6 +255,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center'
 
+  },
+  resultText3: {
+    fontSize: 18,
+    /* fontSize: 18, */
+    fontFamily: 'Quicksand-Light',
+    margin: 0,
+    marginTop: 10,
   },
 });
 

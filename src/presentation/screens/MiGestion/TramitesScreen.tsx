@@ -48,7 +48,7 @@ let arrowMarginBottom: number  = hp('1%');
   iconNotificationFontSize = wp('7%');
   titleMarginBottom = hp('3%');
    iconMarginBottom = hp('6%'); 
-   arrowMarginBottom = hp('0.5%'); 
+   arrowMarginBottom = hp('3%'); 
 }
 
 

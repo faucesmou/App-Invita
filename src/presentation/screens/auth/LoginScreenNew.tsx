@@ -97,16 +97,16 @@ export const LoginScreenNew = ({ navigation }: Props) => {
     }
   };
 
-  let paddingTopNumber = hp('12%');
+  let paddingTopNumber = hp('8.5%');
   if (height < 680) { // IMPORTANTE Pantallas más pequeñas como iPhone SE o iPhone 8 de 5.4 pulgadas o menos aproximadamente 
-    paddingTopNumber = hp('6%');
+    paddingTopNumber = hp('5%');
 
   }
 
   return (
     <Layout style={{ flex: 1, }}>
       <ScrollView style={{ marginHorizontal: hp('0.7%') }}>
-        <Layout style={{ paddingTop: hp('8.5%'), backgroundColor: 'white', }}>
+        <Layout style={{ paddingTop: paddingTopNumber, backgroundColor: 'white', }}>
 
           <View style={styles.container}>
 
@@ -124,14 +124,13 @@ export const LoginScreenNew = ({ navigation }: Props) => {
             <View style={styles.waveContainer}>
               <Svg
                 height={hp('13%')} // Ajusta el tamaño de la onda
-                width={wp('97%')}
+                width={wp('99%')}
                 /*  color={'black'} */
                 viewBox="0 0 1440 320" // Vista para el SVG
 
               >
                 <Path
                   fill="white" // Color de la sección inferior (fondo blanco)
-
                   /* para controlar los picos y valles modifica estos primeros valores:  */
                   d="M0,40 C520,20 1140,420 1440,160 L1640,1090 L0,400Z"
                 />
@@ -147,7 +146,7 @@ export const LoginScreenNew = ({ navigation }: Props) => {
                 </Text>
                 <Input 
                 placeholder="Usuario"
-                  style={{ marginBottom: hp('1%'), maxWidth: hp('42%'), borderRadius: 15, }}
+                  style={{ marginBottom: hp('1%'), maxWidth: hp('42%'), minWidth: hp('40%'), borderRadius: 15, alignSelf: 'center' }}
                   autoCapitalize="none"
                   value={form.usuario}
                   onChangeText={(usuario) => setForm({ ...form, usuario })}
@@ -155,7 +154,7 @@ export const LoginScreenNew = ({ navigation }: Props) => {
                 <Input
                   placeholder="Contraseña"
                   secureTextEntry
-                  style={{ marginBottom: hp('1%'), maxWidth: hp('42%'), borderRadius: 15,  }}
+                  style={{ marginBottom: hp('1%'), maxWidth: hp('42%'), minWidth: hp('40%'), borderRadius: 15, alignSelf: 'center'  }}
                   value={form.password}
                   onChangeText={(password) => setForm({ ...form, password })}
 
@@ -243,67 +242,7 @@ export const LoginScreenNew = ({ navigation }: Props) => {
   )
 
 }
-/* const styles = StyleSheet.create({
-  customButton: {
-    backgroundColor: 'orange',
-    borderColor: 'orange',
-    borderRadius: 10,
-    borderWidth: 0,
-    margin: 5,
-    padding: 0,
-    maxWidth: hp('15%'),
-    minWidth: hp('15%'),
 
-  },
-  customText: {
-    color: '#4285F4',
-    marginTop: 10,
-  },
-  customText2: {
-    color: '#4285F4',
-    fontWeight: 'bold',
-  },
-
-  imageContainer: {
-    marginBottom: hp('3%'),
-    marginTop: hp('0.1%'),
-    alignItems: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    maxHeight: hp('50%'),
-    marginHorizontal: wp('3%'),
-    padding: 0,
-  },
-  innerContainer: {
-    marginBottom: hp('1%'),
-    marginTop: hp('1%'),
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: wp('30%'),
-    marginHorizontal: wp('4%'),
-    backgroundColor: 'blue',
-  },
-  image: {
-    width: wp('20%'), 
-    height: hp('10%'), 
-    marginBottom: wp('1%'),
-    marginTop: 0,
-
-  },
-  text: {
-    fontSize: wp('6%'),
-    textAlign: 'center',
-    marginBottom: hp('0%'),
-    marginTop: hp('0%'),
-    color: 'black',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
- 
-}); */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -346,7 +285,7 @@ const styles = StyleSheet.create({
     borderColor: 'orange',
     borderRadius: 10,
     marginTop: hp('2%'),
-    maxWidth: hp('15%'),
+    maxWidth: hp('20%'),
     minWidth: hp('15%'),
   },
   image: {
