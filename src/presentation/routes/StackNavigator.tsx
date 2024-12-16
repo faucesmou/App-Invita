@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ProductScreen } from '../screens/afiliados/ProductScreen';
 /* import { SettingsScreen } from '../screens/settings/Perfil'; */
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { HamburgerMenu } from '../components/shared/HamburgerMenu';
 import { useProfileStore } from '../store/profile-store';
@@ -44,6 +44,8 @@ import { ConsultaScreenUx } from '../screens/ordenConsulta/ConsultaScreenUx';
 import { EstudiosMedicosScreenUx } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosScreenUx';
 import { LoginScreenNew } from '../screens/auth/LoginScreenNew';
 import { EstudiosMedicosEnvNew } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosEnvNew';
+import { FullScreenLoader } from '../components/ui/FullScreenLoader';
+import { FormulariosEspScreenNuevo } from '../screens/MiGestion/formulariosEspeciales/FormulariosEspScreenNuevo';
 
 /* import { UserData } from '../screens/auth/userData'; */
 
@@ -104,7 +106,9 @@ const Stack = createStackNavigator<RootStackParams>();
 
 export const StackNavigator = () => {
 
-  const { status } = useAuthStore();
+  const { initializeAuth, status } = useAuthStore();
+
+
   const navigator = useNavigation();
 
   const email = useProfileStore(state => state.email);
@@ -116,6 +120,25 @@ export const StackNavigator = () => {
   
   }, []) */
 
+/* probando la persistencia del Login: ---------------> */
+const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      console.log('inicializando la app con initializeAuth--->>');
+      
+      await initializeAuth();
+
+      setIsReady(true);
+      console.log('ha funcionado correctamente la inicialización!--->>');
+    })();
+  }, []);
+
+  if (!isReady) {
+    <FullScreenLoader />
+    console.log('aqui deberia mostrar un loader o algo asi mientras se cargan los datos---es el !isReady>>');
+    return null; // Muestra un loader o una pantalla inicial mientras se cargan los datos
+  }
 
   return (
     <Stack.Navigator
@@ -196,7 +219,8 @@ export const StackNavigator = () => {
       <Stack.Screen name="Enviado" component={EstudiosMedicosEnvNew} options={{ headerShown: true }} />
 
 {/* Obtener Formularios Especiales: */}
-      <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} />
+      <Stack.Screen name="Formularios" component={FormulariosEspScreenNuevo} options={{ headerShown: true }} />
+      {/* <Stack.Screen name="Formularios" component={FormulariosEspScreen} options={{ headerShown: true }} /> */}
 
       <Stack.Screen name="Formulario" component={FormularioElegido} options={{ headerShown: true }} />
 

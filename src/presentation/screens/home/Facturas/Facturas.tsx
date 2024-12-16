@@ -16,6 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import datos from './datosFacturas.json';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 // Define los tipos
@@ -332,6 +333,15 @@ export const Facturas = () => {
 
       <BackButton Size={hp('4%')}/>
 
+      <Text style={{
+        marginBottom: wp('-1%'),
+        marginTop: wp('-1%'),
+        fontSize: hp('3.5%'),
+        textAlign: 'center',
+        color: globalColors.gray2,
+        fontWeight: 'bold'
+      }}>Descargá tus Facturas</Text>
+
 {/*       <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Tus Facturas</Text> */}
       <ScrollView>
 
@@ -358,21 +368,40 @@ export const Facturas = () => {
 
                     {!factura.pagados ?
                       (
-                        <TouchableOpacity
+                        <>
+                        {/* <TouchableOpacity
                           style={globalStyles.primaryButton2}
                           onPress={() => handlePress(factura.linkMp)}
                         >
                           <Text style={globalStyles.buttonText}>
                             Link de Pago
                           </Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                                  <LinearGradient
+
+                                    colors={['#c86443', '#d6783c', '#e08050', '#e88848']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}
+                                    style={globalStyles.primaryButton2}>
+
+                                    <TouchableOpacity
+                                      /* style={globalStyles.primaryButton2} */
+                                      onPress={() => handlePress(factura.linkMp)}
+                                    >
+                                      <Text style={globalStyles.buttonText}>
+                                        Link de Pago
+                                      </Text>
+                                    </TouchableOpacity>
+                                  </LinearGradient>
+
+                                </>
 
                       ) :
 
                       (
                         factura.facturas === "Si" ? (
 
-                          <TouchableOpacity
+                       /*    <TouchableOpacity
                             style={globalStyles.paidButton}
                             onPress={async () => {
                               let existeFactura = factura.facturas;
@@ -385,21 +414,57 @@ export const Facturas = () => {
                               Descargar
                             </Text>
 
-                          </TouchableOpacity>
+                          </TouchableOpacity> */
+                          <LinearGradient
+                                    colors={['#509d4f', '#5ab759', '#5ab759', '#5ab759']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}
+                                    style={globalStyles.paidButton}
+                                  >
+                                    <TouchableOpacity
+                                      onPress={async () => {
+                                        let existeFactura = factura.facturas;
+                                        let idUnico = factura.idUnico;
+                                        await FacturasRequest2(existeFactura, idUnico)
+                                      }}
+                                    >
+
+                                      <Text style={globalStyles.buttonText}>
+                                        Descargar
+                                      </Text>
+
+                                    </TouchableOpacity>
+                                  </LinearGradient>
 
                         )
                           :
                           (
                             <>
                              
-                              <TouchableOpacity
+                            {/*   <TouchableOpacity
                           style={globalStyles.paidButton}
                           onPress={async () => {
                             await GenerarFactura2(factura.id, factura.facturas, factura.idUnico, String(factura.periodo));
                           }}
                         >
                           <Text style={globalStyles.buttonText}>{getButtonText2(factura.id)}</Text>
-                        </TouchableOpacity>  
+                        </TouchableOpacity>   */}
+                         <LinearGradient
+                                        colors={['#509d4f', '#5ab759', '#5ab759', '#5ab759']}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 1, y: 0 }}
+                                        style={globalStyles.paidButton}
+                                      >
+                                        <TouchableOpacity
+                                          onPress={async () => {
+                                            await GenerarFactura2(factura.id, factura.facturas, factura.idUnico, String(factura.periodo));
+                                          }}
+                                        >
+
+                                          <Text style={globalStyles.buttonText}>{getButtonText2(factura.id)}</Text>
+
+                                        </TouchableOpacity>
+                                      </LinearGradient>
 
                   </>
 

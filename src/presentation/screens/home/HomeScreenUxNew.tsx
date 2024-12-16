@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, PixelRatio, Image, Pressable, Linking, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Pressable, Linking, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
@@ -8,15 +8,15 @@ import NotiMensajes from '../../components/shared/Noti-mensajes';
 import { useNotificationStore } from '../../store/notification-store';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import { RootStackParams } from '../../routes/StackNavigator';
-import { QuaternaryButton } from '../../components/shared/QuaternaryButton';
-import { SecondaryButton } from '../../components/shared/SecondaryButton';
+
 import { globalColors } from '../../theme/theme';
-import Credencial from '../../components/shared/Credencial';
+
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { QuaternaryButton2 } from '../../components/shared/QuaternaryButton2';
-import { SecondaryButton2 } from '../../components/shared/SecondaryButton2';
+
 import { IonIcon } from '../../components/shared/IonIcon';
 import CredencialNew from '../../components/shared/CredencialNew';
+import { loadAuthData } from '../../store/auth/authService';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface Props {
   onPress: () => void;
@@ -34,6 +34,10 @@ interface Props {
 
 export const HomeScreenUxNew = () => {
   const { setShouldUpdateNotifications, getUserName } = useAuthStore();
+  const setAuthData = useAuthStore((state) => state.setAuthData);
+
+
+  const {  UserName, } = useAuthStore();
 
   const [currentUserName, setCurrentUserName] = useState<string | null>(null)
 
@@ -42,6 +46,24 @@ export const HomeScreenUxNew = () => {
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     });
   }
+/* 62305471666/0000 
+
+JhonDoe09
+*/
+
+  /* Esta función y useEffect es fundamental--> */
+
+  useEffect(() => {
+    const fetchAuthData = async () => {
+      const data = await loadAuthData();
+      if (data) {
+        setAuthData(data);
+        console.log('Datos de autenticación cargados en el contexto desde AsyncStorage:', data);
+      }
+    };
+    fetchAuthData();
+  }, []);
+
 /*   const currentUserNameInicial = getUserName();
   const currentUserName = capitalizeWords(currentUserNameInicial);
   console.log('currentUserName es: ', currentUserName); */
@@ -57,7 +79,7 @@ export const HomeScreenUxNew = () => {
         console.log('No se encontró el nombre de usuario');
       }
    
-  }, [getUserName])
+  }, [UserName])
   
   useEffect(() => {
     setShouldUpdateNotifications(true);
@@ -163,6 +185,7 @@ export const HomeScreenUxNew = () => {
   return (
     <View style={styles.screenContainer}>
       <ScrollView   
+        contentContainerStyle={{ flexGrow: 1 }}
   /*    scrollToOverflowEnabled={false}  
      snapToInterval={2} 
      bounces={false}  */
@@ -170,7 +193,8 @@ export const HomeScreenUxNew = () => {
       >
 
 
-      <View style={[styles.headerContainer, { height: headerHeight, backgroundColor: '#e1a159'/* '#7ba1c3' */, },]}>
+    {/*   <View style={[styles.headerContainer, { height: headerHeight, backgroundColor: '#e1a159' },]}>
+
         <View style={{ width: wp('80%'), marginBottom: titleMarginBottom }}>
           <Text style={styles.headerText}>Inicio</Text>
         </View>
@@ -185,7 +209,29 @@ export const HomeScreenUxNew = () => {
           </Pressable>
           <NotiComponent3 />
         </View>
-      </View>
+      </View> */}
+      <LinearGradient
+          colors={['#e49958', '#e49958', '#e1a159', '#e1a159', '#e1a159', '#e49958', '#e49958', '#e49958',]/* ['#e49958','#e49958','#e1a159', '#e1a159','#e1a159','#e1a159','#e1a159','#c88846','#daa36b' , '#e79340' ] */} // Degradado del color base
+          start={{ x: 0, y: 0 }} // Inicio del gradiente (esquina superior izquierda)
+          end={{ x: 1, y: 2 }} // Fin del gradiente (esquina inferior derecha)
+          style={[{ height: headerHeight }, styles.headerContainer]} // Estilo inline para ajustar tamaño y posición
+        >
+          <View style={{ width: '80%', marginBottom: titleMarginBottom }}>
+            <Text style={styles.headerText}>Inicio</Text>
+          </View>
+
+          <View>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('Buzón');
+              }}
+              style={{ marginLeft: 0, marginBottom: iconMarginBottom }}
+            >
+              <NotiMensajes IonIconSize={iconNotificationFontSize} />
+            </Pressable>
+            <NotiComponent3 />
+          </View>
+        </LinearGradient>
 
       <View style={styles.cardContainer}>
        {/*  <Credencial /> */}

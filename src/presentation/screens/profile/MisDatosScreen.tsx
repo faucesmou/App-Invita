@@ -17,7 +17,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const MisDatosScreen = () => {
 
-  const { idAfiliadoTitular, idAfiliado } = useAuthStore();
+  const { idAfiliadoTitular, idAfiliado, nombreCompleto, numeroCredencial, tipoPlan, estadoAfiliacion, tipoPago, mail, numCelular  } = useAuthStore();
 
   const [isConsulting, setIsConsulting] = useState(false);
   const { top } = useSafeAreaInsets();
@@ -25,7 +25,7 @@ export const MisDatosScreen = () => {
 
   const [afiliado, setAfiliado] = useState(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     setIsConsulting(true);
 
     const AfiliadosRequest = async () => {
@@ -61,7 +61,8 @@ export const MisDatosScreen = () => {
     };
     AfiliadosRequest()
 
-  }, [])
+  }, []) */
+
   const colorNaranja = globalColors.orange
 
 
@@ -77,52 +78,46 @@ export const MisDatosScreen = () => {
 <BackButton Size={hp('4%')}/>
 
 
-      <Text style={{ marginBottom: hp('1%'), fontSize: hp('3%'), textAlign: 'center' }}>Mis Datos</Text>
+      {/* <Text style={{ marginBottom: hp('1%'), fontSize: hp('3%'), textAlign: 'center' }}>Mis Datos</Text> */}
 
       {/*    <BackButton onPress={() => navigation.navigate('home')} /> */}
-      {
-        isConsulting ? (
+      <Text style={{
+        marginBottom: wp('2%'),
+        marginTop: wp('-1%'),
+        fontSize: hp('3.5%'),
+        textAlign: 'center',
+        color: globalColors.gray2,
+        fontWeight: 'bold'
+      }}>Mis Datos</Text>
+     
+          <View style={{ alignItems: 'center' }}>
+        <View style={styles.TertiaryButton}>
+          
+          <View style={styles.container}>
+            <View style={{ alignItems: 'center' }}>
 
-          <View
-            style={{
-              flex: 0.5,
-              marginTop: top - hp('0%'),
-              marginBottom: hp('6%'),
-            }}
-          >
-            <FullScreenLoader />
+            <Text style={[styles.text, { fontSize: hp('2%') }]}>{`${nombreCompleto}`}</Text>
+            </View>
+            <Text style={[styles.text, { fontSize: hp('2%') }]}>{`Número de Afiliado: ${numeroCredencial}`}</Text>
+            {/*    <Text style={styles.text}>{`Edad: ${item.edad}`}</Text> */}
+            <Text style={[styles.text, { fontSize: hp('2%') }]}>{`Plan: ${tipoPlan}`}</Text>
+            <Text style={[styles.text, { fontSize: hp('2%') }]}>{`Estado: ${estadoAfiliacion}`}</Text>
+            <Text style={[styles.text, { fontSize: hp('2%') }]}>{`Tipo de Pago: ${tipoPago}`}</Text>
+            <Text style={[styles.text, { fontSize: hp('2%') }]}>{`Celular: ${numCelular}`}</Text>
+            <Text style={[styles.text, { fontSize: hp('2%') }]}>{`Correo: ${mail}`}</Text>
+
           </View>
 
-        )
-          :
-          <FlatList
-            data={afiliado}
-            renderItem={({ item }) => (
-              <View>
-                <View>
-                  <View style={styles.container}>
-                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`${item.apellidoYNombre}`}</Text>
-                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`Numero de Afiliado: ${item.nroAfiliado}`}</Text>
-                 {/*    <Text style={styles.text}>{`Edad: ${item.edad}`}</Text> */}
-                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`Plan: ${item.planPrestacional}`}</Text>
-                    <Text style={[styles.text, {fontSize:hp('2%')}]}>{`Estado: ${item.estadoAfiliacion}`}</Text>
+        </View>
 
-                  </View>
-
-                </View>
-
-
-              </View>
-            )
-            }
-          />
-      }
+      </View>
+      
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  text: {
+/*   text: {
     marginBottom: 5,
     marginTop: 5,
     fontSize: 18,
@@ -133,6 +128,40 @@ const styles = StyleSheet.create({
     marginHorizontal:20,
    marginTop: 10,
    marginBottom:20,
-  }
+  } */
+  text: {
+    marginBottom: 5,
+    marginTop: 5,
+    fontSize: 15,
+    textAlign: 'left',
+    /* color: 'black', */
+    color: globalColors.gray,
+    fontWeight: 'bold',
+
+  },
+  container: {
+    marginHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  //ESTILOS PARA EL BORDE (COPIADOS DE TERTIARY BUTTON):
+  TertiaryButton: {
+    backgroundColor: 'white',
+    minWidth: '95%',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
+    padding: wp('1%'),
+    margin: wp('1%'),
+    marginBottom: wp('2%'),
+    marginHorizontal: wp('10%'),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
 })

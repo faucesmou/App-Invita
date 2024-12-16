@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View } from 'react-native' 
 import { globalStyles } from '../../theme/theme'
 import { FlatList } from 'react-native-gesture-handler'
 import { PrimaryButton } from '../../components/shared/PrimaryButton'

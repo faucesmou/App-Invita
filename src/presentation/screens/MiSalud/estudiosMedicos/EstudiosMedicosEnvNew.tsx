@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Linking, Text, TouchableOpacity, View, Modal, Image, Button, StyleSheet,Platform, NativeModules, Dimensions, ScrollView,   } from 'react-native'
+import { Linking, Text, TouchableOpacity, View, Image, StyleSheet,Platform, NativeModules, Dimensions, ScrollView,   } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 /*  import * as Clipboard from '@react-native-clipboard/clipboard';  */
@@ -12,8 +12,8 @@ import { BackButton } from '../../../components/shared/BackButton'
 import { FullScreenLoader } from '../../../components/ui/FullScreenLoader'
 import { useAuthStore } from '../../../store/auth/useAuthStore'
 import { xml2js } from 'xml-js';
-import { globalColors, globalStyles } from '../../../theme/theme'
-import { globalStylesCredentials } from '../../credential/css/themeCredentials'
+import { globalStyles } from '../../../theme/theme'
+
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
@@ -173,11 +173,7 @@ const [linkDescargaEstudio, setLinkDescargaEstudio] = useState<string>()
 
         const resultadoBusqueda = await axios.get(`https://andessalud.createch.com.ar/estudios/consultar?idAfiliado=${idAfiliadoSeleccionado}&idOrden=${idOrdenBuscar}`);
 
-        /* const resultadoBusqueda = await axios.get(`https://andessalud.createch.com.ar/estudios/consultar?idAfiliado=5AA57241-C4E6-4AD6-B7F2-B96D57C35DF4&idOrden=56DD751C-F198-47A6-B332-591DDE6B495B`); */
-
-
-        console.log('resultadoBusqueda--->', resultadoBusqueda)
-        
+      
        
 
         const result = resultadoBusqueda.data.meta.message;
@@ -185,15 +181,13 @@ const [linkDescargaEstudio, setLinkDescargaEstudio] = useState<string>()
         console.log('result--->', result)
         if( resultadoBusqueda && result === 'Estudio encontrado'){
 
-          /* MODIFICAR ESTO PARA QUE EL LINK SEA CON VALORES DINAMICOS Revisar:-------------------------->>> */
+         
           setEstudioEncontrado(true)
           
           setLinkDescargaEstudio(`https://andessalud.createch.com.ar/documento/estudios?idOrden=${idOrdenBuscar}&idAfiliado=${idAfiliadoSeleccionado}`)
           console.log('estudio encontrado--->')
 
-          /*   setLinkDescargaEstudio(`https://andessalud.createch.com.ar/documento/estudios?idOrden=9D29D0A4-3A2F-4FBA-AF43-3727ED1C1ED7&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA`)
-            console.log('estudio encontrado--->')
-           */
+          
         }
 
 
@@ -211,42 +205,12 @@ const [linkDescargaEstudio, setLinkDescargaEstudio] = useState<string>()
 
   }, [result])
 
- /*  useEffect(() => {
-    
-    const descargarEstudio = async () => {
-
-      try {
-
-        const resultadoBusqueda = await axios.get(`https://andessalud.createch.com.ar/documento/estudios?idOrden=9D29D0A4-3A2F-4FBA-AF43-3727ED1C1ED7&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA`);
-
-        const result = resultadoBusqueda.meta.message
-        if( result === 'Estudio encontrado'){
-          setEstudioEncontrado(true)
-          console.log('estudio encontrado--->')
-        }
-        
-      } catch (error) {
-        console.log('ocurrió un error al buscar la orden. Error: ', error)
-      }
-
-    }
-    descargarEstudio()
-
-  }, [result]) */
   
   const handlePress = (url: string) => {
     Linking.openURL(url).catch((err) => console.error('Error al abrir el enlace del estudio:', err));
   };
 
-/*   const handleCopyPress = (textToCopy: string) => {
-    Clipboard.setString(textToCopy)
-      .then(() => {
-        Alert.alert('Texto copiado', 'El texto se ha copiado al portapapeles');
-      })
-      .catch(err => {
-        console.error('Error al copiar al portapapeles:', err);
-      });
-}; */
+
 
 
 const { height } = Dimensions.get('window');

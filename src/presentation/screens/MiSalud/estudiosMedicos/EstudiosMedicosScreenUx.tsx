@@ -323,7 +323,15 @@ export const EstudiosMedicosScreenUx = () => {
 
       <BackButton Size={hp('4%')}/>
       {/*   <Text style={{ marginBottom: '3%', marginTop: '2%', fontSize: 25, textAlign: 'center', color:'#030136'}}>Estudios medicos Ux</Text>  */}
-
+      <Text style={{
+        marginBottom: wp('2%'),
+        marginTop: 0,
+        fontSize: hp('3%'),
+        textAlign: 'center',
+        color: globalColors.gray2,
+        fontWeight: 'bold'
+      }}>Solicitá la Orden de tus Estudios</Text>
+      
       <View
         style={{   /* backgroundColor: 'green', */  flex: 1, marginBottom: '15%', marginTop: '0%' }}>
 

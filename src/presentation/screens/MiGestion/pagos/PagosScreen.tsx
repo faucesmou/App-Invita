@@ -16,6 +16,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import datos from './datosPrueba.json';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface Saldo {
   id: number;
@@ -25,14 +27,14 @@ interface Saldo {
   saldoBase: number;
   valorPlanContrato: number;
   AporteContrato: number;
-  descuentos: string; 
+  descuentos: string;
   descuentosMonto: number;
-  adicionales: string; 
+  adicionales: string;
   adicionalesMonto: number;
   periodo: number;
   linkDePago: string;
   pagado: boolean;
-  gf: number; 
+  gf: number;
   medioPago: string;
   planDePago: number;
   tipoSaldo: string;
@@ -50,10 +52,11 @@ const shadowOpt = {
   color: "#000",
   border: 8,
   shadowRadius: 21,
-  radius: 3,
+  radius: 2,
   opacity: 0.1,
-  x: -5,
-  y: 20,
+  x: 0,
+  y: 25,
+  /*   elevation:5, */
   style: { marginVertical: 5 }
 };
 
@@ -73,13 +76,16 @@ export const PagosScreen = () => {
   const [errores, setErrores] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
+  const [isConsulting, setIsConsulting] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-/*   const Saldos = datos.data; */
+  /*   const Saldos = datos.data; */
   useEffect(() => {
 
 
     const PagosPeticion = async () => {
       console.log('entrando a PagosPeticion--------->>>>');
+      setIsConsulting(true);
       try {
         const response = await axios.post(`https://fiscalizacion.createch.com.ar/contratos/paginador/aplicacion?afiliado=${cuilTitular}`);
 
@@ -109,35 +115,49 @@ export const PagosScreen = () => {
               tipoSaldo: item.tipoSaldo,
               revision: item.revision,
               contratoId: item.contratoId,
-              
+
             }));
             setSaldos(extractedData);
-          
+            /*  console.log('saldos_:> ', Saldos); */
+
+            setIsConsulting(false);
+
           }
           else {
             setError('El formato de los datos recibidos no es el esperado.');
             console.log('no es array');
+            setIsConsulting(false);
+            setIsError(true)
 
           }
         } else {
           setError("Error con los datos");
           console.log('la respuesta con errores de Cta Cte es--------->>>>', error);
+          setIsConsulting(false);
+          setIsError(true)
         }
 
       } catch (error) {
         console.error('Error al obtener los pagos:', error);
         setError("Error con los datos");
+        setIsConsulting(false);
+        setIsError(true)
       }
     };
 
-    PagosPeticion()
-  
+     PagosPeticion()
+
   }, [])
 
   const handlePress = (url: string) => {
     Linking.openURL(url).catch((err) => console.error('Error al abrir el enlace:', err));
   };
 
+  function capitalizeWords(string: string) {
+    return string.replace(/\b\w+/g, function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    });
+  }
 
   const { height } = useWindowDimensions();
   let modalsTitleFontSize = wp('4.5%');
@@ -150,68 +170,189 @@ export const PagosScreen = () => {
   }
 
 
+
   return (
     <View
 
       style={globalStyles.container}
     >
-      <CustomHeader /* color={globalColors.gray2}  */titleSize={hp('4%')} />
+      <CustomHeader /* color={globalColors.gray2}  */ titleSize={hp('4%')} />
 
-      <BackButton Size={hp('4%')}/>
+      <BackButton Size={hp('4%')} />
 
-      <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', }}>Estado de Pagos</Text>
+      {/*   <Text style={{ marginBottom: 0, marginTop: 5, fontSize: 25, textAlign: 'center', color: 'black' }}>Estado de Pagos</Text> */}
+
+      <Text style={{
+        marginBottom: wp('-1%'),
+        marginTop: wp('-1%'),
+        fontSize: hp('3.5%'),
+        textAlign: 'center',
+        color: globalColors.gray2,
+        fontWeight: 'bold'
+      }}>Estado de Pagos</Text>
+
       <ScrollView >
 
         <View style={globalStyles.containerEstudiosMedicosEnv2}>
-          {error ? (
-            <View style={globalStyles.errorContainerEstudios}>
-              <Text style={globalStyles.titleErrorEstMedicosEnv}>Problemas en la solicitud</Text>
-              <Text style={globalStyles.errorTextEstudios}>Error: {error}</Text>
-            </View>
-          ) : (
-            Saldos.map((saldo, index) => (
-              <View key={saldo.id} style={[
-                styles.cardWrapper,
-                { marginBottom: saldo.pagado ? '4%' : '7%' },
-              ]}
-              >
-                <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 105 }} 
+
+
+          {
+
+
+            /*  error ? (
+               <View style={globalStyles.errorContainerEstudios}>
+                 <Text style={globalStyles.titleErrorEstMedicosEnv}>Problemas en la solicitud</Text>
+                 <Text style={globalStyles.errorTextEstudios}>Error: {error}</Text>
+               </View>
+             ) : ( */
+
+            isConsulting ?
+              (
+                <>
+
+                  <View
+                    style={{
+                      flex: 0.5,
+                      marginTop: top - hp('-5%'),
+                      marginBottom: hp('6%'),
+                      marginHorizontal: wp('9%'),
+                    }}
                   >
-
-                  <View style={styles.card}>
-
-                      
-                    <Text style={[styles.resultText3, {fontSize: modalsTitleFontSize}]}>{saldo.tipoSaldo}</Text>
-
-                    <Text style={[globalStyles.resultText2, {fontSize: modalsTitleFontSize}]}>Medio de Pago: {saldo.medioPago}</Text> 
-
-                    { saldo.pagado === false ? 
-                      (
-                          <>
-                          <Text style={[globalStyles.resultText2, { fontSize: modalsTitleFontSize}]}>Saldo: ${saldo.debePagar}</Text>
-                        <TouchableOpacity style={styles.primaryButton45} onPress={() => handlePress(saldo.linkDePago)}>
-                          <Text style={globalStyles.buttonText}>
-                            Link de Pago
-                          </Text>
-                        </TouchableOpacity>
-                          </>
-
-                      ) : (
-
-                    <View style={globalStyles.paidSign} >
-                      <Text style={[globalStyles.buttonText, {fontSize: modalsTitleFontSize}]}>
-                        Pagado
+                    <View style={styles.noDataContainer}>
+                      <Text style={styles.noDataText}>
+                        Aguardá un momento mientras obtenemos tus Pagos
                       </Text>
+                      <Text style={styles.noDataText}>
+                        Esto puede tomar unos segundos
+                      </Text>
+
                     </View>
-                      )
-                    }
-
                   </View>
-                </BoxShadow>
+                  <FullScreenLoader />
 
-              </View>
-            ))
-          )}
+                </>
+
+              )
+              : isError ? (
+
+                <View style={styles.noDataContainer}>
+                  <Text style={styles.noDataText}>
+                    ¡Ups! Parece que algo salió mal.
+                  </Text>
+                  <Text style={styles.noDataText}>
+                    Por favor, intenta nuevamente más tarde.
+                  </Text>
+                  <Text style={styles.noDataText2}>
+                    Si el problema persiste, no dudes en comunicarte con nuestro servicio de atención al cliente
+                  </Text>
+                </View>
+              )
+                :
+                Saldos.length > 0 ?
+                  (
+
+
+                    Saldos.map((saldo, index) => (
+                      <View key={saldo.id} style={[
+                        styles.cardWrapper,
+                        { marginBottom: saldo.pagado ? '4%' : '7%' },
+                      ]}
+                      >
+                        <BoxShadow setting={{ ...shadowOpt, height: showAfiliados ? 210 : 105, y: saldo.pagado === false ? 30 : 20 }}
+                        >
+
+                          <View style={styles.card}>
+
+
+                            <Text style={[styles.resultText3, { fontSize: modalsTitleFontSize }]}>{saldo.tipoSaldo}</Text>
+
+                            <Text style={[globalStyles.resultText2, { fontSize: modalsTitleFontSize }]}>Medio de Pago:
+                              <Text style={{ color: 'black', fontWeight: 'bold' }}> {/* Cambia el color a lo que prefieras */}
+                                {capitalizeWords(saldo.medioPago)}
+                              </Text>
+                              {/* {capitalizeWords(saldo.medioPago)} */}</Text>
+
+                            {saldo.pagado === false ?
+                              (
+                                <>
+                                  {/*   <Text style={[globalStyles.resultText2, { fontSize: modalsTitleFontSize }]}>Saldo: ${saldo.debePagar}</Text> */}
+                                  <Text style={[globalStyles.resultText2, { fontSize: modalsTitleFontSize }]}>Estado: Pendiente</Text>
+                                  {/*  <TouchableOpacity style={styles.primaryButton45} onPress={() => handlePress(saldo.linkDePago)}>
+                                  <Text style={globalStyles.buttonText}>
+                                    Link de Pago
+                                  </Text>
+
+                                </TouchableOpacity> */}
+                                  <LinearGradient
+                                    /*  colors={['#ba5050', '#ba5050','#dc7643','#e08050']} */
+                                    colors={['#c86443', '#d6783c', '#e08050', '#e88848']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}
+                                    style={styles.primaryButton46}>
+                                    <TouchableOpacity onPress={() => handlePress(saldo.linkDePago)}>
+                                      <Text style={globalStyles.buttonText}>Link de Pago</Text>
+                                    </TouchableOpacity>
+                                  </LinearGradient>
+                                </>
+
+                              ) : (
+                                <>
+                                  <LinearGradient
+                                    colors={['#509d4f', '#5ab759', '#5ab759', '#5ab759']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 0 }}
+                                    style={styles.primaryButton45}>
+                                    <View /* style={globalStyles.paidSign} */ >
+                                      <Text style={[globalStyles.buttonText, { fontSize: modalsTitleFontSize }]}>
+                                        Pagado
+                                      </Text>
+                                    </View>
+                                  </LinearGradient>
+
+
+
+                                </>
+
+                              )
+                            }
+
+                          </View>
+                        </BoxShadow>
+
+                      </View>
+                    ))
+                  )
+                  : (
+                    <>
+                    <View style={styles.noSeEncontraronContainer}>
+                      <View
+                        style={{
+                          marginTop: wp('1%'),
+                          backgroundColor: '#FFFFFF',/* '#FFFFFF' */
+                          marginHorizontal: wp('2%'),
+                          alignContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+
+                        <Text style={styles.titleMessage}>No encontramos pagos registrados</Text>
+
+                        <View style={{marginHorizontal: wp('3.5%'), alignContent: 'center',
+                          /* alignItems: 'center', */ /* backgroundColor: 'yellow', */}}>
+
+
+                          <Text style={{ marginTop: wp('2%'), marginBottom: wp('4%'), fontSize: wp('4%'), color: '#595960', }}>Por favor, intenta nuevamente más tarde.</Text>
+
+                          <Text style={{ fontSize: wp('4%'), color: '#595960', marginBottom: wp('1%') }}>Si el problema persiste, no dudes en comunicarte con nuestro servicio de atención al cliente.</Text>
+
+                        </View>
+
+                      </View>
+                    </View>
+                  </>
+                    
+                  )
+          }
         </View>
 
 
@@ -227,41 +368,98 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 'auto',
+    backgroundColor: 'green'
   },
   cardWrapper: {
     alignItems: 'center',
-    marginBottom: '5%',
+    /* marginBottom: '5%', */
   },
   card: {
-    width: 350,
+    /*  width: 350, */
+    /*  width: wp('20') */
     height: 'auto',
+    /*  height:wp('31%'), */
     marginTop: 0,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 7,
-    borderRadius: 15,
+    borderRadius: 20,
   },
   primaryButton45: {
-    backgroundColor: '#b74a4a',
-    borderRadius: 5,
-    padding: 5,
+    backgroundColor: '#ba5050',
+    borderRadius: 17,
+    padding: 6,
     margin: 10,
     marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 20,
     marginHorizontal: 60,
     paddingHorizontal: 10,
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center'
-
+  },
+  primaryButton46: {
+    backgroundColor: '#ba5050',
+    borderRadius: 17,
+    padding: 6,
+    margin: 10,
+    marginTop: 10,
+    marginBottom: 20,
+    marginHorizontal: 60,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'center'
   },
   resultText3: {
-    fontSize: 18,
+    fontSize: wp('1%'),
     /* fontSize: 18, */
     fontFamily: 'Quicksand-Light',
     margin: 0,
     marginTop: 10,
+    color: 'black',
+  },
+  /* Cartel de error: no se pudieron obtener los pagos:  */
+  noDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: wp('4.5%'),
+    color: 'gray',
+    textAlign: 'center',
+    marginTop: wp('3%'),
+  },
+  noDataText2: {
+    fontSize: wp('4%'),
+    color: 'gray',
+    textAlign: 'center',
+    marginTop: wp('8%'),
+  },
+  noSeEncontraronContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5,
+    marginHorizontal: wp('1%'),
+  },
+  titleMessage: {
+    /* fontSize: 22, */
+    fontSize: wp('5%'),
+    marginTop: 10,
+    marginBottom: 5,
+    color: '#030136',
+    fontWeight: 'bold',
+    marginHorizontal: 0,
+    /*  justifyContent:'center' */
   },
 });
 

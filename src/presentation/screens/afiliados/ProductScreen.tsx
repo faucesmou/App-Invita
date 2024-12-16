@@ -41,7 +41,14 @@ navigation.setOptions({
     navigation.goBack(); // Retroceder a la pantalla anterior
   };
 
-
+  function capitalizeWords(input: string | undefined): string {
+    if (!input) {
+      return "";
+    }
+    return input.replace(/\b\p{L}+/gu, function (word) {
+      return word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase();
+    });
+  }
 
   return (
     <View 
@@ -66,15 +73,16 @@ navigation.setOptions({
         > Credencial</Text> */}
 
         <Text style={{
-          fontSize:20,
-          textAlign: 'center',
-          marginTop: 0,
-          padding: 10,
-       /*    backgroundColor: 'orange', */ 
-          width:'100%'
-        }}>
-          { params.id }  
-        </Text>
+        marginBottom: wp('2%'),
+        marginTop: wp('2%'),
+        fontSize: hp('3%'),
+        textAlign: 'center',
+        color: globalColors.gray,
+        fontWeight: 'bold'
+      }}>
+        {/*  { params.id } */}  
+          {capitalizeWords(params.id)}
+      </Text>
 
        {/*  <Text style={{
           fontSize:15,

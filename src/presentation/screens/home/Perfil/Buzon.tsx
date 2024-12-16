@@ -421,8 +421,17 @@ export const Buzon = () => {
         <View style={styles.ContainerMainTitle} >
          
            {/*  <Text style={styles.MainTitle} >Notificaciones</Text> */}
-            <Text style={styles.MainTitle} >Selecciona el tipo de solicitud</Text>
-        
+          {/*   <Text style={styles.MainTitle} >Selecciona el tipo de solicitud</Text> */}
+
+          <Text style={{
+        marginBottom: wp('1%'),
+        marginTop: 0,
+        fontSize: hp('3%'),
+        textAlign: 'center',
+        color: globalColors.gray2,
+        fontWeight: 'bold'
+      }}>Selecciona el tipo de solicitud</Text>
+              
         </View>
 
         <View style={styles.ContainerEstudiosMedicosTitleAfuera} >

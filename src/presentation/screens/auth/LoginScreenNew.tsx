@@ -6,7 +6,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/auth/useAuthStore";
-import { MyIcon } from "../../components/ui/MyIcon";
+
 import { RootStackParams } from "../../routes/StackNavigator";
 import { FullScreenLoader } from "../../components/ui/FullScreenLoader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -25,7 +25,7 @@ export const LoginScreenNew = ({ navigation }: Props) => {
   const { top } = useSafeAreaInsets();
 
 
-  const { loginGonzaMejorado, guardarDatosLoginEnContext, loginGonzaMejorado2, setUserName } = useAuthStore();
+  const { loginGonzaMejorado, guardarDatosLoginEnContext, loginGonzaMejorado2, setUserName, guardarDatosLoginEnContextMejorada } = useAuthStore();
 
 
   const [isPosting, setIsPosting] = useState(false)
@@ -36,7 +36,9 @@ export const LoginScreenNew = ({ navigation }: Props) => {
     dni: '',
   })
   const [linkAndesSalud, setLinkAndesSalud] = useState("");
-  let UrlAndes = `https://www.andessalud.com.ar/`
+  let UrlAndes2 = `https://www.andessalud.com.ar/`
+  let UrlAndes = `https://www.andessalud.com.ar/register/`
+
 
   const handleOpenURLAndes = () => {
     console.log('entrando a Andes Salud');
@@ -78,7 +80,9 @@ export const LoginScreenNew = ({ navigation }: Props) => {
 
         if (idAfiliado) {
           // Llama a guardarDatosLoginEnContext con el idAfiliado actualizado
-          const datosGuardados = await guardarDatosLoginEnContext(idAfiliado);
+       /*    const datosGuardados = await guardarDatosLoginEnContext(idAfiliado); */
+          // Guardamos los datos en AsyncStorage y en el contexto
+          const datosGuardados = await guardarDatosLoginEnContextMejorada(idAfiliado);
 
           if (!datosGuardados) {
             console.error('No se pudieron guardar los datos de usuario desde el LoginScreen');
@@ -86,6 +90,23 @@ export const LoginScreenNew = ({ navigation }: Props) => {
         } else {
           console.error('idAfiliado no está disponible');
         }
+
+        /* empiezo a agregar còdigo para sostener la sesiòn aunque se cierre la app:  */
+        
+        if (loginExitoso) {
+          const { idAfiliado, cuilTitular, nombreCompleto, idAfiliadoTitular, UserName, numeroCredencial, tipoPlan, estadoAfiliacion, tipoPago, numCelular, mail } = useAuthStore.getState();
+         
+          if (idAfiliado) {
+         
+            await useAuthStore.getState().setAuthenticated(idAfiliado);
+            await useAuthStore.getState().setDataStore(cuilTitular, nombreCompleto, idAfiliadoTitular, UserName, numeroCredencial, tipoPlan, estadoAfiliacion, tipoPago, numCelular, mail);
+
+
+          } else {
+            console.log('idAfiliado no está disponible');
+          }
+        }
+        /* hasta acà */
 
       } else {
         Alert.alert('Ups!', 'Usuario o contraseña incorrectos');

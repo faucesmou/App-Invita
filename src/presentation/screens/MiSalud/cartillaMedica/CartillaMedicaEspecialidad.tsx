@@ -402,6 +402,15 @@ const filtrarPorTodos = () => {
   };
   const prestadoresParaMostrar = renderPrestadores();
 
+  function capitalizeWords(input: string | undefined): string {
+    if (!input) {
+      return "";
+    }
+    return input.replace(/\b\p{L}+/gu, function (word) {
+      return word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase();
+    });
+  }
+
   return (
     <View
 
@@ -415,12 +424,12 @@ const filtrarPorTodos = () => {
       <Text style={{
         marginBottom: 10,
         marginTop: 0,
-        fontSize: hp('3.5%'),
+        fontSize: hp('3%'),
         textAlign: 'center',
         color: globalColors.gray2,
         fontWeight: 'bold',
 
-      }}>{nombreEspecialidadSeleccionada}</Text>
+      }}>{capitalizeWords(nombreEspecialidadSeleccionada)}</Text>
 
 
       <View style={[styles.container, { gap: dynamicGap, }]}>
