@@ -605,7 +605,26 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       return [];
     }
   },
+      GuardarIdMacroZonaSeleccionada: async (idZona: string, nombreProvincia: string): Promise<string[]> => {
+                  try {
+                    set({ idZona: idZona, nombreProvincia: nombreProvincia })
 
+                    return [];
+                  } catch (error) {
+                    console.log('ha ocurrido un error al guardar idZona o el nombreProvincia en el useAuthStore');
+                    return [];
+                  }
+                },
+                GuardarIdDepartamentoSeleccionado: async (idDepartamento: string, nombreDepartamento: string): Promise<string[]> => {
+                  try {
+                    set({ idDepartamento: idDepartamento, nombreDepartamento: nombreDepartamento })
+
+                    return [];
+                  } catch (error) {
+                    console.log('ha ocurrido un error al guardar idDepartamento o el nombreDepartamento en el useAuthStore');
+                    return [];
+                  }
+                },
   /* set({ idsEspecialidades: idsEspecialidades })esto no esta funcionando resolver */
   registerUser: async (email: string, password: string, fullName: string) => {
     try {

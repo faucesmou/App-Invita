@@ -18,6 +18,11 @@ import CredencialNew from '../../components/shared/CredencialNew';
 import { loadAuthData } from '../../store/auth/authService';
 import LinearGradient from 'react-native-linear-gradient';
 
+import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
 interface Props {
   onPress: () => void;
   label?: string;
@@ -40,6 +45,8 @@ export const HomeScreenUxNew = () => {
   const {  UserName, } = useAuthStore();
 
   const [currentUserName, setCurrentUserName] = useState<string | null>(null)
+  const [mostrarActualizacion, setMostrarActualizacion] = useState(false);
+
 
   function capitalizeWords(string:string) {
     return string.replace(/\b\w+/g, function(word) {
@@ -180,7 +187,128 @@ JhonDoe09
       </Pressable>
     );
   };
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisibleGracias, setModalVisibleGracias] = useState(false);
+  const [isModalVisibleNotificacion, setModalVisibleNotificacion] = useState(false);
+  const [gcmData, setGcmData] = useState<any | null>(null);
 
+/* useEffect para chequear para saber si el usuario ya concedió permiso a notificaciones push o no, en caso de que no lo haya hecho se le muestra un cartel. */
+  useEffect(() => {
+    const checkPermission = async () => {
+      /* console.log('Se ejecutó el chequeo para saber si el usuario ya concedió permiso ') */
+
+      const permission = await AsyncStorage.getItem('notificationPermissionn');
+
+      // Mostrar el modal si nunca ha seleccionado permitir o denegar
+      if (!permission) {
+        setModalVisible(true);
+      } else if (permission === 'granted') {
+        console.log('El permiso ya ha sido concedido cambiar a  ')
+        //revisar si hace falta activar de nuevo el token
+        //registerForPushNotifications() 
+        // Activar función si ya ha permitido notificaciones ESTO DEBE HACERSE SIEMPRE ? 
+      }
+    };
+
+    checkPermission();
+  }, []);
+
+/* Función para solicitar al servidor la inscripción en el Topic de SNS */
+  /*const registerForPushNotifications = async () => {
+    try {
+      await messaging().requestPermission(); // Solicitar permiso al sistema
+      const token = await messaging().getToken();
+      console.log('el token obtenido es---->', token)
+      await axios.post('https://gmfp.createch.com.ar/api/notificacionesPrueba', { token });
+    } catch (error) {
+      console.log("Error al obtener o enviar el token desde la original FCM:-->", error);
+      if (error.response) {
+        console.log('Respuesta del servidor:error.response.data>', error.response.data);
+        console.log('Estado del servidor:error.response.status>', error.response.status);
+      } else if (error.request) {
+        console.log('La solicitud fue hecha pero no se recibió respuesta alguna');
+      } else {
+        console.log('Error en la configuración:error.message>', error.message);
+      }
+    }
+  };
+
+*/
+/*
+  const handleAllow = async () => {
+    setModalVisible(false);
+    await AsyncStorage.setItem('notificationPermission', 'granted');
+    registerForPushNotifications(); 
+    setModalVisibleGracias(true)
+
+  };*/
+  
+/* funcion para gestionar la redireccion a un actualización disponible en play store */
+  const handleActualizar = async () => { 
+    setMostrarActualizacion(false);
+    try {
+      await Linking.openURL(UrlActualizar);
+    } catch (err) {
+      console.log('error al intentar ingresar a la actualización:', err);
+    } 
+
+  };
+
+/* funcion para gestionar el permiso negado a notificaciones push */
+  const handleDeny = async () => {
+    setModalVisible(false);
+    await AsyncStorage.setItem('notificationPermission', 'denied');
+    console.log("El usuario se negó a recibir notificaciones-->");
+  };
+  /* funcion para gestionar el boton de cerrar el modal de actualizaciones  */
+  const handleCerrarActualizacion = async () => {
+    setMostrarActualizacion(false);
+    console.log("El usuario se negó a actualizar la app-->");
+  };
+
+/* acà agregar useEffect para escuchar posibles notificaciones desde el topic de SNS y estructurar los datos recibidos: */
+  
+
+
+/* acà agregar useEffect para escuchar desde un Segundo Plano posibles notificaciones desde el topic de SNS y estructurar los datos recibidos:  */
+
+
+/* useEffect para activar el modal en caso de que tengamos nuevos datos recibidos */
+
+
+/* este useEffect es para buscar versiones nuevas y avisar: */
+
+let UrlActualizar = 'https://play.google.com/store/apps/details?id=com.ar.andessalud.andessalud'
+
+/*
+useEffect(() => {
+  const checkForUpdate2 = async () => {
+    try {
+      const version  = await checkVersion();
+
+      if (version.needsUpdate) {
+        
+        console.log('Nueva versión disponible:', version );
+        console.log(`La App tiene la actualización pendiente: (version .updateType) ${version.updateType} .`);
+        setMostrarActualizacion(true)
+        setActualizacionDisponible(true)
+        
+      } 
+      console.log('se consultaron actualizaciones pero no se encontraron nuevas versiones disponibles' );
+     
+       console.log('Nueva versión--> version---->>>:', version );
+      console.log('version.needsUpdate---->>>:', version.needsUpdate );
+      console.log('version.updateType---->>>:', version.updateType ); 
+    } catch (error) {
+      console.error('Error al verificar actualizaciones:', error);
+    } finally {
+      setHasCheckedForUpdate(true); // Marca como chequeado
+    }
+  };
+
+  checkForUpdate2();
+}, [hasCheckedForUpdate]);
+*/
 
   return (
     <View style={styles.screenContainer}>

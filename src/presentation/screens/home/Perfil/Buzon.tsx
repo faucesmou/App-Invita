@@ -15,6 +15,7 @@ import Divider from '../../../components/shared/Divider';
 import { BuzonOrdenesC } from './BuzonOrdenesC';
 import { useNotificationStore } from '../../../store/notification-store';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { NotificacionesGenericas } from './NotificacionesGenericas';
 
 
 interface Notificacion {
@@ -689,6 +690,7 @@ export const Buzon = () => {
 
 
          <BuzonOrdenesC/> 
+         <NotificacionesGenericas />
 
       </View >
     </View >
@@ -802,15 +804,26 @@ const styles = StyleSheet.create({
   },
   ContainerEstudiosMedicosTitleAfuera: {
     marginTop: 5,
+    marginBottom: wp('0%'),
+    padding: 5,
+    backgroundColor: '#e1a159',
+    borderRadius: 15,
+    borderWidth: 0,
+    borderColor: globalColors.earthYellow2,
+    marginHorizontal: 10,
+    minWidth: '80%',
+    maxWidth: '80%',
+    /*marginTop: 5,
     marginBottom:5,
     padding: 5,
-    backgroundColor: '#fbd1a5'/* globalColors.earthYellow2  *//* brown2 *//* 'brown' *//* '#97e3b0' *//* '#d7e5f8' */,
+    backgroundColor: '#fbd1a5',
     borderRadius: 15,
     borderWidth:0,
     borderColor: globalColors.earthYellow2,
     marginHorizontal:10,
     minWidth:'80%',
-    maxWidth:'80%',
+    maxWidth:'80%',*/
+
   },
   ContainerEstudiosMedicosTitle: {
     marginTop: 10,
@@ -852,11 +865,13 @@ const styles = StyleSheet.create({
   },
   titleEstudiosMedicosAfuera: {
     marginBottom: 5,
-    fontSize: hp('2.3%'),
+    fontSize: hp('2%'),
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
- /*    backgroundColor:'blue', */
-    minWidth:'100%',
+    /*    backgroundColor:'blue', */
+    minWidth: '100%',
+    color: 'white',
+    fontWeight: 'bold',
   },
   titleOrdenConsulta: {
     marginBottom: 5,

@@ -46,6 +46,9 @@ import { LoginScreenNew } from '../screens/auth/LoginScreenNew';
 import { EstudiosMedicosEnvNew } from '../screens/MiSalud/estudiosMedicos/EstudiosMedicosEnvNew';
 import { FullScreenLoader } from '../components/ui/FullScreenLoader';
 import { FormulariosEspScreenNuevo } from '../screens/MiGestion/formulariosEspeciales/FormulariosEspScreenNuevo';
+import { CartillaFarmaciaDepartamento } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaDepartamento';
+import { CartillaFarmaciaDepartamentoSeleccionado } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaDepartamentoSeleccionado';
+import { CartillaFarmaciaProvincias } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaProvincias';
 
 /* import { UserData } from '../screens/auth/userData'; */
 
@@ -70,6 +73,9 @@ export type RootStackParams = {
   "Enviando": undefined,
   Credencial: undefined,
   Cartilla: undefined,
+  "Cartilla Farmacias": undefined,
+  "Cartillas Farmacias": undefined,
+  "Farmacias": undefined,
   LoginScreen: undefined,
   LoginScreenNew: undefined,
   LoginScreen2: undefined,
@@ -203,6 +209,12 @@ const [isReady, setIsReady] = useState(false);
       <Stack.Screen name="Cartillas" component={CartillaMedicaScreen} options={{ headerShown: true }} /> 
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="Prestadores" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
+
+      <Stack.Screen name="Cartillas Farmacias" component={CartillaFarmaciaDepartamento} options={{ headerShown: true }} />
+
+      <Stack.Screen name="Farmacias" component={CartillaFarmaciaDepartamentoSeleccionado} options={{ headerShown: true }} />
+
+      <Stack.Screen name="Cartilla Farmacias" component={CartillaFarmaciaProvincias} options={{ headerShown: true }} /> 
 
       <Stack.Screen name="Estudios!" component={EstudiosMedicosScreen} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} />
    <Stack.Screen name="Estudios" component={EstudiosMedicosScreenUx} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} /> 

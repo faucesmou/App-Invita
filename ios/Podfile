@@ -25,6 +25,8 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+
+
 target 'NavigationApp6' do
   config = use_native_modules!
 
