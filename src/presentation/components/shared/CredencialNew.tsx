@@ -169,7 +169,7 @@ const CredencialNew = () => {
                       ]} >
                       <Text style={{ color: 'white', fontSize: hp('1.7%') }}>{datosCredencial.nombreAfiliado}</Text>
                       <Text style={{ color: 'white', fontSize: hp('1.7%') }}>{datosCredencial.numAfiliado}</Text>
-                      <Text style={{ color: 'white', fontSize: hp('1.7%') }}>{datosCredencial.fecVencimiento}</Text>
+                      <Text style={{ color: 'white', fontSize: hp('1.2%') }}>{datosCredencial.fecVencimiento}</Text>
                     </View>
                   </View>
                 </View>

@@ -19,6 +19,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { FullScreenLoader } from '../../../components/ui/FullScreenLoader';
 
 export const CartillaFarmaciaDepartamento = () => {
+
   console.log('Entrando a CartillaFarmaciaDepartamento------->');
   const { idAfiliadoTitular, idAfiliado, GuardarIdCartillaSeleccionada, idZona,  GuardarIdDepartamentoSeleccionado, nombreProvincia } = useAuthStore();
  
@@ -97,7 +98,7 @@ export const CartillaFarmaciaDepartamento = () => {
       style={{ ...globalStyles.container, marginBottom: 0, }}
 
     >
-      <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('4%')} />
+      <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('3%')} />
 
       <BackButton Size={hp('4%')} />
 

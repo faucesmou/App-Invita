@@ -49,7 +49,7 @@ import { FormulariosEspScreenNuevo } from '../screens/MiGestion/formulariosEspec
 import { CartillaFarmaciaDepartamento } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaDepartamento';
 import { CartillaFarmaciaDepartamentoSeleccionado } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaDepartamentoSeleccionado';
 import { CartillaFarmaciaProvincias } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaProvincias';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 /* import { UserData } from '../screens/auth/userData'; */
 
 
@@ -73,8 +73,8 @@ export type RootStackParams = {
   "Enviando": undefined,
   Credencial: undefined,
   Cartilla: undefined,
-  "Cartilla Farmacias": undefined,
-  "Cartillas Farmacias": undefined,
+  "Cartilla Farmacia": undefined,
+  "Departamentos": undefined,
   "Farmacias": undefined,
   LoginScreen: undefined,
   LoginScreenNew: undefined,
@@ -156,7 +156,10 @@ const [isReady, setIsReady] = useState(false);
         headerStyle: {
           elevation: 50,
           shadowColor: 'transparent',
-        }
+        },
+        headerTitleStyle: {
+          fontSize: 18,
+        },
       }}
     >
 {/* ------------VISTAS PRINCIPALES: -------------->*/}
@@ -210,11 +213,13 @@ const [isReady, setIsReady] = useState(false);
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="Prestadores" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
 
-      <Stack.Screen name="Cartillas Farmacias" component={CartillaFarmaciaDepartamento} options={{ headerShown: true }} />
+      <Stack.Screen name="Departamentos" component={CartillaFarmaciaDepartamento} options={{
+    headerShown: true
+  }}/>
 
       <Stack.Screen name="Farmacias" component={CartillaFarmaciaDepartamentoSeleccionado} options={{ headerShown: true }} />
 
-      <Stack.Screen name="Cartilla Farmacias" component={CartillaFarmaciaProvincias} options={{ headerShown: true }} /> 
+      <Stack.Screen name="Cartilla Farmacia" component={CartillaFarmaciaProvincias} options={{ headerShown: true }} /> 
 
       <Stack.Screen name="Estudios!" component={EstudiosMedicosScreen} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} />
    <Stack.Screen name="Estudios" component={EstudiosMedicosScreenUx} options={{ headerShown: true, headerTitleStyle: { fontSize: 18 },  }} /> 

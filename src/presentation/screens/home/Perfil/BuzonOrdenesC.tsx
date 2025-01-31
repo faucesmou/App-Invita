@@ -613,8 +613,8 @@ const styles = StyleSheet.create({
    
   },
   innerContainer: {
-    marginBottom: 15,
-    marginTop: 15,
+    marginBottom: wp('3%'),
+    marginTop: wp('3%'),
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
@@ -718,7 +718,7 @@ const styles = StyleSheet.create({
   },
   titleEstudiosMedicosAfuera: {
     marginBottom: 5,
-    fontSize: hp('2%'),
+    fontSize: hp('2.5%'),
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
     /*    backgroundColor:'blue', */

@@ -51,7 +51,7 @@ export const NotificacionesGenericas = () => {
 
   const { top } = useSafeAreaInsets();
   const [notificaciones, setNotificaciones] = useState([]);
- /*  const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]); */
+  /*  const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]); */
 
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,33 +89,33 @@ export const NotificacionesGenericas = () => {
           url: "https://dzwytx4yka.execute-api.us-east-1.amazonaws.com/primera/messages",
           data: {}, // Enviar un objeto vacío como body
         });
-      
+
         console.log("Datos recibidos------>:", response.data);
         console.log("Tipo de response.data.body:", typeof response.data.body);
-console.log("Contenido de response.data.body:", response.data.body);
+        console.log("Contenido de response.data.body:", response.data.body);
         // Asegúrate de que response.data.body sea un array
-     /*  const dataNoti = Array.isArray(response.data.body) ? response.data.body : []; */
-     
-      const dataNoti = JSON.parse(response.data.body)
-      console.log("dataNoti--------->>>", dataNoti);
-     /*  setNotificaciones(dataNoti); */
-      /*   let dataNoti = response.data.body; */
+        /*  const dataNoti = Array.isArray(response.data.body) ? response.data.body : []; */
+
+        const dataNoti = JSON.parse(response.data.body)
+        console.log("dataNoti--------->>>", dataNoti);
+        /*  setNotificaciones(dataNoti); */
+        /*   let dataNoti = response.data.body; */
         console.log("response.data.body--EHEH---->:", response.data.body);
 
-            // Ordenar el array por timestamp en orden descendente
-    const sortedNoti = dataNoti.sort(
-      (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    );
+        // Ordenar el array por timestamp en orden descendente
+        const sortedNoti = dataNoti.sort(
+          (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
 
-    // Tomar los primeros 4 objetos más recientes
-    const recentNoti = sortedNoti.slice(0, 4);
+        // Tomar los primeros 4 objetos más recientes
+        const recentNoti = sortedNoti.slice(0, 4);
 
-    console.log("Notificaciones recientes (últimos 4):", recentNoti);
+        console.log("Notificaciones recientes (últimos 4):", recentNoti);
 
 
         setNotificaciones(recentNoti);
-       /*  console.log("notificaciones--------->>>", notificaciones);
-        setIsConsulting(false) */
+        /*  console.log("notificaciones--------->>>", notificaciones);
+         setIsConsulting(false) */
       } catch (error) {
         console.error("Error al obtener las notificaciones:", error);
         setIsConsulting(false)
@@ -132,7 +132,7 @@ console.log("Contenido de response.data.body:", response.data.body);
   }, [notificaciones]); // Se ejecutará cada vez que notificaciones cambie
 
   useEffect(() => {
-    
+
     console.log("notificaciones actualizado:", notificaciones);
     setIsConsulting(false);
   }, [notificaciones]); // Se ejecutará cada vez que `notificaciones` cambie.
@@ -224,18 +224,18 @@ console.log("Contenido de response.data.body:", response.data.body);
   console.log("notificaciones--------->>>", notificaciones); //BORRAR ESTOOOOO----------------------zzz
 
   return (
-      
+
     <>
 
       <View style={styles.ContainerEstudiosMedicosTitleAfuera} >
-        
+
         <Pressable
-         onPress={() => {
-           console.log('se toco el titulo Notificaciones genéricas');
-           
-           modifyNotificacionesVisible()
-         }
-         }
+          onPress={() => {
+            console.log('se toco el titulo Notificaciones genéricas');
+
+            modifyNotificacionesVisible()
+          }
+          }
         >
           <Text style={styles.titleEstudiosMedicosAfuera} >Notificaciones Andes Salud:</Text>
         </Pressable>
@@ -251,7 +251,7 @@ console.log("Contenido de response.data.body:", response.data.body);
             contentContainerStyle={{ flexGrow: 1 }}
           >
 
-            { isConsulting ?
+            {isConsulting ?
               (
                 <View style={styles.LoaderContainer}>
                   <FullScreenLoader />
@@ -283,7 +283,7 @@ console.log("Contenido de response.data.body:", response.data.body);
                   (
                     <>
 
-              {/*   <Text style={{
+                      {/*   <Text style={{
                           marginBottom: wp('2%'),
                           marginTop: 0,
                           fontSize: hp('2%'),
@@ -491,7 +491,7 @@ console.log("Contenido de response.data.body:", response.data.body);
         <></>
       }
 
-</>
+    </>
 
   );
 };
@@ -889,51 +889,51 @@ const styles = StyleSheet.create({
 
 /*  if (practicaResueltaData &&   practicaResueltaData.tablaEncabezado && practicaResueltaData.tablaDetalle) */
 
-  /* console.log("Datos recibidos------>:", response.data);
-        //verificamos si recibimos un array:
+/* console.log("Datos recibidos------>:", response.data);
+      //verificamos si recibimos un array:
 
-        if (response.data && Array.isArray(response.data.body)) {
-          
-          const formattedData = response.data.body.map((notificacion: any) => ({
-            id: notificacion.messageId,
-            title: notificacion.title || "Sin título",
-            body: notificacion.messageBody || "Sin mensaje",
-            extraInfo: notificacion.extraInfo || "",
-            timestamp: notificacion.timestamp || "",
-          }));
+      if (response.data && Array.isArray(response.data.body)) {
+        
+        const formattedData = response.data.body.map((notificacion: any) => ({
+          id: notificacion.messageId,
+          title: notificacion.title || "Sin título",
+          body: notificacion.messageBody || "Sin mensaje",
+          extraInfo: notificacion.extraInfo || "",
+          timestamp: notificacion.timestamp || "",
+        }));
 
-          console.log("formattedData--------->>>", formattedData);
-          setNotificaciones(formattedData);
-        } // Guardar las notificaciones formateadas
+        console.log("formattedData--------->>>", formattedData);
+        setNotificaciones(formattedData);
+      } // Guardar las notificaciones formateadas
 
-        else {
-          console.error('La respuesta del servidor no es un arreglo válido');
-        } */
+      else {
+        console.error('La respuesta del servidor no es un arreglo válido');
+      } */
 
-          
-        /* if (response.data && typeof response.data.body === 'string' ) {
 
-          try {
-            const parsedData = JSON.parse(response.data.body);
-            if (parsedData) { 
-          const formattedData = response.data.body.map((notificacion: any) => ({
-            id: notificacion.messageId,
-            title: notificacion.title || "Sin título",
-            body: notificacion.messageBody || "Sin mensaje",
-            extraInfo: notificacion.extraInfo || "",
-            timestamp: new Date(notificacion.timestamp),
-          }));
-  
-          console.log("formattedData--------->>>", formattedData);
-          setNotificaciones(formattedData);
-        } else {
-          console.error('La respuesta del servidor no contiene datos en la propiedad "body"');
-          setNotificaciones([]); 
-        }} catch (error) {
-          console.error('Error al parsear la respuesta del servidor:', error);
-        }
-        } else {
-          console.error('La respuesta del servidor no es un arreglo válido en la propiedad "body"');
-          setNotificaciones(dataNoti);
-          console.log("notificaciones--------->>>", notificaciones);
-        } */
+/* if (response.data && typeof response.data.body === 'string' ) {
+
+  try {
+    const parsedData = JSON.parse(response.data.body);
+    if (parsedData) { 
+  const formattedData = response.data.body.map((notificacion: any) => ({
+    id: notificacion.messageId,
+    title: notificacion.title || "Sin título",
+    body: notificacion.messageBody || "Sin mensaje",
+    extraInfo: notificacion.extraInfo || "",
+    timestamp: new Date(notificacion.timestamp),
+  }));
+ 
+  console.log("formattedData--------->>>", formattedData);
+  setNotificaciones(formattedData);
+} else {
+  console.error('La respuesta del servidor no contiene datos en la propiedad "body"');
+  setNotificaciones([]); 
+}} catch (error) {
+  console.error('Error al parsear la respuesta del servidor:', error);
+}
+} else {
+  console.error('La respuesta del servidor no es un arreglo válido en la propiedad "body"');
+  setNotificaciones(dataNoti);
+  console.log("notificaciones--------->>>", notificaciones);
+} */

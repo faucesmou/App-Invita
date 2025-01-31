@@ -270,7 +270,7 @@ export const CartillaScreen = () => {
 
         </View>
 
-        <View style={{ marginTop: hp('1%') }}>
+        <View style={{ marginTop: hp('1%'), marginHorizontal: wp('1%')  }}>
 
           <TertiaryButton
             onPress={() => navigation.navigate('Cartillas')}
@@ -284,10 +284,10 @@ export const CartillaScreen = () => {
 
         </View>
 
-        <View style={{ marginTop: hp('1%'), marginHorizontal: wp('3%') }}>
+        <View style={{ marginTop: hp('1%'), marginHorizontal: wp('1%') }}>
 
           <TertiaryButton
-            onPress={() => navigation.navigate('Cartilla Farmacias')}
+            onPress={() => navigation.navigate('Cartilla Farmacia')}
             label="Cartilla de Farmacias"
             color={globalColors.profile2}
             iconName='medkit-outline'

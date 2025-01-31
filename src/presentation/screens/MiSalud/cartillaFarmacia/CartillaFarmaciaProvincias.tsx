@@ -102,7 +102,7 @@ export const CartillaFarmaciaProvincias = () => {
       style={{ ...globalStyles.container, marginBottom: 0, }}
 
     >
-      <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('4%')} />
+      <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('3%')} />
 
       <BackButton Size={hp('4%')} />
 
@@ -167,7 +167,7 @@ export const CartillaFarmaciaProvincias = () => {
                             let nombreProvincia = cartilla.nombre;
                             GuardarIdMacroZonaSeleccionada(idZona, nombreProvincia);
                            
-                            navigation.navigate('Cartillas Farmacias')
+                            navigation.navigate('Departamentos')
                           }
                           }
                         >

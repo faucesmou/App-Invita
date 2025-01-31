@@ -599,8 +599,9 @@ const styles = StyleSheet.create({
  marginLeft:5,
   },
   descriptionTexttelefono: {
-    color: 'blue',
-    fontSize: 15,
+    color: globalColors.yellow,
+    fontWeight: 'bold',
+    fontSize: hp('2%'),
     textAlign: 'center',
   },
   descriptionTextMapa: {

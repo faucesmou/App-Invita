@@ -152,6 +152,47 @@ console.log('Processed cartillas------------------------>>>>:', processedCartill
     }
   };
 
+  const handleOpenMaps2 = async () => {
+    setAddressModalVisible(false);
+  
+    try {
+      const googleMapsURL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedAddress)}`;
+      const appleMapsURL = `http://maps.apple.com/?q=${encodeURIComponent(selectedAddress)}`;
+  
+      const canOpenGoogleMaps = await Linking.canOpenURL(googleMapsURL);
+      const canOpenAppleMaps = await Linking.canOpenURL(appleMapsURL);
+  
+      if (canOpenGoogleMaps && canOpenAppleMaps) {
+        // Mostrar selector de aplicaciones
+        Alert.alert(
+          'Abrir ubicación',
+          '¿En qué aplicación desea abrir la dirección?',
+          [
+            {
+              text: 'Mapas',
+              onPress: () => Linking.openURL(appleMapsURL),
+            },
+            {
+              text: 'Google Maps',
+              onPress: () => Linking.openURL(googleMapsURL),
+            },
+          ],
+          { cancelable: true }
+        );
+      } else if (canOpenAppleMaps) {
+        Linking.openURL(appleMapsURL);
+      } else if (canOpenGoogleMaps) {
+        Linking.openURL(googleMapsURL);
+      } else {
+        console.error('No se pudo abrir ninguna aplicación de mapas');
+        setErrorAbrirDireccion(true);
+      }
+    } catch (error) {
+      console.error('Error al intentar abrir la dirección:', error);
+      setErrorAbrirDireccion(true);
+    }
+  };
+
   const handleDenyMaps = () => {
     setAddressModalVisible(false);
   };
@@ -288,7 +329,7 @@ console.log('Processed cartillas------------------------>>>>:', processedCartill
           <View style={styles.modalOverlay}>
             <View style={styles.modalContainer}>
               <Text style={styles.modalTitle}>
-                ¿Deseas abrir esta dirección en Google Maps?
+                ¿Deseas abrir esta dirección en Mapas?
                 {/*   {"\n"} */}
                 {/*     {selectedAddress} */}
               </Text>
@@ -307,7 +348,7 @@ console.log('Processed cartillas------------------------>>>>:', processedCartill
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                   style={styles.buttonContainer}>
-                  <TouchableOpacity style={styles.allowButton} onPress={handleOpenMaps}>
+                  <TouchableOpacity style={styles.allowButton} onPress={handleOpenMaps2}>
                     <Text style={styles.buttonText}>
                       Abrir
                     </Text>
@@ -373,7 +414,8 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     alignSelf: 'center',
     paddingHorizontal: wp('5%'),
-    color: 'black'
+    color: 'black',
+    width: wp('80%'),
     /*  minWidth: wp('80%'), */
   },
   card: {

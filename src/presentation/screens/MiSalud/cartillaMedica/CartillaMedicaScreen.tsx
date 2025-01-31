@@ -176,9 +176,10 @@ const styles = StyleSheet.create ({
     justifyContent: 'center',
   },
   descriptionText: {
-    color: 'black',
+    color: '#3b3937', 
     fontSize: 18,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight:"bold",
   },
   contentWrapper2: {
     flexDirection: 'row',
