@@ -415,7 +415,7 @@ export const Buzon = () => {
           /*     backgroundColor: 'orange', */
              maxHeight:'80%',
              minHeight:'80%',
-             marginHorizontal:20
+             marginHorizontal: wp('1%')
         }}>
           
         <View style={styles.ContainerMainTitle} >
@@ -424,7 +424,7 @@ export const Buzon = () => {
           {/*   <Text style={styles.MainTitle} >Selecciona el tipo de solicitud</Text> */}
 
           <Text style={{
-        marginBottom: wp('1%'),
+        marginBottom: wp('0%'),
         marginTop: 0,
         fontSize: hp('3%'),
         textAlign: 'center',
@@ -709,8 +709,8 @@ const styles = StyleSheet.create({
    
   },
   innerContainer: {
-    marginBottom: 15,
-    marginTop: 15,
+    marginBottom: wp('3%'),
+    marginTop: wp('3%'),
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
@@ -852,7 +852,7 @@ const styles = StyleSheet.create({
   },
   titleEstudiosMedicosAfuera: {
     marginBottom: 5,
-    fontSize: hp('2.3%'),
+    fontSize: hp('2.5%'),
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
  /*    backgroundColor:'blue', */

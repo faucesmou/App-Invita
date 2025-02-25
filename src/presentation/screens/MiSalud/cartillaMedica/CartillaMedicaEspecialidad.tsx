@@ -82,7 +82,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
       }
       try {
         setIsConsulting(true);
-        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscarPrestadoresCartilla?IMEI=&idAfiliado=4E7EF475-B01B-4FED-BE87-3B896766D4DA&idCartilla=${idCartillaSeleccionada}`)
+        const response = await axios.get(`https://srvloc.andessalud.com.ar/WebServicePrestacional.asmx/APPBuscarPrestadoresCartilla?IMEI=&idAfiliado=${idAfiliado}&idCartilla=${idCartillaSeleccionada}`)
         const xmlData = response.data;
 
         // Convertir XML a JSON
@@ -599,8 +599,9 @@ const styles = StyleSheet.create({
  marginLeft:5,
   },
   descriptionTexttelefono: {
-    color: 'blue',
-    fontSize: 15,
+    color: globalColors.yellow,
+    fontWeight: 'bold',
+    fontSize: hp('2%'),
     textAlign: 'center',
   },
   descriptionTextMapa: {

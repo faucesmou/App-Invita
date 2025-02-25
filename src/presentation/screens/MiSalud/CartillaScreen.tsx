@@ -192,11 +192,25 @@ export const CartillaScreen = () => {
 
         </View>
 
-        <View style={{ marginTop: hp('1%') }}>
+        <View style={{ marginTop: hp('1%') , marginHorizontal: wp('1%') }}>
 
           <TertiaryButton
             onPress={() => navigation.navigate('Cartillas')}
             label="Cartilla Médica"
+            color={globalColors.profile2}
+            iconName='heart-outline'
+            description='Accedé a todas las cartillas'
+            textSize={buttonTextFontSize} 
+            descriptionSize={buttonDescriptionFontSize}
+          />
+
+        </View>
+
+        <View style={{ marginTop: hp('1%'), marginHorizontal: wp('1%')  }}>
+
+          <TertiaryButton
+            onPress={() => navigation.navigate('Cartilla Farmacias')}
+            label="Cartilla de Farmacias"
             color={globalColors.profile2}
             iconName='heart-outline'
             description='Accedé a todas las cartillas'
