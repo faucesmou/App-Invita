@@ -34,9 +34,10 @@ interface Prestador {
 }
 
 export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }: Props) => {
-  
-  console.log('Entrando a CartillaMedicaEspecialidad--------------------->');
 
+  console.log('Entrando a CartillaMedicaEspecialidad--------------------->');
+  
+  const { top } = useSafeAreaInsets();
   const screenWidth = Dimensions.get('window').width;
   const dynamicGap = screenWidth * 0.00;
 
@@ -45,7 +46,7 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
   const [isConsulting, setIsConsulting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [modalData, setModalData] = useState([]);
-  
+
   const [selectedValue, setSelectedValue] = useState('Todos');
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -57,22 +58,22 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
   const [prestadoresMendoza, setPrestadoresMendoza] = useState<Prestador[]>([]);
   const [prestadoresSanLuis, setPrestadoresSanLuis] = useState<Prestador[]>([]);
   const [prestadoresTodos, setPrestadoresTodos] = useState<Prestador[]>([]);
-  const [provinciaSeleccionada, setProvinciaSeleccionada] = useState<string | null>(null); 
+  const [provinciaSeleccionada, setProvinciaSeleccionada] = useState<string | null>(null);
 
 
   const [mostrarFiltrados, setMostrarFiltrados] = useState(false);
   const [pressedButton, setPressedButton] = useState(null);
-  
+
   const { idAfiliadoTitular, idAfiliado, idCartillaSeleccionada, nombreEspecialidadSeleccionada } = useAuthStore();
-  const { top } = useSafeAreaInsets();
+
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
-  
+
 
   useEffect(() => {
 
     const CartillaRequest = async () => {
 
-      if (idCartillaSeleccionada === undefined ) {
+      if (idCartillaSeleccionada === undefined) {
         let sinCartilas = [{
           nombre: 'No se encontraron prestadores para esta especialidad',
           idConvenio: 'sin convenio'
@@ -97,36 +98,36 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
           const telefonos = result2.Resultado.fila.tablaTelefonos;
 
           // Asegúrate de que estamos tratando con arreglos
-          const prestadoresList = Array.isArray(prestadores.idConvenio) ? 
-          //@ts-ignore
-          prestadores.idConvenio.map((_, index) => ({
-            idConvenio: prestadores.idConvenio[index],
-            nombre: prestadores.nombre[index],
-            ordenAccion: prestadores.ordenAccion[index],
-            ordenAccionInt: prestadores.ordenAccionInt[index],
-            descartar: prestadores.descartar[index]
-          })) : [];
+          const prestadoresList = Array.isArray(prestadores.idConvenio) ?
+            //@ts-ignore
+            prestadores.idConvenio.map((_, index) => ({
+              idConvenio: prestadores.idConvenio[index],
+              nombre: prestadores.nombre[index],
+              ordenAccion: prestadores.ordenAccion[index],
+              ordenAccionInt: prestadores.ordenAccionInt[index],
+              descartar: prestadores.descartar[index]
+            })) : [];
 
 
-          const domiciliosList = Array.isArray(domicilios.idConvenioDom) ? 
-          //@ts-ignore
-          domicilios.idConvenioDom.map((_, index) => ({
-            idConvenioDom: domicilios.idConvenioDom[index],
-            idDomicilioDom: domicilios.idDomicilioDom[index],
-            domicilio: domicilios.domicilio[index],
-            localidad: domicilios.localidad[index],
-            provincia: domicilios.provincia[index],
-            lat: domicilios.lat[index],
-            long: domicilios.long[index],
-            paraOrden: domicilios.paraOrden[index]
-          })) : [];
+          const domiciliosList = Array.isArray(domicilios.idConvenioDom) ?
+            //@ts-ignore
+            domicilios.idConvenioDom.map((_, index) => ({
+              idConvenioDom: domicilios.idConvenioDom[index],
+              idDomicilioDom: domicilios.idDomicilioDom[index],
+              domicilio: domicilios.domicilio[index],
+              localidad: domicilios.localidad[index],
+              provincia: domicilios.provincia[index],
+              lat: domicilios.lat[index],
+              long: domicilios.long[index],
+              paraOrden: domicilios.paraOrden[index]
+            })) : [];
 
-          const telefonosList = Array.isArray(telefonos.idDomicilioTel) ? 
-          //@ts-ignore
-          telefonos.idDomicilioTel.map((_, index) => ({
-            idDomicilioTel: telefonos.idDomicilioTel[index],
-            telefono: telefonos.telefono[index]
-          })) : [];
+          const telefonosList = Array.isArray(telefonos.idDomicilioTel) ?
+            //@ts-ignore
+            telefonos.idDomicilioTel.map((_, index) => ({
+              idDomicilioTel: telefonos.idDomicilioTel[index],
+              telefono: telefonos.telefono[index]
+            })) : [];
 
           const arrayPrestadores: any[] = [];
 
@@ -179,9 +180,9 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
             });
           });
           setPrestadores(arrayPrestadores)
-        console.log('prestadores son: --->', prestadores);
-        
-          
+          console.log('prestadores son: --->', prestadores);
+
+
           setPrestadoresCordoba(arrayPrestadores);
 
         } catch (err) {
@@ -225,45 +226,45 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
     };
     CartillaRequest()
 
-  }, [idAfiliadoTitular, idCartillaSeleccionada ])
+  }, [idAfiliadoTitular, idCartillaSeleccionada])
 
 
   const handlePhonePress2 = (phoneNumber: any) => {
     Alert.alert(
-      'Abrir Contacto',
-      `¿Deseas abrir WhatsApp o llamar al número ${phoneNumber}?`,
+      'Llamar',
+      `¿Deseas llamar al número ${phoneNumber}?`,
       [
-        {
+       /*  {
           text: 'WhatsApp',
           onPress: () => {
-            // Aquí mostrarías un mensaje indicando que la acción se realizaría en un dispositivo físico
+         
             console.log('Abrir WhatsApp:', phoneNumber);
             const whatsappUrl = `whatsapp://send?phone=${phoneNumber}`;
             Linking.openURL(whatsappUrl)
-            .then(() => {
-              console.log('WhatsApp abierto correctamente');
-            })
-            .catch((err) => {
-              Alert.alert('Error', 'No se pudo abrir WhatsApp. Por favor, verifica tu conexión a internet.');
-            console.log('el error es el siguiente:', err);
-            
-            });
+              .then(() => {
+                console.log('WhatsApp abierto correctamente');
+              })
+              .catch((err) => {
+                Alert.alert('Error', 'No se pudo abrir WhatsApp. Por favor, verifica tu conexión a internet.');
+                console.log('el error es el siguiente:', err);
+
+              });
           },
-        },
+        }, */
         {
           text: 'Llamar',
           onPress: () => {
             // Aquí mostrarías un mensaje indicando que la acción se realizaría en un dispositivo físico
             console.log('Llamar:', phoneNumber);
             Linking.openURL(`tel:${phoneNumber}`)
-            .then(()=> {
-              console.log('llamada iniciada correctamente');
-              
-            })
-            .catch((err)=>{
-              Alert.alert('Error', 'No se pudo llamar al número indicado, por favor verifica que sea válido');
-              console.log('el error es el siguiente:', err);
-            })
+              .then(() => {
+                console.log('llamada iniciada correctamente');
+
+              })
+              .catch((err) => {
+                Alert.alert('Error', 'No se pudo llamar al número indicado, por favor verifica que sea válido');
+                console.log('el error es el siguiente:', err);
+              })
           },
         },
         {
@@ -273,11 +274,11 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
       ]
     );
   };
-  
+
   const handleShowLocation = (latitude: string, longitude: string) => {
     Alert.alert(
-      'Ver en Google Maps',
-      '¿Deseas ver esta ubicación en Google Maps?',
+      'Ver en Mapas',
+      '¿Deseas ver esta ubicación en Mapas?',
       [
         {
           text: 'Cancelar',
@@ -286,23 +287,23 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
         {
           text: 'Ver',
           onPress: () => {
-           try{
-            console.log(`la latitude es: ${latitude} y la longitude es: ${longitude}` );
-            
-          const url = `maps:0?q=${latitude},${longitude}`; 
-          
-             console.log('la url es: ----->', url);
-             
-             Linking.openURL(url)
-           }catch(err){
-            console.error('ocurrio un error al intentar abrir el mapa:', err)
+            try {
+              console.log(`la latitude es: ${latitude} y la longitude es: ${longitude}`);
+
+              const url = `maps:0?q=${latitude},${longitude}`;
+
+              console.log('la url es: ----->', url);
+
+              Linking.openURL(url)
+            } catch (err) {
+              console.error('ocurrio un error al intentar abrir el mapa:', err)
               /*  const url = `comgooglemaps://?center=${latitude},${longitude}&zoom=14`; */
-            /* const url = `comgooglemaps://?center=<span class="math-inline">\{latitude\.trim\(\)\},</span>{longitude.trim()}&zoom=14`; */
-            /* const url = `comgooglemaps://?center=${encodeURIComponent(latitude.trim())},${encodeURIComponent(longitude.trim())}`; */
-           }
-          
-          /*   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
-            Linking.openURL(mapUrl); */
+              /* const url = `comgooglemaps://?center=<span class="math-inline">\{latitude\.trim\(\)\},</span>{longitude.trim()}&zoom=14`; */
+              /* const url = `comgooglemaps://?center=${encodeURIComponent(latitude.trim())},${encodeURIComponent(longitude.trim())}`; */
+            }
+
+            /*   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+              Linking.openURL(mapUrl); */
           },
         },
       ]
@@ -310,60 +311,60 @@ export const CartillaMedicaEspecialidad = ({ idCartilla, nombreEspecialidad44 }:
   };
 
 
-const filtrarPorCordoba = () => {
-  const palabrasClave = [ "CORDOBA", "B5000","5105","VILLA ALLENDE", ];  
-     const filtrados = prestadores.filter(prestador =>
-    palabrasClave.some(palabra =>
-      prestador.localidad.toUpperCase().includes(palabra)
-    )
-  ); 
-  setPrestadoresCordoba(filtrados);
-  setProvinciaSeleccionada('Córdoba');
-  setMostrarFiltrados(true);
-};
-const filtrarPorSanJuan = () => {
+  const filtrarPorCordoba = () => {
+    const palabrasClave = ["CORDOBA", "B5000", "5105", "VILLA ALLENDE",];
+    const filtrados = prestadores.filter(prestador =>
+      palabrasClave.some(palabra =>
+        prestador.localidad.toUpperCase().includes(palabra)
+      )
+    );
+    setPrestadoresCordoba(filtrados);
+    setProvinciaSeleccionada('Córdoba');
+    setMostrarFiltrados(true);
+  };
+  const filtrarPorSanJuan = () => {
 
-   const palabrasClave = [ "5400", "CAUCETE", "5442", "SAN JUAN"]; 
-   const filtrados = prestadores.filter(prestador =>
-    palabrasClave.some(palabra =>
-      prestador.localidad.toUpperCase().includes(palabra)
-    )
-  );
-  setPrestadoresSanJuan(filtrados);
-  setProvinciaSeleccionada('San Juan');
-  setMostrarFiltrados(true);
-};
+    const palabrasClave = ["5400", "CAUCETE", "5442", "SAN JUAN"];
+    const filtrados = prestadores.filter(prestador =>
+      palabrasClave.some(palabra =>
+        prestador.localidad.toUpperCase().includes(palabra)
+      )
+    );
+    setPrestadoresSanJuan(filtrados);
+    setProvinciaSeleccionada('San Juan');
+    setMostrarFiltrados(true);
+  };
 
-const filtrarPorMendoza = () => {
-  const palabrasClave = ["MENDOZA", "5500", "5519", "5501","5521","5515", "5509",  "DORREGO", "LUJAN DE CUYO", "MAIPU", "GUAYMALLEN", "LAVALLE","GENERAL SAN MARTIN", "TUNUYAN", "GODOY CRUZ"];
-  const filtrados = prestadores.filter(prestador =>
-    palabrasClave.some(palabra =>
-      prestador.localidad.toUpperCase().includes(palabra)
-    )
-  );
-  setPrestadoresMendoza(filtrados);
-  setProvinciaSeleccionada('Mendoza');
-  setMostrarFiltrados(true);
-};
-const filtrarPorSanLuis = () => {
-  const palabrasClave = [ "5700", "SAN LUIS", "VILLA MERCEDES", "5730"];
-  const filtrados = prestadores.filter(prestador =>
-    palabrasClave.some(palabra =>
-      prestador.localidad.toUpperCase().includes(palabra)
-    )
-  );
-  setPrestadoresSanLuis(filtrados);
-  setProvinciaSeleccionada('San Luis');
-  setMostrarFiltrados(true);
-};
-const filtrarPorTodos = () => {
-  const filtrados = prestadores
-  setPrestadoresTodos(filtrados);
-  setProvinciaSeleccionada('Todos');
-  setMostrarFiltrados(true);
-};
+  const filtrarPorMendoza = () => {
+    const palabrasClave = ["MENDOZA", "5500", "5519", "5501", "5521", "5515", "5509", "DORREGO", "LUJAN DE CUYO", "MAIPU", "GUAYMALLEN", "LAVALLE", "GENERAL SAN MARTIN", "TUNUYAN", "GODOY CRUZ"];
+    const filtrados = prestadores.filter(prestador =>
+      palabrasClave.some(palabra =>
+        prestador.localidad.toUpperCase().includes(palabra)
+      )
+    );
+    setPrestadoresMendoza(filtrados);
+    setProvinciaSeleccionada('Mendoza');
+    setMostrarFiltrados(true);
+  };
+  const filtrarPorSanLuis = () => {
+    const palabrasClave = ["5700", "SAN LUIS", "VILLA MERCEDES", "5730"];
+    const filtrados = prestadores.filter(prestador =>
+      palabrasClave.some(palabra =>
+        prestador.localidad.toUpperCase().includes(palabra)
+      )
+    );
+    setPrestadoresSanLuis(filtrados);
+    setProvinciaSeleccionada('San Luis');
+    setMostrarFiltrados(true);
+  };
+  const filtrarPorTodos = () => {
+    const filtrados = prestadores
+    setPrestadoresTodos(filtrados);
+    setProvinciaSeleccionada('Todos');
+    setMostrarFiltrados(true);
+  };
 
-  const handleSelect2 = (value:any) => {
+  const handleSelect2 = (value: any) => {
     const actions = {
       'Córdoba': filtrarPorCordoba,
       'Mendoza': filtrarPorMendoza,
@@ -371,7 +372,7 @@ const filtrarPorTodos = () => {
       'San Luis': filtrarPorSanLuis,
       'Todos': filtrarPorTodos,
     };
-//@ts-ignore
+    //@ts-ignore
     const action = actions[value];
     if (action) {
       action();
@@ -381,7 +382,7 @@ const filtrarPorTodos = () => {
     setSelectedValue(value);
     setModalVisible(false);  // Cierra el modal después de seleccionar
   };
- 
+
   const renderPrestadores = () => {
     switch (provinciaSeleccionada) {
       case 'Córdoba':
@@ -397,7 +398,7 @@ const filtrarPorTodos = () => {
         console.log('es el caso san luis ');
         return prestadoresSanLuis;
       default:
-        return prestadores; 
+        return prestadores;
     }
   };
   const prestadoresParaMostrar = renderPrestadores();
@@ -419,12 +420,12 @@ const filtrarPorTodos = () => {
     >
       <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('4%')} />
 
-      <BackButton Size={hp('4%')}/>
+      <BackButton Size={hp('4%')} />
 
       <Text style={{
         marginBottom: 10,
         marginTop: 0,
-        fontSize: hp('3%'),
+        fontSize: hp('3.3%'),
         textAlign: 'center',
         color: globalColors.gray2,
         fontWeight: 'bold',
@@ -481,15 +482,24 @@ const filtrarPorTodos = () => {
         {isConsulting ? (
 
           <>
-<View style={styles.aguardaContainer}>
-                <Text style={styles.aguardaText}>
-                  Aguardá un momento mientras obtenemos tus Prestadores
-                </Text>
-                <Text style={styles.aguardaText}>
-                  Esto puede tomar unos segundos
-                </Text>
-            <FullScreenLoader layoutStyle={{ justifyContent: 'center', /* backgroundColor:'green'  */}}  />
-              </View>
+            <View 
+            style={{
+              flex: 0.5,
+              marginTop: top - hp('-10%'),
+              marginBottom: hp('6%'),
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: 20,
+            }}
+             >
+              <Text style={styles.aguardaText}>
+                Aguardá un momento mientras obtenemos tus Prestadores
+              </Text>
+              <Text style={styles.aguardaText}>
+                Esto puede tomar unos segundos
+              </Text>
+              <FullScreenLoader  />
+            </View>
           </>
         ) : (
           <ScrollView >
@@ -543,9 +553,9 @@ const filtrarPorTodos = () => {
             )
             }
 
-        </ScrollView>
-      )
-      }
+          </ScrollView>
+        )
+        }
       </View>
 
     </View>
@@ -581,14 +591,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-   justifyContent: 'center',
+    justifyContent: 'center',
   },
   telefonosContainer: {
     display: 'flex',
     flexDirection: 'row',
-   justifyContent: 'center',
-  flexWrap:'wrap',
-  marginTop:5,
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginTop: 5,
   },
   descriptionTextNombre: {
     color: 'black',
@@ -596,7 +606,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   telefonoTouchable: {
- marginLeft:5,
+    marginLeft: 5,
   },
   descriptionTexttelefono: {
     color: globalColors.yellow,
@@ -624,21 +634,21 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    margin:0,
-    padding:0,
+    margin: 0,
+    padding: 0,
     backgroundColor: '#4285F4',
   },
   consignaText: {
     color: 'black',
     fontSize: 18,
-    margin:0,
-    padding:0
+    margin: 0,
+    padding: 0
   },
-/* inicio del modal  */
-container: {
+  /* inicio del modal  */
+  container: {
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection:'row',
+    flexDirection: 'row',
     gap: -10,
     marginBottom: 12,
   },
@@ -655,7 +665,7 @@ container: {
   },
   closeButton: {
     marginTop: 20,
- backgroundColor: '#4285F4',
+    backgroundColor: '#4285F4',
     padding: 10,
     borderRadius: 8,
     alignItems: 'center',
@@ -698,6 +708,8 @@ container: {
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+  /*   marginTop: top - hp('-10%'), */
+    marginBottom: hp('6%'),
   },
   aguardaText: {
     fontSize: 18,

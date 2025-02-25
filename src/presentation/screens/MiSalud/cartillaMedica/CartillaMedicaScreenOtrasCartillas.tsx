@@ -44,6 +44,8 @@ export const CartillaMedicaScreenOtrasCartillas = () => {
     });
   }
 
+
+
   useEffect(() => {
 
     const CartillaRequest = async () => {
@@ -217,12 +219,11 @@ const styles = StyleSheet.create ({
     justifyContent: 'center',
   },
   descriptionText: {
-    color: '#3b3937',
-        fontWeight: 'bold',
-   /*  fontSize: 18, */
-    fontSize: hp('2.3%'),
-    textAlign: 'center'
-
+    color: 'black',
+/*    color: '#3b3937', */
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   contentWrapper2: {
     flexDirection: 'row',

@@ -49,6 +49,7 @@ import { FormulariosEspScreenNuevo } from '../screens/MiGestion/formulariosEspec
 import { CartillaFarmaciaProvincias } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaProvincias';
 import { CartillaFarmaciaDepartamento } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaDepartamento';
 import { CartillaFarmaciaDepartamentoSeleccionado } from '../screens/MiSalud/cartillaFarmacia/CartillaFarmaciaDepartamentoSeleccionado';
+import { CartillaMedicaScreenOtrasCartillas } from '../screens/MiSalud/cartillaFarmacia/CartillaMedicaScreenOtrasCartillas';
 
 /* import { UserData } from '../screens/auth/userData'; */
 
@@ -91,6 +92,7 @@ export type RootStackParams = {
   Formulario:undefined,
   CartillaScreen: undefined,
   Cartillas: undefined,
+  "Otras Cartillas":undefined,
   MiSalud: undefined,
   Formularios:undefined,
   Prestadores: { idCartilla: string };
@@ -211,6 +213,8 @@ const [isReady, setIsReady] = useState(false);
 {/* MI SALUD (CartillaScreen): */}
 
       <Stack.Screen name="Cartillas" component={CartillaMedicaScreen} options={{ headerShown: true }} /> 
+      <Stack.Screen name="Otras Cartillas" component={CartillaMedicaScreenOtrasCartillas} options={{ headerShown: true }} /> 
+     
      {/* Desde CartilaMedicaScreen vamos a la especialidad: */}
       <Stack.Screen name="Prestadores" component={CartillaMedicaEspecialidad} options={{ headerShown: true }} />
       <Stack.Screen name="Departamentos" component={CartillaFarmaciaDepartamento} options={{ headerShown: true }} />

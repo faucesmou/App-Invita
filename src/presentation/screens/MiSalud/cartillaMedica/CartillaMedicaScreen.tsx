@@ -29,6 +29,16 @@ export const CartillaMedicaScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
+  function capitalizeWords(input: string | undefined): string {
+    if (!input) {
+      return "";
+    }
+    return input.replace(/\b\p{L}+/gu, function (word) {
+      return word.charAt(0).toLocaleUpperCase("es-ES") + word.slice(1).toLocaleLowerCase("es-ES");
+    });
+  }
+
+
   useEffect(() => {
 
     const CartillaRequest = async () => {
@@ -44,7 +54,7 @@ export const CartillaMedicaScreen = () => {
         const cartillasData = result.Resultado.fila.tabCartillas;
 
         // Verificar si cartillasData es un array o un objeto y procesar en consecuencia
-        const mappedCartillas = Array.isArray(cartillasData.idCartilla)
+      /*   const mappedCartillas = Array.isArray(cartillasData.idCartilla)
           ? cartillasData.idCartilla.map((_: any, index: number) => ({
             nombre: cartillasData.nombre[index]._text,
             idCartilla: cartillasData.idCartilla[index]._text,
@@ -52,12 +62,23 @@ export const CartillaMedicaScreen = () => {
           : [{
             nombre: cartillasData.nombre._text,
             idCartilla: cartillasData.idCartilla._text,
-          }];
-        setCartillas(mappedCartillas);
-      
-        
+          }]; */
+          const mappedCartillas = Array.isArray(cartillasData.idCartilla)
+          ? cartillasData.idCartilla.map((_: any, index: number) => ({
+            nombre: cartillasData.nombre[index]._text,
+            idCartilla: cartillasData.idCartilla[index]._text,
+          }))
+            .filter(cartilla => cartilla.nombre !== "Otras cartillas") // Filtramos el objeto otras cartillas ya que lo vamos a mostrar como botón al final
+          : [{
+            nombre: cartillasData.nombre._text,
+            idCartilla: cartillasData.idCartilla._text,
+          }].filter(cartilla => cartilla.nombre !== "Otras cartillas");
 
-      /*   console.log('este es el mappedCartillas DE CARTILLA MEDICA---x--x-x--x->:', mappedCartillas); */
+        setCartillas(mappedCartillas);
+
+
+
+        /*   console.log('este es el mappedCartillas DE CARTILLA MEDICA---x--x-x--x->:', mappedCartillas); */
         /*  console.log('este es el cartillas useState:', cartillas); */
 
       }
@@ -75,12 +96,12 @@ export const CartillaMedicaScreen = () => {
   return (
     <View
 
-      style={{...globalStyles.container, marginBottom:0, }}
+      style={{ ...globalStyles.container, marginBottom: 0, }}
 
     >
       <CustomHeader /* color={globalColors.gray2} */ titleSize={hp('4%')} />
 
-      <BackButton Size={hp('4%')}/>
+      <BackButton Size={hp('4%')} />
 
       <Text style={{
         marginBottom: 0,
@@ -95,11 +116,11 @@ export const CartillaMedicaScreen = () => {
         <ScrollView /* contentContainerStyle={styles.scrollViewContent} */>
           {cartillas.map((cartilla, index) => (
 
-            <View 
-            key={index} 
-            style={{ marginBottom: 5 }} 
+            <View
+              key={index}
+              style={{ marginBottom: 5 }}
             >
-            {/*   <Text 
+              {/*   <Text 
               onPress={ ()=> {
                 console.log('Valor de idCartilla ACA ACA ACAA:', cartilla.idCartilla);
               let idCartilla = cartilla.idCartilla;
@@ -111,16 +132,16 @@ export const CartillaMedicaScreen = () => {
               {/* mejora del estilo:  */}
               <Pressable
                 onPress={() => {
-                 
+
                   let idCartilla = cartilla.idCartilla;
                   let nombre88 = cartilla.nombre;
                   GuardarIdCartillaSeleccionada(idCartilla, nombre88);
-                  console.log('nombre es----->>>',cartilla.nombre );
-                  console.log('cartilla es----->>>',cartilla.nombre );
-                  console.log('nombre88----->>>',nombre88 );
-                  navigation.navigate('Prestadores', { 
+                  console.log('nombre es----->>>', cartilla.nombre);
+                  console.log('cartilla es----->>>', cartilla.nombre);
+                  console.log('nombre88----->>>', nombre88);
+                  navigation.navigate('Prestadores', {
                     idCartilla: cartilla.idCartilla,
-                })
+                  })
                 }
                 }
               >
@@ -128,7 +149,7 @@ export const CartillaMedicaScreen = () => {
                   <View style={styles.contentWrapper2}>
                     <View style={styles.textWrapper}>
                       <Text style={styles.descriptionText}>
-                      {cartilla.nombre}
+                      {capitalizeWords(cartilla.nombre)}
                       </Text>
                       {/*    <Text style={{ fontSize: 15, marginBottom: 10 }}>ID: {cartilla.idCartilla}</Text>  */}
                     </View>
@@ -139,6 +160,24 @@ export const CartillaMedicaScreen = () => {
             </View>
           ))}
 
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Otras Cartillas')
+            }
+            }
+          >
+            <View style={styles.TertiaryButton}>
+              <View style={styles.contentWrapper2}>
+                <View style={styles.textWrapper}>
+                  <Text style={styles.descriptionText}>
+                    Otras Cartillas
+                  </Text>
+
+                </View>
+              </View>
+            </View>
+          </Pressable>
+
         </ScrollView>
       </View>
 
@@ -147,7 +186,7 @@ export const CartillaMedicaScreen = () => {
   )
 }
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   TertiaryButton: {
     backgroundColor: 'white',
     minWidth: '80%',
@@ -166,10 +205,11 @@ const styles = StyleSheet.create ({
     justifyContent: 'center',
   },
   descriptionText: {
-    color: '#3b3937', 
-    fontSize: 18,
+    color: '#3b3937',
+   /*  fontSize: 18, */
     textAlign: 'center',
-    fontWeight:"bold",
+    fontWeight: "bold",
+    fontSize: hp('2.3%'),
   },
   contentWrapper2: {
     flexDirection: 'row',

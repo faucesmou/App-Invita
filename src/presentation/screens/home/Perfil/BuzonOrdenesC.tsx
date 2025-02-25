@@ -695,7 +695,7 @@ const styles = StyleSheet.create({
   },
   ContainerEstudiosMedicosTitleAfuera: {
     marginTop: 10,
-    marginBottom:5,
+    marginBottom:0,
     padding: 5,
     backgroundColor: globalColors.white22 /* yellow3 *//*  '#9dcaf1' *//* '#d7e5f8' */,
     borderRadius: 15,
@@ -711,6 +711,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Light',
     textAlign: 'center',
     minWidth:'100%',
+    color: 'white',
+    fontWeight: 'bold',
   },
   ContainerEstudiosMedicosTitle: {
     marginTop: 10,
